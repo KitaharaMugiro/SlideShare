@@ -53,7 +53,7 @@
             "queryString": true
           },
           "lambda@edge": {
-            "origin-request": "arn:aws:lambda:us-east-1:904678698219:function:k5vd2zt-jgv9la:2"
+            "origin-request": "arn:aws:lambda:us-east-1:904678698219:function:k5vd2zt-jgv9la:4"
           }
         },
         "_next/data/*": {
@@ -73,8 +73,8 @@
             "queryString": true
           },
           "lambda@edge": {
-            "origin-request": "arn:aws:lambda:us-east-1:904678698219:function:k5vd2zt-88bdnum:2",
-            "origin-response": "arn:aws:lambda:us-east-1:904678698219:function:k5vd2zt-88bdnum:2"
+            "origin-request": "arn:aws:lambda:us-east-1:904678698219:function:k5vd2zt-88bdnum:4",
+            "origin-response": "arn:aws:lambda:us-east-1:904678698219:function:k5vd2zt-88bdnum:4"
           }
         }
       }
@@ -103,8 +103,8 @@
       "PATCH"
     ],
     "lambda@edge": {
-      "origin-request": "arn:aws:lambda:us-east-1:904678698219:function:k5vd2zt-88bdnum:2",
-      "origin-response": "arn:aws:lambda:us-east-1:904678698219:function:k5vd2zt-88bdnum:2"
+      "origin-request": "arn:aws:lambda:us-east-1:904678698219:function:k5vd2zt-88bdnum:4",
+      "origin-response": "arn:aws:lambda:us-east-1:904678698219:function:k5vd2zt-88bdnum:4"
     },
     "compress": true
   }

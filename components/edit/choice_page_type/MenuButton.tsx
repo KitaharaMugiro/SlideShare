@@ -1,10 +1,10 @@
 import { PinDropSharp } from "@mui/icons-material";
-
+import Image from "next/image"
 interface Props {
     imageUrl: string
     title: string
     description: string
-    onClick: Function
+    onClick: () => void
 }
 
 export default (props: Props) => {
@@ -28,7 +28,7 @@ export default (props: Props) => {
     </>
 }
 
-const formatStringToCamelCase = str => {
+const formatStringToCamelCase = (str: string) => {
     const splitted = str.split("-");
     if (splitted.length === 1) return splitted[0];
     return (
@@ -40,8 +40,8 @@ const formatStringToCamelCase = str => {
     );
 };
 
-const getStyleObjectFromString = str => {
-    const style = {};
+const getStyleObjectFromString = (str: string) => {
+    const style: any = {};
     str.split(";").forEach(el => {
         const [property, value] = el.split(":");
         if (!property) return;
