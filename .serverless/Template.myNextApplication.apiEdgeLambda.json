@@ -1,0 +1,17 @@
+{
+  "name": "k5vd2zt-jgv9la",
+  "hash": "4kMYvCOXlzNKnIzX/ZdPhWcZXHs2866YYWHy9Cb25h4=",
+  "description": "API Lambda@Edge for Next CloudFront distribution",
+  "memory": 512,
+  "timeout": 10,
+  "code": "/Users/mukitahara/projects/workgroup/slideshare/.serverless_nextjs/api-lambda",
+  "shims": [],
+  "handler": "index.handler",
+  "runtime": "nodejs14.x",
+  "env": {},
+  "role": {
+    "arn": "arn:aws:iam::904678698219:role/k5vd2zt-kpef4l"
+  },
+  "arn": "arn:aws:lambda:us-east-1:904678698219:function:k5vd2zt-jgv9la",
+  "region": "us-east-1"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "k5vd2zt-88bdnum",
+  "hash": "lPbJL1IVj2gDVV4F8+WO35L0wZ7WhecQzguAwgWfpjg=",
+  "description": "Default Lambda@Edge for Next CloudFront distribution",
+  "memory": 512,
+  "timeout": 10,
+  "code": "/Users/mukitahara/projects/workgroup/slideshare/.serverless_nextjs/default-lambda",
+  "shims": [],
+  "handler": "index.handler",
+  "runtime": "nodejs14.x",
+  "env": {},
+  "role": {
+    "arn": "arn:aws:iam::904678698219:role/k5vd2zt-k7iu68g"
+  },
+  "arn": "arn:aws:lambda:us-east-1:904678698219:function:k5vd2zt-88bdnum",
+  "region": "us-east-1"
+}
