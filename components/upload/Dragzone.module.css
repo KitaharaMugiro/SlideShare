@@ -1,0 +1,10 @@
+.container {
+    border: 1px dashed grey;
+    padding: 100px;
+    width:500px;
+    cursor: pointer;
+}
+
+.text {
+    color: #868686;
+}
