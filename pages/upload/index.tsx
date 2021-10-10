@@ -4,9 +4,12 @@ import React from "react"
 import Dragzone from "../../components/upload/PdfUploader"
 import style from "./index.module.css"
 import { Storage } from "aws-amplify"
+import useCreateTest from "../../api/gqlFunctions/useCreateTest"
 const Home = () => {
+    const createTest = useCreateTest()
     const onClickTest = async () => {
-        const result = await Storage.put('test.txt', 'Hello');
+        //const result = await Storage.put('test.txt', 'Hello');
+        createTest("from web")
     }
     return (<>
 
@@ -23,7 +26,7 @@ const Home = () => {
             <div style={{ height: 20 }} />
 
             <Button href="/edit">Start with blank</Button>
-
+            <Button onClick={onClickTest}>Test</Button>
         </div>
     </>)
 }

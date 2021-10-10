@@ -24,7 +24,7 @@ var _Box = _interopRequireDefault(__webpack_require__(55838));
 
 /***/ }),
 
-/***/ 20030:
+/***/ 62612:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -64,7 +64,7 @@ __webpack_require__.r(__webpack_exports__);
 
       const documentModule = __webpack_require__(6021)
 
-      const appMod = __webpack_require__(54558)
+      const appMod = __webpack_require__(276)
       let App = appMod.default || appMod.then && appMod.then(mod => mod.default);
 
       const compMod = __webpack_require__(3359)
@@ -118,11 +118,11 @@ __webpack_require__.r(__webpack_exports__);
         rewrites: combinedRewrites,
         i18n: undefined,
         page: "/_error",
-        buildId: "-rl1-IMttwMKOC1RhkHQ5",
-        escapedBuildId: "\-rl1\-IMttwMKOC1RhkHQ5",
+        buildId: "u6bt7rT8HJpPS_o9v46xe",
+        escapedBuildId: "u6bt7rT8HJpPS_o9v46xe",
         basePath: "",
         pageIsDynamic: false,
-        encodedPreviewProps: {previewModeId:"9232b7a1b168c5fd882acd6fdfa34504",previewModeSigningKey:"893bdf64a78dfcd885e4dcc8b1eb948b8a2a7de23a69520df048b37ada3cfc9f",previewModeEncryptionKey:"37d77aec7433ea24a340c67f56c7077690ffaa4f36f950ccdad9b1fe4bceb4cb"}
+        encodedPreviewProps: {previewModeId:"f2296e12a23b53dc1304efc2a045a45c",previewModeSigningKey:"cfa017fb1658922ed31dc358b313f6ae1b1bc2447cd30e8492c13bac709a01b7",previewModeEncryptionKey:"09a3a8c2b105ecb9d219cb5498bd39f3c92cbd1232ce0d22103ed2cebec6035c"}
       })
       
     
@@ -141,10 +141,24 @@ if (true) {
 
 /***/ }),
 
+/***/ 42357:
+/***/ ((module) => {
+
+module.exports = require("assert");
+
+/***/ }),
+
 /***/ 64293:
 /***/ ((module) => {
 
 module.exports = require("buffer");
+
+/***/ }),
+
+/***/ 63129:
+/***/ ((module) => {
+
+module.exports = require("child_process");
 
 /***/ }),
 
@@ -183,10 +197,24 @@ module.exports = require("http");
 
 /***/ }),
 
+/***/ 97565:
+/***/ ((module) => {
+
+module.exports = require("http2");
+
+/***/ }),
+
 /***/ 57211:
 /***/ ((module) => {
 
 module.exports = require("https");
+
+/***/ }),
+
+/***/ 11631:
+/***/ ((module) => {
+
+module.exports = require("net");
 
 /***/ }),
 
@@ -211,6 +239,13 @@ module.exports = require("path");
 
 /***/ }),
 
+/***/ 61765:
+/***/ ((module) => {
+
+module.exports = require("process");
+
+/***/ }),
+
 /***/ 71191:
 /***/ ((module) => {
 
@@ -229,6 +264,13 @@ module.exports = require("stream");
 /***/ ((module) => {
 
 module.exports = require("string_decoder");
+
+/***/ }),
+
+/***/ 33867:
+/***/ ((module) => {
+
+module.exports = require("tty");
 
 /***/ }),
 
@@ -295,7 +337,7 @@ module.exports = require("zlib");
 /******/ 	__webpack_require__.x = () => {
 /******/ 		// Load entry module and return exports
 /******/ 		// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 		var __webpack_exports__ = __webpack_require__.O(undefined, [315,692,133,811,101], () => (__webpack_require__(20030)))
+/******/ 		var __webpack_exports__ = __webpack_require__.O(undefined, [315,801,133,375,811,181], () => (__webpack_require__(62612)))
 /******/ 		__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 		return __webpack_exports__;
 /******/ 	};
@@ -458,10 +500,11 @@ module.exports = require("zlib");
 /******/ 		var next = __webpack_require__.x;
 /******/ 		__webpack_require__.x = () => {
 /******/ 			__webpack_require__.e(315);
-/******/ 			__webpack_require__.e(692);
+/******/ 			__webpack_require__.e(801);
 /******/ 			__webpack_require__.e(133);
+/******/ 			__webpack_require__.e(375);
 /******/ 			__webpack_require__.e(811);
-/******/ 			__webpack_require__.e(101);
+/******/ 			__webpack_require__.e(181);
 /******/ 			return next();
 /******/ 		};
 /******/ 	})();
