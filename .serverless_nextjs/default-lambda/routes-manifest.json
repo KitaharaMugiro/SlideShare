@@ -1,1 +1,0 @@
-{"version":3,"pages404":true,"basePath":"","redirects":[],"headers":[],"dynamicRoutes":[{"page":"/slide/[slideId]","regex":"^/slide/([^/]+?)(?:/)?$","routeKeys":{"slideId":"slideId"},"namedRegex":"^/slide/(?<slideId>[^/]+?)(?:/)?$"}],"dataRoutes":[],"rewrites":[]}
