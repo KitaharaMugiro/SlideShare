@@ -25,7 +25,7 @@ const MyAppBar = () => {
         if (user) {
             return <Button color="inherit" onClick={signOut}>Logout</Button>
         } else {
-            return <Button color="inherit">Login</Button>
+            return <Button color="inherit" href="/signin">Login</Button>
         }
     }
 

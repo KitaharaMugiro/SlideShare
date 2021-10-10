@@ -22,7 +22,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "lib/Pdf2Image.js"
+    "lib/Pdf2Image.js",
+    "components/common/Signin.jsx"
   ],
   "exclude": [
     "node_modules"

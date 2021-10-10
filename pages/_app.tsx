@@ -8,6 +8,29 @@ import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 import { useAtom } from 'jotai';
 import { UserAtom } from '../model/jotai/User';
 
+function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
+  if (urlStrings.length === 1) return urlStrings[0];
+
+  const re: RegExp = isLocal ? /^http:\/\/localhost/ : /^https:\/\//;
+  const [url]: Array<URL> = urlStrings
+    .filter((urlString) => urlString.match(re))
+    .map((urlString) => new URL(urlString));
+  if (!url) throw new Error("No valid URL found: " + urlStrings.join(","));
+  return url.href;
+}
+
+function isDevelopment() {
+  const { NODE_ENV } = process.env;
+  return NODE_ENV === "development";
+}
+
+const redirectSignIn = findUrlForEnv(
+  awsConfig.oauth.redirectSignIn.split(","),
+  isDevelopment()
+);
+
+awsConfig.oauth.redirectSignIn = redirectSignIn
+awsConfig.oauth.redirectSignOut = redirectSignIn
 Amplify.configure(awsConfig);
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
@@ -26,4 +49,4 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <Component {...pageProps} />
   </>
 }
-export default withAuthenticator(MyApp)
+export default MyApp

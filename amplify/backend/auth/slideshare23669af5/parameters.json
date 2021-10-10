@@ -61,5 +61,5 @@
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
     "dependsOn": [],
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://d3jp709mv9klye.cloudfront.net/redirect/\"],\"LogoutURLs\":[\"https://d3jp709mv9klye.cloudfront.net/signout/\"]}"
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://d3jp709mv9klye.cloudfront.net/\",  \"http://localhost:3000/\"],\"LogoutURLs\":[\"https://d3jp709mv9klye.cloudfront.net/\", \"http://localhost:3000/\"]}"
 }

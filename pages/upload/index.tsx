@@ -24,7 +24,6 @@ const Home = () => {
 
             <Button href="/edit">Start with blank</Button>
 
-            <Button onClick={onClickTest}>test</Button>
         </div>
     </>)
 }
