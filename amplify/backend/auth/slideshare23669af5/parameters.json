@@ -54,13 +54,12 @@
     "hostedUIDomainName": "slideshare23669af5-23669af5",
     "authProvidersUserPool": [
         "Facebook",
-        "Google",
-        "SignInWithApple"
+        "Google"
     ],
-    "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}},{\"ProviderName\":\"SignInWithApple\",\"authorize_scopes\":\"email\",\"AttributeMapping\":{\"email\":\"email\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://d3jp709mv9klye.cloudfront.net/redirect/\"],\"LogoutURLs\":[\"https://d3jp709mv9klye.cloudfront.net/signout/\"]}",
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "dependsOn": []
+    "dependsOn": [],
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://d3jp709mv9klye.cloudfront.net/redirect/\"],\"LogoutURLs\":[\"https://d3jp709mv9klye.cloudfront.net/signout/\"]}"
 }

@@ -1,3 +1,4 @@
+
 // eslint-disable-next-line
 exports.handler = async function (event) {
   console.log('Received S3 event:', JSON.stringify(event, null, 2));
