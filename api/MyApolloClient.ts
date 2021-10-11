@@ -3,7 +3,7 @@ import { setContext } from '@apollo/client/link/context';
 import { getMainDefinition } from "@apollo/client/utilities";
 import Amplify, { Auth } from 'aws-amplify';
 
-const uri = "http://desig-publi-1hibz0rclcsyu-915643025.ap-northeast-1.elb.amazonaws.com/v1/graphql"
+const uri = "https://adequate-guinea-56.hasura.app/v1/graphql"
 const httpLink = new HttpLink({ uri });
 const authLink = setContext(async (_, { headers }) => {
     // get the authentication token from local storage if it exists
