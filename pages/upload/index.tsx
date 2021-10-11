@@ -4,12 +4,12 @@ import React from "react"
 import Dragzone from "../../components/upload/PdfUploader"
 import style from "./index.module.css"
 import { Storage } from "aws-amplify"
-import useCreateTest from "../../api/gqlFunctions/useCreateTest"
+import { useCreateTestMutation } from "../../src/generated/graphql"
 const Home = () => {
-    const createTest = useCreateTest()
+    const [createTest] = useCreateTestMutation()
     const onClickTest = async () => {
         //const result = await Storage.put('test.txt', 'Hello');
-        createTest("from web")
+        createTest({ variables: { test: "hogehoge" } })
     }
     return (<>
 

@@ -7,6 +7,8 @@ import awsConfig from '../src/aws-exports';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 import { useAtom } from 'jotai';
 import { UserAtom } from '../model/jotai/User';
+import { ApolloProvider } from '@apollo/client';
+import MyApolloClient from '../api/MyApolloClient';
 
 function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
   if (urlStrings.length === 1) return urlStrings[0];
@@ -45,8 +47,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   }, [])
 
   return <>
-    <MyAppBar />
-    <Component {...pageProps} />
+    <ApolloProvider client={MyApolloClient}>
+      <MyAppBar />
+      <Component {...pageProps} />
+    </ApolloProvider>
   </>
 }
 export default MyApp
