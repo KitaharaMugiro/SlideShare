@@ -1,7 +1,7 @@
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import React, { useState } from "react";
-import { usePageList } from "../../../model/jotai/FocusedPageId";
+import { usePageList } from "../../../model/hooks/usePageList";
 
 
 export default () => {
@@ -16,7 +16,7 @@ export default () => {
     const handleClose = (option: string) => {
         if (option === "Delete") {
             if (!focusedPage) return
-            removePage(focusedPage.pageId)
+            removePage(focusedPage.id)
         }
         setAnchorEl(null);
     };

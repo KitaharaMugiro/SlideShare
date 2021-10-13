@@ -1,16 +1,21 @@
 import { Button, Divider, Typography } from "@mui/material"
 import { height } from "@mui/system"
+import { useRouter } from "next/dist/client/router"
 import React from "react"
 import Dragzone from "../../components/upload/PdfUploader"
+import { useCreateSlideMutation } from "../../src/generated/graphql"
 import style from "./index.module.css"
-import { Storage } from "aws-amplify"
-import { useCreateTestMutation } from "../../src/generated/graphql"
 const Home = () => {
-    const [createTest] = useCreateTestMutation()
-    const onClickTest = async () => {
-        //const result = await Storage.put('test.txt', 'Hello');
-        createTest({ variables: { test: "hogehoge" } })
+    const [createNewSlide] = useCreateSlideMutation()
+    const router = useRouter()
+
+    const onClickNew = async () => {
+        const createdSlide = await createNewSlide()
+        const slideId = createdSlide.data?.insert_slideshare_Slide_one?.id
+        if (!slideId) { return }
+        router.push(`/edit/${slideId}`)
     }
+
     return (<>
 
         <div className={style.center}>
@@ -25,8 +30,7 @@ const Home = () => {
             </Divider>
             <div style={{ height: 20 }} />
 
-            <Button href="/edit">Start with blank</Button>
-            <Button onClick={onClickTest}>Test</Button>
+            <Button onClick={onClickNew}>Start with blank</Button>
         </div>
     </>)
 }

@@ -1,6 +1,6 @@
 import { Button } from "@mui/material"
 import React, { useState } from "react"
-import { usePageList } from "../../../model/jotai/FocusedPageId"
+import { usePageList } from "../../../model/hooks/usePageList"
 import style from "./ImagePreview.module.css"
 
 interface Props {
@@ -15,12 +15,8 @@ export default (props: Props) => {
     const sizeStyle = { width, height }
     const imageSizeStyle = { width, height, backgroundSize: `${width} ${height}` }
 
-    const { focusedPage, removePage } = usePageList()
+    const { focusedPage } = usePageList()
     if (!focusedPage) return <div />
-    const onClickDelete = () => {
-        removePage(focusedPage?.pageId)
-    }
-
     return <>
         <div className={style.paper} style={sizeStyle} >
             <div

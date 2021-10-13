@@ -1,7 +1,0 @@
-mutation CreateTest($test: String!) {
-                insert_slideshare_Test_one(object:{test:$test}) {
-                    id
-                    text
-                    test
-                }   
-        }

@@ -1,7 +1,6 @@
-import { Button, Typography } from '@mui/material';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useDropzone } from 'react-dropzone';
-import { usePageList } from '../../../model/jotai/FocusedPageId';
+import { usePageList } from '../../../model/hooks/usePageList';
 import UploadDragzoneDesign from '../../upload/UploadDragzoneDesign';
 
 function ImageUploader() {
@@ -15,7 +14,7 @@ function ImageUploader() {
         console.log(file);
         //TODO: とりあえず適当に画像はめているが、きちんと設計する
         const size = file.size
-        focusedPage.imageAttribute = { url: `/static/sample_slide${size % 3 + 1}.png` }
+        focusedPage.imageUrl = `/static/sample_slide${size % 3 + 1}.png`
         updatePage(focusedPage)
     }
 

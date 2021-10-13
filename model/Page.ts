@@ -1,33 +1,24 @@
 import * as uuid from "uuid"
-
-export type PageType = "text" | "image" | "video" | "temp"
-
-export type TextAttribute = {
-    markdown: string
-}
-
-export type ImageAttribute = {
-    url: string
-}
-
-export type VideoAttribute = {
-    url: string
-}
+import { Slideshare_PageType_Enum } from "../src/generated/graphql"
 
 export type Page = {
-    pageId: string
-    type: PageType
-    order: number
-    textAttribute?: TextAttribute
-    imageAttribute?: ImageAttribute
-    videoAttribute?: VideoAttribute
+    id: string | number
+    type: Slideshare_PageType_Enum
+    pageNumber: number
+    text?: string | null
+    imageUrl?: string | null
+    videoUrl?: string | null
 }
 
-
-
 export const createNewPage = (): Page => {
-    const pageId = uuid.v4()
-    const type = "temp"
-    const order = 0
-    return { pageId, type, order }
+    const id = uuid.v4()
+    const type = Slideshare_PageType_Enum.Temp
+    const pageNumber = 0
+    return { id, type, pageNumber }
+}
+
+export const reorderPageList = (pageList: Page[]) => {
+    pageList.forEach((p, index) => {
+        p.pageNumber = index
+    })
 }

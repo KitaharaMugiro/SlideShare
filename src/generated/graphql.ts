@@ -67,6 +67,19 @@ export enum Board_Select_Column {
   UpdatedAt = 'UpdatedAt'
 }
 
+/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
+export type Boolean_Comparison_Exp = {
+  _eq?: Maybe<Scalars['Boolean']>;
+  _gt?: Maybe<Scalars['Boolean']>;
+  _gte?: Maybe<Scalars['Boolean']>;
+  _in?: Maybe<Array<Scalars['Boolean']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['Boolean']>;
+  _lte?: Maybe<Scalars['Boolean']>;
+  _neq?: Maybe<Scalars['Boolean']>;
+  _nin?: Maybe<Array<Scalars['Boolean']>>;
+};
+
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
   _eq?: Maybe<Scalars['Int']>;
@@ -386,26 +399,34 @@ export type Mutation_Root = {
   delete_Note?: Maybe<Note_Mutation_Response>;
   /** delete single row from the table: "Note" */
   delete_Note_by_pk?: Maybe<Note>;
-  /** delete data from the table: "slideshare.Test" */
-  delete_slideshare_Test?: Maybe<Slideshare_Test_Mutation_Response>;
-  /** delete single row from the table: "slideshare.Test" */
-  delete_slideshare_Test_by_pk?: Maybe<Slideshare_Test>;
+  /** delete data from the table: "slideshare.Page" */
+  delete_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
+  /** delete single row from the table: "slideshare.Page" */
+  delete_slideshare_Page_by_pk?: Maybe<Slideshare_Page>;
+  /** delete data from the table: "slideshare.Slide" */
+  delete_slideshare_Slide?: Maybe<Slideshare_Slide_Mutation_Response>;
+  /** delete single row from the table: "slideshare.Slide" */
+  delete_slideshare_Slide_by_pk?: Maybe<Slideshare_Slide>;
   /** insert data into the table: "Note" */
   insert_Note?: Maybe<Note_Mutation_Response>;
   /** insert a single row into the table: "Note" */
   insert_Note_one?: Maybe<Note>;
-  /** insert data into the table: "slideshare.Test" */
-  insert_slideshare_Test?: Maybe<Slideshare_Test_Mutation_Response>;
-  /** insert a single row into the table: "slideshare.Test" */
-  insert_slideshare_Test_one?: Maybe<Slideshare_Test>;
+  /** insert data into the table: "slideshare.Page" */
+  insert_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
+  /** insert a single row into the table: "slideshare.Page" */
+  insert_slideshare_Page_one?: Maybe<Slideshare_Page>;
+  /** insert data into the table: "slideshare.Slide" */
+  insert_slideshare_Slide?: Maybe<Slideshare_Slide_Mutation_Response>;
+  /** insert a single row into the table: "slideshare.Slide" */
+  insert_slideshare_Slide_one?: Maybe<Slideshare_Slide>;
   /** update data of the table: "Note" */
   update_Note?: Maybe<Note_Mutation_Response>;
   /** update single row of the table: "Note" */
   update_Note_by_pk?: Maybe<Note>;
-  /** update data of the table: "slideshare.Test" */
-  update_slideshare_Test?: Maybe<Slideshare_Test_Mutation_Response>;
-  /** update single row of the table: "slideshare.Test" */
-  update_slideshare_Test_by_pk?: Maybe<Slideshare_Test>;
+  /** update data of the table: "slideshare.Page" */
+  update_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
+  /** update single row of the table: "slideshare.Page" */
+  update_slideshare_Page_by_pk?: Maybe<Slideshare_Page>;
 };
 
 
@@ -422,13 +443,25 @@ export type Mutation_RootDelete_Note_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_Slideshare_TestArgs = {
-  where: Slideshare_Test_Bool_Exp;
+export type Mutation_RootDelete_Slideshare_PageArgs = {
+  where: Slideshare_Page_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Slideshare_Test_By_PkArgs = {
+export type Mutation_RootDelete_Slideshare_Page_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_SlideArgs = {
+  where: Slideshare_Slide_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_Slide_By_PkArgs = {
   id: Scalars['Int'];
 };
 
@@ -448,16 +481,30 @@ export type Mutation_RootInsert_Note_OneArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_Slideshare_TestArgs = {
-  objects: Array<Slideshare_Test_Insert_Input>;
-  on_conflict?: Maybe<Slideshare_Test_On_Conflict>;
+export type Mutation_RootInsert_Slideshare_PageArgs = {
+  objects: Array<Slideshare_Page_Insert_Input>;
+  on_conflict?: Maybe<Slideshare_Page_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Slideshare_Test_OneArgs = {
-  object: Slideshare_Test_Insert_Input;
-  on_conflict?: Maybe<Slideshare_Test_On_Conflict>;
+export type Mutation_RootInsert_Slideshare_Page_OneArgs = {
+  object: Slideshare_Page_Insert_Input;
+  on_conflict?: Maybe<Slideshare_Page_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_SlideArgs = {
+  objects: Array<Slideshare_Slide_Insert_Input>;
+  on_conflict?: Maybe<Slideshare_Slide_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_Slide_OneArgs = {
+  object: Slideshare_Slide_Insert_Input;
+  on_conflict?: Maybe<Slideshare_Slide_On_Conflict>;
 };
 
 
@@ -478,18 +525,18 @@ export type Mutation_RootUpdate_Note_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Slideshare_TestArgs = {
-  _inc?: Maybe<Slideshare_Test_Inc_Input>;
-  _set?: Maybe<Slideshare_Test_Set_Input>;
-  where: Slideshare_Test_Bool_Exp;
+export type Mutation_RootUpdate_Slideshare_PageArgs = {
+  _inc?: Maybe<Slideshare_Page_Inc_Input>;
+  _set?: Maybe<Slideshare_Page_Set_Input>;
+  where: Slideshare_Page_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Slideshare_Test_By_PkArgs = {
-  _inc?: Maybe<Slideshare_Test_Inc_Input>;
-  _set?: Maybe<Slideshare_Test_Set_Input>;
-  pk_columns: Slideshare_Test_Pk_Columns_Input;
+export type Mutation_RootUpdate_Slideshare_Page_By_PkArgs = {
+  _inc?: Maybe<Slideshare_Page_Inc_Input>;
+  _set?: Maybe<Slideshare_Page_Set_Input>;
+  pk_columns: Slideshare_Page_Pk_Columns_Input;
 };
 
 /** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
@@ -531,10 +578,18 @@ export type Query_Root = {
   Note: Array<Note>;
   /** fetch data from the table: "Note" using primary key columns */
   Note_by_pk?: Maybe<Note>;
-  /** fetch data from the table: "slideshare.Test" */
-  slideshare_Test: Array<Slideshare_Test>;
-  /** fetch data from the table: "slideshare.Test" using primary key columns */
-  slideshare_Test_by_pk?: Maybe<Slideshare_Test>;
+  /** fetch data from the table: "slideshare.Page" */
+  slideshare_Page: Array<Slideshare_Page>;
+  /** fetch data from the table: "slideshare.PageType" */
+  slideshare_PageType: Array<Slideshare_PageType>;
+  /** fetch data from the table: "slideshare.PageType" using primary key columns */
+  slideshare_PageType_by_pk?: Maybe<Slideshare_PageType>;
+  /** fetch data from the table: "slideshare.Page" using primary key columns */
+  slideshare_Page_by_pk?: Maybe<Slideshare_Page>;
+  /** fetch data from the table: "slideshare.Slide" */
+  slideshare_Slide: Array<Slideshare_Slide>;
+  /** fetch data from the table: "slideshare.Slide" using primary key columns */
+  slideshare_Slide_by_pk?: Maybe<Slideshare_Slide>;
 };
 
 
@@ -566,107 +621,418 @@ export type Query_RootNote_By_PkArgs = {
 };
 
 
-export type Query_RootSlideshare_TestArgs = {
-  distinct_on?: Maybe<Array<Slideshare_Test_Select_Column>>;
+export type Query_RootSlideshare_PageArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Page_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Slideshare_Test_Order_By>>;
-  where?: Maybe<Slideshare_Test_Bool_Exp>;
+  order_by?: Maybe<Array<Slideshare_Page_Order_By>>;
+  where?: Maybe<Slideshare_Page_Bool_Exp>;
 };
 
 
-export type Query_RootSlideshare_Test_By_PkArgs = {
+export type Query_RootSlideshare_PageTypeArgs = {
+  distinct_on?: Maybe<Array<Slideshare_PageType_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_PageType_Order_By>>;
+  where?: Maybe<Slideshare_PageType_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_PageType_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+export type Query_RootSlideshare_Page_By_PkArgs = {
   id: Scalars['Int'];
 };
 
-/** columns and relationships of "slideshare.Test" */
-export type Slideshare_Test = {
-  __typename?: 'slideshare_Test';
+
+export type Query_RootSlideshare_SlideArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Slide_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Slide_Order_By>>;
+  where?: Maybe<Slideshare_Slide_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_Slide_By_PkArgs = {
   id: Scalars['Int'];
-  test?: Maybe<Scalars['String']>;
-  text: Scalars['String'];
 };
 
-/** Boolean expression to filter rows from the table "slideshare.Test". All fields are combined with a logical 'AND'. */
-export type Slideshare_Test_Bool_Exp = {
-  _and?: Maybe<Array<Slideshare_Test_Bool_Exp>>;
-  _not?: Maybe<Slideshare_Test_Bool_Exp>;
-  _or?: Maybe<Array<Slideshare_Test_Bool_Exp>>;
-  id?: Maybe<Int_Comparison_Exp>;
-  test?: Maybe<String_Comparison_Exp>;
-  text?: Maybe<String_Comparison_Exp>;
+/** columns and relationships of "slideshare.Page" */
+export type Slideshare_Page = {
+  __typename?: 'slideshare_Page';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id: Scalars['Int'];
+  imageUrl?: Maybe<Scalars['String']>;
+  isVisible: Scalars['Boolean'];
+  pageNumber: Scalars['Int'];
+  slideId: Scalars['Int'];
+  text?: Maybe<Scalars['String']>;
+  type: Slideshare_PageType_Enum;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  videoUrl?: Maybe<Scalars['String']>;
 };
 
-/** unique or primary key constraints on table "slideshare.Test" */
-export enum Slideshare_Test_Constraint {
-  /** unique or primary key constraint */
-  TestPkey = 'Test_pkey'
+/** columns and relationships of "slideshare.PageType" */
+export type Slideshare_PageType = {
+  __typename?: 'slideshare_PageType';
+  comment?: Maybe<Scalars['String']>;
+  value: Scalars['String'];
+};
+
+/** Boolean expression to filter rows from the table "slideshare.PageType". All fields are combined with a logical 'AND'. */
+export type Slideshare_PageType_Bool_Exp = {
+  _and?: Maybe<Array<Slideshare_PageType_Bool_Exp>>;
+  _not?: Maybe<Slideshare_PageType_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_PageType_Bool_Exp>>;
+  comment?: Maybe<String_Comparison_Exp>;
+  value?: Maybe<String_Comparison_Exp>;
+};
+
+export enum Slideshare_PageType_Enum {
+  Image = 'image',
+  Temp = 'temp',
+  Text = 'text',
+  Video = 'video'
 }
 
-/** input type for incrementing numeric columns in table "slideshare.Test" */
-export type Slideshare_Test_Inc_Input = {
-  id?: Maybe<Scalars['Int']>;
+/** Boolean expression to compare columns of type "slideshare_PageType_enum". All fields are combined with logical 'AND'. */
+export type Slideshare_PageType_Enum_Comparison_Exp = {
+  _eq?: Maybe<Slideshare_PageType_Enum>;
+  _in?: Maybe<Array<Slideshare_PageType_Enum>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _neq?: Maybe<Slideshare_PageType_Enum>;
+  _nin?: Maybe<Array<Slideshare_PageType_Enum>>;
 };
 
-/** input type for inserting data into table "slideshare.Test" */
-export type Slideshare_Test_Insert_Input = {
-  id?: Maybe<Scalars['Int']>;
-  test?: Maybe<Scalars['String']>;
+/** Ordering options when selecting data from "slideshare.PageType". */
+export type Slideshare_PageType_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
 };
 
-/** response of any mutation on the table "slideshare.Test" */
-export type Slideshare_Test_Mutation_Response = {
-  __typename?: 'slideshare_Test_mutation_response';
+/** select columns of table "slideshare.PageType" */
+export enum Slideshare_PageType_Select_Column {
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  Value = 'value'
+}
+
+/** order by aggregate values of table "slideshare.Page" */
+export type Slideshare_Page_Aggregate_Order_By = {
+  avg?: Maybe<Slideshare_Page_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Slideshare_Page_Max_Order_By>;
+  min?: Maybe<Slideshare_Page_Min_Order_By>;
+  stddev?: Maybe<Slideshare_Page_Stddev_Order_By>;
+  stddev_pop?: Maybe<Slideshare_Page_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Slideshare_Page_Stddev_Samp_Order_By>;
+  sum?: Maybe<Slideshare_Page_Sum_Order_By>;
+  var_pop?: Maybe<Slideshare_Page_Var_Pop_Order_By>;
+  var_samp?: Maybe<Slideshare_Page_Var_Samp_Order_By>;
+  variance?: Maybe<Slideshare_Page_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "slideshare.Page" */
+export type Slideshare_Page_Arr_Rel_Insert_Input = {
+  data: Array<Slideshare_Page_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Slideshare_Page_On_Conflict>;
+};
+
+/** order by avg() on columns of table "slideshare.Page" */
+export type Slideshare_Page_Avg_Order_By = {
+  id?: Maybe<Order_By>;
+  pageNumber?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "slideshare.Page". All fields are combined with a logical 'AND'. */
+export type Slideshare_Page_Bool_Exp = {
+  _and?: Maybe<Array<Slideshare_Page_Bool_Exp>>;
+  _not?: Maybe<Slideshare_Page_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_Page_Bool_Exp>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  imageUrl?: Maybe<String_Comparison_Exp>;
+  isVisible?: Maybe<Boolean_Comparison_Exp>;
+  pageNumber?: Maybe<Int_Comparison_Exp>;
+  slideId?: Maybe<Int_Comparison_Exp>;
+  text?: Maybe<String_Comparison_Exp>;
+  type?: Maybe<Slideshare_PageType_Enum_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+  videoUrl?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "slideshare.Page" */
+export enum Slideshare_Page_Constraint {
+  /** unique or primary key constraint */
+  PagePkey = 'Page_pkey'
+}
+
+/** input type for incrementing numeric columns in table "slideshare.Page" */
+export type Slideshare_Page_Inc_Input = {
+  pageNumber?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "slideshare.Page" */
+export type Slideshare_Page_Insert_Input = {
+  imageUrl?: Maybe<Scalars['String']>;
+  pageNumber?: Maybe<Scalars['Int']>;
+  slideId?: Maybe<Scalars['Int']>;
+  text?: Maybe<Scalars['String']>;
+  type?: Maybe<Slideshare_PageType_Enum>;
+  videoUrl?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "slideshare.Page" */
+export type Slideshare_Page_Max_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  imageUrl?: Maybe<Order_By>;
+  pageNumber?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+  text?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  videoUrl?: Maybe<Order_By>;
+};
+
+/** order by min() on columns of table "slideshare.Page" */
+export type Slideshare_Page_Min_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  imageUrl?: Maybe<Order_By>;
+  pageNumber?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+  text?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  videoUrl?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "slideshare.Page" */
+export type Slideshare_Page_Mutation_Response = {
+  __typename?: 'slideshare_Page_mutation_response';
   /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
   /** data from the rows affected by the mutation */
-  returning: Array<Slideshare_Test>;
+  returning: Array<Slideshare_Page>;
 };
 
-/** on conflict condition type for table "slideshare.Test" */
-export type Slideshare_Test_On_Conflict = {
-  constraint: Slideshare_Test_Constraint;
-  update_columns?: Array<Slideshare_Test_Update_Column>;
-  where?: Maybe<Slideshare_Test_Bool_Exp>;
+/** on conflict condition type for table "slideshare.Page" */
+export type Slideshare_Page_On_Conflict = {
+  constraint: Slideshare_Page_Constraint;
+  update_columns?: Array<Slideshare_Page_Update_Column>;
+  where?: Maybe<Slideshare_Page_Bool_Exp>;
 };
 
-/** Ordering options when selecting data from "slideshare.Test". */
-export type Slideshare_Test_Order_By = {
+/** Ordering options when selecting data from "slideshare.Page". */
+export type Slideshare_Page_Order_By = {
+  createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  test?: Maybe<Order_By>;
+  imageUrl?: Maybe<Order_By>;
+  isVisible?: Maybe<Order_By>;
+  pageNumber?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
   text?: Maybe<Order_By>;
+  type?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  videoUrl?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: slideshare_Test */
-export type Slideshare_Test_Pk_Columns_Input = {
+/** primary key columns input for table: slideshare_Page */
+export type Slideshare_Page_Pk_Columns_Input = {
   id: Scalars['Int'];
 };
 
-/** select columns of table "slideshare.Test" */
-export enum Slideshare_Test_Select_Column {
+/** select columns of table "slideshare.Page" */
+export enum Slideshare_Page_Select_Column {
+  /** column name */
+  CreatedAt = 'createdAt',
   /** column name */
   Id = 'id',
   /** column name */
-  Test = 'test',
+  ImageUrl = 'imageUrl',
   /** column name */
-  Text = 'text'
+  IsVisible = 'isVisible',
+  /** column name */
+  PageNumber = 'pageNumber',
+  /** column name */
+  SlideId = 'slideId',
+  /** column name */
+  Text = 'text',
+  /** column name */
+  Type = 'type',
+  /** column name */
+  UpdatedAt = 'updatedAt',
+  /** column name */
+  VideoUrl = 'videoUrl'
 }
 
-/** input type for updating data in table "slideshare.Test" */
-export type Slideshare_Test_Set_Input = {
-  id?: Maybe<Scalars['Int']>;
-  test?: Maybe<Scalars['String']>;
+/** input type for updating data in table "slideshare.Page" */
+export type Slideshare_Page_Set_Input = {
+  imageUrl?: Maybe<Scalars['String']>;
+  isVisible?: Maybe<Scalars['Boolean']>;
+  pageNumber?: Maybe<Scalars['Int']>;
   text?: Maybe<Scalars['String']>;
+  type?: Maybe<Slideshare_PageType_Enum>;
+  videoUrl?: Maybe<Scalars['String']>;
 };
 
-/** update columns of table "slideshare.Test" */
-export enum Slideshare_Test_Update_Column {
+/** order by stddev() on columns of table "slideshare.Page" */
+export type Slideshare_Page_Stddev_Order_By = {
+  id?: Maybe<Order_By>;
+  pageNumber?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by stddev_pop() on columns of table "slideshare.Page" */
+export type Slideshare_Page_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+  pageNumber?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by stddev_samp() on columns of table "slideshare.Page" */
+export type Slideshare_Page_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+  pageNumber?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by sum() on columns of table "slideshare.Page" */
+export type Slideshare_Page_Sum_Order_By = {
+  id?: Maybe<Order_By>;
+  pageNumber?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** update columns of table "slideshare.Page" */
+export enum Slideshare_Page_Update_Column {
+  /** column name */
+  ImageUrl = 'imageUrl',
+  /** column name */
+  IsVisible = 'isVisible',
+  /** column name */
+  PageNumber = 'pageNumber',
+  /** column name */
+  Text = 'text',
+  /** column name */
+  Type = 'type',
+  /** column name */
+  VideoUrl = 'videoUrl'
+}
+
+/** order by var_pop() on columns of table "slideshare.Page" */
+export type Slideshare_Page_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+  pageNumber?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by var_samp() on columns of table "slideshare.Page" */
+export type Slideshare_Page_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+  pageNumber?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by variance() on columns of table "slideshare.Page" */
+export type Slideshare_Page_Variance_Order_By = {
+  id?: Maybe<Order_By>;
+  pageNumber?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** columns and relationships of "slideshare.Slide" */
+export type Slideshare_Slide = {
+  __typename?: 'slideshare_Slide';
+  /** An array relationship */
+  Pages: Array<Slideshare_Page>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  createdBy: Scalars['String'];
+  id: Scalars['Int'];
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+};
+
+
+/** columns and relationships of "slideshare.Slide" */
+export type Slideshare_SlidePagesArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Page_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Page_Order_By>>;
+  where?: Maybe<Slideshare_Page_Bool_Exp>;
+};
+
+/** Boolean expression to filter rows from the table "slideshare.Slide". All fields are combined with a logical 'AND'. */
+export type Slideshare_Slide_Bool_Exp = {
+  Pages?: Maybe<Slideshare_Page_Bool_Exp>;
+  _and?: Maybe<Array<Slideshare_Slide_Bool_Exp>>;
+  _not?: Maybe<Slideshare_Slide_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_Slide_Bool_Exp>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  createdBy?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "slideshare.Slide" */
+export enum Slideshare_Slide_Constraint {
+  /** unique or primary key constraint */
+  SlidePkey = 'Slide_pkey'
+}
+
+/** input type for inserting data into table "slideshare.Slide" */
+export type Slideshare_Slide_Insert_Input = {
+  Pages?: Maybe<Slideshare_Page_Arr_Rel_Insert_Input>;
+};
+
+/** response of any mutation on the table "slideshare.Slide" */
+export type Slideshare_Slide_Mutation_Response = {
+  __typename?: 'slideshare_Slide_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Slideshare_Slide>;
+};
+
+/** on conflict condition type for table "slideshare.Slide" */
+export type Slideshare_Slide_On_Conflict = {
+  constraint: Slideshare_Slide_Constraint;
+  update_columns?: Array<Slideshare_Slide_Update_Column>;
+  where?: Maybe<Slideshare_Slide_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "slideshare.Slide". */
+export type Slideshare_Slide_Order_By = {
+  Pages_aggregate?: Maybe<Slideshare_Page_Aggregate_Order_By>;
+  createdAt?: Maybe<Order_By>;
+  createdBy?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+};
+
+/** select columns of table "slideshare.Slide" */
+export enum Slideshare_Slide_Select_Column {
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  CreatedBy = 'createdBy',
   /** column name */
   Id = 'id',
   /** column name */
-  Test = 'test',
-  /** column name */
-  Text = 'text'
+  UpdatedAt = 'updatedAt'
+}
+
+/** placeholder for update columns of table "slideshare.Slide" (current role has no relevant permissions) */
+export enum Slideshare_Slide_Update_Column {
+  /** placeholder (do not use) */
+  Placeholder = '_PLACEHOLDER'
 }
 
 export type Subscription_Root = {
@@ -679,10 +1045,18 @@ export type Subscription_Root = {
   Note: Array<Note>;
   /** fetch data from the table: "Note" using primary key columns */
   Note_by_pk?: Maybe<Note>;
-  /** fetch data from the table: "slideshare.Test" */
-  slideshare_Test: Array<Slideshare_Test>;
-  /** fetch data from the table: "slideshare.Test" using primary key columns */
-  slideshare_Test_by_pk?: Maybe<Slideshare_Test>;
+  /** fetch data from the table: "slideshare.Page" */
+  slideshare_Page: Array<Slideshare_Page>;
+  /** fetch data from the table: "slideshare.PageType" */
+  slideshare_PageType: Array<Slideshare_PageType>;
+  /** fetch data from the table: "slideshare.PageType" using primary key columns */
+  slideshare_PageType_by_pk?: Maybe<Slideshare_PageType>;
+  /** fetch data from the table: "slideshare.Page" using primary key columns */
+  slideshare_Page_by_pk?: Maybe<Slideshare_Page>;
+  /** fetch data from the table: "slideshare.Slide" */
+  slideshare_Slide: Array<Slideshare_Slide>;
+  /** fetch data from the table: "slideshare.Slide" using primary key columns */
+  slideshare_Slide_by_pk?: Maybe<Slideshare_Slide>;
 };
 
 
@@ -714,16 +1088,44 @@ export type Subscription_RootNote_By_PkArgs = {
 };
 
 
-export type Subscription_RootSlideshare_TestArgs = {
-  distinct_on?: Maybe<Array<Slideshare_Test_Select_Column>>;
+export type Subscription_RootSlideshare_PageArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Page_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Slideshare_Test_Order_By>>;
-  where?: Maybe<Slideshare_Test_Bool_Exp>;
+  order_by?: Maybe<Array<Slideshare_Page_Order_By>>;
+  where?: Maybe<Slideshare_Page_Bool_Exp>;
 };
 
 
-export type Subscription_RootSlideshare_Test_By_PkArgs = {
+export type Subscription_RootSlideshare_PageTypeArgs = {
+  distinct_on?: Maybe<Array<Slideshare_PageType_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_PageType_Order_By>>;
+  where?: Maybe<Slideshare_PageType_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_PageType_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+export type Subscription_RootSlideshare_Page_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Subscription_RootSlideshare_SlideArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Slide_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Slide_Order_By>>;
+  where?: Maybe<Slideshare_Slide_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_Slide_By_PkArgs = {
   id: Scalars['Int'];
 };
 
@@ -753,46 +1155,232 @@ export type Timestamptz_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['timestamptz']>>;
 };
 
-export type CreateTestMutationVariables = Exact<{
-  test: Scalars['String'];
+export type UpdatePagesMutationVariables = Exact<{
+  id?: Maybe<Scalars['Int']>;
 }>;
 
 
-export type CreateTestMutation = { __typename?: 'mutation_root', insert_slideshare_Test_one?: { __typename?: 'slideshare_Test', id: number, text: string, test?: string | null | undefined } | null | undefined };
+export type UpdatePagesMutation = { __typename?: 'mutation_root', update_slideshare_Page_by_pk?: { __typename?: 'slideshare_Page', id: number } | null | undefined };
+
+export type InsertPageMutationVariables = Exact<{
+  object1?: Maybe<Slideshare_Page_Insert_Input>;
+}>;
 
 
-export const CreateTestDocument = gql`
-    mutation CreateTest($test: String!) {
-  insert_slideshare_Test_one(object: {test: $test}) {
+export type InsertPageMutation = { __typename?: 'mutation_root', insert_slideshare_Page_one?: { __typename?: 'slideshare_Page', id: number, pageNumber: number, imageUrl?: string | null | undefined, isVisible: boolean, slideId: number, text?: string | null | undefined, type: Slideshare_PageType_Enum, videoUrl?: string | null | undefined } | null | undefined };
+
+export type DeletePageMutationVariables = Exact<{
+  id?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type DeletePageMutation = { __typename?: 'mutation_root', delete_slideshare_Page_by_pk?: { __typename?: 'slideshare_Page', id: number } | null | undefined };
+
+export type CreateSlideMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreateSlideMutation = { __typename?: 'mutation_root', insert_slideshare_Slide_one?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', id: number, type: Slideshare_PageType_Enum, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined }> } | null | undefined };
+
+export type QuerySlideQueryVariables = Exact<{
+  slideId: Scalars['Int'];
+}>;
+
+
+export type QuerySlideQuery = { __typename?: 'query_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', id: number, type: Slideshare_PageType_Enum, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined }> } | null | undefined };
+
+
+export const UpdatePagesDocument = gql`
+    mutation UpdatePages($id: Int = 1) {
+  update_slideshare_Page_by_pk(
+    pk_columns: {id: $id}
+    _set: {imageUrl: "", isVisible: false, pageNumber: 10, text: "", type: image, videoUrl: ""}
+  ) {
     id
-    text
-    test
   }
 }
     `;
-export type CreateTestMutationFn = Apollo.MutationFunction<CreateTestMutation, CreateTestMutationVariables>;
+export type UpdatePagesMutationFn = Apollo.MutationFunction<UpdatePagesMutation, UpdatePagesMutationVariables>;
 
 /**
- * __useCreateTestMutation__
+ * __useUpdatePagesMutation__
  *
- * To run a mutation, you first call `useCreateTestMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateTestMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUpdatePagesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePagesMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createTestMutation, { data, loading, error }] = useCreateTestMutation({
+ * const [updatePagesMutation, { data, loading, error }] = useUpdatePagesMutation({
  *   variables: {
- *      test: // value for 'test'
+ *      id: // value for 'id'
  *   },
  * });
  */
-export function useCreateTestMutation(baseOptions?: Apollo.MutationHookOptions<CreateTestMutation, CreateTestMutationVariables>) {
+export function useUpdatePagesMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePagesMutation, UpdatePagesMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateTestMutation, CreateTestMutationVariables>(CreateTestDocument, options);
+        return Apollo.useMutation<UpdatePagesMutation, UpdatePagesMutationVariables>(UpdatePagesDocument, options);
       }
-export type CreateTestMutationHookResult = ReturnType<typeof useCreateTestMutation>;
-export type CreateTestMutationResult = Apollo.MutationResult<CreateTestMutation>;
-export type CreateTestMutationOptions = Apollo.BaseMutationOptions<CreateTestMutation, CreateTestMutationVariables>;
+export type UpdatePagesMutationHookResult = ReturnType<typeof useUpdatePagesMutation>;
+export type UpdatePagesMutationResult = Apollo.MutationResult<UpdatePagesMutation>;
+export type UpdatePagesMutationOptions = Apollo.BaseMutationOptions<UpdatePagesMutation, UpdatePagesMutationVariables>;
+export const InsertPageDocument = gql`
+    mutation InsertPage($object1: slideshare_Page_insert_input = {}) {
+  insert_slideshare_Page_one(object: $object1) {
+    id
+    pageNumber
+    imageUrl
+    isVisible
+    slideId
+    text
+    type
+    videoUrl
+  }
+}
+    `;
+export type InsertPageMutationFn = Apollo.MutationFunction<InsertPageMutation, InsertPageMutationVariables>;
+
+/**
+ * __useInsertPageMutation__
+ *
+ * To run a mutation, you first call `useInsertPageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertPageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertPageMutation, { data, loading, error }] = useInsertPageMutation({
+ *   variables: {
+ *      object1: // value for 'object1'
+ *   },
+ * });
+ */
+export function useInsertPageMutation(baseOptions?: Apollo.MutationHookOptions<InsertPageMutation, InsertPageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertPageMutation, InsertPageMutationVariables>(InsertPageDocument, options);
+      }
+export type InsertPageMutationHookResult = ReturnType<typeof useInsertPageMutation>;
+export type InsertPageMutationResult = Apollo.MutationResult<InsertPageMutation>;
+export type InsertPageMutationOptions = Apollo.BaseMutationOptions<InsertPageMutation, InsertPageMutationVariables>;
+export const DeletePageDocument = gql`
+    mutation DeletePage($id: Int = 10) {
+  delete_slideshare_Page_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export type DeletePageMutationFn = Apollo.MutationFunction<DeletePageMutation, DeletePageMutationVariables>;
+
+/**
+ * __useDeletePageMutation__
+ *
+ * To run a mutation, you first call `useDeletePageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePageMutation, { data, loading, error }] = useDeletePageMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeletePageMutation(baseOptions?: Apollo.MutationHookOptions<DeletePageMutation, DeletePageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeletePageMutation, DeletePageMutationVariables>(DeletePageDocument, options);
+      }
+export type DeletePageMutationHookResult = ReturnType<typeof useDeletePageMutation>;
+export type DeletePageMutationResult = Apollo.MutationResult<DeletePageMutation>;
+export type DeletePageMutationOptions = Apollo.BaseMutationOptions<DeletePageMutation, DeletePageMutationVariables>;
+export const CreateSlideDocument = gql`
+    mutation createSlide {
+  insert_slideshare_Slide_one(object: {}) {
+    id
+    Pages {
+      id
+      type
+      text
+      pageNumber
+      imageUrl
+      videoUrl
+      createdAt
+    }
+  }
+}
+    `;
+export type CreateSlideMutationFn = Apollo.MutationFunction<CreateSlideMutation, CreateSlideMutationVariables>;
+
+/**
+ * __useCreateSlideMutation__
+ *
+ * To run a mutation, you first call `useCreateSlideMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSlideMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createSlideMutation, { data, loading, error }] = useCreateSlideMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCreateSlideMutation(baseOptions?: Apollo.MutationHookOptions<CreateSlideMutation, CreateSlideMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateSlideMutation, CreateSlideMutationVariables>(CreateSlideDocument, options);
+      }
+export type CreateSlideMutationHookResult = ReturnType<typeof useCreateSlideMutation>;
+export type CreateSlideMutationResult = Apollo.MutationResult<CreateSlideMutation>;
+export type CreateSlideMutationOptions = Apollo.BaseMutationOptions<CreateSlideMutation, CreateSlideMutationVariables>;
+export const QuerySlideDocument = gql`
+    query querySlide($slideId: Int!) {
+  slideshare_Slide_by_pk(id: $slideId) {
+    id
+    Pages(where: {isVisible: {_eq: true}}) {
+      id
+      type
+      text
+      pageNumber
+      imageUrl
+      videoUrl
+      createdAt
+      updatedAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useQuerySlideQuery__
+ *
+ * To run a query within a React component, call `useQuerySlideQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQuerySlideQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQuerySlideQuery({
+ *   variables: {
+ *      slideId: // value for 'slideId'
+ *   },
+ * });
+ */
+export function useQuerySlideQuery(baseOptions: Apollo.QueryHookOptions<QuerySlideQuery, QuerySlideQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QuerySlideQuery, QuerySlideQueryVariables>(QuerySlideDocument, options);
+      }
+export function useQuerySlideLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QuerySlideQuery, QuerySlideQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QuerySlideQuery, QuerySlideQueryVariables>(QuerySlideDocument, options);
+        }
+export type QuerySlideQueryHookResult = ReturnType<typeof useQuerySlideQuery>;
+export type QuerySlideLazyQueryHookResult = ReturnType<typeof useQuerySlideLazyQuery>;
+export type QuerySlideQueryResult = Apollo.QueryResult<QuerySlideQuery, QuerySlideQueryVariables>;

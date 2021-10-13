@@ -1,7 +1,5 @@
-import { useAtom } from "jotai"
 import React from "react"
-import { focusedPageIdAtom, usePageList } from "../../model/jotai/FocusedPageId"
-import { pageListAtom } from "../../model/jotai/PageList"
+import { usePageList } from "../../model/hooks/usePageList"
 import MenuButtonList from "./choice_page_type/MenuButtonList"
 import ImageEditor from "./editor/ImageEditor"
 import ImagePreview from "./preview/ImagePreview"
@@ -17,8 +15,8 @@ export default () => {
         </>
     }
     if (focusedPage.type === "image") {
-        if (focusedPage.imageAttribute && focusedPage.imageAttribute.url) {
-            return <ImagePreview imageUrl={focusedPage.imageAttribute.url} />
+        if (focusedPage.imageUrl) {
+            return <ImagePreview imageUrl={focusedPage.imageUrl} />
         }
         return <ImageEditor />
     }
