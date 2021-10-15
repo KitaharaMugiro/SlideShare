@@ -40,8 +40,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   useEffect(() => {
     const getUser = async () => {
-      const user = await Auth.currentAuthenticatedUser()
-      setUser(user)
+      try {
+        const user = await Auth.currentAuthenticatedUser()
+        setUser(user)
+      } catch {
+        console.log("No User info")
+      }
+
     }
     getUser()
   }, [])

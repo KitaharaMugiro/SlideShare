@@ -15,7 +15,7 @@ const Page = () => {
     //データ取得
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) } })
     const pages = initialSlide?.slideshare_Slide_by_pk?.Pages
-
+    console.log(error)
 
     //制御変数
     const [customizeWidth, setWidth] = useState(950)
@@ -69,11 +69,18 @@ const Page = () => {
     //TODO: 画像ひとつ表示するだけでこれはきつい・・・
     const [url, setUrl] = useState("")
     useEffect(() => {
+        console.log("begin")
+        console.log(pages)
         if (!pages) return
         const load = async () => {
-            const page = pages![slideState.picNumber]
-            const signedURL = await Storage.get(page.imageUrl!);
-            setUrl(signedURL)
+
+            const page = pages[slideState.picNumber]
+            if (page && page.imageUrl) {
+                console.log(page.imageUrl)
+                const signedURL = await Storage.get(page.imageUrl!);
+                console.log({ signedURL })
+                setUrl(signedURL)
+            }
         }
         load()
     }, [pages, slideState.picNumber])

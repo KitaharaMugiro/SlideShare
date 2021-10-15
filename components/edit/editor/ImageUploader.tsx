@@ -10,24 +10,14 @@ function ImageUploader() {
     const accept = "image/*"
     const multiple = false
     const { focusedPage, updatePage } = usePageList()
-    const _onDrop = async (acceptedFiles: any) => {
-        if (!focusedPage) return
-        const file = acceptedFiles[0]
-        console.log(file);
 
-
-        //TODO: とりあえず適当に画像はめているが、きちんと設計する
-        const size = file.size
-        const newPage = Object.assign({}, focusedPage)
-        newPage.imageUrl = `/static/sample_slide${size % 3 + 1}.png`
-        updatePage(newPage)
-    }
 
     const onDrop = useCallback(acceptedFiles => {
         acceptedFiles.forEach((file: any) => {
             const reader = new FileReader();
             reader.onload = () => {
-                const fileAsArrayBuffer = new Uint8Array(reader.result);
+                //TODO: as anyで逃げてる
+                const fileAsArrayBuffer = new Uint8Array(reader.result as any);
                 // do whatever you want with the file content
                 const fileName = uuidv4() + file.name
                 Storage.put('upload/' + fileName, fileAsArrayBuffer,
