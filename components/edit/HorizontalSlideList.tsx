@@ -1,21 +1,22 @@
 import { useAtom } from "jotai"
-import React, { useState } from "react"
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
+import { useRouter } from "next/dist/client/router"
+import React from "react"
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 import { usePageList } from "../../model/hooks/usePageList"
 import { focusedPageIdAtom } from "../../model/jotai/FocusedPageId"
-import { pageListAtom } from "../../model/jotai/PageList"
-import { createNewPage, Page } from "../../model/Page"
+import { Page } from "../../model/Page"
 import ImageFrame from "./frame/ImageFrame"
 import PlusFrame from "./frame/PlusFrame"
 import SimpleFrame from "./frame/SimpleFrame"
 
 export default () => {
-    const [pageList] = useAtom(pageListAtom)
+    const router = useRouter()
+    const { slideId } = router.query
     const [focusId, setFocusId] = useAtom(focusedPageIdAtom)
-    const { createPage, changeOrderPage } = usePageList()
+    const { pageList, createPage, changeOrderPage } = usePageList()
 
     const onClickPlus = () => {
-        createPage()
+        createPage(Number(slideId))
     }
 
     const onDragEnd = (result: any) => {

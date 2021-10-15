@@ -1,0 +1,14 @@
+mutation createSlide {
+  insert_slideshare_Slide_one(object:{}) {
+    id
+    Pages {
+      id
+      type
+      text
+      pageNumber
+      imageUrl
+      videoUrl
+      createdAt
+    }
+  }
+}

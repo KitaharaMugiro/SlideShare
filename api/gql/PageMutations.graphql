@@ -1,0 +1,37 @@
+
+mutation UpdatePage($id: String!, $object: slideshare_Page_set_input) {
+  update_slideshare_Page_by_pk(pk_columns: {id: $id}, _set: $object) {
+    id
+  }
+}
+
+mutation UpdatePageNumber($objects: [slideshare_Page_insert_input!]!) {
+  insert_slideshare_Page(objects: $objects, on_conflict: {constraint: Page_pkey, update_columns: pageNumber}) {
+    affected_rows
+  }
+}
+
+mutation UpdatePages($id: String!, $object: slideshare_Page_set_input) {
+  update_slideshare_Page_by_pk(pk_columns: {id: $id}, _set: $object) {
+    id
+  }
+}
+
+mutation InsertPage($object: slideshare_Page_insert_input = {}) {
+  insert_slideshare_Page_one(object: $object) {
+    id
+    pageNumber
+    imageUrl
+    isVisible
+    slideId
+    text
+    type
+    videoUrl
+  }
+}
+
+mutation DeletePage($id: String!) {
+  delete_slideshare_Page_by_pk(id: $id) {
+    id
+  }
+}

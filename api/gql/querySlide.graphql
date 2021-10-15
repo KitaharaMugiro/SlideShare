@@ -1,0 +1,15 @@
+query querySlide($slideId: Int!) {
+  slideshare_Slide_by_pk(id: $slideId) {
+    id
+    Pages {
+      id
+      type
+      text
+      pageNumber
+      imageUrl
+      videoUrl
+      createdAt
+      updatedAt
+    }
+  }
+}

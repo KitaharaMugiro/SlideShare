@@ -1,22 +1,28 @@
 import { useRouter } from "next/dist/client/router"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useRealtimeCursor, useRealtimeSharedState, useRealtimeUserAction } from "realtimely"
 import MiniChat from "../../components/slide/MiniChat"
 import NormalButton from "../../components/slide/NormalButton"
 import style from "./style.module.css"
 import { CSSTransition } from 'react-transition-group';
-
+import { Storage } from "aws-amplify"
+import { useQuerySlideQuery } from "../../src/generated/graphql"
 
 const Page = () => {
     const router = useRouter()
     const { slideId, admin } = router.query
+
+    //データ取得
+    const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) } })
+    const pages = initialSlide?.slideshare_Slide_by_pk?.Pages
+
 
     //制御変数
     const [customizeWidth, setWidth] = useState(950)
 
     //slide状態変数
     const [slideState, setSlideState] = useRealtimeSharedState({
-        picNumber: 1,
+        picNumber: 0,
         enableCursor: false,
         enableChat: false,
         enableButtons: false
@@ -60,12 +66,18 @@ const Page = () => {
     const { onMouseMove, renderCursors } = useRealtimeCursor()
 
     //画像Path
-    let picturePath = "/static/slides_pic/" + slideId + "/slide" + slideState.picNumber + ".png"
-    if (slideState.picNumber == 6) {
-        picturePath = "/static/slides_pic/" + slideId + "/slide" + slideState.picNumber + ".gif"
-    }
-
-    const pictureUrl = "url(" + picturePath + ")"
+    //TODO: 画像ひとつ表示するだけでこれはきつい・・・
+    const [url, setUrl] = useState("")
+    useEffect(() => {
+        if (!pages) return
+        const load = async () => {
+            const page = pages![slideState.picNumber]
+            const signedURL = await Storage.get(page.imageUrl!);
+            setUrl(signedURL)
+        }
+        load()
+    }, [pages, slideState.picNumber])
+    const pictureUrl = "url(" + url + ")"
 
     //スライドサイズは16:9, 4:3から選ぶ
     const width = customizeWidth + "px"

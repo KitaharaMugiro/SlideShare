@@ -1,8 +1,8 @@
 import { Button } from "@mui/material"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { usePageList } from "../../../model/hooks/usePageList"
 import style from "./ImagePreview.module.css"
-
+import { Storage } from "aws-amplify"
 interface Props {
     imageUrl: string
 }
@@ -15,13 +15,24 @@ export default (props: Props) => {
     const sizeStyle = { width, height }
     const imageSizeStyle = { width, height, backgroundSize: `${width} ${height}` }
 
+    //TODO: 画像ひとつ表示するだけでこれはきつい・・・
+    const [url, setUrl] = useState("")
+    useEffect(() => {
+        const load = async () => {
+            const signedURL = await Storage.get(props.imageUrl);
+            setUrl(signedURL)
+        }
+        load()
+    }, [props.imageUrl])
+
+
     const { focusedPage } = usePageList()
     if (!focusedPage) return <div />
     return <>
         <div className={style.paper} style={sizeStyle} >
             <div
                 className={style.picture}
-                style={{ backgroundImage: `url("${props.imageUrl}")`, ...imageSizeStyle }}
+                style={{ backgroundImage: `url("${url}")`, ...imageSizeStyle }}
             />
         </div>
 

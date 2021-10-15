@@ -2,7 +2,7 @@ import * as uuid from "uuid"
 import { Slideshare_PageType_Enum } from "../src/generated/graphql"
 
 export type Page = {
-    id: string | number
+    id: string
     type: Slideshare_PageType_Enum
     pageNumber: number
     text?: string | null
@@ -13,7 +13,7 @@ export type Page = {
 export const createNewPage = (): Page => {
     const id = uuid.v4()
     const type = Slideshare_PageType_Enum.Temp
-    const pageNumber = 0
+    const pageNumber = 999
     return { id, type, pageNumber }
 }
 

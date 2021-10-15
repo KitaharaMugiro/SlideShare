@@ -9,8 +9,10 @@ export default () => {
 
     if (!focusedPage) return <div />
     const onClick = (type: Slideshare_PageType_Enum) => {
-        focusedPage.type = type
-        updatePage(focusedPage)
+        //TODO: Object.assignは隠蔽したい
+        const newPage = Object.assign({}, focusedPage)
+        newPage.type = type
+        updatePage(newPage)
     }
 
     return <>
