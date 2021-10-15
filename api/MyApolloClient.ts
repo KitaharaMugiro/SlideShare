@@ -7,15 +7,13 @@ const uri = "https://adequate-guinea-56.hasura.app/v1/graphql"
 const httpLink = new HttpLink({ uri });
 const authLink = setContext(async (_, { headers }) => {
     // get the authentication token from local storage if it exists
-    let authorization = null
     try {
         const token = await Auth.currentSession()
-        authorization = { authorization: `Bearer ${token.getIdToken().getJwtToken()}` }
         // return the headers to the context so httpLink can read them
         return {
             headers: {
                 ...headers,
-                authorization,
+                authorization: `Bearer ${token.getIdToken().getJwtToken()}`,
             }
         }
     } catch {

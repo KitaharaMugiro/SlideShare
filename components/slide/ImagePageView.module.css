@@ -1,0 +1,10 @@
+.paper {
+    background-color: gray;
+    box-shadow: rgba(242, 242, 242, 0.26) 10px 12px 50px 10px;
+}
+
+.picture {
+    padding-top: 59px;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+}
