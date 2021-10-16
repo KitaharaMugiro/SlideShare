@@ -10,6 +10,9 @@ import { UserAtom } from '../model/jotai/User';
 import { ApolloProvider } from '@apollo/client';
 import MyApolloClient from '../api/MyApolloClient';
 import MyBackdrop from '../components/common/MyBackdrop';
+import { ThemeProvider } from '@emotion/react';
+import { createTheme } from '@mui/material';
+import { useRouter } from 'next/dist/client/router';
 
 function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
   if (urlStrings.length === 1) return urlStrings[0];
@@ -38,6 +41,7 @@ Amplify.configure(awsConfig);
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [_, setUser] = useAtom(UserAtom)
+  const router = useRouter()
 
   useEffect(() => {
     const getUser = async () => {
@@ -47,16 +51,23 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       } catch {
         console.log("No User info")
       }
-
     }
     getUser()
   }, [])
 
+  const darkTheme = createTheme({
+    palette: {
+      mode: router.pathname.startsWith("/slide") ? 'dark' : "light",
+    },
+  });
+
   return <>
     <ApolloProvider client={MyApolloClient}>
-      <MyAppBar />
-      <MyBackdrop />
-      <Component {...pageProps} />
+      <ThemeProvider theme={darkTheme}>
+        <MyAppBar />
+        <MyBackdrop />
+        <Component {...pageProps} />
+      </ThemeProvider>
     </ApolloProvider>
   </>
 }

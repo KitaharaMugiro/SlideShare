@@ -10,6 +10,8 @@ import { Auth } from 'aws-amplify';
 import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { UserAtom } from '../../model/jotai/User';
+import { ThemeProvider } from '@emotion/react';
+import { createTheme } from '@mui/material';
 const MyAppBar = () => {
     const [user, _] = useAtom(UserAtom)
     const signOut = async () => {
@@ -20,6 +22,7 @@ const MyAppBar = () => {
             console.log('error signing out: ', error);
         }
     }
+
 
     const renderSigninOrOutButton = () => {
         if (user) {

@@ -46,10 +46,12 @@ const Page = () => {
 
     const goNext = () => {
         if (isAdmin) {
+            if (slideState.pageNumber >= pages.length - 1) return
             slideState.pageNumber += 1
             setSlideState(slideState)
         } else {
             const nextPageNumber = localPageNumber + 1
+            if (nextPageNumber >= pages.length) return
             setIsSync(slideState.pageNumber === nextPageNumber)
             setLocalPageNumber(nextPageNumber)
         }
@@ -57,21 +59,14 @@ const Page = () => {
 
     const goPrevious = () => {
         if (isAdmin) {
+            if (slideState.pageNumber <= 0) return
             slideState.pageNumber -= 1
             setSlideState(slideState)
         } else {
             const nextPageNumber = localPageNumber - 1
+            if (nextPageNumber < 0) return
             setIsSync(slideState.pageNumber === nextPageNumber)
             setLocalPageNumber(nextPageNumber)
-        }
-    }
-
-    const goStart = () => {
-        if (isAdmin) {
-            slideState.pageNumber = 0
-            setSlideState(slideState)
-        } else {
-            setLocalPageNumber(0)
         }
     }
 
@@ -113,7 +108,7 @@ const Page = () => {
 
                 </div>
                 <div style={{
-                    marginLeft: 30,
+                    marginLeft: 60,
                     marginRight: 30,
                     width: "100%",
                 }}>
