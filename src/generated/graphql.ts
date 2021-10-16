@@ -379,6 +379,11 @@ export type String_Comparison_Exp = {
   _similar?: Maybe<Scalars['String']>;
 };
 
+export type UploadPdfOutput = {
+  __typename?: 'UploadPdfOutput';
+  keys?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
 /** Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'. */
 export type Bigint_Comparison_Exp = {
   _eq?: Maybe<Scalars['bigint']>;
@@ -427,6 +432,8 @@ export type Mutation_Root = {
   update_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
   /** update single row of the table: "slideshare.Page" */
   update_slideshare_Page_by_pk?: Maybe<Slideshare_Page>;
+  /** PDFをPNGに変えてPageにする */
+  uploadPdf?: Maybe<UploadPdfOutput>;
 };
 
 
@@ -537,6 +544,12 @@ export type Mutation_RootUpdate_Slideshare_Page_By_PkArgs = {
   _inc?: Maybe<Slideshare_Page_Inc_Input>;
   _set?: Maybe<Slideshare_Page_Set_Input>;
   pk_columns: Slideshare_Page_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUploadPdfArgs = {
+  pdfName: Scalars['String'];
 };
 
 /** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
@@ -1207,6 +1220,13 @@ export type QuerySlideQueryVariables = Exact<{
 
 export type QuerySlideQuery = { __typename?: 'query_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined }> } | null | undefined };
 
+export type UploadPdfMutationVariables = Exact<{
+  pdfName: Scalars['String'];
+}>;
+
+
+export type UploadPdfMutation = { __typename?: 'mutation_root', uploadPdf?: { __typename?: 'UploadPdfOutput', keys?: Array<string | null | undefined> | null | undefined } | null | undefined };
+
 
 export const UpdatePageDocument = gql`
     mutation UpdatePage($id: String!, $object: slideshare_Page_set_input) {
@@ -1472,3 +1492,36 @@ export function useQuerySlideLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type QuerySlideQueryHookResult = ReturnType<typeof useQuerySlideQuery>;
 export type QuerySlideLazyQueryHookResult = ReturnType<typeof useQuerySlideLazyQuery>;
 export type QuerySlideQueryResult = Apollo.QueryResult<QuerySlideQuery, QuerySlideQueryVariables>;
+export const UploadPdfDocument = gql`
+    mutation UploadPdf($pdfName: String!) {
+  uploadPdf(pdfName: $pdfName) {
+    keys
+  }
+}
+    `;
+export type UploadPdfMutationFn = Apollo.MutationFunction<UploadPdfMutation, UploadPdfMutationVariables>;
+
+/**
+ * __useUploadPdfMutation__
+ *
+ * To run a mutation, you first call `useUploadPdfMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadPdfMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadPdfMutation, { data, loading, error }] = useUploadPdfMutation({
+ *   variables: {
+ *      pdfName: // value for 'pdfName'
+ *   },
+ * });
+ */
+export function useUploadPdfMutation(baseOptions?: Apollo.MutationHookOptions<UploadPdfMutation, UploadPdfMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UploadPdfMutation, UploadPdfMutationVariables>(UploadPdfDocument, options);
+      }
+export type UploadPdfMutationHookResult = ReturnType<typeof useUploadPdfMutation>;
+export type UploadPdfMutationResult = Apollo.MutationResult<UploadPdfMutation>;
+export type UploadPdfMutationOptions = Apollo.BaseMutationOptions<UploadPdfMutation, UploadPdfMutationVariables>;

@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid"
 import { useRouter } from 'next/dist/client/router';
 
 interface Props {
-    onSuccessUpload: () => void
+    onSuccessUpload: (key: string) => void
 }
 
 function PdfUploader(props: Props) {
@@ -24,10 +24,7 @@ function PdfUploader(props: Props) {
                     { contentType: file.type })
                     .then(result => {
                         const key = result.key
-                        // const newPage = Object.assign({}, focusedPage)
-                        // newPage.imageUrl = key
-                        // updatePage(newPage)
-
+                        props.onSuccessUpload(key)
                         return true;
                     })
                     .catch(err => {
