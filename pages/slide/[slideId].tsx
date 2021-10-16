@@ -1,15 +1,20 @@
+import { useAtom } from "jotai";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { useRealtimeSharedState } from "realtimely";
 import ImagePageView from "../../components/slide/ImagePageView";
 import ProfileCard from "../../components/slide/ProfileCard";
 import SlideSlider from "../../components/slide/SlideSlider";
+import { UserAtom } from "../../model/jotai/User";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
 
 const Page = () => {
     const router = useRouter()
-    const { slideId, admin: isAdmin } = router.query
+    const { slideId } = router.query
+
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [user] = useAtom(UserAtom)
 
     //slide状態変数
     const [slideState, setSlideState] = useRealtimeSharedState({
@@ -21,8 +26,16 @@ const Page = () => {
     //データ取得
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) } })
     const slide = initialSlide?.slideshare_Slide_by_pk
-    const pages = slide?.Pages
-    const viewingPage = pages?.at(localPageNumber)
+    const pages = slide?.Pages ? [...slide?.Pages].sort((a, b) => a.pageNumber - b.pageNumber) : []
+    const viewingPage = pages[localPageNumber]
+
+    useEffect(() => {
+        if (slide && user) {
+            if (slide?.createdBy === user?.attributes.sub) {
+                setIsAdmin(true)
+            }
+        }
+    }, [user, slide])
 
     useEffect(() => {
         if (isSync) {
@@ -79,13 +92,6 @@ const Page = () => {
 
     return (
         <div className={style.main}>
-
-            {/* Adminコントロール(TODO: 消す) */}
-            {isAdmin ? <div>
-                <button onClick={goStart}>Back to beginning</button>
-                <button onClick={goPrevious}>Previous</button>
-                <button onClick={goNext}>Next</button>
-            </div> : <div />}
 
             {/* スライド */}
             <div className={style.deck_space}>
