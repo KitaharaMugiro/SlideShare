@@ -9,6 +9,7 @@ import { useAtom } from 'jotai';
 import { UserAtom } from '../model/jotai/User';
 import { ApolloProvider } from '@apollo/client';
 import MyApolloClient from '../api/MyApolloClient';
+import MyBackdrop from '../components/common/MyBackdrop';
 
 function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
   if (urlStrings.length === 1) return urlStrings[0];
@@ -54,6 +55,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return <>
     <ApolloProvider client={MyApolloClient}>
       <MyAppBar />
+      <MyBackdrop />
       <Component {...pageProps} />
     </ApolloProvider>
   </>

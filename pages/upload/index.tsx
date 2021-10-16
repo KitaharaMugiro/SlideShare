@@ -3,6 +3,7 @@ import { height } from "@mui/system"
 import { useRouter } from "next/dist/client/router"
 import React from "react"
 import PdfUploader from "../../components/upload/PdfUploader"
+import { useLoading } from "../../model/hooks/useLoading"
 import { createNewPage } from "../../model/Page"
 import { Slideshare_PageType_Enum, useCreateSlideMutation, useInsertPageMutation, useUploadPdfMutation } from "../../src/generated/graphql"
 import style from "./index.module.css"
@@ -10,6 +11,7 @@ const Home = () => {
     const [createNewSlide] = useCreateSlideMutation()
     const [createPageMutation] = useInsertPageMutation()
     const [uploadPdf] = useUploadPdfMutation()
+    const { startLoading, finishLoading } = useLoading()
     const router = useRouter()
 
     const onClickNew = async () => {
@@ -20,6 +22,7 @@ const Home = () => {
     }
 
     const onSuccessUpload = async (key: string) => {
+        startLoading()
         const response = await uploadPdf({ variables: { pdfName: key } })
         const pngList = response.data?.uploadPdf?.keys
         if (!pngList) { return }
@@ -35,7 +38,7 @@ const Home = () => {
             pageNumber += 1
             createPageMutation({ variables: { object: { ...newPage, slideId } } })
         }
-
+        finishLoading()
         router.push(`/edit/${slideId}`)
     }
 
@@ -43,7 +46,7 @@ const Home = () => {
 
         <div className={style.center}>
             <div style={{ height: 30 }} />
-            <Typography variant="h2">Upload a new PDF</Typography>
+            <Typography variant="h2">Upload your PDF</Typography>
             <div style={{ height: 30 }} />
             <PdfUploader onSuccessUpload={onSuccessUpload} />
 
