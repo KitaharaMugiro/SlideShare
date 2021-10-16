@@ -18,7 +18,7 @@
       "function": {
         "S3Trigger7909f23f": {
           "deploymentBucketName": "amplify-slideshare-dev-235535-deployment",
-          "s3Key": "amplify-builds/S3Trigger7909f23f-57356a446363727a6a4f-build.zip"
+          "s3Key": "amplify-builds/S3Trigger7909f23f-6c6646357a77372b6c62-build.zip"
         }
       }
     }

@@ -4,12 +4,15 @@ import { usePageList } from '../../../model/hooks/usePageList';
 import UploadDragzoneDesign from '../../upload/UploadDragzoneDesign';
 import { Storage } from "aws-amplify"
 import { v4 as uuidv4 } from "uuid"
+import { useAtom } from 'jotai';
+import { UserAtom } from '../../../model/jotai/User';
 
 function ImageUploader() {
 
     const accept = "image/*"
     const multiple = false
     const { focusedPage, updatePage } = usePageList()
+    const [user] = useAtom(UserAtom)
 
 
     const onDrop = useCallback(acceptedFiles => {
@@ -20,7 +23,8 @@ function ImageUploader() {
                 const fileAsArrayBuffer = new Uint8Array(reader.result as any);
                 // do whatever you want with the file content
                 const fileName = uuidv4() + file.name
-                Storage.put('upload/' + fileName, fileAsArrayBuffer,
+                //TODO: できたらユーザごとにフォルダ分けたいけどCognitoUserのsubの取り方がわからない
+                Storage.put(`upload/${fileName}`, fileAsArrayBuffer,
                     { contentType: file.type })
                     .then(result => {
                         const key = result.key

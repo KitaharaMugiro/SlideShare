@@ -2,6 +2,8 @@ import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { useRealtimeSharedState } from "realtimely";
 import ImagePageView from "../../components/slide/ImagePageView";
+import ProfileCard from "../../components/slide/ProfileCard";
+import SlideSlider from "../../components/slide/SlideSlider";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
 
@@ -12,11 +14,12 @@ const Page = () => {
     //slide状態変数
     const [slideState, setSlideState] = useRealtimeSharedState({
         picNumber: 0,
-    }, "slideState")
+    }, "slideState" + slideId)
 
     //データ取得
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) } })
-    const pages = initialSlide?.slideshare_Slide_by_pk?.Pages
+    const slide = initialSlide?.slideshare_Slide_by_pk
+    const pages = slide?.Pages
     const page = pages?.at(slideState.picNumber)
 
     const goNext = () => {
@@ -30,10 +33,14 @@ const Page = () => {
     }
 
     const goStart = () => {
-        slideState.picNumber = 1
+        slideState.picNumber = 0
         setSlideState(slideState)
     }
 
+    const onChangePageNumber = (number: number) => {
+        slideState.picNumber = number
+        setSlideState(slideState)
+    }
 
     return (
         <div className={style.main}>
@@ -47,12 +54,34 @@ const Page = () => {
 
             {/* スライド */}
             <div className={style.deck_space}>
-                <ImagePageView
-                    imageUrl={page?.imageUrl}
-                    onClickLeft={goPrevious}
-                    onClickRight={goNext}
-                />
+                <div>
+                    <ImagePageView
+                        imageUrl={page?.imageUrl}
+                        identityId={slide?.createdBy}
+                        onClickLeft={goPrevious}
+                        onClickRight={goNext}
+                    />
+                    <SlideSlider
+                        maxPageNumber={pages?.length || 0}
+                        pageNumber={slideState.picNumber}
+                        onChangePageNumber={onChangePageNumber}
+                    />
+
+                </div>
+                <div style={{
+                    marginLeft: 30,
+                    marginRight: 30,
+                    width: "100%",
+                }}>
+                    <ProfileCard
+                        name="test"
+                        subtitle="hogehoge"
+                        description="株式会社HOGE CEO"
+                    />
+                </div>
             </div>
+
+
 
         </div>
     )

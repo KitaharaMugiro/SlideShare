@@ -6,6 +6,7 @@ interface Props {
     imageUrl?: string | null
     onClickLeft?: () => void
     onClickRight?: () => void
+    identityId?: string
 }
 
 export default (props: Props) => {
@@ -16,7 +17,11 @@ export default (props: Props) => {
     const width = customizeWidth
     const height = (customizeWidth / 16 * 9)
     const sizeStyle = { width, height }
-    const imageSizeStyle = { width, height, backgroundSize: `${width}px ${height}px` }
+    const imageSizeStyle = {
+        width,
+        height,
+        backgroundSize: `${width}px ${height}px`
+    }
 
     //画像Path
     //TODO: 画像ひとつ表示するだけでこれはきつい・・・
@@ -25,7 +30,9 @@ export default (props: Props) => {
         if (!props.imageUrl) return
         const load = async () => {
             if (props.imageUrl) {
-                const signedURL = await Storage.get(props.imageUrl!);
+                const signedURL = await Storage.get(
+                    props.imageUrl!,
+                )
                 setUrl(signedURL)
             }
         }
@@ -42,6 +49,8 @@ export default (props: Props) => {
                 className={style.picture}
                 style={{ backgroundImage: pictureUrl, ...imageSizeStyle }}
             />
+
+            {/* クリックゾーン */}
             <div
                 onClick={props.onClickLeft}
                 style={{

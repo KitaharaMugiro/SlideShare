@@ -1,3 +1,4 @@
+import { PDFDocument, rgb } from 'pdf-lib'
 
 // eslint-disable-next-line
 exports.handler = async function (event) {
@@ -6,4 +7,5 @@ exports.handler = async function (event) {
   const bucket = event.Records[0].s3.bucket.name; //eslint-disable-line
   const key = event.Records[0].s3.object.key; //eslint-disable-line
   console.log(`Bucket: ${bucket}`, `Key: ${key}`);
+
 };

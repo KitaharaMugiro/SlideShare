@@ -30,10 +30,11 @@ const Edit = () => {
     const onClickSend = () => {
         //アップロード処理
         //これどちらかというとスライドの公開設定に近いかも
+        router.push(`/slide/${slideId}`)
     }
 
     //TODO: もっとマシにしよう
-    if (error) return <div>エラー発生</div>
+    if (error) return <div>{error}</div>
     if (loading) return <div>ロード中</div>
 
     return <>
@@ -47,7 +48,6 @@ const Edit = () => {
         <div style={{ position: "absolute", right: 20, bottom: 20 }}>
             <Button
                 onClick={onClickSend}
-                href={`/slide/${slideId}`} //TODO: 消す
                 size="large" variant="contained" endIcon={<SendIcon />}>
                 Send
             </Button>
