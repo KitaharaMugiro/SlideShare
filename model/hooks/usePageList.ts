@@ -14,9 +14,16 @@ export const usePageList = () => {
     const [deletePageMutation] = useDeletePageMutation()
     const [updatePageNumberMutation] = useUpdatePageNumberMutation()
 
-    const createPage = async (slideId: number) => {
+    const updateAllPageNumber = async () => {
+        reorderPageList(pageList)
+        const requestObjects = pageList.map(o => { return { id: o.id, pageNumber: o.pageNumber, slideId: 0 } })
+        updatePageNumberMutation({ variables: { objects: requestObjects } })
+    }
+
+    const createPage = async (slideId: number, index?: number) => {
         const newPage = createNewPage()
-        let newPageList = [...pageList, newPage]
+        if (!index) index = pageList.length
+        const newPageList = [...pageList.slice(0, index), newPage, ...pageList.slice(index)];
         reorderPageList(newPageList)
         setPageList(newPageList)
         setFocusedId(newPage.id)
@@ -73,6 +80,6 @@ export const usePageList = () => {
         updatePageNumberMutation({ variables: { objects: requestObjects } })
     }
 
-    return { pageList, focusedPage, updatePage, removePage, createPage, changeOrderPage }
+    return { pageList, focusedPage, updatePage, removePage, createPage, changeOrderPage, updateAllPageNumber }
 }
 

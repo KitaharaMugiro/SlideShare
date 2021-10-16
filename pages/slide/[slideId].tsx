@@ -24,12 +24,13 @@ const Page = () => {
     const [isSync, setIsSync] = useState(true)
 
     //データ取得
-    const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) } })
+    const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) }, fetchPolicy: "no-cache" })
     const slide = initialSlide?.slideshare_Slide_by_pk
     const pages = slide?.Pages ? [...slide?.Pages].sort((a, b) => a.pageNumber - b.pageNumber) : []
     const viewingPage = pages[localPageNumber]
 
     useEffect(() => {
+        //TODO: Realtimely側をsecureにしないと意味ない
         if (slide && user) {
             if (slide?.createdBy === user?.attributes.sub) {
                 setIsAdmin(true)

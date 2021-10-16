@@ -1,11 +1,14 @@
 import SendIcon from '@mui/icons-material/Send';
 import { Button } from "@mui/material";
+import { Auth } from 'aws-amplify';
 import { useAtom } from "jotai";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect } from "react";
 import EditOrPreview from "../../components/edit/EditOrPreview";
 import HorizontalSlideList from "../../components/edit/HorizontalSlideList";
+import { usePageList } from '../../model/hooks/usePageList';
 import { pageListAtom } from "../../model/jotai/PageList";
+import { UserAtom } from '../../model/jotai/User';
 import { Page } from '../../model/Page';
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./index.module.css";
@@ -14,22 +17,44 @@ const Edit = () => {
     const router = useRouter()
     const { slideId } = router.query
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) } })
-
+    const [user] = useAtom(UserAtom)
     const [_, setEditingPageList] = useAtom(pageListAtom)
+    const { updateAllPageNumber } = usePageList()
 
     useEffect(() => {
-        const pages = initialSlide?.slideshare_Slide_by_pk?.Pages
-        if (pages) {
-            //TODO:これ隠蔽したい
-            const myClonedArray: Page[] = [];
-            pages.forEach(val => myClonedArray.push(Object.assign({}, val)));
-            setEditingPageList(myClonedArray)
+        Auth.currentAuthenticatedUser().catch(() => {
+            router.push("/signin")
+        })
+    }, [])
+
+    useEffect(() => {
+        if (user) {
+            if (loading) return
+            const slide = initialSlide?.slideshare_Slide_by_pk
+            if (!slide) {
+                console.log("slideがありませんでした")
+                router.push("/")
+                return
+            }
+            if (slide.createdBy !== user.attributes.sub) {
+                console.log("作成者とユーザIDが一致しませんでした")
+                router.push("/")
+                return
+            }
+            const pages = slide?.Pages
+            if (pages) {
+                //TODO:これ隠蔽したい
+                const myClonedArray: Page[] = [];
+                pages.forEach(val => myClonedArray.push(Object.assign({}, val)));
+                myClonedArray.sort((a, b) => a.pageNumber - b.pageNumber)
+                setEditingPageList(myClonedArray)
+            }
         }
     }, [initialSlide])
 
-    const onClickSend = () => {
-        //アップロード処理
-        //これどちらかというとスライドの公開設定に近いかも
+    const onClickSend = async () => {
+        //TODO:これ必要？？
+        await updateAllPageNumber()
         router.push(`/slide/${slideId}`)
     }
 

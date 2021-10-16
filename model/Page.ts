@@ -8,6 +8,7 @@ export type Page = {
     text?: string | null
     imageUrl?: string | null
     videoUrl?: string | null
+    slideId?: number
 }
 
 export const createNewPage = (): Page => {

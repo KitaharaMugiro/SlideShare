@@ -1,9 +1,12 @@
+import Auth from "@aws-amplify/auth"
 import { Button, Divider, Typography } from "@mui/material"
 import { height } from "@mui/system"
+import { useAtom } from "jotai"
 import { useRouter } from "next/dist/client/router"
-import React from "react"
+import React, { useEffect } from "react"
 import PdfUploader from "../../components/upload/PdfUploader"
 import { useLoading } from "../../model/hooks/useLoading"
+import { UserAtom } from "../../model/jotai/User"
 import { createNewPage } from "../../model/Page"
 import { Slideshare_PageType_Enum, useCreateSlideMutation, useInsertPageMutation, useUploadPdfMutation } from "../../src/generated/graphql"
 import style from "./index.module.css"
@@ -13,6 +16,12 @@ const Home = () => {
     const [uploadPdf] = useUploadPdfMutation()
     const { startLoading, finishLoading } = useLoading()
     const router = useRouter()
+
+    useEffect(() => {
+        Auth.currentAuthenticatedUser().catch(() => {
+            router.push("/signin")
+        })
+    }, [])
 
     const onClickNew = async () => {
         const createdSlide = await createNewSlide()

@@ -5,8 +5,8 @@ import { usePageList } from "../../../model/hooks/usePageList";
 
 
 export default () => {
-    const options = ["Delete"]
-    const { focusedPage, removePage } = usePageList()
+    const options = ["Insert New Page", "Delete"]
+    const { focusedPage, removePage, createPage } = usePageList()
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -17,6 +17,14 @@ export default () => {
         if (option === "Delete") {
             if (!focusedPage) return
             removePage(focusedPage.id)
+        } else if (option === "Insert New Page") {
+            if (!focusedPage) return
+            if (!focusedPage.slideId) {
+                //TODO: 新しく作られたスライドなんかはここが引っかかる
+                console.warn("pageにslideIdが付与されていない")
+                return
+            }
+            createPage(focusedPage.slideId, focusedPage.pageNumber + 1)
         }
         setAnchorEl(null);
     };
