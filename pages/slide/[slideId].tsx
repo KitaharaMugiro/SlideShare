@@ -1,9 +1,11 @@
+import { Button } from "@mui/material";
 import { useAtom } from "jotai";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { useRealtimeSharedState } from "realtimely";
 import ImagePageView from "../../components/slide/ImagePageView";
 import ProfileCard from "../../components/slide/ProfileCard";
+import ProfileCardController from "../../components/slide/ProfileCardController";
 import SlideSlider from "../../components/slide/SlideSlider";
 import { UserAtom } from "../../model/jotai/User";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
@@ -112,11 +114,7 @@ const Page = () => {
                     marginRight: 30,
                     width: "100%",
                 }}>
-                    <ProfileCard
-                        name="test"
-                        subtitle="hogehoge"
-                        description="株式会社HOGE CEO"
-                    />
+                    <ProfileCardController isAdmin={isAdmin} userId={slide?.createdBy || ""} />
                 </div>
             </div>
 

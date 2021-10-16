@@ -420,6 +420,10 @@ export type Mutation_Root = {
   insert_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
   /** insert a single row into the table: "slideshare.Page" */
   insert_slideshare_Page_one?: Maybe<Slideshare_Page>;
+  /** insert data into the table: "slideshare.Profile" */
+  insert_slideshare_Profile?: Maybe<Slideshare_Profile_Mutation_Response>;
+  /** insert a single row into the table: "slideshare.Profile" */
+  insert_slideshare_Profile_one?: Maybe<Slideshare_Profile>;
   /** insert data into the table: "slideshare.Slide" */
   insert_slideshare_Slide?: Maybe<Slideshare_Slide_Mutation_Response>;
   /** insert a single row into the table: "slideshare.Slide" */
@@ -432,6 +436,10 @@ export type Mutation_Root = {
   update_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
   /** update single row of the table: "slideshare.Page" */
   update_slideshare_Page_by_pk?: Maybe<Slideshare_Page>;
+  /** update data of the table: "slideshare.Profile" */
+  update_slideshare_Profile?: Maybe<Slideshare_Profile_Mutation_Response>;
+  /** update single row of the table: "slideshare.Profile" */
+  update_slideshare_Profile_by_pk?: Maybe<Slideshare_Profile>;
   /** PDFをPNGに変えてPageにする */
   uploadPdf?: Maybe<UploadPdfOutput>;
 };
@@ -502,6 +510,20 @@ export type Mutation_RootInsert_Slideshare_Page_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Slideshare_ProfileArgs = {
+  objects: Array<Slideshare_Profile_Insert_Input>;
+  on_conflict?: Maybe<Slideshare_Profile_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_Profile_OneArgs = {
+  object: Slideshare_Profile_Insert_Input;
+  on_conflict?: Maybe<Slideshare_Profile_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Slideshare_SlideArgs = {
   objects: Array<Slideshare_Slide_Insert_Input>;
   on_conflict?: Maybe<Slideshare_Slide_On_Conflict>;
@@ -544,6 +566,20 @@ export type Mutation_RootUpdate_Slideshare_Page_By_PkArgs = {
   _inc?: Maybe<Slideshare_Page_Inc_Input>;
   _set?: Maybe<Slideshare_Page_Set_Input>;
   pk_columns: Slideshare_Page_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Slideshare_ProfileArgs = {
+  _set?: Maybe<Slideshare_Profile_Set_Input>;
+  where: Slideshare_Profile_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Slideshare_Profile_By_PkArgs = {
+  _set?: Maybe<Slideshare_Profile_Set_Input>;
+  pk_columns: Slideshare_Profile_Pk_Columns_Input;
 };
 
 
@@ -599,6 +635,10 @@ export type Query_Root = {
   slideshare_PageType_by_pk?: Maybe<Slideshare_PageType>;
   /** fetch data from the table: "slideshare.Page" using primary key columns */
   slideshare_Page_by_pk?: Maybe<Slideshare_Page>;
+  /** fetch data from the table: "slideshare.Profile" */
+  slideshare_Profile: Array<Slideshare_Profile>;
+  /** fetch data from the table: "slideshare.Profile" using primary key columns */
+  slideshare_Profile_by_pk?: Maybe<Slideshare_Profile>;
   /** fetch data from the table: "slideshare.Slide" */
   slideshare_Slide: Array<Slideshare_Slide>;
   /** fetch data from the table: "slideshare.Slide" using primary key columns */
@@ -659,6 +699,20 @@ export type Query_RootSlideshare_PageType_By_PkArgs = {
 
 export type Query_RootSlideshare_Page_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+export type Query_RootSlideshare_ProfileArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Profile_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Profile_Order_By>>;
+  where?: Maybe<Slideshare_Profile_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_Profile_By_PkArgs = {
+  userId: Scalars['String'];
 };
 
 
@@ -964,6 +1018,93 @@ export type Slideshare_Page_Variance_Order_By = {
   slideId?: Maybe<Order_By>;
 };
 
+/** columns and relationships of "slideshare.Profile" */
+export type Slideshare_Profile = {
+  __typename?: 'slideshare_Profile';
+  contribution: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+  profile?: Maybe<Scalars['String']>;
+  userId: Scalars['String'];
+};
+
+/** Boolean expression to filter rows from the table "slideshare.Profile". All fields are combined with a logical 'AND'. */
+export type Slideshare_Profile_Bool_Exp = {
+  _and?: Maybe<Array<Slideshare_Profile_Bool_Exp>>;
+  _not?: Maybe<Slideshare_Profile_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_Profile_Bool_Exp>>;
+  contribution?: Maybe<Int_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  profile?: Maybe<String_Comparison_Exp>;
+  userId?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "slideshare.Profile" */
+export enum Slideshare_Profile_Constraint {
+  /** unique or primary key constraint */
+  ProfilePkey = 'Profile_pkey'
+}
+
+/** input type for inserting data into table "slideshare.Profile" */
+export type Slideshare_Profile_Insert_Input = {
+  name?: Maybe<Scalars['String']>;
+  profile?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "slideshare.Profile" */
+export type Slideshare_Profile_Mutation_Response = {
+  __typename?: 'slideshare_Profile_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Slideshare_Profile>;
+};
+
+/** on conflict condition type for table "slideshare.Profile" */
+export type Slideshare_Profile_On_Conflict = {
+  constraint: Slideshare_Profile_Constraint;
+  update_columns?: Array<Slideshare_Profile_Update_Column>;
+  where?: Maybe<Slideshare_Profile_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "slideshare.Profile". */
+export type Slideshare_Profile_Order_By = {
+  contribution?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  profile?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: slideshare_Profile */
+export type Slideshare_Profile_Pk_Columns_Input = {
+  userId: Scalars['String'];
+};
+
+/** select columns of table "slideshare.Profile" */
+export enum Slideshare_Profile_Select_Column {
+  /** column name */
+  Contribution = 'contribution',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  Profile = 'profile',
+  /** column name */
+  UserId = 'userId'
+}
+
+/** input type for updating data in table "slideshare.Profile" */
+export type Slideshare_Profile_Set_Input = {
+  name?: Maybe<Scalars['String']>;
+  profile?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "slideshare.Profile" */
+export enum Slideshare_Profile_Update_Column {
+  /** column name */
+  Name = 'name',
+  /** column name */
+  Profile = 'profile'
+}
+
 /** columns and relationships of "slideshare.Slide" */
 export type Slideshare_Slide = {
   __typename?: 'slideshare_Slide';
@@ -1069,6 +1210,10 @@ export type Subscription_Root = {
   slideshare_PageType_by_pk?: Maybe<Slideshare_PageType>;
   /** fetch data from the table: "slideshare.Page" using primary key columns */
   slideshare_Page_by_pk?: Maybe<Slideshare_Page>;
+  /** fetch data from the table: "slideshare.Profile" */
+  slideshare_Profile: Array<Slideshare_Profile>;
+  /** fetch data from the table: "slideshare.Profile" using primary key columns */
+  slideshare_Profile_by_pk?: Maybe<Slideshare_Profile>;
   /** fetch data from the table: "slideshare.Slide" */
   slideshare_Slide: Array<Slideshare_Slide>;
   /** fetch data from the table: "slideshare.Slide" using primary key columns */
@@ -1129,6 +1274,20 @@ export type Subscription_RootSlideshare_PageType_By_PkArgs = {
 
 export type Subscription_RootSlideshare_Page_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+export type Subscription_RootSlideshare_ProfileArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Profile_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Profile_Order_By>>;
+  where?: Maybe<Slideshare_Profile_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_Profile_By_PkArgs = {
+  userId: Scalars['String'];
 };
 
 
@@ -1212,6 +1371,21 @@ export type CreateSlideMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CreateSlideMutation = { __typename?: 'mutation_root', insert_slideshare_Slide_one?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined }> } | null | undefined };
+
+export type SaveProfileMutationVariables = Exact<{
+  name?: Maybe<Scalars['String']>;
+  profile?: Maybe<Scalars['String']>;
+}>;
+
+
+export type SaveProfileMutation = { __typename?: 'mutation_root', insert_slideshare_Profile_one?: { __typename?: 'slideshare_Profile', userId: string, name?: string | null | undefined, profile?: string | null | undefined, contribution: number } | null | undefined };
+
+export type QueryProfileQueryVariables = Exact<{
+  userId: Scalars['String'];
+}>;
+
+
+export type QueryProfileQuery = { __typename?: 'query_root', slideshare_Profile_by_pk?: { __typename?: 'slideshare_Profile', contribution: number, name?: string | null | undefined, profile?: string | null | undefined, userId: string } | null | undefined };
 
 export type QuerySlideQueryVariables = Exact<{
   slideId: Scalars['Int'];
@@ -1446,6 +1620,84 @@ export function useCreateSlideMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateSlideMutationHookResult = ReturnType<typeof useCreateSlideMutation>;
 export type CreateSlideMutationResult = Apollo.MutationResult<CreateSlideMutation>;
 export type CreateSlideMutationOptions = Apollo.BaseMutationOptions<CreateSlideMutation, CreateSlideMutationVariables>;
+export const SaveProfileDocument = gql`
+    mutation saveProfile($name: String = "", $profile: String = "") {
+  insert_slideshare_Profile_one(
+    object: {name: $name, profile: $profile}
+    on_conflict: {constraint: Profile_pkey, update_columns: [name, profile]}
+  ) {
+    userId
+    name
+    profile
+    contribution
+  }
+}
+    `;
+export type SaveProfileMutationFn = Apollo.MutationFunction<SaveProfileMutation, SaveProfileMutationVariables>;
+
+/**
+ * __useSaveProfileMutation__
+ *
+ * To run a mutation, you first call `useSaveProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveProfileMutation, { data, loading, error }] = useSaveProfileMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      profile: // value for 'profile'
+ *   },
+ * });
+ */
+export function useSaveProfileMutation(baseOptions?: Apollo.MutationHookOptions<SaveProfileMutation, SaveProfileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveProfileMutation, SaveProfileMutationVariables>(SaveProfileDocument, options);
+      }
+export type SaveProfileMutationHookResult = ReturnType<typeof useSaveProfileMutation>;
+export type SaveProfileMutationResult = Apollo.MutationResult<SaveProfileMutation>;
+export type SaveProfileMutationOptions = Apollo.BaseMutationOptions<SaveProfileMutation, SaveProfileMutationVariables>;
+export const QueryProfileDocument = gql`
+    query queryProfile($userId: String!) {
+  slideshare_Profile_by_pk(userId: $userId) {
+    contribution
+    name
+    profile
+    userId
+  }
+}
+    `;
+
+/**
+ * __useQueryProfileQuery__
+ *
+ * To run a query within a React component, call `useQueryProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryProfileQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useQueryProfileQuery(baseOptions: Apollo.QueryHookOptions<QueryProfileQuery, QueryProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QueryProfileQuery, QueryProfileQueryVariables>(QueryProfileDocument, options);
+      }
+export function useQueryProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryProfileQuery, QueryProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QueryProfileQuery, QueryProfileQueryVariables>(QueryProfileDocument, options);
+        }
+export type QueryProfileQueryHookResult = ReturnType<typeof useQueryProfileQuery>;
+export type QueryProfileLazyQueryHookResult = ReturnType<typeof useQueryProfileLazyQuery>;
+export type QueryProfileQueryResult = Apollo.QueryResult<QueryProfileQuery, QueryProfileQueryVariables>;
 export const QuerySlideDocument = gql`
     query querySlide($slideId: Int!) {
   slideshare_Slide_by_pk(id: $slideId) {

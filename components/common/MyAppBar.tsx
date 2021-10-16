@@ -12,8 +12,10 @@ import { useAtom } from 'jotai';
 import { UserAtom } from '../../model/jotai/User';
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material';
+import { HeaderTitleAtom } from '../../model/jotai/HeaderTitle';
 const MyAppBar = () => {
-    const [user, _] = useAtom(UserAtom)
+    const [user] = useAtom(UserAtom)
+    const [headerTitle] = useAtom(HeaderTitleAtom)
     const signOut = async () => {
         try {
             await Auth.signOut();
@@ -48,7 +50,7 @@ const MyAppBar = () => {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Slide Share(仮)
+                        {headerTitle}
                     </Typography>
                     {renderSigninOrOutButton()}
                 </Toolbar>
