@@ -28,6 +28,7 @@
     "react-social-login-buttons": "^3.6.0",
     "react-transition-group": "^4.4.2",
     "realtimely": "^3.3.0",
+    "subscriptions-transport-ws": "^0.9.19",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

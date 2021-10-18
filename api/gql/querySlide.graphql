@@ -2,7 +2,7 @@ query querySlide($slideId: Int!) {
   slideshare_Slide_by_pk(id: $slideId) {
     id
     createdBy
-    Pages {
+    Pages(order_by:{pageNumber:asc}) {
       id
       type
       text

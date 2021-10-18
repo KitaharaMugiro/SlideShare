@@ -404,6 +404,10 @@ export type Mutation_Root = {
   delete_Note?: Maybe<Note_Mutation_Response>;
   /** delete single row from the table: "Note" */
   delete_Note_by_pk?: Maybe<Note>;
+  /** delete data from the table: "slideshare.Comment" */
+  delete_slideshare_Comment?: Maybe<Slideshare_Comment_Mutation_Response>;
+  /** delete single row from the table: "slideshare.Comment" */
+  delete_slideshare_Comment_by_pk?: Maybe<Slideshare_Comment>;
   /** delete data from the table: "slideshare.Page" */
   delete_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
   /** delete single row from the table: "slideshare.Page" */
@@ -416,6 +420,10 @@ export type Mutation_Root = {
   insert_Note?: Maybe<Note_Mutation_Response>;
   /** insert a single row into the table: "Note" */
   insert_Note_one?: Maybe<Note>;
+  /** insert data into the table: "slideshare.Comment" */
+  insert_slideshare_Comment?: Maybe<Slideshare_Comment_Mutation_Response>;
+  /** insert a single row into the table: "slideshare.Comment" */
+  insert_slideshare_Comment_one?: Maybe<Slideshare_Comment>;
   /** insert data into the table: "slideshare.Page" */
   insert_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
   /** insert a single row into the table: "slideshare.Page" */
@@ -458,6 +466,18 @@ export type Mutation_RootDelete_Note_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Slideshare_CommentArgs = {
+  where: Slideshare_Comment_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_Comment_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_Slideshare_PageArgs = {
   where: Slideshare_Page_Bool_Exp;
 };
@@ -492,6 +512,18 @@ export type Mutation_RootInsert_NoteArgs = {
 export type Mutation_RootInsert_Note_OneArgs = {
   object: Note_Insert_Input;
   on_conflict?: Maybe<Note_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_CommentArgs = {
+  objects: Array<Slideshare_Comment_Insert_Input>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_Comment_OneArgs = {
+  object: Slideshare_Comment_Insert_Input;
 };
 
 
@@ -627,6 +659,10 @@ export type Query_Root = {
   Note: Array<Note>;
   /** fetch data from the table: "Note" using primary key columns */
   Note_by_pk?: Maybe<Note>;
+  /** fetch data from the table: "slideshare.Comment" */
+  slideshare_Comment: Array<Slideshare_Comment>;
+  /** fetch data from the table: "slideshare.Comment" using primary key columns */
+  slideshare_Comment_by_pk?: Maybe<Slideshare_Comment>;
   /** fetch data from the table: "slideshare.Page" */
   slideshare_Page: Array<Slideshare_Page>;
   /** fetch data from the table: "slideshare.PageType" */
@@ -671,6 +707,20 @@ export type Query_RootNoteArgs = {
 
 export type Query_RootNote_By_PkArgs = {
   Id: Scalars['Int'];
+};
+
+
+export type Query_RootSlideshare_CommentArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Comment_Order_By>>;
+  where?: Maybe<Slideshare_Comment_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_Comment_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -728,6 +778,87 @@ export type Query_RootSlideshare_SlideArgs = {
 export type Query_RootSlideshare_Slide_By_PkArgs = {
   id: Scalars['Int'];
 };
+
+/** columns and relationships of "slideshare.Comment" */
+export type Slideshare_Comment = {
+  __typename?: 'slideshare_Comment';
+  /** An object relationship */
+  Page: Slideshare_Page;
+  /** An object relationship */
+  Profile?: Maybe<Slideshare_Profile>;
+  /** An object relationship */
+  Slide: Slideshare_Slide;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  createdBy: Scalars['String'];
+  id: Scalars['Int'];
+  pageId: Scalars['String'];
+  slideId: Scalars['Int'];
+  text: Scalars['String'];
+};
+
+/** Boolean expression to filter rows from the table "slideshare.Comment". All fields are combined with a logical 'AND'. */
+export type Slideshare_Comment_Bool_Exp = {
+  Page?: Maybe<Slideshare_Page_Bool_Exp>;
+  Profile?: Maybe<Slideshare_Profile_Bool_Exp>;
+  Slide?: Maybe<Slideshare_Slide_Bool_Exp>;
+  _and?: Maybe<Array<Slideshare_Comment_Bool_Exp>>;
+  _not?: Maybe<Slideshare_Comment_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_Comment_Bool_Exp>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  createdBy?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  pageId?: Maybe<String_Comparison_Exp>;
+  slideId?: Maybe<Int_Comparison_Exp>;
+  text?: Maybe<String_Comparison_Exp>;
+};
+
+/** input type for inserting data into table "slideshare.Comment" */
+export type Slideshare_Comment_Insert_Input = {
+  Page?: Maybe<Slideshare_Page_Obj_Rel_Insert_Input>;
+  Profile?: Maybe<Slideshare_Profile_Obj_Rel_Insert_Input>;
+  Slide?: Maybe<Slideshare_Slide_Obj_Rel_Insert_Input>;
+  pageId?: Maybe<Scalars['String']>;
+  slideId?: Maybe<Scalars['Int']>;
+  text?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "slideshare.Comment" */
+export type Slideshare_Comment_Mutation_Response = {
+  __typename?: 'slideshare_Comment_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Slideshare_Comment>;
+};
+
+/** Ordering options when selecting data from "slideshare.Comment". */
+export type Slideshare_Comment_Order_By = {
+  Page?: Maybe<Slideshare_Page_Order_By>;
+  Profile?: Maybe<Slideshare_Profile_Order_By>;
+  Slide?: Maybe<Slideshare_Slide_Order_By>;
+  createdAt?: Maybe<Order_By>;
+  createdBy?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+  text?: Maybe<Order_By>;
+};
+
+/** select columns of table "slideshare.Comment" */
+export enum Slideshare_Comment_Select_Column {
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  CreatedBy = 'createdBy',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PageId = 'pageId',
+  /** column name */
+  SlideId = 'slideId',
+  /** column name */
+  Text = 'text'
+}
 
 /** columns and relationships of "slideshare.Page" */
 export type Slideshare_Page = {
@@ -892,6 +1023,13 @@ export type Slideshare_Page_Mutation_Response = {
   affected_rows: Scalars['Int'];
   /** data from the rows affected by the mutation */
   returning: Array<Slideshare_Page>;
+};
+
+/** input type for inserting object relation for remote table "slideshare.Page" */
+export type Slideshare_Page_Obj_Rel_Insert_Input = {
+  data: Slideshare_Page_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Slideshare_Page_On_Conflict>;
 };
 
 /** on conflict condition type for table "slideshare.Page" */
@@ -1059,6 +1197,13 @@ export type Slideshare_Profile_Mutation_Response = {
   returning: Array<Slideshare_Profile>;
 };
 
+/** input type for inserting object relation for remote table "slideshare.Profile" */
+export type Slideshare_Profile_Obj_Rel_Insert_Input = {
+  data: Slideshare_Profile_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Slideshare_Profile_On_Conflict>;
+};
+
 /** on conflict condition type for table "slideshare.Profile" */
 export type Slideshare_Profile_On_Conflict = {
   constraint: Slideshare_Profile_Constraint;
@@ -1158,6 +1303,13 @@ export type Slideshare_Slide_Mutation_Response = {
   returning: Array<Slideshare_Slide>;
 };
 
+/** input type for inserting object relation for remote table "slideshare.Slide" */
+export type Slideshare_Slide_Obj_Rel_Insert_Input = {
+  data: Slideshare_Slide_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Slideshare_Slide_On_Conflict>;
+};
+
 /** on conflict condition type for table "slideshare.Slide" */
 export type Slideshare_Slide_On_Conflict = {
   constraint: Slideshare_Slide_Constraint;
@@ -1202,6 +1354,10 @@ export type Subscription_Root = {
   Note: Array<Note>;
   /** fetch data from the table: "Note" using primary key columns */
   Note_by_pk?: Maybe<Note>;
+  /** fetch data from the table: "slideshare.Comment" */
+  slideshare_Comment: Array<Slideshare_Comment>;
+  /** fetch data from the table: "slideshare.Comment" using primary key columns */
+  slideshare_Comment_by_pk?: Maybe<Slideshare_Comment>;
   /** fetch data from the table: "slideshare.Page" */
   slideshare_Page: Array<Slideshare_Page>;
   /** fetch data from the table: "slideshare.PageType" */
@@ -1246,6 +1402,20 @@ export type Subscription_RootNoteArgs = {
 
 export type Subscription_RootNote_By_PkArgs = {
   Id: Scalars['Int'];
+};
+
+
+export type Subscription_RootSlideshare_CommentArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Comment_Order_By>>;
+  where?: Maybe<Slideshare_Comment_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_Comment_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -1366,6 +1536,22 @@ export type DeletePageMutationVariables = Exact<{
 
 
 export type DeletePageMutation = { __typename?: 'mutation_root', delete_slideshare_Page_by_pk?: { __typename?: 'slideshare_Page', id: string } | null | undefined };
+
+export type QueryCommentSubscriptionVariables = Exact<{
+  slideId?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type QueryCommentSubscription = { __typename?: 'subscription_root', slideshare_Comment: Array<{ __typename?: 'slideshare_Comment', id: number, slideId: number, pageId: string, text: string, createdBy: string, createdAt?: any | null | undefined, Page: { __typename?: 'slideshare_Page', pageNumber: number }, Profile?: { __typename?: 'slideshare_Profile', profile?: string | null | undefined, name?: string | null | undefined } | null | undefined }> };
+
+export type SendCommentMutationVariables = Exact<{
+  slideId?: Maybe<Scalars['Int']>;
+  pageId?: Maybe<Scalars['String']>;
+  text?: Maybe<Scalars['String']>;
+}>;
+
+
+export type SendCommentMutation = { __typename?: 'mutation_root', insert_slideshare_Comment_one?: { __typename?: 'slideshare_Comment', id: number } | null | undefined };
 
 export type CreateSlideMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -1579,6 +1765,88 @@ export function useDeletePageMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeletePageMutationHookResult = ReturnType<typeof useDeletePageMutation>;
 export type DeletePageMutationResult = Apollo.MutationResult<DeletePageMutation>;
 export type DeletePageMutationOptions = Apollo.BaseMutationOptions<DeletePageMutation, DeletePageMutationVariables>;
+export const QueryCommentDocument = gql`
+    subscription queryComment($slideId: Int) {
+  slideshare_Comment(
+    where: {slideId: {_eq: $slideId}}
+    order_by: {createdAt: desc}
+  ) {
+    id
+    slideId
+    pageId
+    Page {
+      pageNumber
+    }
+    Profile {
+      profile
+      name
+    }
+    text
+    createdBy
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useQueryCommentSubscription__
+ *
+ * To run a query within a React component, call `useQueryCommentSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useQueryCommentSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryCommentSubscription({
+ *   variables: {
+ *      slideId: // value for 'slideId'
+ *   },
+ * });
+ */
+export function useQueryCommentSubscription(baseOptions?: Apollo.SubscriptionHookOptions<QueryCommentSubscription, QueryCommentSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<QueryCommentSubscription, QueryCommentSubscriptionVariables>(QueryCommentDocument, options);
+      }
+export type QueryCommentSubscriptionHookResult = ReturnType<typeof useQueryCommentSubscription>;
+export type QueryCommentSubscriptionResult = Apollo.SubscriptionResult<QueryCommentSubscription>;
+export const SendCommentDocument = gql`
+    mutation sendComment($slideId: Int, $pageId: String, $text: String) {
+  insert_slideshare_Comment_one(
+    object: {slideId: $slideId, pageId: $pageId, text: $text}
+  ) {
+    id
+  }
+}
+    `;
+export type SendCommentMutationFn = Apollo.MutationFunction<SendCommentMutation, SendCommentMutationVariables>;
+
+/**
+ * __useSendCommentMutation__
+ *
+ * To run a mutation, you first call `useSendCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendCommentMutation, { data, loading, error }] = useSendCommentMutation({
+ *   variables: {
+ *      slideId: // value for 'slideId'
+ *      pageId: // value for 'pageId'
+ *      text: // value for 'text'
+ *   },
+ * });
+ */
+export function useSendCommentMutation(baseOptions?: Apollo.MutationHookOptions<SendCommentMutation, SendCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendCommentMutation, SendCommentMutationVariables>(SendCommentDocument, options);
+      }
+export type SendCommentMutationHookResult = ReturnType<typeof useSendCommentMutation>;
+export type SendCommentMutationResult = Apollo.MutationResult<SendCommentMutation>;
+export type SendCommentMutationOptions = Apollo.BaseMutationOptions<SendCommentMutation, SendCommentMutationVariables>;
 export const CreateSlideDocument = gql`
     mutation createSlide {
   insert_slideshare_Slide_one(object: {}) {
@@ -1703,7 +1971,7 @@ export const QuerySlideDocument = gql`
   slideshare_Slide_by_pk(id: $slideId) {
     id
     createdBy
-    Pages {
+    Pages(order_by: {pageNumber: asc}) {
       id
       type
       text

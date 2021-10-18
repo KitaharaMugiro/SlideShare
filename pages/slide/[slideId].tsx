@@ -1,10 +1,9 @@
-import { Button } from "@mui/material";
 import { useAtom } from "jotai";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { useRealtimeSharedState } from "realtimely";
+import Comments from "../../components/slide/comments/Comments";
 import ImagePageView from "../../components/slide/ImagePageView";
-import ProfileCard from "../../components/slide/ProfileCard";
 import ProfileCardController from "../../components/slide/ProfileCardController";
 import SlideSlider from "../../components/slide/SlideSlider";
 import { UserAtom } from "../../model/jotai/User";
@@ -88,6 +87,13 @@ const Page = () => {
         setLocalPageNumber(slideState.pageNumber)
     }
 
+    const onClickPageLink = (pageId: string) => {
+        const targetPage = pages.find(p => p.id === pageId)
+        onChangePageNumber(targetPage?.pageNumber || 0)
+    }
+
+    if (loading) return <div>ロード中</div>
+    if (error) return <div>{JSON.stringify(error)}</div>
     return (
         <div className={style.main}>
 
@@ -115,6 +121,10 @@ const Page = () => {
                     width: "100%",
                 }}>
                     <ProfileCardController isAdmin={isAdmin} userId={slide?.createdBy || ""} />
+                    <Comments
+                        viewingPage={viewingPage}
+                        onClickLink={onClickPageLink}
+                    />
                 </div>
             </div>
 
