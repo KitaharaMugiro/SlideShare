@@ -1,0 +1,17 @@
+mutation saveProfile($name: String = "", $profile: String = "") {
+  insert_slideshare_Profile_one(object: {name: $name, profile: $profile}, on_conflict: {constraint: Profile_pkey, update_columns: [name, profile]}) {
+    userId
+    name
+    profile
+    contribution
+  }
+}
+
+query queryProfile($userId: String!) {
+  slideshare_Profile_by_pk(userId: $userId) {
+    contribution
+    name
+    profile
+    userId
+  }
+}

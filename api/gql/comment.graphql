@@ -1,0 +1,26 @@
+subscription queryComment($slideId: Int ) {
+  slideshare_Comment(
+    where: {slideId: {_eq: $slideId}}
+    order_by:{createdAt:desc}
+  ) {
+    id
+    slideId
+    pageId
+    Page {
+      pageNumber
+    }
+    Profile {
+      profile
+    	name
+    }
+    text
+    createdBy
+    createdAt
+  }
+}
+mutation sendComment($slideId: Int, $pageId: String, $text: String) {
+  insert_slideshare_Comment_one(object: {slideId: $slideId, pageId: $pageId, text: $text}) {
+    id
+  }
+}
+
