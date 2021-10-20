@@ -1,10 +1,22 @@
-import React from "react"
+import { Button } from "@mui/material"
+import React, { useEffect, useState } from "react"
 import { usePageList } from "../../model/hooks/usePageList"
+import { MultiplePoll } from "../slide/poll/MultiplePoll"
 import MenuButtonList from "./choice_page_type/MenuButtonList"
 import ImageEditor from "./editor/ImageEditor"
+import MarkdownEditor from "./editor/MarkdownEditor"
 import ImagePreview from "./preview/ImagePreview"
 
 export default () => {
+    const [results, setResults] = useState([{ text: "hoge", votes: 0, percentage: 0 }, { text: "こんにちは", votes: 0, percentage: 0 }])
+    const onClick = () => {
+        const a = Object.assign({}, results[0])
+        const b = Object.assign({}, results[1])
+        a.percentage += 1
+        b.percentage -= 1
+        setResults([a, b])
+    }
+
     const { focusedPage } = usePageList()
     if (!focusedPage) {
         return (<div></div>)
@@ -21,10 +33,23 @@ export default () => {
         return <ImageEditor />
     }
     if (focusedPage.type === "video") {
-        return <div>video</div>
+        const customTheme = {
+            textColor: 'black',
+            mainColor: '#00B87B',
+            backgroundColor: 'rgb(255,255,255)',
+            alignment: 'center'
+        }
+        return <div style={{ width: 500 }}>
+            <MultiplePoll
+                question="test"
+                theme={customTheme}
+                results={results}
+            />
+            <Button onClick={onClick}>test</Button>
+        </div>
     }
     if (focusedPage.type === "text") {
-        return <div>text</div>
+        return <MarkdownEditor />
     }
     return <div>bug</div>
 }
