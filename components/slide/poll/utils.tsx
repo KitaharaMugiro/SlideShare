@@ -32,7 +32,8 @@ export function animateAnswers(
     index: number,
     results: Result[],
     refs: MutableRefObject<RefObject<HTMLDivElement>[]>,
-    theme?: Theme
+    theme?: Theme,
+    firstAnimate: boolean = true
 ): void {
     const answers: HTMLElement[] = []
     const restOfAnswersIndexes: number[] = []
@@ -44,33 +45,38 @@ export function animateAnswers(
     }
 
     // animate clicked answer
-    answers[index].animate(
-        [
-            { width: 0, easing: 'ease-out', backgroundColor: 'white' },
-            {
-                width: `${results[index].percentage}%`,
-                easing: 'ease-out',
-                backgroundColor: `${theme?.mainColor}`
-            }
-        ],
-        500
-    )
+    if (firstAnimate) {
+        answers[index].animate(
+            [
+                { width: 0, easing: 'ease-out', backgroundColor: 'white' },
+                {
+                    width: `${results[index].percentage}%`,
+                    easing: 'ease-out',
+                    backgroundColor: `${theme?.mainColor}`
+                }
+            ],
+            500
+        )
+    }
+
     answers[index].style.width = `${results[index].percentage}%`
     if (theme?.mainColor) answers[index].style.backgroundColor = theme?.mainColor
 
     // animate rest of answers (not clicked)
     for (const i of restOfAnswersIndexes) {
-        answers[i].animate(
-            [
-                { width: 0, easing: 'ease-out', backgroundColor: 'white' },
-                {
-                    width: `${results[i].percentage}%`,
-                    easing: 'ease-out',
-                    backgroundColor: '#efefef'
-                }
-            ],
-            500
-        )
+        if (firstAnimate) {
+            answers[i].animate(
+                [
+                    { width: 0, easing: 'ease-out', backgroundColor: 'white' },
+                    {
+                        width: `${results[i].percentage}%`,
+                        easing: 'ease-out',
+                        backgroundColor: '#efefef'
+                    }
+                ],
+                500
+            )
+        }
         answers[i].style.width = `${results[i].percentage}%`
         answers[i].style.backgroundColor = '#efefef'
     }

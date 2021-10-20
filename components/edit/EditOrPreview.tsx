@@ -8,12 +8,11 @@ import MarkdownEditor from "./editor/MarkdownEditor"
 import ImagePreview from "./preview/ImagePreview"
 
 export default () => {
-    const [results, setResults] = useState([{ text: "hoge", votes: 0, percentage: 0 }, { text: "こんにちは", votes: 0, percentage: 0 }])
+    const [results, setResults] = useState([{ text: "hoge", votes: 0 }, { text: "こんにちは", votes: 0 }])
     const onClick = () => {
         const a = Object.assign({}, results[0])
         const b = Object.assign({}, results[1])
-        a.percentage += 1
-        b.percentage -= 1
+        a.votes += 1
         setResults([a, b])
     }
 

@@ -37,8 +37,14 @@ const MultiplePoll = ({
         results.map(() => createRef<HTMLDivElement>())
     )
     useEffect(() => {
-        animateAnswers(votedIndex, results, answerRefs, theme)
+        animateAnswers(votedIndex, results, answerRefs, theme, false)
     }, [results])
+    const sumVote = results.reduce((p, c) => p + c.votes, 0)
+    results.forEach(r => {
+        if (r.percentage !== undefined) {
+            r.percentage = Math.round(r.votes / sumVote * 100)
+        }
+    })
     return (
         <article
             className={styles.container}
