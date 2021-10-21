@@ -3,7 +3,8 @@ import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { useRealtimeSharedState } from "realtimely";
 import Comments from "../../components/slide/comments/Comments";
-import ImagePageView from "../../components/slide/ImagePageView";
+import ImagePageView from "../../components/slide/pageview/ImagePageView";
+import PageViewController from "../../components/slide/pageview/PageViewController";
 import ProfileCardController from "../../components/slide/ProfileCardController";
 import SlideSlider from "../../components/slide/SlideSlider";
 import { UserAtom } from "../../model/jotai/User";
@@ -100,9 +101,8 @@ const Page = () => {
             {/* スライド */}
             <div className={style.deck_space}>
                 <div>
-                    <ImagePageView
-                        imageUrl={viewingPage?.imageUrl}
-                        identityId={slide?.createdBy}
+                    <PageViewController
+                        viewingPage={viewingPage}
                         onClickLeft={goPrevious}
                         onClickRight={goNext}
                     />

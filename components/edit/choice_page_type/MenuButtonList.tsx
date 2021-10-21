@@ -29,6 +29,10 @@ export default () => {
             <MenuButton
                 onClick={() => onClick(Slideshare_PageType_Enum.Video)}
                 imageUrl="/static/page_select/video.png" title="Youtube" description="Embed with youtube link" />
+            <MenuButton
+                onClick={() => onClick(Slideshare_PageType_Enum.Poll)}
+                imageUrl="/static/page_select/poll.png" title="Poll" description="Hear opinions from audiences" />
+
         </div>
     </>
 }

@@ -8,14 +8,6 @@ import MarkdownEditor from "./editor/MarkdownEditor"
 import ImagePreview from "./preview/ImagePreview"
 
 export default () => {
-    const [results, setResults] = useState([{ text: "hoge", votes: 0 }, { text: "こんにちは", votes: 0 }])
-    const onClick = () => {
-        const a = Object.assign({}, results[0])
-        const b = Object.assign({}, results[1])
-        a.votes += 1
-        setResults([a, b])
-    }
-
     const { focusedPage } = usePageList()
     if (!focusedPage) {
         return (<div></div>)
@@ -32,23 +24,15 @@ export default () => {
         return <ImageEditor />
     }
     if (focusedPage.type === "video") {
-        const customTheme = {
-            textColor: 'black',
-            mainColor: '#00B87B',
-            backgroundColor: 'rgb(255,255,255)',
-            alignment: 'center'
-        }
-        return <div style={{ width: 500 }}>
-            <MultiplePoll
-                question="test"
-                theme={customTheme}
-                results={results}
-            />
-            <Button onClick={onClick}>test</Button>
-        </div>
+        return <div>動画は実装中です</div>
     }
     if (focusedPage.type === "text") {
-        return <MarkdownEditor />
+        return <div style={{ width: "90%" }}>
+            <MarkdownEditor editable={true} height={400} />
+        </div>
     }
-    return <div>bug</div>
+    if (focusedPage.type === "poll") {
+        return <div>投票は実装中です</div>
+    }
+    return <div>対応していないページです</div>
 }

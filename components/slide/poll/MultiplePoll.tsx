@@ -28,9 +28,15 @@ interface MultiplePollProps {
 const MultiplePoll = ({
     question,
     results,
-    theme,
+    theme: propTheme,
     onVote
 }: MultiplePollProps) => {
+    const theme = propTheme || {
+        textColor: 'black',
+        mainColor: '#00B87B',
+        backgroundColor: 'rgb(255,255,255)',
+        alignment: 'center'
+    }
     const [voted, setVoted] = useState<boolean>(false)
     const [votedIndex, setVotedIndex] = useState(0)
     const answerRefs = useRef<RefObject<HTMLDivElement>[]>(

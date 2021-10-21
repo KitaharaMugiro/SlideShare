@@ -894,6 +894,7 @@ export type Slideshare_PageType_Bool_Exp = {
 
 export enum Slideshare_PageType_Enum {
   Image = 'image',
+  Poll = 'poll',
   Temp = 'temp',
   Text = 'text',
   Video = 'video'

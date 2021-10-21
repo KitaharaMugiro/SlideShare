@@ -24,7 +24,8 @@
     "**/*.tsx",
     "lib/Pdf2Image.js",
     "components/common/Signin.jsx",
-    "components/edit/editor/MarkdownEditor.jsx"
+    "components/edit/editor/MarkdownEditor.tsx",
+    "components/edit/editor/MarkdownViewer.jsx"
   ],
   "exclude": [
     "node_modules"
