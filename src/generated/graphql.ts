@@ -80,6 +80,18 @@ export type Boolean_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Boolean']>>;
 };
 
+export type GenerateAgoraTokenInput = {
+  channelName: Scalars['String'];
+  uid?: Maybe<Scalars['String']>;
+  userAccount?: Maybe<Scalars['String']>;
+};
+
+export type GenerateAgoraTokenOutput = {
+  __typename?: 'GenerateAgoraTokenOutput';
+  token?: Maybe<Scalars['String']>;
+  tokenCreatedFromAccount?: Maybe<Scalars['String']>;
+};
+
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
   _eq?: Maybe<Scalars['Int']>;
@@ -400,6 +412,7 @@ export type Bigint_Comparison_Exp = {
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+  GenerateAgoraToken?: Maybe<GenerateAgoraTokenOutput>;
   /** delete data from the table: "Note" */
   delete_Note?: Maybe<Note_Mutation_Response>;
   /** delete single row from the table: "Note" */
@@ -450,6 +463,12 @@ export type Mutation_Root = {
   update_slideshare_Profile_by_pk?: Maybe<Slideshare_Profile>;
   /** PDFをPNGに変えてPageにする */
   uploadPdf?: Maybe<UploadPdfOutput>;
+};
+
+
+/** mutation root */
+export type Mutation_RootGenerateAgoraTokenArgs = {
+  input: GenerateAgoraTokenInput;
 };
 
 
@@ -1559,6 +1578,14 @@ export type CreateSlideMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type CreateSlideMutation = { __typename?: 'mutation_root', insert_slideshare_Slide_one?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined }> } | null | undefined };
 
+export type GenerateAgoraTokenMutationVariables = Exact<{
+  channelName: Scalars['String'];
+  uid?: Maybe<Scalars['String']>;
+}>;
+
+
+export type GenerateAgoraTokenMutation = { __typename?: 'mutation_root', GenerateAgoraToken?: { __typename?: 'GenerateAgoraTokenOutput', token?: string | null | undefined, tokenCreatedFromAccount?: string | null | undefined } | null | undefined };
+
 export type SaveProfileMutationVariables = Exact<{
   name?: Maybe<Scalars['String']>;
   profile?: Maybe<Scalars['String']>;
@@ -1889,6 +1916,41 @@ export function useCreateSlideMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateSlideMutationHookResult = ReturnType<typeof useCreateSlideMutation>;
 export type CreateSlideMutationResult = Apollo.MutationResult<CreateSlideMutation>;
 export type CreateSlideMutationOptions = Apollo.BaseMutationOptions<CreateSlideMutation, CreateSlideMutationVariables>;
+export const GenerateAgoraTokenDocument = gql`
+    mutation GenerateAgoraToken($channelName: String!, $uid: String) {
+  GenerateAgoraToken(input: {channelName: $channelName, uid: $uid}) {
+    token
+    tokenCreatedFromAccount
+  }
+}
+    `;
+export type GenerateAgoraTokenMutationFn = Apollo.MutationFunction<GenerateAgoraTokenMutation, GenerateAgoraTokenMutationVariables>;
+
+/**
+ * __useGenerateAgoraTokenMutation__
+ *
+ * To run a mutation, you first call `useGenerateAgoraTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGenerateAgoraTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [generateAgoraTokenMutation, { data, loading, error }] = useGenerateAgoraTokenMutation({
+ *   variables: {
+ *      channelName: // value for 'channelName'
+ *      uid: // value for 'uid'
+ *   },
+ * });
+ */
+export function useGenerateAgoraTokenMutation(baseOptions?: Apollo.MutationHookOptions<GenerateAgoraTokenMutation, GenerateAgoraTokenMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GenerateAgoraTokenMutation, GenerateAgoraTokenMutationVariables>(GenerateAgoraTokenDocument, options);
+      }
+export type GenerateAgoraTokenMutationHookResult = ReturnType<typeof useGenerateAgoraTokenMutation>;
+export type GenerateAgoraTokenMutationResult = Apollo.MutationResult<GenerateAgoraTokenMutation>;
+export type GenerateAgoraTokenMutationOptions = Apollo.BaseMutationOptions<GenerateAgoraTokenMutation, GenerateAgoraTokenMutationVariables>;
 export const SaveProfileDocument = gql`
     mutation saveProfile($name: String = "", $profile: String = "") {
   insert_slideshare_Profile_one(

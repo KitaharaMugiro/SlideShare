@@ -1,0 +1,6 @@
+mutation GenerateAgoraToken($channelName: String!, $uid: String) {
+  GenerateAgoraToken(input: {channelName: $channelName, uid: $uid}) {
+    token
+    tokenCreatedFromAccount
+  }
+}
