@@ -10,7 +10,6 @@ const config: ClientConfig = {
 };
 
 const appId: string = "b2a72b031fc64276bfee7398c7eb6d7b"; //ENTER APP ID HERE
-const token: string = "006b2a72b031fc64276bfee7398c7eb6d7bIAAYdUPgJrEaElvV5FhYEeekNFEwmtJdd7XB02hqwQ6J3S1zB/AAAAAAEADJD5AXm7tzYQEAAQCau3Nh";
 
 interface Props {
     channelName: string
@@ -24,10 +23,12 @@ const App = ({ channelName, uid }: Props) => {
     }, [])
     if (loading) return <div>ローディング</div>
     if (error) return <div>エラー</div>
+    const token = data?.GenerateAgoraToken?.token
+    if (!token) return <div>トークンエラー</div>
+    console.log({ token })
     return (
         <div>
-            <h1 className="heading">Agora RTC NG SDK React Wrapper</h1>
-            <Call channelName={channelName} />
+            <Call channelName={channelName} token={token} uid={uid} />
         </div>
     );
 };
@@ -40,10 +41,10 @@ const useMicrophone = createMicrophoneAudioTrack();
 
 const Call = (props: {
     channelName: string;
+    token: string;
+    uid: string;
 }) => {
-    const { channelName } = props;
-    const [users, setUsers] = useState<IAgoraRTCRemoteUser[]>([]);
-    const [start, setStart] = useState<boolean>(false);
+    const { channelName, token, uid } = props;
     // using the hook to get access to the client object
     const client = useClient();
     // ready is a state variable, which returns true when the local tracks are initialized, untill then tracks variable is null
@@ -55,11 +56,6 @@ const Call = (props: {
             client.on("user-published", async (user, mediaType) => {
                 await client.subscribe(user, mediaType);
                 console.log("subscribe success");
-                if (mediaType === "video") {
-                    setUsers((prevUsers) => {
-                        return [...prevUsers, user];
-                    });
-                }
                 if (mediaType === "audio") {
                     user.audioTrack?.play();
                 }
@@ -70,24 +66,14 @@ const Call = (props: {
                 if (type === "audio") {
                     user.audioTrack?.stop();
                 }
-                if (type === "video") {
-                    setUsers((prevUsers) => {
-                        return prevUsers.filter((User) => User.uid !== user.uid);
-                    });
-                }
             });
 
             client.on("user-left", (user) => {
                 console.log("leaving", user);
-                setUsers((prevUsers) => {
-                    return prevUsers.filter((User) => User.uid !== user.uid);
-                });
             });
 
-            await client.join(appId, name, token, null);
+            await client.join(appId, name, token, uid);
             if (track) await client.publish(track);
-            setStart(true);
-
         };
 
         if (ready && track) {
@@ -95,13 +81,13 @@ const Call = (props: {
             init(channelName);
         }
 
-    }, [channelName, client, ready, track]);
+    }, [channelName, client, ready, track, token]);
 
 
     return (
         <div className="App">
             {ready && track && (
-                <Controls track={track} setStart={setStart} />
+                <Controls track={track} />
             )}
         </div>
     );
@@ -110,10 +96,9 @@ const Call = (props: {
 
 export const Controls = (props: {
     track: IMicrophoneAudioTrack;
-    setStart: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
     const client = useClient();
-    const { track, setStart } = props;
+    const { track } = props;
     const [trackState, setTrackState] = useState({ video: true, audio: true });
 
     const mute = async (type: "audio" | "video") => {
@@ -130,7 +115,6 @@ export const Controls = (props: {
         client.removeAllListeners();
         // we close the tracks to perform cleanup
         track.close();
-        setStart(false);
     };
 
     return (
