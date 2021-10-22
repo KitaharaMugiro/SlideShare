@@ -99,15 +99,14 @@ export const Controls = (props: {
 }) => {
     const client = useClient();
     const { track } = props;
-    const [trackState, setTrackState] = useState({ video: true, audio: true });
+    const [trackState, setTrackState] = useState({ audio: true });
 
-    const mute = async (type: "audio" | "video") => {
-        if (type === "audio") {
-            await track.setEnabled(!trackState.audio);
-            setTrackState((ps) => {
-                return { ...ps, audio: !ps.audio };
-            });
-        }
+    const mute = async () => {
+        await track.setEnabled(!trackState.audio);
+        setTrackState((ps) => {
+            return { ...ps, audio: !ps.audio };
+        });
+
     };
 
     const leaveChannel = async () => {
@@ -120,12 +119,8 @@ export const Controls = (props: {
     return (
         <div className="controls">
             <p className={trackState.audio ? "on" : ""}
-                onClick={() => mute("audio")}>
+                onClick={() => mute()}>
                 {trackState.audio ? "MuteAudio" : "UnmuteAudio"}
-            </p>
-            <p className={trackState.video ? "on" : ""}
-                onClick={() => mute("video")}>
-                {trackState.video ? "MuteVideo" : "UnmuteVideo"}
             </p>
             {<p onClick={() => leaveChannel()}>Leave</p>}
         </div>

@@ -58,4 +58,4 @@ amplifytools.xcconfig
 **.sample
 #amplify-do-not-edit-end
 
-src/lambda/token/handler.py
+src/lambda/token/.env
