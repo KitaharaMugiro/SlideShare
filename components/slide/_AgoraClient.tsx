@@ -1,8 +1,11 @@
+import { Button } from "@mui/material";
 import {
     ClientConfig, createClient,
     createMicrophoneAudioTrack, IAgoraRTCRemoteUser, IMicrophoneAudioTrack
 } from "agora-rtc-react";
+import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
+import { TrackStateAtom } from "../../model/jotai/TrackState";
 import { useGenerateAgoraTokenMutation } from "../../src/generated/graphql";
 
 const config: ClientConfig = {
@@ -153,32 +156,17 @@ const Subscribe = (props: {
 export const Controls = (props: {
     track: IMicrophoneAudioTrack;
 }) => {
-    const client = useClient();
     const { track } = props;
-    const [trackState, setTrackState] = useState({ audio: true });
+    const [trackState] = useAtom(TrackStateAtom);
 
-    const mute = async () => {
-        await track.setEnabled(!trackState.audio);
-        setTrackState((ps) => {
-            return { ...ps, audio: !ps.audio };
-        });
+    useEffect(() => {
+        track.setEnabled(trackState.audio);
+    }, [trackState])
 
-    };
-
-    const leaveChannel = async () => {
-        await client.leave();
-        client.removeAllListeners();
-        // we close the tracks to perform cleanup
-        track.close();
-    };
 
     return (
-        <div className="controls">
-            <p className={trackState.audio ? "on" : ""}
-                onClick={() => mute()}>
-                {trackState.audio ? "MuteAudio" : "UnmuteAudio"}
-            </p>
-            {<p onClick={() => leaveChannel()}>Leave</p>}
+        <div style={{ position: "absolute", left: 0 }}>
+            {/* {trackState.audio ? "録音中" : "ミュート中"} */}
         </div>
     );
 };

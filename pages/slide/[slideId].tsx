@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
-import { useRealtimeSharedState } from "realtimely";
+import { useOnlineUsers, useRealtimeCursor, useRealtimeSharedState } from "realtimely";
 import AgoraClient from "../../components/slide/AgoraClient";
 import Comments from "../../components/slide/comments/Comments";
 import ImagePageView from "../../components/slide/pageview/ImagePageView";
@@ -12,6 +12,10 @@ import { UserAtom } from "../../model/jotai/User";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
 import { v4 as uuidv4 } from "uuid"
+import SlideController from "../../components/slide/SlideController";
+import { SlideStateAtom } from "../../model/jotai/SlideState";
+import SlideInfoBar from "../../components/slide/SlideInfoBar";
+import { Typography } from "@mui/material";
 
 const Page = () => {
     const router = useRouter()
@@ -22,11 +26,19 @@ const Page = () => {
     const [uuid] = useState(uuidv4())
 
     //slide状態変数
+    const [localAdminSlideState] = useAtom(SlideStateAtom)
     const [slideState, setSlideState] = useRealtimeSharedState({
         pageNumber: 0,
+        enableCursor: true
     }, "slideState")
     const [localPageNumber, setLocalPageNumber] = useState(0)
     const [isSync, setIsSync] = useState(true)
+
+    //リアルタイムカーソル
+    const { renderCursors, onMouseMove } = useRealtimeCursor()
+
+    //視聴者数
+    const { onlineUserList } = useOnlineUsers()
 
     //データ取得
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) }, fetchPolicy: "no-cache" })
@@ -48,6 +60,15 @@ const Page = () => {
             setLocalPageNumber(slideState.pageNumber)
         }
     }, [slideState.pageNumber])
+
+    useEffect(() => {
+        if (isAdmin) {
+            setSlideState({
+                ...slideState,
+                enableCursor: localAdminSlideState.cursor
+            })
+        }
+    }, [localAdminSlideState.cursor])
 
     const goNext = () => {
         if (isAdmin) {
@@ -108,13 +129,16 @@ const Page = () => {
                 isHost={isAdmin} />
 
             {/* スライド */}
-            <div className={style.deck_space}>
+            <div className={style.deck_space} >
                 <div>
-                    <PageViewController
-                        viewingPage={viewingPage}
-                        onClickLeft={goPrevious}
-                        onClickRight={goNext}
-                    />
+                    <div style={{ position: "relative" }} onMouseMove={isAdmin ? onMouseMove : undefined}>
+                        <PageViewController
+                            viewingPage={viewingPage}
+                            onClickLeft={goPrevious}
+                            onClickRight={goNext}
+                        />
+                        {slideState.enableCursor ? renderCursors() : <div />}
+                    </div>
                     <SlideSlider
                         maxPageNumber={pages?.length || 0}
                         pageNumber={isSync ? slideState.pageNumber : localPageNumber}
@@ -122,7 +146,8 @@ const Page = () => {
                         isSync={isSync}
                         syncSlide={syncSlide}
                     />
-
+                    {isAdmin ? <SlideController /> : <div />}
+                    <Typography color="white" justifyContent="center">視聴者数: {onlineUserList ? onlineUserList.length : 0}人</Typography>
                 </div>
                 <div style={{
                     marginLeft: 60,

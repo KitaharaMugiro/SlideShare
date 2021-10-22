@@ -70,14 +70,14 @@ export default (props: Props) => {
                     onClick={props.onClickLeft}
                     style={{
                         position: "absolute",
-                        bottom: 0,
+                        bottom: height / 2,
                         left: 0
                     }} >前へ</Button>
                 <Button
                     onClick={props.onClickRight}
                     style={{
                         position: "absolute",
-                        bottom: 0,
+                        bottom: height / 2,
                         right: 0,
                     }} >次へ</Button>
             </>
