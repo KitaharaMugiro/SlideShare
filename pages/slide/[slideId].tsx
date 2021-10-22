@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { useRealtimeSharedState } from "realtimely";
+import AgoraClient from "../../components/slide/AgoraClient";
 import Comments from "../../components/slide/comments/Comments";
 import ImagePageView from "../../components/slide/pageview/ImagePageView";
 import PageViewController from "../../components/slide/pageview/PageViewController";
@@ -10,6 +11,7 @@ import SlideSlider from "../../components/slide/SlideSlider";
 import { UserAtom } from "../../model/jotai/User";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
+import { v4 as uuidv4 } from "uuid"
 
 const Page = () => {
     const router = useRouter()
@@ -17,6 +19,7 @@ const Page = () => {
 
     const [isAdmin, setIsAdmin] = useState(false)
     const [user] = useAtom(UserAtom)
+    const [uuid] = useState(uuidv4())
 
     //slide状態変数
     const [slideState, setSlideState] = useRealtimeSharedState({
@@ -95,8 +98,14 @@ const Page = () => {
 
     if (loading) return <div>ロード中</div>
     if (error) return <div>{JSON.stringify(error)}</div>
+
     return (
         <div className={style.main}>
+            <AgoraClient
+                uid={uuid}
+                host={slide?.createdBy || ""}
+                channelName={slide?.createdBy || ""}
+                isHost={isAdmin} />
 
             {/* スライド */}
             <div className={style.deck_space}>

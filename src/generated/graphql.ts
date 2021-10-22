@@ -82,14 +82,13 @@ export type Boolean_Comparison_Exp = {
 
 export type GenerateAgoraTokenInput = {
   channelName: Scalars['String'];
+  host: Scalars['String'];
   uid?: Maybe<Scalars['String']>;
-  userAccount?: Maybe<Scalars['String']>;
 };
 
 export type GenerateAgoraTokenOutput = {
   __typename?: 'GenerateAgoraTokenOutput';
   token?: Maybe<Scalars['String']>;
-  tokenCreatedFromAccount?: Maybe<Scalars['String']>;
 };
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
@@ -1581,10 +1580,11 @@ export type CreateSlideMutation = { __typename?: 'mutation_root', insert_slidesh
 export type GenerateAgoraTokenMutationVariables = Exact<{
   channelName: Scalars['String'];
   uid?: Maybe<Scalars['String']>;
+  host: Scalars['String'];
 }>;
 
 
-export type GenerateAgoraTokenMutation = { __typename?: 'mutation_root', GenerateAgoraToken?: { __typename?: 'GenerateAgoraTokenOutput', token?: string | null | undefined, tokenCreatedFromAccount?: string | null | undefined } | null | undefined };
+export type GenerateAgoraTokenMutation = { __typename?: 'mutation_root', GenerateAgoraToken?: { __typename?: 'GenerateAgoraTokenOutput', token?: string | null | undefined } | null | undefined };
 
 export type SaveProfileMutationVariables = Exact<{
   name?: Maybe<Scalars['String']>;
@@ -1917,10 +1917,9 @@ export type CreateSlideMutationHookResult = ReturnType<typeof useCreateSlideMuta
 export type CreateSlideMutationResult = Apollo.MutationResult<CreateSlideMutation>;
 export type CreateSlideMutationOptions = Apollo.BaseMutationOptions<CreateSlideMutation, CreateSlideMutationVariables>;
 export const GenerateAgoraTokenDocument = gql`
-    mutation GenerateAgoraToken($channelName: String!, $uid: String) {
-  GenerateAgoraToken(input: {channelName: $channelName, uid: $uid}) {
+    mutation GenerateAgoraToken($channelName: String!, $uid: String, $host: String!) {
+  GenerateAgoraToken(input: {channelName: $channelName, uid: $uid, host: $host}) {
     token
-    tokenCreatedFromAccount
   }
 }
     `;
@@ -1941,6 +1940,7 @@ export type GenerateAgoraTokenMutationFn = Apollo.MutationFunction<GenerateAgora
  *   variables: {
  *      channelName: // value for 'channelName'
  *      uid: // value for 'uid'
+ *      host: // value for 'host'
  *   },
  * });
  */

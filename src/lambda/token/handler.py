@@ -4,8 +4,7 @@ import sys
 import os
 import time
 from random import randint
-from RtcTokenBuilder import RtcTokenBuilder, Role_Attendee
-from dotenv import load_dotenv
+from RtcTokenBuilder import RtcTokenBuilder, Role_Subscriber, Role_Publisher
 
 appID = os.environ.get("appID")
 appCertificate = os.environ.get("appCertificate")
@@ -22,34 +21,26 @@ def hello(event, context):
     print(input)
     channelName: str = input["channelName"]
     uid: str = input.get("uid")
+    host: str = input.get("host")
     session_variables = body.get("session_variables")
-    userAccount = None
+    role = Role_Subscriber
     if session_variables:
         userAccount = session_variables.get("x-hasura-user-id")
-    # userAccount: str = input.get("userAccount")
+        if userAccount == host:
+            # Speaker
+            role = Role_Publisher
 
-    token = None
-    tokenCreatedFromAccount = None
-    if uid is not None:
-        token = RtcTokenBuilder.buildTokenWithUid(
-            appID, appCertificate, channelName, uid, Role_Attendee, privilegeExpiredTs
-        )
-        print("Token with int uid: {}".format(token))
+    if role == Role_Subscriber:
+        print("role: audience")
+    elif role == Role_Publisher:
+        print("role: host")
 
-    if userAccount is not None:
-        tokenCreatedFromAccount = RtcTokenBuilder.buildTokenWithAccount(
-            appID,
-            appCertificate,
-            channelName,
-            userAccount,
-            Role_Attendee,
-            privilegeExpiredTs,
-        )
-        print("Token with user account: {}".format(tokenCreatedFromAccount))
-    body = {
-        "token": token,
-        "tokenCreatedFromAccount": tokenCreatedFromAccount,
-    }
+    token = RtcTokenBuilder.buildTokenWithUid(
+        appID, appCertificate, channelName, uid, role, privilegeExpiredTs
+    )
+    print("Token with int uid: {}".format(token))
+
+    body = {"token": token}
 
     response = {"statusCode": 200, "body": json.dumps(body)}
 

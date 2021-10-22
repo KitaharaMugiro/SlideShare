@@ -537,19 +537,23 @@
             "deprecationReason": null
           },
           {
-            "name": "uid",
+            "name": "host",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "userAccount",
+            "name": "uid",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -572,18 +576,6 @@
         "fields": [
           {
             "name": "token",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "tokenCreatedFromAccount",
             "description": null,
             "args": [],
             "type": {
