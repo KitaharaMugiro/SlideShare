@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from "react";
 import {
-    AgoraVideoPlayer,
-    createClient,
-    createMicrophoneAndCameraTracks,
-    ClientConfig,
-    IAgoraRTCRemoteUser,
-    ICameraVideoTrack,
-    IMicrophoneAudioTrack,
+    ClientConfig, createClient,
+    createMicrophoneAudioTrack, IAgoraRTCRemoteUser, IMicrophoneAudioTrack
 } from "agora-rtc-react";
-import dynamic from "next/dynamic";
+import React, { useEffect, useState } from "react";
+import { useGenerateAgoraTokenMutation } from "../../src/generated/graphql";
 
 const config: ClientConfig = {
     mode: "rtc", codec: "vp8",
 };
 
 const appId: string = "b2a72b031fc64276bfee7398c7eb6d7b"; //ENTER APP ID HERE
-const token: string | null = "006b2a72b031fc64276bfee7398c7eb6d7bIAAYdUPgJrEaElvV5FhYEeekNFEwmtJdd7XB02hqwQ6J3S1zB/AAAAAAEADJD5AXm7tzYQEAAQCau3Nh";
+const token: string = "006b2a72b031fc64276bfee7398c7eb6d7bIAAYdUPgJrEaElvV5FhYEeekNFEwmtJdd7XB02hqwQ6J3S1zB/AAAAAAEADJD5AXm7tzYQEAAQCau3Nh";
 
-const App = () => {
-    const [inCall, setInCall] = useState(false);
-    const [channelName, setChannelName] = useState("aaa");
+interface Props {
+    channelName: string
+    uid: string
+}
+
+const App = ({ channelName, uid }: Props) => {
+    const [getToken, { data, loading, error }] = useGenerateAgoraTokenMutation({ variables: { channelName, uid } })
+    useEffect(() => {
+        getToken()
+    }, [])
+    if (loading) return <div>ローディング</div>
+    if (error) return <div>エラー</div>
     return (
         <div>
             <h1 className="heading">Agora RTC NG SDK React Wrapper</h1>
-            {inCall ? (
-                <VideoCall setInCall={setInCall} channelName={channelName} />
-            ) : (
-                <ChannelForm setInCall={setInCall} setChannelName={setChannelName} />
-            )}
+            <Call channelName={channelName} />
         </div>
     );
 };
@@ -36,19 +36,18 @@ const App = () => {
 // the create method should be called outside the parent component
 // this hook can be used the get the client/stream in any component
 const useClient = createClient(config);
-const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
+const useMicrophone = createMicrophoneAudioTrack();
 
-const VideoCall = (props: {
-    setInCall: React.Dispatch<React.SetStateAction<boolean>>;
+const Call = (props: {
     channelName: string;
 }) => {
-    const { setInCall, channelName } = props;
+    const { channelName } = props;
     const [users, setUsers] = useState<IAgoraRTCRemoteUser[]>([]);
     const [start, setStart] = useState<boolean>(false);
     // using the hook to get access to the client object
     const client = useClient();
     // ready is a state variable, which returns true when the local tracks are initialized, untill then tracks variable is null
-    const { ready, tracks } = useMicrophoneAndCameraTracks();
+    const { ready, track } = useMicrophone();
 
     useEffect(() => {
         // function to initialise the SDK
@@ -86,73 +85,42 @@ const VideoCall = (props: {
             });
 
             await client.join(appId, name, token, null);
-            if (tracks) await client.publish([tracks[0], tracks[1]]);
+            if (track) await client.publish(track);
             setStart(true);
 
         };
 
-        if (ready && tracks) {
+        if (ready && track) {
             console.log("init ready");
             init(channelName);
         }
 
-    }, [channelName, client, ready, tracks]);
+    }, [channelName, client, ready, track]);
 
 
     return (
         <div className="App">
-            {ready && tracks && (
-                <Controls tracks={tracks} setStart={setStart} setInCall={setInCall} />
+            {ready && track && (
+                <Controls track={track} setStart={setStart} />
             )}
-            {start && tracks && <Videos users={users} tracks={tracks} />}
         </div>
     );
 };
 
-const Videos = (props: {
-    users: IAgoraRTCRemoteUser[];
-    tracks: [IMicrophoneAudioTrack, ICameraVideoTrack];
-}) => {
-    const { users, tracks } = props;
-
-    return (
-        <div>
-            <div id="videos">
-                {/* AgoraVideoPlayer component takes in the video track to render the stream,
-            you can pass in other props that get passed to the rendered div */}
-                <AgoraVideoPlayer style={{ height: '95%', width: '95%' }} className='vid' videoTrack={tracks[1]} />
-                {users.length > 0 &&
-                    users.map((user) => {
-                        if (user.videoTrack) {
-                            return (
-                                <AgoraVideoPlayer style={{ height: '95%', width: '95%' }} className='vid' videoTrack={user.videoTrack} key={user.uid} />
-                            );
-                        } else return null;
-                    })}
-            </div>
-        </div>
-    );
-};
 
 export const Controls = (props: {
-    tracks: [IMicrophoneAudioTrack, ICameraVideoTrack];
+    track: IMicrophoneAudioTrack;
     setStart: React.Dispatch<React.SetStateAction<boolean>>;
-    setInCall: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
     const client = useClient();
-    const { tracks, setStart, setInCall } = props;
+    const { track, setStart } = props;
     const [trackState, setTrackState] = useState({ video: true, audio: true });
 
     const mute = async (type: "audio" | "video") => {
         if (type === "audio") {
-            await tracks[0].setEnabled(!trackState.audio);
+            await track.setEnabled(!trackState.audio);
             setTrackState((ps) => {
                 return { ...ps, audio: !ps.audio };
-            });
-        } else if (type === "video") {
-            await tracks[1].setEnabled(!trackState.video);
-            setTrackState((ps) => {
-                return { ...ps, video: !ps.video };
             });
         }
     };
@@ -161,10 +129,8 @@ export const Controls = (props: {
         await client.leave();
         client.removeAllListeners();
         // we close the tracks to perform cleanup
-        tracks[0].close();
-        tracks[1].close();
+        track.close();
         setStart(false);
-        setInCall(false);
     };
 
     return (
@@ -179,29 +145,6 @@ export const Controls = (props: {
             </p>
             {<p onClick={() => leaveChannel()}>Leave</p>}
         </div>
-    );
-};
-
-const ChannelForm = (props: {
-    setInCall: React.Dispatch<React.SetStateAction<boolean>>;
-    setChannelName: React.Dispatch<React.SetStateAction<string>>;
-}) => {
-    const { setInCall, setChannelName } = props;
-
-    return (
-        <form className="join">
-            {appId === '' && <p style={{ color: 'red' }}>Please enter your Agora App ID in App.tsx and refresh the page</p>}
-            <input type="text"
-                placeholder="Enter Channel Name"
-                onChange={(e) => setChannelName(e.target.value)}
-            />
-            <button onClick={(e) => {
-                e.preventDefault();
-                setInCall(true);
-            }}>
-                Join
-            </button>
-        </form>
     );
 };
 

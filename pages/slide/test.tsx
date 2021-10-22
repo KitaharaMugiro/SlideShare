@@ -2,9 +2,13 @@ import dynamic from "next/dynamic";
 
 const ClientSideControls = dynamic(
     () => {
-        return import("../../components/slide/test") as any;
+        return import("../../components/slide/AgoraClient");
     },
     { ssr: false }
 );
 
-export default ClientSideControls
+const App = () => {
+    return <ClientSideControls channelName={"aaa"} uid={"aaa"} />
+}
+
+export default App
