@@ -1,28 +1,26 @@
+import { Typography } from "@mui/material";
 import { useAtom } from "jotai";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { useOnlineUsers, useRealtimeCursor, useRealtimeSharedState } from "realtimely";
+import { v4 as uuidv4 } from "uuid";
 import AgoraClient from "../../components/slide/AgoraClient";
 import Comments from "../../components/slide/comments/Comments";
-import ImagePageView from "../../components/slide/pageview/ImagePageView";
 import PageViewController from "../../components/slide/pageview/PageViewController";
 import ProfileCardController from "../../components/slide/ProfileCardController";
+import SlideController from "../../components/slide/SlideController";
 import SlideSlider from "../../components/slide/SlideSlider";
-import { UserAtom } from "../../model/jotai/User";
+import useUser from "../../model/hooks/useUser";
+import { SlideStateAtom } from "../../model/jotai/SlideState";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
-import { v4 as uuidv4 } from "uuid"
-import SlideController from "../../components/slide/SlideController";
-import { SlideStateAtom } from "../../model/jotai/SlideState";
-import SlideInfoBar from "../../components/slide/SlideInfoBar";
-import { Typography } from "@mui/material";
 
 const Page = () => {
     const router = useRouter()
     const { slideId } = router.query
 
     const [isAdmin, setIsAdmin] = useState(false)
-    const [user] = useAtom(UserAtom)
+    const { user } = useUser()
     const [uuid] = useState(uuidv4())
 
     //slide状態変数
@@ -131,7 +129,7 @@ const Page = () => {
             {/* スライド */}
             <div className={style.deck_space} >
                 <div>
-                    <div style={{ position: "relative" }} onMouseMove={isAdmin ? onMouseMove : undefined}>
+                    <div style={{ position: "relative" }} onMouseMove={isAdmin && slideState.enableCursor ? onMouseMove : undefined}>
                         <PageViewController
                             viewingPage={viewingPage}
                             onClickLeft={goPrevious}

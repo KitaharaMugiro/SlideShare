@@ -1,18 +1,15 @@
+import { Storage } from "aws-amplify";
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { v4 as uuidv4 } from "uuid";
 import { usePageList } from '../../../model/hooks/usePageList';
 import UploadDragzoneDesign from '../../upload/UploadDragzoneDesign';
-import { Storage } from "aws-amplify"
-import { v4 as uuidv4 } from "uuid"
-import { useAtom } from 'jotai';
-import { UserAtom } from '../../../model/jotai/User';
 
 function ImageUploader() {
 
     const accept = "image/*"
     const multiple = false
     const { focusedPage, updatePage } = usePageList()
-    const [user] = useAtom(UserAtom)
 
 
     const onDrop = useCallback(acceptedFiles => {

@@ -1,12 +1,9 @@
 import React, { useState, useRef, createRef, RefObject, useEffect } from 'react'
+import { PollOption } from '../../../model/Poll'
+import { useSubscribePollResultsQuery } from '../../../src/generated/graphql'
 import styles from './MultiplePoll.module.css'
 import { animateAnswers, manageVote } from './utils'
 
-export interface Result {
-    text: string
-    votes: number
-    percentage?: number
-}
 
 export interface Theme {
     mainColor?: string // multiple poll only
@@ -20,37 +17,38 @@ export interface Theme {
 
 interface MultiplePollProps {
     question?: string
-    results: Result[]
+    results: PollOption[]
     theme?: Theme
-    onVote?(item: Result, results: Result[]): void
+    voted: boolean
+    votedIndex: number
+    onVote(votedIndex: number): void
 }
 
 const MultiplePoll = ({
     question,
     results,
     theme: propTheme,
+    voted,
+    votedIndex,
     onVote
 }: MultiplePollProps) => {
+
     const theme = propTheme || {
         textColor: 'black',
         mainColor: '#00B87B',
         backgroundColor: 'rgb(255,255,255)',
         alignment: 'center'
     }
-    const [voted, setVoted] = useState<boolean>(false)
-    const [votedIndex, setVotedIndex] = useState(0)
     const answerRefs = useRef<RefObject<HTMLDivElement>[]>(
         results.map(() => createRef<HTMLDivElement>())
     )
+
     useEffect(() => {
-        animateAnswers(votedIndex, results, answerRefs, theme, false)
-    }, [results])
-    const sumVote = results.reduce((p, c) => p + c.votes, 0)
-    results.forEach(r => {
-        if (r.percentage !== undefined) {
-            r.percentage = Math.round(r.votes / sumVote * 100)
+        if (voted) {
+            animateAnswers(votedIndex, results, answerRefs, theme, false)
         }
-    })
+    }, [results])
+
     return (
         <article
             className={styles.container}
@@ -71,10 +69,8 @@ const MultiplePoll = ({
                     }}
                     onClick={() => {
                         if (!voted) {
-                            setVoted(true)
-                            setVotedIndex(index)
                             manageVote(results, result, index, answerRefs, theme)
-                            onVote?.(result, results)
+                            onVote(index)
                         }
                     }}
                 >

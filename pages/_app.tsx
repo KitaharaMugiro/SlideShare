@@ -1,18 +1,16 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import React, { useEffect } from 'react'
-import MyAppBar from '../components/common/MyAppBar'
-import Amplify, { Auth, Storage } from 'aws-amplify';
-import awsConfig from '../src/aws-exports';
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
-import { useAtom } from 'jotai';
-import { UserAtom } from '../model/jotai/User';
 import { ApolloProvider } from '@apollo/client';
-import MyApolloClient from '../api/MyApolloClient';
-import MyBackdrop from '../components/common/MyBackdrop';
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material';
+import Amplify, { Auth } from 'aws-amplify';
+import type { AppProps } from 'next/app';
 import { useRouter } from 'next/dist/client/router';
+import React, { useEffect } from 'react';
+import MyApolloClient from '../api/MyApolloClient';
+import MyAppBar from '../components/common/MyAppBar';
+import MyBackdrop from '../components/common/MyBackdrop';
+import useUser from '../model/hooks/useUser';
+import awsConfig from '../src/aws-exports';
+import '../styles/globals.css';
 
 function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
   if (urlStrings.length === 1) return urlStrings[0];
@@ -40,7 +38,7 @@ awsConfig.oauth.redirectSignOut = redirectSignIn
 Amplify.configure(awsConfig);
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const [_, setUser] = useAtom(UserAtom)
+  const { setUser } = useUser()
   const router = useRouter()
 
   useEffect(() => {

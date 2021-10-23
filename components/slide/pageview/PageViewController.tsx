@@ -4,6 +4,7 @@ import { Page } from "../../../model/Page"
 import { Slideshare_PageType_Enum } from "../../../src/generated/graphql"
 import MarkdownEditor from "../../edit/editor/MarkdownEditor"
 import { MultiplePoll } from "../poll/MultiplePoll"
+import PollController from "../poll/PollController"
 import ImagePageView from "./ImagePageView"
 import style from "./ImagePageView.module.css"
 
@@ -37,10 +38,7 @@ export default (props: Props) => {
         if (props.viewingPage.type === Slideshare_PageType_Enum.Poll) {
             return <>
                 <div style={{ position: "absolute", width: width / 3, left: width / 3 }}>
-                    <MultiplePoll
-                        question="このように投票をかけます"
-                        results={[{ text: "React", votes: 9 }, { text: "Vue", votes: 4 }]}
-                    />
+                    <PollController pageId={props.viewingPage.id} />
                 </div>
             </>
         }
@@ -54,7 +52,7 @@ export default (props: Props) => {
         }
         if (props.viewingPage.type === Slideshare_PageType_Enum.Text) {
             return <>
-                <MarkdownEditor editable={false} height={height} />
+                <MarkdownEditor editable={false} height={height} page={props.viewingPage} />
             </>
         }
 

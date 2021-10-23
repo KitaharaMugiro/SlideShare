@@ -5,6 +5,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 import { usePageList } from "../../model/hooks/usePageList"
 import { focusedPageIdAtom } from "../../model/jotai/FocusedPageId"
 import { Page } from "../../model/Page"
+import { Slideshare_PageType_Enum } from "../../src/generated/graphql"
 import ImageFrame from "./frame/ImageFrame"
 import PlusFrame from "./frame/PlusFrame"
 import SimpleFrame from "./frame/SimpleFrame"
@@ -27,12 +28,12 @@ export default () => {
 
     const frameByType = (page: Page) => {
         const isFocus = page.id === focusId
-        if (page.type === "temp") {
+        if (page.type === Slideshare_PageType_Enum.Temp) {
             return <SimpleFrame text="" isFocus={isFocus} />
-        } else if (page.type === "image" && page.imageUrl) {
+        } else if (page.type === Slideshare_PageType_Enum.Image && page.imageUrl) {
             return <ImageFrame imageUrl={page.imageUrl} isFocus={isFocus} />
         } else {
-            return <SimpleFrame text="" isFocus={isFocus} />
+            return <SimpleFrame text={page.type} isFocus={isFocus} />
         }
     }
 

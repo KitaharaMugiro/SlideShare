@@ -424,6 +424,10 @@ export type Mutation_Root = {
   delete_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
   /** delete single row from the table: "slideshare.Page" */
   delete_slideshare_Page_by_pk?: Maybe<Slideshare_Page>;
+  /** delete data from the table: "slideshare.Poll" */
+  delete_slideshare_Poll?: Maybe<Slideshare_Poll_Mutation_Response>;
+  /** delete single row from the table: "slideshare.Poll" */
+  delete_slideshare_Poll_by_pk?: Maybe<Slideshare_Poll>;
   /** delete data from the table: "slideshare.Slide" */
   delete_slideshare_Slide?: Maybe<Slideshare_Slide_Mutation_Response>;
   /** delete single row from the table: "slideshare.Slide" */
@@ -440,6 +444,14 @@ export type Mutation_Root = {
   insert_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
   /** insert a single row into the table: "slideshare.Page" */
   insert_slideshare_Page_one?: Maybe<Slideshare_Page>;
+  /** insert data into the table: "slideshare.Poll" */
+  insert_slideshare_Poll?: Maybe<Slideshare_Poll_Mutation_Response>;
+  /** insert data into the table: "slideshare.PollResult" */
+  insert_slideshare_PollResult?: Maybe<Slideshare_PollResult_Mutation_Response>;
+  /** insert a single row into the table: "slideshare.PollResult" */
+  insert_slideshare_PollResult_one?: Maybe<Slideshare_PollResult>;
+  /** insert a single row into the table: "slideshare.Poll" */
+  insert_slideshare_Poll_one?: Maybe<Slideshare_Poll>;
   /** insert data into the table: "slideshare.Profile" */
   insert_slideshare_Profile?: Maybe<Slideshare_Profile_Mutation_Response>;
   /** insert a single row into the table: "slideshare.Profile" */
@@ -456,6 +468,14 @@ export type Mutation_Root = {
   update_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
   /** update single row of the table: "slideshare.Page" */
   update_slideshare_Page_by_pk?: Maybe<Slideshare_Page>;
+  /** update data of the table: "slideshare.Poll" */
+  update_slideshare_Poll?: Maybe<Slideshare_Poll_Mutation_Response>;
+  /** update data of the table: "slideshare.PollResult" */
+  update_slideshare_PollResult?: Maybe<Slideshare_PollResult_Mutation_Response>;
+  /** update single row of the table: "slideshare.PollResult" */
+  update_slideshare_PollResult_by_pk?: Maybe<Slideshare_PollResult>;
+  /** update single row of the table: "slideshare.Poll" */
+  update_slideshare_Poll_by_pk?: Maybe<Slideshare_Poll>;
   /** update data of the table: "slideshare.Profile" */
   update_slideshare_Profile?: Maybe<Slideshare_Profile_Mutation_Response>;
   /** update single row of the table: "slideshare.Profile" */
@@ -508,6 +528,18 @@ export type Mutation_RootDelete_Slideshare_Page_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Slideshare_PollArgs = {
+  where: Slideshare_Poll_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_Poll_By_PkArgs = {
+  pageId: Scalars['String'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_Slideshare_SlideArgs = {
   where: Slideshare_Slide_Bool_Exp;
 };
@@ -556,6 +588,34 @@ export type Mutation_RootInsert_Slideshare_PageArgs = {
 export type Mutation_RootInsert_Slideshare_Page_OneArgs = {
   object: Slideshare_Page_Insert_Input;
   on_conflict?: Maybe<Slideshare_Page_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_PollArgs = {
+  objects: Array<Slideshare_Poll_Insert_Input>;
+  on_conflict?: Maybe<Slideshare_Poll_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_PollResultArgs = {
+  objects: Array<Slideshare_PollResult_Insert_Input>;
+  on_conflict?: Maybe<Slideshare_PollResult_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_PollResult_OneArgs = {
+  object: Slideshare_PollResult_Insert_Input;
+  on_conflict?: Maybe<Slideshare_PollResult_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_Poll_OneArgs = {
+  object: Slideshare_Poll_Insert_Input;
+  on_conflict?: Maybe<Slideshare_Poll_On_Conflict>;
 };
 
 
@@ -616,6 +676,36 @@ export type Mutation_RootUpdate_Slideshare_Page_By_PkArgs = {
   _inc?: Maybe<Slideshare_Page_Inc_Input>;
   _set?: Maybe<Slideshare_Page_Set_Input>;
   pk_columns: Slideshare_Page_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Slideshare_PollArgs = {
+  _set?: Maybe<Slideshare_Poll_Set_Input>;
+  where: Slideshare_Poll_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Slideshare_PollResultArgs = {
+  _inc?: Maybe<Slideshare_PollResult_Inc_Input>;
+  _set?: Maybe<Slideshare_PollResult_Set_Input>;
+  where: Slideshare_PollResult_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Slideshare_PollResult_By_PkArgs = {
+  _inc?: Maybe<Slideshare_PollResult_Inc_Input>;
+  _set?: Maybe<Slideshare_PollResult_Set_Input>;
+  pk_columns: Slideshare_PollResult_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Slideshare_Poll_By_PkArgs = {
+  _set?: Maybe<Slideshare_Poll_Set_Input>;
+  pk_columns: Slideshare_Poll_Pk_Columns_Input;
 };
 
 
@@ -689,6 +779,14 @@ export type Query_Root = {
   slideshare_PageType_by_pk?: Maybe<Slideshare_PageType>;
   /** fetch data from the table: "slideshare.Page" using primary key columns */
   slideshare_Page_by_pk?: Maybe<Slideshare_Page>;
+  /** fetch data from the table: "slideshare.Poll" */
+  slideshare_Poll: Array<Slideshare_Poll>;
+  /** fetch data from the table: "slideshare.PollResult" */
+  slideshare_PollResult: Array<Slideshare_PollResult>;
+  /** fetch data from the table: "slideshare.PollResult" using primary key columns */
+  slideshare_PollResult_by_pk?: Maybe<Slideshare_PollResult>;
+  /** fetch data from the table: "slideshare.Poll" using primary key columns */
+  slideshare_Poll_by_pk?: Maybe<Slideshare_Poll>;
   /** fetch data from the table: "slideshare.Profile" */
   slideshare_Profile: Array<Slideshare_Profile>;
   /** fetch data from the table: "slideshare.Profile" using primary key columns */
@@ -770,6 +868,34 @@ export type Query_RootSlideshare_Page_By_PkArgs = {
 };
 
 
+export type Query_RootSlideshare_PollArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Poll_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Poll_Order_By>>;
+  where?: Maybe<Slideshare_Poll_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_PollResultArgs = {
+  distinct_on?: Maybe<Array<Slideshare_PollResult_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_PollResult_Order_By>>;
+  where?: Maybe<Slideshare_PollResult_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_PollResult_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Query_RootSlideshare_Poll_By_PkArgs = {
+  pageId: Scalars['String'];
+};
+
+
 export type Query_RootSlideshare_ProfileArgs = {
   distinct_on?: Maybe<Array<Slideshare_Profile_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -814,6 +940,32 @@ export type Slideshare_Comment = {
   text: Scalars['String'];
 };
 
+/** order by aggregate values of table "slideshare.Comment" */
+export type Slideshare_Comment_Aggregate_Order_By = {
+  avg?: Maybe<Slideshare_Comment_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Slideshare_Comment_Max_Order_By>;
+  min?: Maybe<Slideshare_Comment_Min_Order_By>;
+  stddev?: Maybe<Slideshare_Comment_Stddev_Order_By>;
+  stddev_pop?: Maybe<Slideshare_Comment_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Slideshare_Comment_Stddev_Samp_Order_By>;
+  sum?: Maybe<Slideshare_Comment_Sum_Order_By>;
+  var_pop?: Maybe<Slideshare_Comment_Var_Pop_Order_By>;
+  var_samp?: Maybe<Slideshare_Comment_Var_Samp_Order_By>;
+  variance?: Maybe<Slideshare_Comment_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "slideshare.Comment" */
+export type Slideshare_Comment_Arr_Rel_Insert_Input = {
+  data: Array<Slideshare_Comment_Insert_Input>;
+};
+
+/** order by avg() on columns of table "slideshare.Comment" */
+export type Slideshare_Comment_Avg_Order_By = {
+  id?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "slideshare.Comment". All fields are combined with a logical 'AND'. */
 export type Slideshare_Comment_Bool_Exp = {
   Page?: Maybe<Slideshare_Page_Bool_Exp>;
@@ -838,6 +990,26 @@ export type Slideshare_Comment_Insert_Input = {
   pageId?: Maybe<Scalars['String']>;
   slideId?: Maybe<Scalars['Int']>;
   text?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "slideshare.Comment" */
+export type Slideshare_Comment_Max_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  createdBy?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+  text?: Maybe<Order_By>;
+};
+
+/** order by min() on columns of table "slideshare.Comment" */
+export type Slideshare_Comment_Min_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  createdBy?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+  text?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "slideshare.Comment" */
@@ -878,9 +1050,57 @@ export enum Slideshare_Comment_Select_Column {
   Text = 'text'
 }
 
+/** order by stddev() on columns of table "slideshare.Comment" */
+export type Slideshare_Comment_Stddev_Order_By = {
+  id?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by stddev_pop() on columns of table "slideshare.Comment" */
+export type Slideshare_Comment_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by stddev_samp() on columns of table "slideshare.Comment" */
+export type Slideshare_Comment_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by sum() on columns of table "slideshare.Comment" */
+export type Slideshare_Comment_Sum_Order_By = {
+  id?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by var_pop() on columns of table "slideshare.Comment" */
+export type Slideshare_Comment_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by var_samp() on columns of table "slideshare.Comment" */
+export type Slideshare_Comment_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by variance() on columns of table "slideshare.Comment" */
+export type Slideshare_Comment_Variance_Order_By = {
+  id?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
 /** columns and relationships of "slideshare.Page" */
 export type Slideshare_Page = {
   __typename?: 'slideshare_Page';
+  /** An array relationship */
+  Comments: Array<Slideshare_Comment>;
+  /** An object relationship */
+  PageType: Slideshare_PageType;
+  /** An object relationship */
+  Poll?: Maybe<Slideshare_Poll>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   createdBy: Scalars['String'];
   id: Scalars['String'];
@@ -892,6 +1112,16 @@ export type Slideshare_Page = {
   type: Slideshare_PageType_Enum;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   videoUrl?: Maybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "slideshare.Page" */
+export type Slideshare_PageCommentsArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Comment_Order_By>>;
+  where?: Maybe<Slideshare_Comment_Bool_Exp>;
 };
 
 /** columns and relationships of "slideshare.PageType" */
@@ -971,6 +1201,9 @@ export type Slideshare_Page_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "slideshare.Page". All fields are combined with a logical 'AND'. */
 export type Slideshare_Page_Bool_Exp = {
+  Comments?: Maybe<Slideshare_Comment_Bool_Exp>;
+  PageType?: Maybe<Slideshare_PageType_Bool_Exp>;
+  Poll?: Maybe<Slideshare_Poll_Bool_Exp>;
   _and?: Maybe<Array<Slideshare_Page_Bool_Exp>>;
   _not?: Maybe<Slideshare_Page_Bool_Exp>;
   _or?: Maybe<Array<Slideshare_Page_Bool_Exp>>;
@@ -1000,6 +1233,8 @@ export type Slideshare_Page_Inc_Input = {
 
 /** input type for inserting data into table "slideshare.Page" */
 export type Slideshare_Page_Insert_Input = {
+  Comments?: Maybe<Slideshare_Comment_Arr_Rel_Insert_Input>;
+  Poll?: Maybe<Slideshare_Poll_Obj_Rel_Insert_Input>;
   id?: Maybe<Scalars['String']>;
   imageUrl?: Maybe<Scalars['String']>;
   pageNumber?: Maybe<Scalars['Int']>;
@@ -1060,6 +1295,9 @@ export type Slideshare_Page_On_Conflict = {
 
 /** Ordering options when selecting data from "slideshare.Page". */
 export type Slideshare_Page_Order_By = {
+  Comments_aggregate?: Maybe<Slideshare_Comment_Aggregate_Order_By>;
+  PageType?: Maybe<Slideshare_PageType_Order_By>;
+  Poll?: Maybe<Slideshare_Poll_Order_By>;
   createdAt?: Maybe<Order_By>;
   createdBy?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
@@ -1174,6 +1412,325 @@ export type Slideshare_Page_Variance_Order_By = {
   pageNumber?: Maybe<Order_By>;
   slideId?: Maybe<Order_By>;
 };
+
+/** columns and relationships of "slideshare.Poll" */
+export type Slideshare_Poll = {
+  __typename?: 'slideshare_Poll';
+  /** An object relationship */
+  Page: Slideshare_Page;
+  /** An array relationship */
+  PollResults: Array<Slideshare_PollResult>;
+  option1: Scalars['String'];
+  option2: Scalars['String'];
+  option3?: Maybe<Scalars['String']>;
+  option4?: Maybe<Scalars['String']>;
+  pageId: Scalars['String'];
+  question: Scalars['String'];
+};
+
+
+/** columns and relationships of "slideshare.Poll" */
+export type Slideshare_PollPollResultsArgs = {
+  distinct_on?: Maybe<Array<Slideshare_PollResult_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_PollResult_Order_By>>;
+  where?: Maybe<Slideshare_PollResult_Bool_Exp>;
+};
+
+/** columns and relationships of "slideshare.PollResult" */
+export type Slideshare_PollResult = {
+  __typename?: 'slideshare_PollResult';
+  createdBy: Scalars['String'];
+  id: Scalars['Int'];
+  optionNumber: Scalars['Int'];
+  pageId: Scalars['String'];
+};
+
+/** order by aggregate values of table "slideshare.PollResult" */
+export type Slideshare_PollResult_Aggregate_Order_By = {
+  avg?: Maybe<Slideshare_PollResult_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Slideshare_PollResult_Max_Order_By>;
+  min?: Maybe<Slideshare_PollResult_Min_Order_By>;
+  stddev?: Maybe<Slideshare_PollResult_Stddev_Order_By>;
+  stddev_pop?: Maybe<Slideshare_PollResult_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Slideshare_PollResult_Stddev_Samp_Order_By>;
+  sum?: Maybe<Slideshare_PollResult_Sum_Order_By>;
+  var_pop?: Maybe<Slideshare_PollResult_Var_Pop_Order_By>;
+  var_samp?: Maybe<Slideshare_PollResult_Var_Samp_Order_By>;
+  variance?: Maybe<Slideshare_PollResult_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "slideshare.PollResult" */
+export type Slideshare_PollResult_Arr_Rel_Insert_Input = {
+  data: Array<Slideshare_PollResult_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Slideshare_PollResult_On_Conflict>;
+};
+
+/** order by avg() on columns of table "slideshare.PollResult" */
+export type Slideshare_PollResult_Avg_Order_By = {
+  id?: Maybe<Order_By>;
+  optionNumber?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "slideshare.PollResult". All fields are combined with a logical 'AND'. */
+export type Slideshare_PollResult_Bool_Exp = {
+  _and?: Maybe<Array<Slideshare_PollResult_Bool_Exp>>;
+  _not?: Maybe<Slideshare_PollResult_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_PollResult_Bool_Exp>>;
+  createdBy?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  optionNumber?: Maybe<Int_Comparison_Exp>;
+  pageId?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "slideshare.PollResult" */
+export enum Slideshare_PollResult_Constraint {
+  /** unique or primary key constraint */
+  PollResultPageIdCreatedByKey = 'PollResult_pageId_createdBy_key',
+  /** unique or primary key constraint */
+  PollResultPkey = 'PollResult_pkey'
+}
+
+/** input type for incrementing numeric columns in table "slideshare.PollResult" */
+export type Slideshare_PollResult_Inc_Input = {
+  optionNumber?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "slideshare.PollResult" */
+export type Slideshare_PollResult_Insert_Input = {
+  createdBy?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']>;
+  optionNumber?: Maybe<Scalars['Int']>;
+  pageId?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "slideshare.PollResult" */
+export type Slideshare_PollResult_Max_Order_By = {
+  createdBy?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  optionNumber?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+};
+
+/** order by min() on columns of table "slideshare.PollResult" */
+export type Slideshare_PollResult_Min_Order_By = {
+  createdBy?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  optionNumber?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "slideshare.PollResult" */
+export type Slideshare_PollResult_Mutation_Response = {
+  __typename?: 'slideshare_PollResult_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Slideshare_PollResult>;
+};
+
+/** on conflict condition type for table "slideshare.PollResult" */
+export type Slideshare_PollResult_On_Conflict = {
+  constraint: Slideshare_PollResult_Constraint;
+  update_columns?: Array<Slideshare_PollResult_Update_Column>;
+  where?: Maybe<Slideshare_PollResult_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "slideshare.PollResult". */
+export type Slideshare_PollResult_Order_By = {
+  createdBy?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  optionNumber?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: slideshare_PollResult */
+export type Slideshare_PollResult_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "slideshare.PollResult" */
+export enum Slideshare_PollResult_Select_Column {
+  /** column name */
+  CreatedBy = 'createdBy',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  OptionNumber = 'optionNumber',
+  /** column name */
+  PageId = 'pageId'
+}
+
+/** input type for updating data in table "slideshare.PollResult" */
+export type Slideshare_PollResult_Set_Input = {
+  optionNumber?: Maybe<Scalars['Int']>;
+};
+
+/** order by stddev() on columns of table "slideshare.PollResult" */
+export type Slideshare_PollResult_Stddev_Order_By = {
+  id?: Maybe<Order_By>;
+  optionNumber?: Maybe<Order_By>;
+};
+
+/** order by stddev_pop() on columns of table "slideshare.PollResult" */
+export type Slideshare_PollResult_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+  optionNumber?: Maybe<Order_By>;
+};
+
+/** order by stddev_samp() on columns of table "slideshare.PollResult" */
+export type Slideshare_PollResult_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+  optionNumber?: Maybe<Order_By>;
+};
+
+/** order by sum() on columns of table "slideshare.PollResult" */
+export type Slideshare_PollResult_Sum_Order_By = {
+  id?: Maybe<Order_By>;
+  optionNumber?: Maybe<Order_By>;
+};
+
+/** update columns of table "slideshare.PollResult" */
+export enum Slideshare_PollResult_Update_Column {
+  /** column name */
+  OptionNumber = 'optionNumber'
+}
+
+/** order by var_pop() on columns of table "slideshare.PollResult" */
+export type Slideshare_PollResult_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+  optionNumber?: Maybe<Order_By>;
+};
+
+/** order by var_samp() on columns of table "slideshare.PollResult" */
+export type Slideshare_PollResult_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+  optionNumber?: Maybe<Order_By>;
+};
+
+/** order by variance() on columns of table "slideshare.PollResult" */
+export type Slideshare_PollResult_Variance_Order_By = {
+  id?: Maybe<Order_By>;
+  optionNumber?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "slideshare.Poll". All fields are combined with a logical 'AND'. */
+export type Slideshare_Poll_Bool_Exp = {
+  Page?: Maybe<Slideshare_Page_Bool_Exp>;
+  PollResults?: Maybe<Slideshare_PollResult_Bool_Exp>;
+  _and?: Maybe<Array<Slideshare_Poll_Bool_Exp>>;
+  _not?: Maybe<Slideshare_Poll_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_Poll_Bool_Exp>>;
+  option1?: Maybe<String_Comparison_Exp>;
+  option2?: Maybe<String_Comparison_Exp>;
+  option3?: Maybe<String_Comparison_Exp>;
+  option4?: Maybe<String_Comparison_Exp>;
+  pageId?: Maybe<String_Comparison_Exp>;
+  question?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "slideshare.Poll" */
+export enum Slideshare_Poll_Constraint {
+  /** unique or primary key constraint */
+  PollPkey = 'Poll_pkey'
+}
+
+/** input type for inserting data into table "slideshare.Poll" */
+export type Slideshare_Poll_Insert_Input = {
+  Page?: Maybe<Slideshare_Page_Obj_Rel_Insert_Input>;
+  PollResults?: Maybe<Slideshare_PollResult_Arr_Rel_Insert_Input>;
+  option1?: Maybe<Scalars['String']>;
+  option2?: Maybe<Scalars['String']>;
+  option3?: Maybe<Scalars['String']>;
+  option4?: Maybe<Scalars['String']>;
+  pageId?: Maybe<Scalars['String']>;
+  question?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "slideshare.Poll" */
+export type Slideshare_Poll_Mutation_Response = {
+  __typename?: 'slideshare_Poll_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Slideshare_Poll>;
+};
+
+/** input type for inserting object relation for remote table "slideshare.Poll" */
+export type Slideshare_Poll_Obj_Rel_Insert_Input = {
+  data: Slideshare_Poll_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Slideshare_Poll_On_Conflict>;
+};
+
+/** on conflict condition type for table "slideshare.Poll" */
+export type Slideshare_Poll_On_Conflict = {
+  constraint: Slideshare_Poll_Constraint;
+  update_columns?: Array<Slideshare_Poll_Update_Column>;
+  where?: Maybe<Slideshare_Poll_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "slideshare.Poll". */
+export type Slideshare_Poll_Order_By = {
+  Page?: Maybe<Slideshare_Page_Order_By>;
+  PollResults_aggregate?: Maybe<Slideshare_PollResult_Aggregate_Order_By>;
+  option1?: Maybe<Order_By>;
+  option2?: Maybe<Order_By>;
+  option3?: Maybe<Order_By>;
+  option4?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+  question?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: slideshare_Poll */
+export type Slideshare_Poll_Pk_Columns_Input = {
+  pageId: Scalars['String'];
+};
+
+/** select columns of table "slideshare.Poll" */
+export enum Slideshare_Poll_Select_Column {
+  /** column name */
+  Option1 = 'option1',
+  /** column name */
+  Option2 = 'option2',
+  /** column name */
+  Option3 = 'option3',
+  /** column name */
+  Option4 = 'option4',
+  /** column name */
+  PageId = 'pageId',
+  /** column name */
+  Question = 'question'
+}
+
+/** input type for updating data in table "slideshare.Poll" */
+export type Slideshare_Poll_Set_Input = {
+  option1?: Maybe<Scalars['String']>;
+  option2?: Maybe<Scalars['String']>;
+  option3?: Maybe<Scalars['String']>;
+  option4?: Maybe<Scalars['String']>;
+  pageId?: Maybe<Scalars['String']>;
+  question?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "slideshare.Poll" */
+export enum Slideshare_Poll_Update_Column {
+  /** column name */
+  Option1 = 'option1',
+  /** column name */
+  Option2 = 'option2',
+  /** column name */
+  Option3 = 'option3',
+  /** column name */
+  Option4 = 'option4',
+  /** column name */
+  PageId = 'pageId',
+  /** column name */
+  Question = 'question'
+}
 
 /** columns and relationships of "slideshare.Profile" */
 export type Slideshare_Profile = {
@@ -1385,6 +1942,14 @@ export type Subscription_Root = {
   slideshare_PageType_by_pk?: Maybe<Slideshare_PageType>;
   /** fetch data from the table: "slideshare.Page" using primary key columns */
   slideshare_Page_by_pk?: Maybe<Slideshare_Page>;
+  /** fetch data from the table: "slideshare.Poll" */
+  slideshare_Poll: Array<Slideshare_Poll>;
+  /** fetch data from the table: "slideshare.PollResult" */
+  slideshare_PollResult: Array<Slideshare_PollResult>;
+  /** fetch data from the table: "slideshare.PollResult" using primary key columns */
+  slideshare_PollResult_by_pk?: Maybe<Slideshare_PollResult>;
+  /** fetch data from the table: "slideshare.Poll" using primary key columns */
+  slideshare_Poll_by_pk?: Maybe<Slideshare_Poll>;
   /** fetch data from the table: "slideshare.Profile" */
   slideshare_Profile: Array<Slideshare_Profile>;
   /** fetch data from the table: "slideshare.Profile" using primary key columns */
@@ -1463,6 +2028,34 @@ export type Subscription_RootSlideshare_PageType_By_PkArgs = {
 
 export type Subscription_RootSlideshare_Page_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+export type Subscription_RootSlideshare_PollArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Poll_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Poll_Order_By>>;
+  where?: Maybe<Slideshare_Poll_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_PollResultArgs = {
+  distinct_on?: Maybe<Array<Slideshare_PollResult_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_PollResult_Order_By>>;
+  where?: Maybe<Slideshare_PollResult_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_PollResult_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Subscription_RootSlideshare_Poll_By_PkArgs = {
+  pageId: Scalars['String'];
 };
 
 
@@ -1585,6 +2178,34 @@ export type GenerateAgoraTokenMutationVariables = Exact<{
 
 
 export type GenerateAgoraTokenMutation = { __typename?: 'mutation_root', GenerateAgoraToken?: { __typename?: 'GenerateAgoraTokenOutput', token?: string | null | undefined } | null | undefined };
+
+export type InsertPollMutationVariables = Exact<{
+  option1: Scalars['String'];
+  option2: Scalars['String'];
+  option3?: Maybe<Scalars['String']>;
+  option4?: Maybe<Scalars['String']>;
+  pageId: Scalars['String'];
+  question: Scalars['String'];
+}>;
+
+
+export type InsertPollMutation = { __typename?: 'mutation_root', insert_slideshare_Poll_one?: { __typename?: 'slideshare_Poll', pageId: string } | null | undefined };
+
+export type SubscribePollResultsQueryVariables = Exact<{
+  pageId: Scalars['String'];
+}>;
+
+
+export type SubscribePollResultsQuery = { __typename?: 'query_root', slideshare_Poll_by_pk?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined, PollResults: Array<{ __typename?: 'slideshare_PollResult', id: number, optionNumber: number, createdBy: string }> } | null | undefined };
+
+export type InsertPollResultMutationVariables = Exact<{
+  createdBy: Scalars['String'];
+  optionNumber: Scalars['Int'];
+  pageId: Scalars['String'];
+}>;
+
+
+export type InsertPollResultMutation = { __typename?: 'mutation_root', insert_slideshare_PollResult_one?: { __typename?: 'slideshare_PollResult', id: number } | null | undefined };
 
 export type SaveProfileMutationVariables = Exact<{
   name?: Maybe<Scalars['String']>;
@@ -1951,6 +2572,129 @@ export function useGenerateAgoraTokenMutation(baseOptions?: Apollo.MutationHookO
 export type GenerateAgoraTokenMutationHookResult = ReturnType<typeof useGenerateAgoraTokenMutation>;
 export type GenerateAgoraTokenMutationResult = Apollo.MutationResult<GenerateAgoraTokenMutation>;
 export type GenerateAgoraTokenMutationOptions = Apollo.BaseMutationOptions<GenerateAgoraTokenMutation, GenerateAgoraTokenMutationVariables>;
+export const InsertPollDocument = gql`
+    mutation insertPoll($option1: String!, $option2: String!, $option3: String, $option4: String, $pageId: String!, $question: String!) {
+  insert_slideshare_Poll_one(
+    object: {question: $question, pageId: $pageId, option4: $option4, option3: $option3, option2: $option2, option1: $option1}
+    on_conflict: {constraint: Poll_pkey, update_columns: [option1, option2, option3, option4, question]}
+  ) {
+    pageId
+  }
+}
+    `;
+export type InsertPollMutationFn = Apollo.MutationFunction<InsertPollMutation, InsertPollMutationVariables>;
+
+/**
+ * __useInsertPollMutation__
+ *
+ * To run a mutation, you first call `useInsertPollMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertPollMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertPollMutation, { data, loading, error }] = useInsertPollMutation({
+ *   variables: {
+ *      option1: // value for 'option1'
+ *      option2: // value for 'option2'
+ *      option3: // value for 'option3'
+ *      option4: // value for 'option4'
+ *      pageId: // value for 'pageId'
+ *      question: // value for 'question'
+ *   },
+ * });
+ */
+export function useInsertPollMutation(baseOptions?: Apollo.MutationHookOptions<InsertPollMutation, InsertPollMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertPollMutation, InsertPollMutationVariables>(InsertPollDocument, options);
+      }
+export type InsertPollMutationHookResult = ReturnType<typeof useInsertPollMutation>;
+export type InsertPollMutationResult = Apollo.MutationResult<InsertPollMutation>;
+export type InsertPollMutationOptions = Apollo.BaseMutationOptions<InsertPollMutation, InsertPollMutationVariables>;
+export const SubscribePollResultsDocument = gql`
+    query subscribePollResults($pageId: String!) {
+  slideshare_Poll_by_pk(pageId: $pageId) {
+    question
+    option1
+    option2
+    option3
+    option4
+    PollResults {
+      id
+      optionNumber
+      createdBy
+    }
+  }
+}
+    `;
+
+/**
+ * __useSubscribePollResultsQuery__
+ *
+ * To run a query within a React component, call `useSubscribePollResultsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSubscribePollResultsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSubscribePollResultsQuery({
+ *   variables: {
+ *      pageId: // value for 'pageId'
+ *   },
+ * });
+ */
+export function useSubscribePollResultsQuery(baseOptions: Apollo.QueryHookOptions<SubscribePollResultsQuery, SubscribePollResultsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SubscribePollResultsQuery, SubscribePollResultsQueryVariables>(SubscribePollResultsDocument, options);
+      }
+export function useSubscribePollResultsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SubscribePollResultsQuery, SubscribePollResultsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SubscribePollResultsQuery, SubscribePollResultsQueryVariables>(SubscribePollResultsDocument, options);
+        }
+export type SubscribePollResultsQueryHookResult = ReturnType<typeof useSubscribePollResultsQuery>;
+export type SubscribePollResultsLazyQueryHookResult = ReturnType<typeof useSubscribePollResultsLazyQuery>;
+export type SubscribePollResultsQueryResult = Apollo.QueryResult<SubscribePollResultsQuery, SubscribePollResultsQueryVariables>;
+export const InsertPollResultDocument = gql`
+    mutation insertPollResult($createdBy: String!, $optionNumber: Int!, $pageId: String!) {
+  insert_slideshare_PollResult_one(
+    object: {createdBy: $createdBy, optionNumber: $optionNumber, pageId: $pageId}
+    on_conflict: {constraint: PollResult_pageId_createdBy_key, update_columns: optionNumber}
+  ) {
+    id
+  }
+}
+    `;
+export type InsertPollResultMutationFn = Apollo.MutationFunction<InsertPollResultMutation, InsertPollResultMutationVariables>;
+
+/**
+ * __useInsertPollResultMutation__
+ *
+ * To run a mutation, you first call `useInsertPollResultMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertPollResultMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertPollResultMutation, { data, loading, error }] = useInsertPollResultMutation({
+ *   variables: {
+ *      createdBy: // value for 'createdBy'
+ *      optionNumber: // value for 'optionNumber'
+ *      pageId: // value for 'pageId'
+ *   },
+ * });
+ */
+export function useInsertPollResultMutation(baseOptions?: Apollo.MutationHookOptions<InsertPollResultMutation, InsertPollResultMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertPollResultMutation, InsertPollResultMutationVariables>(InsertPollResultDocument, options);
+      }
+export type InsertPollResultMutationHookResult = ReturnType<typeof useInsertPollResultMutation>;
+export type InsertPollResultMutationResult = Apollo.MutationResult<InsertPollResultMutation>;
+export type InsertPollResultMutationOptions = Apollo.BaseMutationOptions<InsertPollResultMutation, InsertPollResultMutationVariables>;
 export const SaveProfileDocument = gql`
     mutation saveProfile($name: String = "", $profile: String = "") {
   insert_slideshare_Profile_one(

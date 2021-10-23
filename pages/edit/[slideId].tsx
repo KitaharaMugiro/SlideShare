@@ -7,8 +7,8 @@ import React, { useEffect } from "react";
 import EditOrPreview from "../../components/edit/EditOrPreview";
 import HorizontalSlideList from "../../components/edit/HorizontalSlideList";
 import { usePageList } from '../../model/hooks/usePageList';
+import useUser from '../../model/hooks/useUser';
 import { pageListAtom } from "../../model/jotai/PageList";
-import { UserAtom } from '../../model/jotai/User';
 import { Page } from '../../model/Page';
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./index.module.css";
@@ -17,7 +17,7 @@ const Edit = () => {
     const router = useRouter()
     const { slideId } = router.query
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) } })
-    const [user] = useAtom(UserAtom)
+    const { user } = useUser()
     const [_, setEditingPageList] = useAtom(pageListAtom)
     const { updateAllPageNumber } = usePageList()
 

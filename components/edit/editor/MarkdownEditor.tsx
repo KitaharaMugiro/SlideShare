@@ -4,6 +4,8 @@ import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
 import { useEffect, useState, useReducer, useRef } from 'react';
+import { Page } from "../../../model/Page";
+import { usePageList } from "../../../model/hooks/usePageList"
 
 const MDEditor = dynamic(
     () => import("@uiw/react-md-editor").then((mod) => mod.default),
@@ -13,10 +15,10 @@ const MDEditor = dynamic(
 interface Props {
     editable: boolean
     height: number
+    page: Page
 }
 
-const mdMermaid = `
-
+const sampleText = `
 # テスト
 \`\`\`typescript
 interface User {
@@ -50,11 +52,16 @@ if a > 5 :
 
 
 export default function MarkdownEditor(props: Props) {
-    const [value, setValue] = useState(mdMermaid);
+
+    const { updatePage } = usePageList()
+    const [value, setValue] = useState(props.page.text || sampleText);
     const valueRef = useRef();
 
     const updateFunction = async () => {
-        console.log(valueRef.current);
+        console.log("update page text");
+        const page = Object.assign({}, props.page)
+        page.text = valueRef.current
+        updatePage(page)
     }
 
     useEffect(() => {

@@ -1,0 +1,30 @@
+# TODO: insertしたslideが本当に自分の持ち物なのかチェックしていない
+mutation insertPoll($option1: String!, $option2: String!, $option3: String, $option4: String , $pageId: String!, $question: String!) {
+  insert_slideshare_Poll_one(object: {question: $question, pageId: $pageId, option4: $option4, option3: $option3, option2: $option2, option1: $option1}, on_conflict: {constraint: Poll_pkey, update_columns: [option1, option2, option3, option4, question]}) {
+    pageId
+  }
+}
+
+query subscribePollResults($pageId: String!) {
+  slideshare_Poll_by_pk(pageId: $pageId) {
+    question
+    option1
+    option2
+    option3
+    option4
+    PollResults {
+      id
+      optionNumber
+      createdBy
+    }
+  }
+}
+
+mutation insertPollResult($createdBy: String!, $optionNumber: Int! , $pageId: String! ) {
+  insert_slideshare_PollResult_one(object: 
+  {createdBy: $createdBy, optionNumber: $optionNumber, pageId: $pageId}, 
+  on_conflict: {constraint: PollResult_pageId_createdBy_key, 
+  update_columns: optionNumber}) {
+    id
+  }
+}
