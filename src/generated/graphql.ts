@@ -2191,12 +2191,12 @@ export type InsertPollMutationVariables = Exact<{
 
 export type InsertPollMutation = { __typename?: 'mutation_root', insert_slideshare_Poll_one?: { __typename?: 'slideshare_Poll', pageId: string } | null | undefined };
 
-export type SubscribePollResultsQueryVariables = Exact<{
+export type SubscribePollResultsSubscriptionVariables = Exact<{
   pageId: Scalars['String'];
 }>;
 
 
-export type SubscribePollResultsQuery = { __typename?: 'query_root', slideshare_Poll_by_pk?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined, PollResults: Array<{ __typename?: 'slideshare_PollResult', id: number, optionNumber: number, createdBy: string }> } | null | undefined };
+export type SubscribePollResultsSubscription = { __typename?: 'subscription_root', slideshare_Poll_by_pk?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined, PollResults: Array<{ __typename?: 'slideshare_PollResult', id: number, optionNumber: number, createdBy: string }> } | null | undefined };
 
 export type InsertPollResultMutationVariables = Exact<{
   createdBy: Scalars['String'];
@@ -2614,7 +2614,7 @@ export type InsertPollMutationHookResult = ReturnType<typeof useInsertPollMutati
 export type InsertPollMutationResult = Apollo.MutationResult<InsertPollMutation>;
 export type InsertPollMutationOptions = Apollo.BaseMutationOptions<InsertPollMutation, InsertPollMutationVariables>;
 export const SubscribePollResultsDocument = gql`
-    query subscribePollResults($pageId: String!) {
+    subscription subscribePollResults($pageId: String!) {
   slideshare_Poll_by_pk(pageId: $pageId) {
     question
     option1
@@ -2631,32 +2631,27 @@ export const SubscribePollResultsDocument = gql`
     `;
 
 /**
- * __useSubscribePollResultsQuery__
+ * __useSubscribePollResultsSubscription__
  *
- * To run a query within a React component, call `useSubscribePollResultsQuery` and pass it any options that fit your needs.
- * When your component renders, `useSubscribePollResultsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useSubscribePollResultsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useSubscribePollResultsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSubscribePollResultsQuery({
+ * const { data, loading, error } = useSubscribePollResultsSubscription({
  *   variables: {
  *      pageId: // value for 'pageId'
  *   },
  * });
  */
-export function useSubscribePollResultsQuery(baseOptions: Apollo.QueryHookOptions<SubscribePollResultsQuery, SubscribePollResultsQueryVariables>) {
+export function useSubscribePollResultsSubscription(baseOptions: Apollo.SubscriptionHookOptions<SubscribePollResultsSubscription, SubscribePollResultsSubscriptionVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SubscribePollResultsQuery, SubscribePollResultsQueryVariables>(SubscribePollResultsDocument, options);
+        return Apollo.useSubscription<SubscribePollResultsSubscription, SubscribePollResultsSubscriptionVariables>(SubscribePollResultsDocument, options);
       }
-export function useSubscribePollResultsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SubscribePollResultsQuery, SubscribePollResultsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SubscribePollResultsQuery, SubscribePollResultsQueryVariables>(SubscribePollResultsDocument, options);
-        }
-export type SubscribePollResultsQueryHookResult = ReturnType<typeof useSubscribePollResultsQuery>;
-export type SubscribePollResultsLazyQueryHookResult = ReturnType<typeof useSubscribePollResultsLazyQuery>;
-export type SubscribePollResultsQueryResult = Apollo.QueryResult<SubscribePollResultsQuery, SubscribePollResultsQueryVariables>;
+export type SubscribePollResultsSubscriptionHookResult = ReturnType<typeof useSubscribePollResultsSubscription>;
+export type SubscribePollResultsSubscriptionResult = Apollo.SubscriptionResult<SubscribePollResultsSubscription>;
 export const InsertPollResultDocument = gql`
     mutation insertPollResult($createdBy: String!, $optionNumber: Int!, $pageId: String!) {
   insert_slideshare_PollResult_one(

@@ -31,6 +31,7 @@ export default (props: Props) => {
     const renderPageView = () => {
         if (props.viewingPage.type === Slideshare_PageType_Enum.Image) {
             return <ImagePageView
+                key={props.viewingPage.id}
                 imageUrl={props.viewingPage?.imageUrl}
                 imageSizeStyle={imageSizeStyle}
             />
@@ -38,7 +39,7 @@ export default (props: Props) => {
         if (props.viewingPage.type === Slideshare_PageType_Enum.Poll) {
             return <>
                 <div style={{ position: "absolute", width: width / 3, left: width / 3 }}>
-                    <PollController pageId={props.viewingPage.id} />
+                    <PollController key={props.viewingPage.id} pageId={props.viewingPage.id} />
                 </div>
             </>
         }
@@ -52,7 +53,7 @@ export default (props: Props) => {
         }
         if (props.viewingPage.type === Slideshare_PageType_Enum.Text) {
             return <>
-                <MarkdownEditor editable={false} height={height} page={props.viewingPage} />
+                <MarkdownEditor key={props.viewingPage.id} editable={false} height={height} page={props.viewingPage} />
             </>
         }
 

@@ -21,7 +21,7 @@ export default () => {
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Image) {
         if (focusedPage.imageUrl) {
-            return <ImagePreview imageUrl={focusedPage.imageUrl} />
+            return <ImagePreview key={focusedPage.id} imageUrl={focusedPage.imageUrl} />
         }
         return <ImageEditor />
     }
@@ -30,11 +30,11 @@ export default () => {
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Text) {
         return <div style={{ width: "90%" }}>
-            <MarkdownEditor page={focusedPage} editable={true} height={400} />
+            <MarkdownEditor key={focusedPage.id} page={focusedPage} editable={true} height={400} />
         </div>
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Poll) {
-        return <PollEditor page={focusedPage} />
+        return <PollEditor key={focusedPage.id} page={focusedPage} />
     }
     return <div>対応していないページです</div>
 }

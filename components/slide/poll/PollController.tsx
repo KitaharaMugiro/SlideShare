@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import useUser from "../../../model/hooks/useUser"
-import { useInsertPollMutation, useInsertPollResultMutation, useSubscribePollResultsQuery } from "../../../src/generated/graphql"
+import { useInsertPollMutation, useInsertPollResultMutation, useSubscribePollResultsSubscription } from "../../../src/generated/graphql"
 import { MultiplePoll } from "./MultiplePoll"
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default (props: Props) => {
-    const { data, loading, error } = useSubscribePollResultsQuery({ variables: { pageId: props.pageId } })
+    const { data, loading, error } = useSubscribePollResultsSubscription({ variables: { pageId: props.pageId } })
     const [insertPollResult] = useInsertPollResultMutation()
 
     const { tempUserId } = useUser()
@@ -34,7 +34,6 @@ export default (props: Props) => {
     const yourPollResult = pollResults.find(r => r.createdBy === tempUserId)
     const voted = yourPollResult !== undefined
     const votedIndex = yourPollResult?.optionNumber
-    console.log({ voted, votedIndex })
 
     const onVote = async (votedIndex: number) => {
         insertPollResult({
