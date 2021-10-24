@@ -8501,6 +8501,12 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "codepen",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "image",
             "description": null,
             "isDeprecated": false,
@@ -8520,6 +8526,12 @@
           },
           {
             "name": "text",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "typeform",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

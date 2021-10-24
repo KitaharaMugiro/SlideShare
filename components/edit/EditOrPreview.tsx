@@ -4,9 +4,12 @@ import { usePageList } from "../../model/hooks/usePageList"
 import { Slideshare_PageType_Enum } from "../../src/generated/graphql"
 import { MultiplePoll } from "../slide/poll/MultiplePoll"
 import MenuButtonList from "./choice_page_type/MenuButtonList"
+import CodepenEditor from "./editor/CodepenEditor"
 import ImageEditor from "./editor/ImageEditor"
 import MarkdownEditor from "./editor/MarkdownEditor"
 import PollEditor from "./editor/PollEditor"
+import TypeformEditor from "./editor/TypeformEditor"
+import YoutubeEditor from "./editor/YoutubeEditor"
 import ImagePreview from "./preview/ImagePreview"
 
 export default () => {
@@ -26,7 +29,9 @@ export default () => {
         return <ImageEditor />
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Video) {
-        return <div>動画は実装中です</div>
+        return <div style={{ width: 500 }}>
+            <YoutubeEditor key={focusedPage.id} page={focusedPage} />
+        </div>
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Text) {
         return <div style={{ width: "90%" }}>
@@ -35,6 +40,16 @@ export default () => {
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Poll) {
         return <PollEditor key={focusedPage.id} page={focusedPage} />
+    }
+    if (focusedPage.type === Slideshare_PageType_Enum.Typeform) {
+        return <div style={{ width: 500 }}>
+            <TypeformEditor key={focusedPage.id} page={focusedPage} />
+        </div>
+    }
+    if (focusedPage.type === Slideshare_PageType_Enum.Codepen) {
+        return <div style={{ width: 500 }}>
+            <CodepenEditor key={focusedPage.id} page={focusedPage} />
+        </div>
     }
     return <div>対応していないページです</div>
 }

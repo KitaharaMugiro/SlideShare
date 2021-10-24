@@ -1141,10 +1141,12 @@ export type Slideshare_PageType_Bool_Exp = {
 };
 
 export enum Slideshare_PageType_Enum {
+  Codepen = 'codepen',
   Image = 'image',
   Poll = 'poll',
   Temp = 'temp',
   Text = 'text',
+  Typeform = 'typeform',
   Video = 'video'
 }
 

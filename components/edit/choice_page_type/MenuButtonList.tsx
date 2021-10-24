@@ -17,7 +17,7 @@ export default () => {
 
     return <>
         <div style={{ width: 400 }}>
-            <Typography variant="h4" align="center">Pick one below</Typography>
+            <Typography variant="h5" align="center">Add a page</Typography>
             <MenuButton
                 onClick={() => onClick(Slideshare_PageType_Enum.Text)}
                 imageUrl="/static/page_select/text.png" title="Text" description="You can write markdown text" />
@@ -27,12 +27,22 @@ export default () => {
                 imageUrl="/static/page_select/image.png" title="Image/Gif" description="Upload your image or embed with a link" />
             <div style={{ height: 5 }} />
             <MenuButton
-                onClick={() => onClick(Slideshare_PageType_Enum.Video)}
-                imageUrl="/static/page_select/video.png" title="Youtube" description="Embed with youtube link" />
-            <MenuButton
                 onClick={() => onClick(Slideshare_PageType_Enum.Poll)}
                 imageUrl="/static/page_select/poll.png" title="Poll" description="Hear opinions from audiences" />
-
+            <div style={{ height: 10 }} />
+            <Typography variant="h5" align="center">Embed other service</Typography>
+            <MenuButton
+                onClick={() => onClick(Slideshare_PageType_Enum.Video)}
+                imageUrl="/static/page_select/youtube.png" title="Youtube" description="Embed with youtube link" />
+            <div style={{ height: 5 }} />
+            <MenuButton
+                onClick={() => onClick(Slideshare_PageType_Enum.Codepen)}
+                imageUrl="/static/page_select/codepen.png" title="CodePen" description="Embed with codepen link" />
+            <div style={{ height: 5 }} />
+            <MenuButton
+                onClick={() => onClick(Slideshare_PageType_Enum.Typeform)}
+                imageUrl="/static/page_select/typeform.png" title="Typeform" description="Embed with typeform link" />
+            <div style={{ height: 5 }} />
         </div>
     </>
 }
