@@ -1141,7 +1141,9 @@ export type Slideshare_PageType_Bool_Exp = {
 };
 
 export enum Slideshare_PageType_Enum {
+  Bookmark = 'bookmark',
   Codepen = 'codepen',
+  File = 'file',
   Image = 'image',
   Poll = 'poll',
   Temp = 'temp',

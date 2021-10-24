@@ -19,12 +19,12 @@ export default (props: Props) => {
         hash = userAndHashList[1]
     }
 
-    return <>
+    return <div>
         {hash && user ?
             <Codepen
                 hash={hash} user={user}
                 defaultTab="result"
                 height={props.height} />
             : <div />}
-    </>
+    </div>
 }

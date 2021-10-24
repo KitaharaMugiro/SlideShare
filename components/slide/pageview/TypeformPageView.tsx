@@ -9,8 +9,17 @@ interface Props {
 }
 
 export default (props: Props) => {
+    let idPart: string | undefined = undefined
+    const splittedUrl = props.page.videoUrl?.split("/")
+    if (splittedUrl) {
+        if (splittedUrl.length !== 1) {
+            idPart = splittedUrl[splittedUrl.length - 1]
+        }
+    } else {
+        return <div />
+    }
 
     return (
-        <Widget id={props.page.videoUrl || ""} style={{ width: props.width, height: props.height }} />
+        <Widget id={idPart || ""} style={{ width: props.width, height: props.height }} />
     )
 }

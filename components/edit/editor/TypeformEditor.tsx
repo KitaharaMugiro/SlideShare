@@ -25,8 +25,8 @@ export default (props: Props) => {
     const { updatePage } = usePageList()
 
     useEffect(() => {
-        valueRef.current = idPart
-    }, [idPart])
+        valueRef.current = url || ""
+    }, [url])
 
     useEffect(() => {
         return () => {

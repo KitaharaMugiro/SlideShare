@@ -70,7 +70,7 @@ const Edit = () => {
         </div>
 
 
-        <div style={{ position: "absolute", right: 20, bottom: 20 }}>
+        <div style={{ position: "fixed", right: 20, bottom: 20 }}>
             <Button
                 onClick={onClickSend}
                 size="large" variant="contained" endIcon={<SendIcon />}>

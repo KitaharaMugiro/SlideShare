@@ -19,7 +19,7 @@ export default () => {
     }
     if (!focusedPage.type || focusedPage.type === Slideshare_PageType_Enum.Temp) {
         return <>
-            <MenuButtonList />
+            <MenuButtonList key={focusedPage.id} />
         </>
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Image) {
@@ -49,6 +49,16 @@ export default () => {
     if (focusedPage.type === Slideshare_PageType_Enum.Codepen) {
         return <div style={{ width: 500 }}>
             <CodepenEditor key={focusedPage.id} page={focusedPage} />
+        </div>
+    }
+    if (focusedPage.type === Slideshare_PageType_Enum.Bookmark) {
+        return <div style={{ width: 500 }}>
+            未実装です
+        </div>
+    }
+    if (focusedPage.type === Slideshare_PageType_Enum.File) {
+        return <div style={{ width: 500 }}>
+            未実装です
         </div>
     }
     return <div>対応していないページです</div>

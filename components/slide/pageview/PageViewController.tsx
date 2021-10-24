@@ -65,7 +65,10 @@ export default (props: Props) => {
 
     const clickableFrame = () => {
         if (props.viewingPage.type === Slideshare_PageType_Enum.Video ||
-            props.viewingPage.type === Slideshare_PageType_Enum.Text) {
+            props.viewingPage.type === Slideshare_PageType_Enum.Text ||
+            props.viewingPage.type === Slideshare_PageType_Enum.Typeform ||
+            props.viewingPage.type === Slideshare_PageType_Enum.Codepen
+        ) {
             return <>
                 <Button
                     onClick={props.onClickLeft}

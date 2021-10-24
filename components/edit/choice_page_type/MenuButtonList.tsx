@@ -29,6 +29,15 @@ export default () => {
             <MenuButton
                 onClick={() => onClick(Slideshare_PageType_Enum.Poll)}
                 imageUrl="/static/page_select/poll.png" title="Poll" description="Hear opinions from audiences" />
+            <MenuButton
+                onClick={() => onClick(Slideshare_PageType_Enum.Bookmark)}
+                imageUrl="/static/page_select/bookmark.png" title="Links" description="List reference or source urls" />
+            <div style={{ height: 5 }} />
+            <MenuButton
+                onClick={() => onClick(Slideshare_PageType_Enum.File)}
+                imageUrl="/static/page_select/file.png" title="File" description="Upload your pptx or pdf for download" />
+
+
             <div style={{ height: 10 }} />
             <Typography variant="h5" align="center">Embed other service</Typography>
             <MenuButton

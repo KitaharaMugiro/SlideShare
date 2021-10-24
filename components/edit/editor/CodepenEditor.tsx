@@ -40,7 +40,7 @@ export default (props: Props) => {
     }, []);
 
 
-    return <>
+    return <div>
         <TextField
             label="Codepenリンク"
             value={url}
@@ -64,6 +64,5 @@ export default (props: Props) => {
                 defaultTab="result"
                 height={315} />
             : <div />}
-
-    </>
+    </div>
 }

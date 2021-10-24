@@ -8501,7 +8501,19 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "bookmark",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "codepen",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "file",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
