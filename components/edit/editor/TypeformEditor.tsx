@@ -12,6 +12,7 @@ export default (props: Props) => {
     const [url, setUrl] = useState(props.page.videoUrl)
     let idPart: string | undefined = undefined
     try {
+        if (!url) throw Error()
         const splittedUrl = url.split("/")
         if (splittedUrl.length !== 1) {
             idPart = splittedUrl[splittedUrl.length - 1]
@@ -38,7 +39,7 @@ export default (props: Props) => {
 
     return <>
         <TextField
-            label="Yotubeリンク"
+            label="Typeformリンク"
             value={url}
             onChange={e => setUrl(e.target.value)}
             InputProps={{
@@ -54,6 +55,6 @@ export default (props: Props) => {
         <p>対応リンク形式<br />
             ・ https://XXX.typeform.com/to/YYY<br />
         </p>
-        {idPart ? <Widget id={idPart} style={{ width: 560, height: 315 }} className="my-form" /> : <div />}
+        {idPart ? <Widget id={idPart} style={{ width: 560, height: 315 }} /> : <div />}
     </>
 }

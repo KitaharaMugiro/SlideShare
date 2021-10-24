@@ -1,10 +1,11 @@
 import Auth from "@aws-amplify/auth"
 import { Button, Divider, Typography } from "@mui/material"
+import { TypeInfo } from "graphql"
 import { useRouter } from "next/dist/client/router"
 import React, { useEffect } from "react"
 import PdfUploader from "../../components/upload/PdfUploader"
 import { useLoading } from "../../model/hooks/useLoading"
-import { createNewPage } from "../../model/Page"
+import { createNewPage, Page } from "../../model/Page"
 import { Slideshare_PageType_Enum, useCreateSlideMutation, useInsertPageMutation, useUploadPdfMutation } from "../../src/generated/graphql"
 import style from "./index.module.css"
 const Home = () => {
@@ -37,7 +38,7 @@ const Home = () => {
         if (!slideId) { return }
         let pageNumber = 0
         for (const imageUrl of pngList) {
-            const newPage = createNewPage()
+            const newPage = createNewPage() as any //TODO: anyを使わない方法を知りたい
             newPage.type = Slideshare_PageType_Enum.Image
             newPage.imageUrl = imageUrl
             newPage.pageNumber = pageNumber

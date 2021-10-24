@@ -18,7 +18,7 @@ export type Page = {
     } | null
 }
 
-export const createNewPage = (): Page => {
+export const createNewPage = () => {
     const id = uuid.v4()
     const type = Slideshare_PageType_Enum.Temp
     const pageNumber = 999

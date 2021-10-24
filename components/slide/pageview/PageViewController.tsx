@@ -5,8 +5,11 @@ import { Slideshare_PageType_Enum } from "../../../src/generated/graphql"
 import MarkdownEditor from "../../edit/editor/MarkdownEditor"
 import { MultiplePoll } from "../poll/MultiplePoll"
 import PollController from "../poll/PollController"
+import CodepenPageView from "./CodepenPageView"
 import ImagePageView from "./ImagePageView"
 import style from "./ImagePageView.module.css"
+import TypeformPageView from "./TypeformPageView"
+import YoutubePageView from "./YoutubePageView"
 
 interface Props {
     viewingPage: Page
@@ -44,17 +47,16 @@ export default (props: Props) => {
             </>
         }
         if (props.viewingPage.type === Slideshare_PageType_Enum.Video) {
-            return <>
-                <iframe width={width} height={height}
-                    src="https://www.youtube.com/embed/OWoKzNxZWw8"
-                    frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen>
-                </iframe>
-            </>
+            return <YoutubePageView key={props.viewingPage.id} width={width} height={height} page={props.viewingPage} />
         }
         if (props.viewingPage.type === Slideshare_PageType_Enum.Text) {
-            return <>
-                <MarkdownEditor key={props.viewingPage.id} editable={false} height={height} page={props.viewingPage} />
-            </>
+            return <MarkdownEditor key={props.viewingPage.id} editable={false} height={height} page={props.viewingPage} />
+        }
+        if (props.viewingPage.type === Slideshare_PageType_Enum.Codepen) {
+            return <CodepenPageView key={props.viewingPage.id} width={width} height={height} page={props.viewingPage} />
+        }
+        if (props.viewingPage.type === Slideshare_PageType_Enum.Typeform) {
+            return <TypeformPageView key={props.viewingPage.id} width={width} height={height} page={props.viewingPage} />
         }
 
 

@@ -1,6 +1,5 @@
-import React, { useState, useRef, createRef, RefObject, useEffect } from 'react'
+import React, { createRef, RefObject, useEffect, useRef } from 'react'
 import { PollOption } from '../../../model/Poll'
-import { useSubscribePollResultsQuery } from '../../../src/generated/graphql'
 import styles from './MultiplePoll.module.css'
 import { animateAnswers, manageVote } from './utils'
 

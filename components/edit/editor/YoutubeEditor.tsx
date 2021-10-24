@@ -12,6 +12,7 @@ export default (props: Props) => {
     const [url, setUrl] = useState(props.page.videoUrl)
     let youtubeEmbedUrl: string | undefined = undefined
     try {
+        if (!url) throw Error()
         const splittedUrl = url.split("/")
         const url_ = new URL(url);
         const params = new URLSearchParams(url_.search);

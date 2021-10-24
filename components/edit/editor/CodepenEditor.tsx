@@ -24,7 +24,7 @@ export default (props: Props) => {
         //TODO: URLが不正
     }
 
-    const valueRef = useRef<string | undefined>();
+    const valueRef = useRef<string | undefined | null>();
     const { updatePage } = usePageList()
 
     useEffect(() => {
@@ -42,7 +42,7 @@ export default (props: Props) => {
 
     return <>
         <TextField
-            label="Yotubeリンク"
+            label="Codepenリンク"
             value={url}
             onChange={e => setUrl(e.target.value)}
             InputProps={{
