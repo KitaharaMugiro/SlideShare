@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { usePageList } from '../../../model/hooks/usePageList';
 import { Page } from '../../../model/Page';
 import Codepen from "ts-react-codepen-embed";
+import UrlEditor from '../../common/UrlEditor';
 
 interface Props {
     page: Page
@@ -11,49 +12,47 @@ interface Props {
 
 export default (props: Props) => {
     const [url, setUrl] = useState(props.page.videoUrl)
-    let user: string | undefined = undefined
-    let hash: string | undefined = undefined
-    try {
-        const userAndHash = url?.replace("https://codepen.io/", "")
-        const userAndHashList = userAndHash?.split("/pen/")
-        if (userAndHashList?.length === 2) {
-            user = userAndHashList[0]
-            hash = userAndHashList[1]
-        }
-    } catch {
-        //TODO: URLが不正
-    }
+    const [user, setUser] = useState("")
+    const [hash, setHash] = useState("")
 
-    const valueRef = useRef<string | undefined | null>();
     const { updatePage } = usePageList()
 
     useEffect(() => {
-        valueRef.current = url
-    }, [url])
+        try {
+            const userAndHash = url?.replace("https://codepen.io/", "")
+            const userAndHashList = userAndHash?.split("/pen/")
+            if (userAndHashList?.length === 2) {
+                setUser(userAndHashList[0])
+                setHash(userAndHashList[1])
+            }
+        } catch {
 
-    useEffect(() => {
-        return () => {
-            const page = Object.assign({}, props.page)
-            page.videoUrl = valueRef.current
-            updatePage(page)
         }
-    }, []);
+    }, [])
 
+    const onClickSave = () => {
+        try {
+            const userAndHash = url?.replace("https://codepen.io/", "")
+            const userAndHashList = userAndHash?.split("/pen/")
+            if (userAndHashList?.length === 2) {
+                setUser(userAndHashList[0])
+                setHash(userAndHashList[1])
+            }
+
+            const page = Object.assign({}, props.page)
+            page.videoUrl = url
+            updatePage(page)
+        } catch {
+            //TODO: URLが不正
+        }
+    }
 
     return <div>
-        <TextField
-            label="Codepenリンク"
-            value={url}
-            onChange={e => setUrl(e.target.value)}
-            InputProps={{
-                startAdornment: (
-                    <InputAdornment position="start">
-                        <InsertLinkIcon />
-                    </InputAdornment>
-                ),
-            }}
-            fullWidth
-            variant="standard"
+        <UrlEditor
+            label="CodePenリンク"
+            url={url || ""}
+            setUrl={setUrl}
+            onClickSave={onClickSave}
         />
         <p>対応リンク形式<br />
             ・ https://codepen.io/XXX/pen/YYY<br />

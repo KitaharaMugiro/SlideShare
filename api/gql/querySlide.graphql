@@ -12,6 +12,17 @@ query querySlide($slideId: Int!) {
       createdAt
       updatedAt
       slideId
+      Bookmarks {
+        id
+        url
+      }
+      Poll {
+        question
+        option1
+        option2
+        option3
+        option4
+      }
     }
   }
 }

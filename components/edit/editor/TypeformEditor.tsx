@@ -4,53 +4,54 @@ import React, { useEffect, useRef, useState } from "react"
 import { usePageList } from '../../../model/hooks/usePageList';
 import { Page } from '../../../model/Page';
 import { Widget } from '@typeform/embed-react'
+import UrlEditor from '../../common/UrlEditor';
 interface Props {
     page: Page
 }
 
 export default (props: Props) => {
     const [url, setUrl] = useState(props.page.videoUrl)
-    let idPart: string | undefined = undefined
-    try {
-        if (!url) throw Error()
-        const splittedUrl = url.split("/")
-        if (splittedUrl.length !== 1) {
-            idPart = splittedUrl[splittedUrl.length - 1]
-        }
-    } catch {
-        //TODO: URLが不正
-    }
+    const [idPart, setIdPart] = useState("")
 
-    const valueRef = useRef<string | undefined>();
+    useEffect(() => {
+        try {
+            if (!url) throw Error()
+            const splittedUrl = url.split("/")
+            if (splittedUrl.length !== 1) {
+                setIdPart(splittedUrl[splittedUrl.length - 1])
+            }
+        } catch {
+            //TODO: URLが不正
+        }
+    }, [])
+
+
+
     const { updatePage } = usePageList()
 
-    useEffect(() => {
-        valueRef.current = url || ""
-    }, [url])
+    const onClickSave = () => {
+        try {
+            if (!url) throw Error()
+            const splittedUrl = url.split("/")
+            if (splittedUrl.length !== 1) {
+                setIdPart(splittedUrl[splittedUrl.length - 1])
+            }
 
-    useEffect(() => {
-        return () => {
             const page = Object.assign({}, props.page)
-            page.videoUrl = valueRef.current
+            page.videoUrl = url
             updatePage(page)
+        } catch {
+            //TODO: URLが不正
         }
-    }, []);
+    }
 
 
     return <>
-        <TextField
+        <UrlEditor
             label="Typeformリンク"
-            value={url}
-            onChange={e => setUrl(e.target.value)}
-            InputProps={{
-                startAdornment: (
-                    <InputAdornment position="start">
-                        <InsertLinkIcon />
-                    </InputAdornment>
-                ),
-            }}
-            fullWidth
-            variant="standard"
+            url={url || ""}
+            setUrl={setUrl}
+            onClickSave={onClickSave}
         />
         <p>対応リンク形式<br />
             ・ https://XXX.typeform.com/to/YYY<br />

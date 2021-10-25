@@ -16,6 +16,10 @@ export type Page = {
         option3?: string | null
         option4?: string | null
     } | null
+    Bookmarks?: {
+        id: number
+        url: string
+    }[] | null
 }
 
 export const createNewPage = () => {

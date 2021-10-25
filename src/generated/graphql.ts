@@ -416,6 +416,10 @@ export type Mutation_Root = {
   delete_Note?: Maybe<Note_Mutation_Response>;
   /** delete single row from the table: "Note" */
   delete_Note_by_pk?: Maybe<Note>;
+  /** delete data from the table: "slideshare.Bookmark" */
+  delete_slideshare_Bookmark?: Maybe<Slideshare_Bookmark_Mutation_Response>;
+  /** delete single row from the table: "slideshare.Bookmark" */
+  delete_slideshare_Bookmark_by_pk?: Maybe<Slideshare_Bookmark>;
   /** delete data from the table: "slideshare.Comment" */
   delete_slideshare_Comment?: Maybe<Slideshare_Comment_Mutation_Response>;
   /** delete single row from the table: "slideshare.Comment" */
@@ -436,6 +440,10 @@ export type Mutation_Root = {
   insert_Note?: Maybe<Note_Mutation_Response>;
   /** insert a single row into the table: "Note" */
   insert_Note_one?: Maybe<Note>;
+  /** insert data into the table: "slideshare.Bookmark" */
+  insert_slideshare_Bookmark?: Maybe<Slideshare_Bookmark_Mutation_Response>;
+  /** insert a single row into the table: "slideshare.Bookmark" */
+  insert_slideshare_Bookmark_one?: Maybe<Slideshare_Bookmark>;
   /** insert data into the table: "slideshare.Comment" */
   insert_slideshare_Comment?: Maybe<Slideshare_Comment_Mutation_Response>;
   /** insert a single row into the table: "slideshare.Comment" */
@@ -464,6 +472,10 @@ export type Mutation_Root = {
   update_Note?: Maybe<Note_Mutation_Response>;
   /** update single row of the table: "Note" */
   update_Note_by_pk?: Maybe<Note>;
+  /** update data of the table: "slideshare.Bookmark" */
+  update_slideshare_Bookmark?: Maybe<Slideshare_Bookmark_Mutation_Response>;
+  /** update single row of the table: "slideshare.Bookmark" */
+  update_slideshare_Bookmark_by_pk?: Maybe<Slideshare_Bookmark>;
   /** update data of the table: "slideshare.Page" */
   update_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
   /** update single row of the table: "slideshare.Page" */
@@ -500,6 +512,18 @@ export type Mutation_RootDelete_NoteArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Note_By_PkArgs = {
   Id: Scalars['Int'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_BookmarkArgs = {
+  where: Slideshare_Bookmark_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_Bookmark_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -562,6 +586,20 @@ export type Mutation_RootInsert_NoteArgs = {
 export type Mutation_RootInsert_Note_OneArgs = {
   object: Note_Insert_Input;
   on_conflict?: Maybe<Note_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_BookmarkArgs = {
+  objects: Array<Slideshare_Bookmark_Insert_Input>;
+  on_conflict?: Maybe<Slideshare_Bookmark_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_Bookmark_OneArgs = {
+  object: Slideshare_Bookmark_Insert_Input;
+  on_conflict?: Maybe<Slideshare_Bookmark_On_Conflict>;
 };
 
 
@@ -660,6 +698,22 @@ export type Mutation_RootUpdate_Note_By_PkArgs = {
   _inc?: Maybe<Note_Inc_Input>;
   _set?: Maybe<Note_Set_Input>;
   pk_columns: Note_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Slideshare_BookmarkArgs = {
+  _inc?: Maybe<Slideshare_Bookmark_Inc_Input>;
+  _set?: Maybe<Slideshare_Bookmark_Set_Input>;
+  where: Slideshare_Bookmark_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Slideshare_Bookmark_By_PkArgs = {
+  _inc?: Maybe<Slideshare_Bookmark_Inc_Input>;
+  _set?: Maybe<Slideshare_Bookmark_Set_Input>;
+  pk_columns: Slideshare_Bookmark_Pk_Columns_Input;
 };
 
 
@@ -767,6 +821,10 @@ export type Query_Root = {
   Note: Array<Note>;
   /** fetch data from the table: "Note" using primary key columns */
   Note_by_pk?: Maybe<Note>;
+  /** fetch data from the table: "slideshare.Bookmark" */
+  slideshare_Bookmark: Array<Slideshare_Bookmark>;
+  /** fetch data from the table: "slideshare.Bookmark" using primary key columns */
+  slideshare_Bookmark_by_pk?: Maybe<Slideshare_Bookmark>;
   /** fetch data from the table: "slideshare.Comment" */
   slideshare_Comment: Array<Slideshare_Comment>;
   /** fetch data from the table: "slideshare.Comment" using primary key columns */
@@ -823,6 +881,20 @@ export type Query_RootNoteArgs = {
 
 export type Query_RootNote_By_PkArgs = {
   Id: Scalars['Int'];
+};
+
+
+export type Query_RootSlideshare_BookmarkArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Bookmark_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Bookmark_Order_By>>;
+  where?: Maybe<Slideshare_Bookmark_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_Bookmark_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -921,6 +993,173 @@ export type Query_RootSlideshare_SlideArgs = {
 
 export type Query_RootSlideshare_Slide_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+/** columns and relationships of "slideshare.Bookmark" */
+export type Slideshare_Bookmark = {
+  __typename?: 'slideshare_Bookmark';
+  id: Scalars['Int'];
+  pageId: Scalars['String'];
+  url: Scalars['String'];
+};
+
+/** order by aggregate values of table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Aggregate_Order_By = {
+  avg?: Maybe<Slideshare_Bookmark_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Slideshare_Bookmark_Max_Order_By>;
+  min?: Maybe<Slideshare_Bookmark_Min_Order_By>;
+  stddev?: Maybe<Slideshare_Bookmark_Stddev_Order_By>;
+  stddev_pop?: Maybe<Slideshare_Bookmark_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Slideshare_Bookmark_Stddev_Samp_Order_By>;
+  sum?: Maybe<Slideshare_Bookmark_Sum_Order_By>;
+  var_pop?: Maybe<Slideshare_Bookmark_Var_Pop_Order_By>;
+  var_samp?: Maybe<Slideshare_Bookmark_Var_Samp_Order_By>;
+  variance?: Maybe<Slideshare_Bookmark_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Arr_Rel_Insert_Input = {
+  data: Array<Slideshare_Bookmark_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Slideshare_Bookmark_On_Conflict>;
+};
+
+/** order by avg() on columns of table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Avg_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "slideshare.Bookmark". All fields are combined with a logical 'AND'. */
+export type Slideshare_Bookmark_Bool_Exp = {
+  _and?: Maybe<Array<Slideshare_Bookmark_Bool_Exp>>;
+  _not?: Maybe<Slideshare_Bookmark_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_Bookmark_Bool_Exp>>;
+  id?: Maybe<Int_Comparison_Exp>;
+  pageId?: Maybe<String_Comparison_Exp>;
+  url?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "slideshare.Bookmark" */
+export enum Slideshare_Bookmark_Constraint {
+  /** unique or primary key constraint */
+  BookmarkPkey = 'Bookmark_pkey'
+}
+
+/** input type for incrementing numeric columns in table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Inc_Input = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Insert_Input = {
+  id?: Maybe<Scalars['Int']>;
+  pageId?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Max_Order_By = {
+  id?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
+};
+
+/** order by min() on columns of table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Min_Order_By = {
+  id?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Mutation_Response = {
+  __typename?: 'slideshare_Bookmark_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Slideshare_Bookmark>;
+};
+
+/** on conflict condition type for table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_On_Conflict = {
+  constraint: Slideshare_Bookmark_Constraint;
+  update_columns?: Array<Slideshare_Bookmark_Update_Column>;
+  where?: Maybe<Slideshare_Bookmark_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "slideshare.Bookmark". */
+export type Slideshare_Bookmark_Order_By = {
+  id?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: slideshare_Bookmark */
+export type Slideshare_Bookmark_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "slideshare.Bookmark" */
+export enum Slideshare_Bookmark_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PageId = 'pageId',
+  /** column name */
+  Url = 'url'
+}
+
+/** input type for updating data in table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Set_Input = {
+  id?: Maybe<Scalars['Int']>;
+  pageId?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+/** order by stddev() on columns of table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Stddev_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** order by stddev_pop() on columns of table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** order by stddev_samp() on columns of table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** order by sum() on columns of table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Sum_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** update columns of table "slideshare.Bookmark" */
+export enum Slideshare_Bookmark_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PageId = 'pageId',
+  /** column name */
+  Url = 'url'
+}
+
+/** order by var_pop() on columns of table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** order by var_samp() on columns of table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** order by variance() on columns of table "slideshare.Bookmark" */
+export type Slideshare_Bookmark_Variance_Order_By = {
+  id?: Maybe<Order_By>;
 };
 
 /** columns and relationships of "slideshare.Comment" */
@@ -1096,6 +1335,8 @@ export type Slideshare_Comment_Variance_Order_By = {
 export type Slideshare_Page = {
   __typename?: 'slideshare_Page';
   /** An array relationship */
+  Bookmarks: Array<Slideshare_Bookmark>;
+  /** An array relationship */
   Comments: Array<Slideshare_Comment>;
   /** An object relationship */
   PageType: Slideshare_PageType;
@@ -1112,6 +1353,16 @@ export type Slideshare_Page = {
   type: Slideshare_PageType_Enum;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   videoUrl?: Maybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "slideshare.Page" */
+export type Slideshare_PageBookmarksArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Bookmark_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Bookmark_Order_By>>;
+  where?: Maybe<Slideshare_Bookmark_Bool_Exp>;
 };
 
 
@@ -1205,6 +1456,7 @@ export type Slideshare_Page_Avg_Order_By = {
 
 /** Boolean expression to filter rows from the table "slideshare.Page". All fields are combined with a logical 'AND'. */
 export type Slideshare_Page_Bool_Exp = {
+  Bookmarks?: Maybe<Slideshare_Bookmark_Bool_Exp>;
   Comments?: Maybe<Slideshare_Comment_Bool_Exp>;
   PageType?: Maybe<Slideshare_PageType_Bool_Exp>;
   Poll?: Maybe<Slideshare_Poll_Bool_Exp>;
@@ -1237,6 +1489,7 @@ export type Slideshare_Page_Inc_Input = {
 
 /** input type for inserting data into table "slideshare.Page" */
 export type Slideshare_Page_Insert_Input = {
+  Bookmarks?: Maybe<Slideshare_Bookmark_Arr_Rel_Insert_Input>;
   Comments?: Maybe<Slideshare_Comment_Arr_Rel_Insert_Input>;
   Poll?: Maybe<Slideshare_Poll_Obj_Rel_Insert_Input>;
   id?: Maybe<Scalars['String']>;
@@ -1299,6 +1552,7 @@ export type Slideshare_Page_On_Conflict = {
 
 /** Ordering options when selecting data from "slideshare.Page". */
 export type Slideshare_Page_Order_By = {
+  Bookmarks_aggregate?: Maybe<Slideshare_Bookmark_Aggregate_Order_By>;
   Comments_aggregate?: Maybe<Slideshare_Comment_Aggregate_Order_By>;
   PageType?: Maybe<Slideshare_PageType_Order_By>;
   Poll?: Maybe<Slideshare_Poll_Order_By>;
@@ -1934,6 +2188,10 @@ export type Subscription_Root = {
   Note: Array<Note>;
   /** fetch data from the table: "Note" using primary key columns */
   Note_by_pk?: Maybe<Note>;
+  /** fetch data from the table: "slideshare.Bookmark" */
+  slideshare_Bookmark: Array<Slideshare_Bookmark>;
+  /** fetch data from the table: "slideshare.Bookmark" using primary key columns */
+  slideshare_Bookmark_by_pk?: Maybe<Slideshare_Bookmark>;
   /** fetch data from the table: "slideshare.Comment" */
   slideshare_Comment: Array<Slideshare_Comment>;
   /** fetch data from the table: "slideshare.Comment" using primary key columns */
@@ -1990,6 +2248,20 @@ export type Subscription_RootNoteArgs = {
 
 export type Subscription_RootNote_By_PkArgs = {
   Id: Scalars['Int'];
+};
+
+
+export type Subscription_RootSlideshare_BookmarkArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Bookmark_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Bookmark_Order_By>>;
+  where?: Maybe<Slideshare_Bookmark_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_Bookmark_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -2231,7 +2503,7 @@ export type QuerySlideQueryVariables = Exact<{
 }>;
 
 
-export type QuerySlideQuery = { __typename?: 'query_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number }> } | null | undefined };
+export type QuerySlideQuery = { __typename?: 'query_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number, Bookmarks: Array<{ __typename?: 'slideshare_Bookmark', id: number, url: string }>, Poll?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined } | null | undefined }> } | null | undefined };
 
 export type UploadPdfMutationVariables = Exact<{
   pdfName: Scalars['String'];
@@ -2787,6 +3059,17 @@ export const QuerySlideDocument = gql`
       createdAt
       updatedAt
       slideId
+      Bookmarks {
+        id
+        url
+      }
+      Poll {
+        question
+        option1
+        option2
+        option3
+        option4
+      }
     }
   }
 }
