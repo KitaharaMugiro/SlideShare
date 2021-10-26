@@ -4,7 +4,9 @@ import { usePageList } from "../../model/hooks/usePageList"
 import { Slideshare_PageType_Enum } from "../../src/generated/graphql"
 import { MultiplePoll } from "../slide/poll/MultiplePoll"
 import MenuButtonList from "./choice_page_type/MenuButtonList"
+import BookmarkEditor from "./editor/BookmarkEditor"
 import CodepenEditor from "./editor/CodepenEditor"
+import FileEditor from "./editor/FileEditor"
 import ImageEditor from "./editor/ImageEditor"
 import MarkdownEditor from "./editor/MarkdownEditor"
 import PollEditor from "./editor/PollEditor"
@@ -53,13 +55,11 @@ export default () => {
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Bookmark) {
         return <div style={{ width: 500 }}>
-            未実装です
+            <BookmarkEditor key={focusedPage.id} page={focusedPage} />
         </div>
     }
     if (focusedPage.type === Slideshare_PageType_Enum.File) {
-        return <div style={{ width: 500 }}>
-            未実装です
-        </div>
+        return <FileEditor key={focusedPage.id} page={focusedPage} />
     }
     return <div>対応していないページです</div>
 }

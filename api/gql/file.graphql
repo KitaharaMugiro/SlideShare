@@ -1,0 +1,11 @@
+mutation insertFile($pageId: String!, $path: String!, $filename: String!) {
+  insert_slideshare_File_one(object: {pageId: $pageId, path: $path, filename: $filename}) {
+    id
+  }
+}
+
+mutation deleteFile($id: Int!) {
+  delete_slideshare_File_by_pk(id: $id) {
+    id
+  }
+}

@@ -1,0 +1,11 @@
+mutation insertBookmark($pageId: String!, $url: String!) {
+  insert_slideshare_Bookmark_one(object: {pageId: $pageId, url: $url}) {
+    id
+  }
+}
+
+mutation deleteBookmark($id: Int!) {
+  delete_slideshare_Bookmark_by_pk(id: $id) {
+    id
+  }
+}

@@ -5,9 +5,12 @@ import { Slideshare_PageType_Enum } from "../../../src/generated/graphql"
 import MarkdownEditor from "../../edit/editor/MarkdownEditor"
 import { MultiplePoll } from "../poll/MultiplePoll"
 import PollController from "../poll/PollController"
+import BookmarkPageView from "./BookmarkPageView"
 import CodepenPageView from "./CodepenPageView"
+import FilePageView from "./FilePageView"
 import ImagePageView from "./ImagePageView"
 import style from "./ImagePageView.module.css"
+import NotionPageView from "./NotionPageView"
 import TypeformPageView from "./TypeformPageView"
 import YoutubePageView from "./YoutubePageView"
 
@@ -58,12 +61,20 @@ export default (props: Props) => {
         if (props.viewingPage.type === Slideshare_PageType_Enum.Typeform) {
             return <TypeformPageView key={props.viewingPage.id} width={width} height={height} page={props.viewingPage} />
         }
-
-
+        if (props.viewingPage.type === Slideshare_PageType_Enum.Bookmark) {
+            return <BookmarkPageView key={props.viewingPage.id} width={width} height={height} page={props.viewingPage} />
+        }
+        if (props.viewingPage.type === Slideshare_PageType_Enum.File) {
+            return <FilePageView key={props.viewingPage.id} width={width} height={height} page={props.viewingPage} />
+        }
+        if (props.viewingPage.type === Slideshare_PageType_Enum.Notion) {
+            return <NotionPageView key={props.viewingPage.id} width={width} height={height} page={props.viewingPage} />
+        }
         return <>非対応</>
     }
 
     const clickableFrame = () => {
+        //TODO: スクロールの阻害にならないようにする
         if (props.viewingPage.type === Slideshare_PageType_Enum.Video ||
             props.viewingPage.type === Slideshare_PageType_Enum.Text ||
             props.viewingPage.type === Slideshare_PageType_Enum.Typeform ||

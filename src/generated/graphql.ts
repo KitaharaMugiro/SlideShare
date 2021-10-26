@@ -424,6 +424,10 @@ export type Mutation_Root = {
   delete_slideshare_Comment?: Maybe<Slideshare_Comment_Mutation_Response>;
   /** delete single row from the table: "slideshare.Comment" */
   delete_slideshare_Comment_by_pk?: Maybe<Slideshare_Comment>;
+  /** delete data from the table: "slideshare.File" */
+  delete_slideshare_File?: Maybe<Slideshare_File_Mutation_Response>;
+  /** delete single row from the table: "slideshare.File" */
+  delete_slideshare_File_by_pk?: Maybe<Slideshare_File>;
   /** delete data from the table: "slideshare.Page" */
   delete_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
   /** delete single row from the table: "slideshare.Page" */
@@ -448,6 +452,10 @@ export type Mutation_Root = {
   insert_slideshare_Comment?: Maybe<Slideshare_Comment_Mutation_Response>;
   /** insert a single row into the table: "slideshare.Comment" */
   insert_slideshare_Comment_one?: Maybe<Slideshare_Comment>;
+  /** insert data into the table: "slideshare.File" */
+  insert_slideshare_File?: Maybe<Slideshare_File_Mutation_Response>;
+  /** insert a single row into the table: "slideshare.File" */
+  insert_slideshare_File_one?: Maybe<Slideshare_File>;
   /** insert data into the table: "slideshare.Page" */
   insert_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
   /** insert a single row into the table: "slideshare.Page" */
@@ -540,6 +548,18 @@ export type Mutation_RootDelete_Slideshare_Comment_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Slideshare_FileArgs = {
+  where: Slideshare_File_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_File_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_Slideshare_PageArgs = {
   where: Slideshare_Page_Bool_Exp;
 };
@@ -612,6 +632,18 @@ export type Mutation_RootInsert_Slideshare_CommentArgs = {
 /** mutation root */
 export type Mutation_RootInsert_Slideshare_Comment_OneArgs = {
   object: Slideshare_Comment_Insert_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_FileArgs = {
+  objects: Array<Slideshare_File_Insert_Input>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_File_OneArgs = {
+  object: Slideshare_File_Insert_Input;
 };
 
 
@@ -829,6 +861,10 @@ export type Query_Root = {
   slideshare_Comment: Array<Slideshare_Comment>;
   /** fetch data from the table: "slideshare.Comment" using primary key columns */
   slideshare_Comment_by_pk?: Maybe<Slideshare_Comment>;
+  /** fetch data from the table: "slideshare.File" */
+  slideshare_File: Array<Slideshare_File>;
+  /** fetch data from the table: "slideshare.File" using primary key columns */
+  slideshare_File_by_pk?: Maybe<Slideshare_File>;
   /** fetch data from the table: "slideshare.Page" */
   slideshare_Page: Array<Slideshare_Page>;
   /** fetch data from the table: "slideshare.PageType" */
@@ -908,6 +944,20 @@ export type Query_RootSlideshare_CommentArgs = {
 
 
 export type Query_RootSlideshare_Comment_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Query_RootSlideshare_FileArgs = {
+  distinct_on?: Maybe<Array<Slideshare_File_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_File_Order_By>>;
+  where?: Maybe<Slideshare_File_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_File_By_PkArgs = {
   id: Scalars['Int'];
 };
 
@@ -1331,6 +1381,145 @@ export type Slideshare_Comment_Variance_Order_By = {
   slideId?: Maybe<Order_By>;
 };
 
+/** columns and relationships of "slideshare.File" */
+export type Slideshare_File = {
+  __typename?: 'slideshare_File';
+  createdBy: Scalars['String'];
+  filename: Scalars['String'];
+  id: Scalars['Int'];
+  pageId: Scalars['String'];
+  path: Scalars['String'];
+};
+
+/** order by aggregate values of table "slideshare.File" */
+export type Slideshare_File_Aggregate_Order_By = {
+  avg?: Maybe<Slideshare_File_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Slideshare_File_Max_Order_By>;
+  min?: Maybe<Slideshare_File_Min_Order_By>;
+  stddev?: Maybe<Slideshare_File_Stddev_Order_By>;
+  stddev_pop?: Maybe<Slideshare_File_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Slideshare_File_Stddev_Samp_Order_By>;
+  sum?: Maybe<Slideshare_File_Sum_Order_By>;
+  var_pop?: Maybe<Slideshare_File_Var_Pop_Order_By>;
+  var_samp?: Maybe<Slideshare_File_Var_Samp_Order_By>;
+  variance?: Maybe<Slideshare_File_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "slideshare.File" */
+export type Slideshare_File_Arr_Rel_Insert_Input = {
+  data: Array<Slideshare_File_Insert_Input>;
+};
+
+/** order by avg() on columns of table "slideshare.File" */
+export type Slideshare_File_Avg_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "slideshare.File". All fields are combined with a logical 'AND'. */
+export type Slideshare_File_Bool_Exp = {
+  _and?: Maybe<Array<Slideshare_File_Bool_Exp>>;
+  _not?: Maybe<Slideshare_File_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_File_Bool_Exp>>;
+  createdBy?: Maybe<String_Comparison_Exp>;
+  filename?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  pageId?: Maybe<String_Comparison_Exp>;
+  path?: Maybe<String_Comparison_Exp>;
+};
+
+/** input type for inserting data into table "slideshare.File" */
+export type Slideshare_File_Insert_Input = {
+  filename?: Maybe<Scalars['String']>;
+  pageId?: Maybe<Scalars['String']>;
+  path?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "slideshare.File" */
+export type Slideshare_File_Max_Order_By = {
+  createdBy?: Maybe<Order_By>;
+  filename?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+  path?: Maybe<Order_By>;
+};
+
+/** order by min() on columns of table "slideshare.File" */
+export type Slideshare_File_Min_Order_By = {
+  createdBy?: Maybe<Order_By>;
+  filename?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+  path?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "slideshare.File" */
+export type Slideshare_File_Mutation_Response = {
+  __typename?: 'slideshare_File_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Slideshare_File>;
+};
+
+/** Ordering options when selecting data from "slideshare.File". */
+export type Slideshare_File_Order_By = {
+  createdBy?: Maybe<Order_By>;
+  filename?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+  path?: Maybe<Order_By>;
+};
+
+/** select columns of table "slideshare.File" */
+export enum Slideshare_File_Select_Column {
+  /** column name */
+  CreatedBy = 'createdBy',
+  /** column name */
+  Filename = 'filename',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PageId = 'pageId',
+  /** column name */
+  Path = 'path'
+}
+
+/** order by stddev() on columns of table "slideshare.File" */
+export type Slideshare_File_Stddev_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** order by stddev_pop() on columns of table "slideshare.File" */
+export type Slideshare_File_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** order by stddev_samp() on columns of table "slideshare.File" */
+export type Slideshare_File_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** order by sum() on columns of table "slideshare.File" */
+export type Slideshare_File_Sum_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** order by var_pop() on columns of table "slideshare.File" */
+export type Slideshare_File_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** order by var_samp() on columns of table "slideshare.File" */
+export type Slideshare_File_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** order by variance() on columns of table "slideshare.File" */
+export type Slideshare_File_Variance_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
 /** columns and relationships of "slideshare.Page" */
 export type Slideshare_Page = {
   __typename?: 'slideshare_Page';
@@ -1338,6 +1527,8 @@ export type Slideshare_Page = {
   Bookmarks: Array<Slideshare_Bookmark>;
   /** An array relationship */
   Comments: Array<Slideshare_Comment>;
+  /** An array relationship */
+  Files: Array<Slideshare_File>;
   /** An object relationship */
   PageType: Slideshare_PageType;
   /** An object relationship */
@@ -1375,6 +1566,16 @@ export type Slideshare_PageCommentsArgs = {
   where?: Maybe<Slideshare_Comment_Bool_Exp>;
 };
 
+
+/** columns and relationships of "slideshare.Page" */
+export type Slideshare_PageFilesArgs = {
+  distinct_on?: Maybe<Array<Slideshare_File_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_File_Order_By>>;
+  where?: Maybe<Slideshare_File_Bool_Exp>;
+};
+
 /** columns and relationships of "slideshare.PageType" */
 export type Slideshare_PageType = {
   __typename?: 'slideshare_PageType';
@@ -1396,6 +1597,7 @@ export enum Slideshare_PageType_Enum {
   Codepen = 'codepen',
   File = 'file',
   Image = 'image',
+  Notion = 'notion',
   Poll = 'poll',
   Temp = 'temp',
   Text = 'text',
@@ -1458,6 +1660,7 @@ export type Slideshare_Page_Avg_Order_By = {
 export type Slideshare_Page_Bool_Exp = {
   Bookmarks?: Maybe<Slideshare_Bookmark_Bool_Exp>;
   Comments?: Maybe<Slideshare_Comment_Bool_Exp>;
+  Files?: Maybe<Slideshare_File_Bool_Exp>;
   PageType?: Maybe<Slideshare_PageType_Bool_Exp>;
   Poll?: Maybe<Slideshare_Poll_Bool_Exp>;
   _and?: Maybe<Array<Slideshare_Page_Bool_Exp>>;
@@ -1491,6 +1694,7 @@ export type Slideshare_Page_Inc_Input = {
 export type Slideshare_Page_Insert_Input = {
   Bookmarks?: Maybe<Slideshare_Bookmark_Arr_Rel_Insert_Input>;
   Comments?: Maybe<Slideshare_Comment_Arr_Rel_Insert_Input>;
+  Files?: Maybe<Slideshare_File_Arr_Rel_Insert_Input>;
   Poll?: Maybe<Slideshare_Poll_Obj_Rel_Insert_Input>;
   id?: Maybe<Scalars['String']>;
   imageUrl?: Maybe<Scalars['String']>;
@@ -1554,6 +1758,7 @@ export type Slideshare_Page_On_Conflict = {
 export type Slideshare_Page_Order_By = {
   Bookmarks_aggregate?: Maybe<Slideshare_Bookmark_Aggregate_Order_By>;
   Comments_aggregate?: Maybe<Slideshare_Comment_Aggregate_Order_By>;
+  Files_aggregate?: Maybe<Slideshare_File_Aggregate_Order_By>;
   PageType?: Maybe<Slideshare_PageType_Order_By>;
   Poll?: Maybe<Slideshare_Poll_Order_By>;
   createdAt?: Maybe<Order_By>;
@@ -2196,6 +2401,10 @@ export type Subscription_Root = {
   slideshare_Comment: Array<Slideshare_Comment>;
   /** fetch data from the table: "slideshare.Comment" using primary key columns */
   slideshare_Comment_by_pk?: Maybe<Slideshare_Comment>;
+  /** fetch data from the table: "slideshare.File" */
+  slideshare_File: Array<Slideshare_File>;
+  /** fetch data from the table: "slideshare.File" using primary key columns */
+  slideshare_File_by_pk?: Maybe<Slideshare_File>;
   /** fetch data from the table: "slideshare.Page" */
   slideshare_Page: Array<Slideshare_Page>;
   /** fetch data from the table: "slideshare.PageType" */
@@ -2275,6 +2484,20 @@ export type Subscription_RootSlideshare_CommentArgs = {
 
 
 export type Subscription_RootSlideshare_Comment_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Subscription_RootSlideshare_FileArgs = {
+  distinct_on?: Maybe<Array<Slideshare_File_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_File_Order_By>>;
+  where?: Maybe<Slideshare_File_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_File_By_PkArgs = {
   id: Scalars['Int'];
 };
 
@@ -2425,6 +2648,21 @@ export type DeletePageMutationVariables = Exact<{
 
 export type DeletePageMutation = { __typename?: 'mutation_root', delete_slideshare_Page_by_pk?: { __typename?: 'slideshare_Page', id: string } | null | undefined };
 
+export type InsertBookmarkMutationVariables = Exact<{
+  pageId: Scalars['String'];
+  url: Scalars['String'];
+}>;
+
+
+export type InsertBookmarkMutation = { __typename?: 'mutation_root', insert_slideshare_Bookmark_one?: { __typename?: 'slideshare_Bookmark', id: number } | null | undefined };
+
+export type DeleteBookmarkMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeleteBookmarkMutation = { __typename?: 'mutation_root', delete_slideshare_Bookmark_by_pk?: { __typename?: 'slideshare_Bookmark', id: number } | null | undefined };
+
 export type QueryCommentSubscriptionVariables = Exact<{
   slideId?: Maybe<Scalars['Int']>;
 }>;
@@ -2445,6 +2683,22 @@ export type CreateSlideMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CreateSlideMutation = { __typename?: 'mutation_root', insert_slideshare_Slide_one?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined }> } | null | undefined };
+
+export type InsertFileMutationVariables = Exact<{
+  pageId: Scalars['String'];
+  path: Scalars['String'];
+  filename: Scalars['String'];
+}>;
+
+
+export type InsertFileMutation = { __typename?: 'mutation_root', insert_slideshare_File_one?: { __typename?: 'slideshare_File', id: number } | null | undefined };
+
+export type DeleteFileMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeleteFileMutation = { __typename?: 'mutation_root', delete_slideshare_File_by_pk?: { __typename?: 'slideshare_File', id: number } | null | undefined };
 
 export type GenerateAgoraTokenMutationVariables = Exact<{
   channelName: Scalars['String'];
@@ -2503,7 +2757,7 @@ export type QuerySlideQueryVariables = Exact<{
 }>;
 
 
-export type QuerySlideQuery = { __typename?: 'query_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number, Bookmarks: Array<{ __typename?: 'slideshare_Bookmark', id: number, url: string }>, Poll?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined } | null | undefined }> } | null | undefined };
+export type QuerySlideQuery = { __typename?: 'query_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number, Bookmarks: Array<{ __typename?: 'slideshare_Bookmark', id: number, url: string }>, Poll?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined } | null | undefined, Files: Array<{ __typename?: 'slideshare_File', id: number, path: string, filename: string }> }> } | null | undefined };
 
 export type UploadPdfMutationVariables = Exact<{
   pdfName: Scalars['String'];
@@ -2690,6 +2944,73 @@ export function useDeletePageMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeletePageMutationHookResult = ReturnType<typeof useDeletePageMutation>;
 export type DeletePageMutationResult = Apollo.MutationResult<DeletePageMutation>;
 export type DeletePageMutationOptions = Apollo.BaseMutationOptions<DeletePageMutation, DeletePageMutationVariables>;
+export const InsertBookmarkDocument = gql`
+    mutation insertBookmark($pageId: String!, $url: String!) {
+  insert_slideshare_Bookmark_one(object: {pageId: $pageId, url: $url}) {
+    id
+  }
+}
+    `;
+export type InsertBookmarkMutationFn = Apollo.MutationFunction<InsertBookmarkMutation, InsertBookmarkMutationVariables>;
+
+/**
+ * __useInsertBookmarkMutation__
+ *
+ * To run a mutation, you first call `useInsertBookmarkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertBookmarkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertBookmarkMutation, { data, loading, error }] = useInsertBookmarkMutation({
+ *   variables: {
+ *      pageId: // value for 'pageId'
+ *      url: // value for 'url'
+ *   },
+ * });
+ */
+export function useInsertBookmarkMutation(baseOptions?: Apollo.MutationHookOptions<InsertBookmarkMutation, InsertBookmarkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertBookmarkMutation, InsertBookmarkMutationVariables>(InsertBookmarkDocument, options);
+      }
+export type InsertBookmarkMutationHookResult = ReturnType<typeof useInsertBookmarkMutation>;
+export type InsertBookmarkMutationResult = Apollo.MutationResult<InsertBookmarkMutation>;
+export type InsertBookmarkMutationOptions = Apollo.BaseMutationOptions<InsertBookmarkMutation, InsertBookmarkMutationVariables>;
+export const DeleteBookmarkDocument = gql`
+    mutation deleteBookmark($id: Int!) {
+  delete_slideshare_Bookmark_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteBookmarkMutationFn = Apollo.MutationFunction<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>;
+
+/**
+ * __useDeleteBookmarkMutation__
+ *
+ * To run a mutation, you first call `useDeleteBookmarkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteBookmarkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteBookmarkMutation, { data, loading, error }] = useDeleteBookmarkMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteBookmarkMutation(baseOptions?: Apollo.MutationHookOptions<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>(DeleteBookmarkDocument, options);
+      }
+export type DeleteBookmarkMutationHookResult = ReturnType<typeof useDeleteBookmarkMutation>;
+export type DeleteBookmarkMutationResult = Apollo.MutationResult<DeleteBookmarkMutation>;
+export type DeleteBookmarkMutationOptions = Apollo.BaseMutationOptions<DeleteBookmarkMutation, DeleteBookmarkMutationVariables>;
 export const QueryCommentDocument = gql`
     subscription queryComment($slideId: Int) {
   slideshare_Comment(
@@ -2813,6 +3134,76 @@ export function useCreateSlideMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateSlideMutationHookResult = ReturnType<typeof useCreateSlideMutation>;
 export type CreateSlideMutationResult = Apollo.MutationResult<CreateSlideMutation>;
 export type CreateSlideMutationOptions = Apollo.BaseMutationOptions<CreateSlideMutation, CreateSlideMutationVariables>;
+export const InsertFileDocument = gql`
+    mutation insertFile($pageId: String!, $path: String!, $filename: String!) {
+  insert_slideshare_File_one(
+    object: {pageId: $pageId, path: $path, filename: $filename}
+  ) {
+    id
+  }
+}
+    `;
+export type InsertFileMutationFn = Apollo.MutationFunction<InsertFileMutation, InsertFileMutationVariables>;
+
+/**
+ * __useInsertFileMutation__
+ *
+ * To run a mutation, you first call `useInsertFileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertFileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertFileMutation, { data, loading, error }] = useInsertFileMutation({
+ *   variables: {
+ *      pageId: // value for 'pageId'
+ *      path: // value for 'path'
+ *      filename: // value for 'filename'
+ *   },
+ * });
+ */
+export function useInsertFileMutation(baseOptions?: Apollo.MutationHookOptions<InsertFileMutation, InsertFileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertFileMutation, InsertFileMutationVariables>(InsertFileDocument, options);
+      }
+export type InsertFileMutationHookResult = ReturnType<typeof useInsertFileMutation>;
+export type InsertFileMutationResult = Apollo.MutationResult<InsertFileMutation>;
+export type InsertFileMutationOptions = Apollo.BaseMutationOptions<InsertFileMutation, InsertFileMutationVariables>;
+export const DeleteFileDocument = gql`
+    mutation deleteFile($id: Int!) {
+  delete_slideshare_File_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteFileMutationFn = Apollo.MutationFunction<DeleteFileMutation, DeleteFileMutationVariables>;
+
+/**
+ * __useDeleteFileMutation__
+ *
+ * To run a mutation, you first call `useDeleteFileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteFileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteFileMutation, { data, loading, error }] = useDeleteFileMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteFileMutation(baseOptions?: Apollo.MutationHookOptions<DeleteFileMutation, DeleteFileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteFileMutation, DeleteFileMutationVariables>(DeleteFileDocument, options);
+      }
+export type DeleteFileMutationHookResult = ReturnType<typeof useDeleteFileMutation>;
+export type DeleteFileMutationResult = Apollo.MutationResult<DeleteFileMutation>;
+export type DeleteFileMutationOptions = Apollo.BaseMutationOptions<DeleteFileMutation, DeleteFileMutationVariables>;
 export const GenerateAgoraTokenDocument = gql`
     mutation GenerateAgoraToken($channelName: String!, $uid: String, $host: String!) {
   GenerateAgoraToken(input: {channelName: $channelName, uid: $uid, host: $host}) {
@@ -3069,6 +3460,11 @@ export const QuerySlideDocument = gql`
         option2
         option3
         option4
+      }
+      Files {
+        id
+        path
+        filename
       }
     }
   }

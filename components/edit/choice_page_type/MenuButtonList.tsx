@@ -29,6 +29,7 @@ export default () => {
             <MenuButton
                 onClick={() => onClick(Slideshare_PageType_Enum.Poll)}
                 imageUrl="/static/page_select/poll.png" title="Poll" description="Hear opinions from audiences" />
+            <div style={{ height: 5 }} />
             <MenuButton
                 onClick={() => onClick(Slideshare_PageType_Enum.Bookmark)}
                 imageUrl="/static/page_select/bookmark.png" title="Links" description="List reference or source urls" />
@@ -51,6 +52,10 @@ export default () => {
             <MenuButton
                 onClick={() => onClick(Slideshare_PageType_Enum.Typeform)}
                 imageUrl="/static/page_select/typeform.png" title="Typeform" description="Embed with typeform link" />
+            <div style={{ height: 5 }} />
+            <MenuButton
+                onClick={() => onClick(Slideshare_PageType_Enum.Notion)}
+                imageUrl="/static/page_select/notion.png" title="Notion" description="Embed with Notion link" />
             <div style={{ height: 5 }} />
         </div>
     </>

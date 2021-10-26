@@ -23,6 +23,11 @@ query querySlide($slideId: Int!) {
         option3
         option4
       }
+      Files {
+        id
+        path
+        filename
+      }
     }
   }
 }

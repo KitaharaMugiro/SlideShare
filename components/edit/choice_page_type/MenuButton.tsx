@@ -1,5 +1,3 @@
-import { PinDropSharp } from "@mui/icons-material";
-import Image from "next/image"
 interface Props {
     imageUrl: string
     title: string

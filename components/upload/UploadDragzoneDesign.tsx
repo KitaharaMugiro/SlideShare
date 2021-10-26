@@ -4,7 +4,7 @@ import style from "./Dragzone.module.css"
 
 interface Props {
     isDragActive: boolean
-    type: "PDF" | "Image"
+    type: "PDF" | "Image" | "Files"
 }
 export default (props: Props) => {
     let text = ""
@@ -12,6 +12,8 @@ export default (props: Props) => {
         text = "Drag 'n' drop a PDF here"
     } else if (props.type === "Image") {
         text = "Drag 'n' drop a Image or GIF file here"
+    } else if (props.type === "Files") {
+        text = "Drag 'n' drop files here"
     }
 
     return <>

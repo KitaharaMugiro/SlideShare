@@ -20,6 +20,11 @@ export type Page = {
         id: number
         url: string
     }[] | null
+    Files?: {
+        id: number
+        path: string
+        filename: string
+    }[] | null
 }
 
 export const createNewPage = () => {

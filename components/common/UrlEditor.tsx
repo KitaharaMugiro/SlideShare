@@ -8,6 +8,7 @@ interface Props {
     url: string
     setUrl: (url: string) => void
     onClickSave: () => void
+    buttonName?: string
 }
 
 export default (props: Props) => {
@@ -30,7 +31,7 @@ export default (props: Props) => {
             <Button
                 onClick={props.onClickSave}
                 startIcon={<SaveIcon />}
-                variant="contained">SAVE</Button>
+                variant="contained">{props.buttonName || "SAVE"}</Button>
         </div>
     </>
 }

@@ -2,8 +2,8 @@ import { Storage } from "aws-amplify";
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { v4 as uuidv4 } from "uuid";
-import { usePageList } from '../../../model/hooks/usePageList';
-import UploadDragzoneDesign from '../../upload/UploadDragzoneDesign';
+import { usePageList } from '../../model/hooks/usePageList';
+import UploadDragzoneDesign from '../upload/UploadDragzoneDesign';
 
 function ImageUploader() {
 
