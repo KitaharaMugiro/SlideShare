@@ -2,10 +2,11 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import React, { useState } from "react";
 import { usePageList } from "../../../model/hooks/usePageList";
+import MyDialog from "../../common/MyDialog";
 
 
 export default () => {
-    const options = ["Insert New Page", "Delete"]
+    const options = ["Set Page Title", "Insert New Page", "Delete"]
     const { focusedPage, removePage, createPage } = usePageList()
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -14,17 +15,22 @@ export default () => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = (option: string) => {
+        //TODO: textで判断するのではなくIDなどで判断するようにする
         if (option === "Delete") {
             if (!focusedPage) return
             removePage(focusedPage.id)
         } else if (option === "Insert New Page") {
             if (!focusedPage) return
             if (!focusedPage.slideId) {
-                //TODO: 新しく作られたスライドなんかはここが引っかかる
+                //TODO: 新しく作られたスライドなんかはここが引っかかるが、この状態はなくしたい
                 console.warn("pageにslideIdが付与されていない")
                 return
             }
             createPage(focusedPage.slideId, focusedPage.pageNumber + 1)
+        } else if (option === "Set Page Title") {
+            if (!focusedPage) return
+            //title編集モーダルを開く
+
         }
         setAnchorEl(null);
     };
@@ -61,6 +67,13 @@ export default () => {
                     </MenuItem>
                 ))}
             </Menu>
+
+            <MyDialog
+                initialValues={[]}
+                dialogTitle={""}
+                dialogDescription={""}
+                open={false}
+                onFinishEdit={null} />
         </div>
     );
 }

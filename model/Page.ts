@@ -4,6 +4,7 @@ import { Slideshare_PageType_Enum } from "../src/generated/graphql"
 export type Page = {
     id: string
     type: Slideshare_PageType_Enum
+    title?: string | null
     pageNumber: number
     text?: string | null
     imageUrl?: string | null

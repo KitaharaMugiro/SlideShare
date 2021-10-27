@@ -5,6 +5,7 @@ query querySlide($slideId: Int!) {
     Pages(order_by:{pageNumber:asc}) {
       id
       type
+      title
       text
       pageNumber
       imageUrl

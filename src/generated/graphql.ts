@@ -1541,6 +1541,7 @@ export type Slideshare_Page = {
   pageNumber: Scalars['Int'];
   slideId: Scalars['Int'];
   text?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
   type: Slideshare_PageType_Enum;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   videoUrl?: Maybe<Scalars['String']>;
@@ -1674,6 +1675,7 @@ export type Slideshare_Page_Bool_Exp = {
   pageNumber?: Maybe<Int_Comparison_Exp>;
   slideId?: Maybe<Int_Comparison_Exp>;
   text?: Maybe<String_Comparison_Exp>;
+  title?: Maybe<String_Comparison_Exp>;
   type?: Maybe<Slideshare_PageType_Enum_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
   videoUrl?: Maybe<String_Comparison_Exp>;
@@ -1698,9 +1700,11 @@ export type Slideshare_Page_Insert_Input = {
   Poll?: Maybe<Slideshare_Poll_Obj_Rel_Insert_Input>;
   id?: Maybe<Scalars['String']>;
   imageUrl?: Maybe<Scalars['String']>;
+  isVisible?: Maybe<Scalars['Boolean']>;
   pageNumber?: Maybe<Scalars['Int']>;
   slideId?: Maybe<Scalars['Int']>;
   text?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
   type?: Maybe<Slideshare_PageType_Enum>;
   videoUrl?: Maybe<Scalars['String']>;
 };
@@ -1714,6 +1718,7 @@ export type Slideshare_Page_Max_Order_By = {
   pageNumber?: Maybe<Order_By>;
   slideId?: Maybe<Order_By>;
   text?: Maybe<Order_By>;
+  title?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
   videoUrl?: Maybe<Order_By>;
 };
@@ -1727,6 +1732,7 @@ export type Slideshare_Page_Min_Order_By = {
   pageNumber?: Maybe<Order_By>;
   slideId?: Maybe<Order_By>;
   text?: Maybe<Order_By>;
+  title?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
   videoUrl?: Maybe<Order_By>;
 };
@@ -1769,6 +1775,7 @@ export type Slideshare_Page_Order_By = {
   pageNumber?: Maybe<Order_By>;
   slideId?: Maybe<Order_By>;
   text?: Maybe<Order_By>;
+  title?: Maybe<Order_By>;
   type?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
   videoUrl?: Maybe<Order_By>;
@@ -1798,6 +1805,8 @@ export enum Slideshare_Page_Select_Column {
   /** column name */
   Text = 'text',
   /** column name */
+  Title = 'title',
+  /** column name */
   Type = 'type',
   /** column name */
   UpdatedAt = 'updatedAt',
@@ -1812,6 +1821,7 @@ export type Slideshare_Page_Set_Input = {
   isVisible?: Maybe<Scalars['Boolean']>;
   pageNumber?: Maybe<Scalars['Int']>;
   text?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
   type?: Maybe<Slideshare_PageType_Enum>;
   videoUrl?: Maybe<Scalars['String']>;
 };
@@ -1852,6 +1862,8 @@ export enum Slideshare_Page_Update_Column {
   PageNumber = 'pageNumber',
   /** column name */
   Text = 'text',
+  /** column name */
+  Title = 'title',
   /** column name */
   Type = 'type',
   /** column name */
@@ -2757,7 +2769,7 @@ export type QuerySlideQueryVariables = Exact<{
 }>;
 
 
-export type QuerySlideQuery = { __typename?: 'query_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number, Bookmarks: Array<{ __typename?: 'slideshare_Bookmark', id: number, url: string }>, Poll?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined } | null | undefined, Files: Array<{ __typename?: 'slideshare_File', id: number, path: string, filename: string }> }> } | null | undefined };
+export type QuerySlideQuery = { __typename?: 'query_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, title?: string | null | undefined, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number, Bookmarks: Array<{ __typename?: 'slideshare_Bookmark', id: number, url: string }>, Poll?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined } | null | undefined, Files: Array<{ __typename?: 'slideshare_File', id: number, path: string, filename: string }> }> } | null | undefined };
 
 export type UploadPdfMutationVariables = Exact<{
   pdfName: Scalars['String'];
@@ -3443,6 +3455,7 @@ export const QuerySlideDocument = gql`
     Pages(order_by: {pageNumber: asc}) {
       id
       type
+      title
       text
       pageNumber
       imageUrl
