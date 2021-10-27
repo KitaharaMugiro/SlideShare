@@ -18,7 +18,6 @@ export default (props: Props) => {
             console.log({ d })
             setData(d)
         }
-
         load()
     }, [])
 
@@ -26,9 +25,9 @@ export default (props: Props) => {
     return <div style={{
         width, height,
         overflowY: "scroll",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
+        // display: "flex",
+        // flexDirection: "column",
+        // alignItems: "center",
     }}>
         {data ? <NotionRenderer
             components={{
@@ -36,7 +35,7 @@ export default (props: Props) => {
                 collectionRow: CollectionRow
             }}
             darkMode={true}
-            rootDomain="test.com"
+            mapPageUrl={(pageId) => "#"}
             recordMap={data} /> : <div />}
 
     </div>

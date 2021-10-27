@@ -9,6 +9,7 @@ export interface Theme {
     leftColor?: string // binary poll only
     rightColor?: string // binary poll only
     textColor?: string
+    questionColor?: string
     backgroundColor?: string
     // alignment?: 'start' | 'center' | 'end'
     alignment?: string
@@ -33,6 +34,7 @@ const MultiplePoll = ({
 }: MultiplePollProps) => {
 
     const theme = propTheme || {
+        questionColor: "white",
         textColor: 'black',
         mainColor: '#00B87B',
         backgroundColor: 'rgb(255,255,255)',
@@ -53,7 +55,7 @@ const MultiplePoll = ({
             className={styles.container}
             style={{ alignItems: theme?.alignment }}
         >
-            {question && <h1 style={{ color: theme?.textColor }}>{question}</h1>}
+            {question && <h1 style={{ color: theme?.questionColor }}>{question}</h1>}
 
             {results.map((result, index) => (
                 <div

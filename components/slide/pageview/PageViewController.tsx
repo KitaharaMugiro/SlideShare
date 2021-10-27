@@ -1,4 +1,4 @@
-import { Button } from "@mui/material"
+import { Button, Typography } from "@mui/material"
 import React, { useState } from "react"
 import { Page } from "../../../model/Page"
 import { Slideshare_PageType_Enum } from "../../../src/generated/graphql"

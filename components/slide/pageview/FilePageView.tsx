@@ -41,7 +41,7 @@ export default (props: Props) => {
         flexDirection: "column",
         alignItems: "center",
     }}>
-        <h1 style={{ color: "white" }}>Downloads</h1>
+        <h1 style={{ color: "white" }}>{props.page.title || "Downloads"}</h1>
         {files ? <FilePaperList files={files} onClickDonwload={onClickDonwload} /> : <div />}
     </div>
 }

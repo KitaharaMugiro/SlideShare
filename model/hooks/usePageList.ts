@@ -47,6 +47,7 @@ export const usePageList = () => {
         updatePageMutation({
             variables: {
                 id: targetPage.id, object: {
+                    title: targetPage.title,
                     text: targetPage.text,
                     imageUrl: targetPage.imageUrl,
                     type: targetPage.type,

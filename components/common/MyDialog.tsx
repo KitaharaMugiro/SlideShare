@@ -8,13 +8,11 @@ interface Props {
     dialogDescription: string
     open: boolean
     onFinishEdit: (values: { key: string, value: string }[]) => void
+    onClose?: () => void
 }
 
 export default function MyDialog(props: Props) {
     const [values, setValus] = useState<{ key: string, value: string }[]>(props.initialValues)
-    const handleClose = () => {
-        props.onFinishEdit(values);
-    };
 
     const onChangeTextField = (key: string, value: string) => {
         const index = values.findIndex(v => v.key === key)
@@ -45,7 +43,7 @@ export default function MyDialog(props: Props) {
     }
 
     return (
-        <Dialog open={props.open} onClose={handleClose}>
+        <Dialog open={props.open} onClose={props.onClose}>
             <DialogTitle>{props.dialogTitle}</DialogTitle>
             <DialogContent>
                 <DialogContentText>

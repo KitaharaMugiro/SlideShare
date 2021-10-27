@@ -33,7 +33,7 @@ export default () => {
         } else if (page.type === Slideshare_PageType_Enum.Image && page.imageUrl) {
             return <ImageFrame key={page.id} imageUrl={page.imageUrl} isFocus={isFocus} />
         } else {
-            return <SimpleFrame key={page.id} text={page.type} isFocus={isFocus} />
+            return <SimpleFrame key={page.id} text={page.title || page.type} isFocus={isFocus} />
         }
     }
 

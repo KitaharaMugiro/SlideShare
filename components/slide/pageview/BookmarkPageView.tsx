@@ -20,7 +20,7 @@ export default (props: Props) => {
         flexDirection: "column",
         alignItems: "center",
     }}>
-        <h1 style={{ color: "white" }}>Links</h1>
+        <h1 style={{ color: "white" }}>{props.page.title || "Links"}</h1>
         {urls ? <BookmarkList urls={urls} /> : <div />}
     </div>
 }

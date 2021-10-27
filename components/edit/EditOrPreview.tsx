@@ -9,6 +9,7 @@ import CodepenEditor from "./editor/CodepenEditor"
 import FileEditor from "./editor/FileEditor"
 import ImageEditor from "./editor/ImageEditor"
 import MarkdownEditor from "./editor/MarkdownEditor"
+import NotionEditor from "./editor/NotionEditor"
 import PollEditor from "./editor/PollEditor"
 import TypeformEditor from "./editor/TypeformEditor"
 import YoutubeEditor from "./editor/YoutubeEditor"
@@ -60,6 +61,12 @@ export default () => {
     }
     if (focusedPage.type === Slideshare_PageType_Enum.File) {
         return <FileEditor key={focusedPage.id} page={focusedPage} />
+    }
+    if (focusedPage.type === Slideshare_PageType_Enum.Notion) {
+        return <div style={{ width: 500, position: "relative" }}>
+            <NotionEditor key={focusedPage.id} page={focusedPage} />
+
+        </div>
     }
     return <div>対応していないページです</div>
 }
