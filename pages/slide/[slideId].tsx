@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import AdminSlideController from "../../components/slide/AdminSlideController";
 import Comments from "../../components/slide/comments/Comments";
 import PageViewController from "../../components/slide/pageview/PageViewController";
 import ProfileCardController from "../../components/slide/ProfileCardController";
@@ -84,6 +85,8 @@ const Page = () => {
                         onChangePageNumber={onChangePageNumber}
                         isSync={false}
                     />
+                    {isAdmin ? <AdminSlideController /> : <div />}
+
                 </div>
                 <div style={{
                     marginLeft: 60,

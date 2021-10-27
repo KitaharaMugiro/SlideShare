@@ -8,7 +8,7 @@ import AgoraClient from "../../components/slide/AgoraClient";
 import Comments from "../../components/slide/comments/Comments";
 import PageViewController from "../../components/slide/pageview/PageViewController";
 import ProfileCardController from "../../components/slide/ProfileCardController";
-import AdminSlideController from "../../components/slide/AdminSlideController";
+import AdminPresentationController from "../../components/slide/AdminPresentationController";
 import SlideSlider from "../../components/slide/SlideSlider";
 import useUser from "../../model/hooks/useUser";
 import { SlideStateAtom } from "../../model/jotai/SlideState";
@@ -146,7 +146,7 @@ const Page = () => {
                         isSync={isSync}
                         syncSlide={syncSlide}
                     />
-                    {isAdmin ? <AdminSlideController /> : <div />}
+                    {isAdmin ? <AdminPresentationController /> : <div />}
                     <Typography color="white" justifyContent="center">視聴者数: {onlineUserList ? onlineUserList.length : 0}人</Typography>
                 </div>
                 <div style={{
