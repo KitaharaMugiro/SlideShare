@@ -10,8 +10,12 @@ import MyAppBar from '../components/common/MyAppBar';
 import MyBackdrop from '../components/common/MyBackdrop';
 import useUser from '../model/hooks/useUser';
 import awsConfig from '../src/aws-exports';
-import '../styles/globals.css';
 
+//material ui font
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 // core styles shared by all of react-notion-x (required)
 import 'react-notion-x/src/styles.css'
 // used for code syntax highlighting (optional)
@@ -20,6 +24,8 @@ import 'prismjs/themes/prism-tomorrow.css'
 import 'rc-dropdown/assets/index.css'
 // used for rendering equations (optional)
 import 'katex/dist/katex.min.css'
+import '../styles/globals.css';
+
 
 function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
   if (urlStrings.length === 1) return urlStrings[0];
@@ -62,9 +68,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     getUser()
   }, [])
 
+  const darkModePathList = ["/slide", "/presentation"]
+  const isDark = darkModePathList.reduce((acc, cur) => acc || router.pathname.includes(cur), false)
   const darkTheme = createTheme({
     palette: {
-      mode: router.pathname.startsWith("/slide") ? 'dark' : "light",
+      mode: isDark ? 'dark' : "light",
     },
   });
 

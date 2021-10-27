@@ -6,7 +6,7 @@ interface Props {
     maxPageNumber: number
     onChangePageNumber: (pageNumber: number) => void
     isSync: boolean
-    syncSlide: () => void
+    syncSlide?: () => void
 }
 
 export default (props: Props) => {
@@ -24,6 +24,6 @@ export default (props: Props) => {
             value={props.pageNumber}
             color={props.isSync ? "secondary" : "primary"}
         />
-        {!props.isSync ? <Button onClick={props.syncSlide}>発表者と同じスライドへ移動</Button> : <div />}
+        {!props.isSync && props.syncSlide ? <Button onClick={props.syncSlide}>発表者と同じスライドへ移動</Button> : <div />}
     </>
 }

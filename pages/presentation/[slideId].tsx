@@ -1,10 +1,14 @@
+import { Typography } from "@mui/material";
 import { useAtom } from "jotai";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
+import { useOnlineUsers, useRealtimeCursor, useRealtimeSharedState } from "realtimely";
 import { v4 as uuidv4 } from "uuid";
+import AgoraClient from "../../components/slide/AgoraClient";
 import Comments from "../../components/slide/comments/Comments";
 import PageViewController from "../../components/slide/pageview/PageViewController";
 import ProfileCardController from "../../components/slide/ProfileCardController";
+import AdminSlideController from "../../components/slide/AdminSlideController";
 import SlideSlider from "../../components/slide/SlideSlider";
 import useUser from "../../model/hooks/useUser";
 import { SlideStateAtom } from "../../model/jotai/SlideState";
@@ -21,7 +25,19 @@ const Page = () => {
 
     //slide状態変数
     const [localAdminSlideState] = useAtom(SlideStateAtom)
+    const [slideState, setSlideState] = useRealtimeSharedState({
+        pageNumber: 0,
+        enableCursor: true
+    }, "slideState")
     const [localPageNumber, setLocalPageNumber] = useState(0)
+    const [isSync, setIsSync] = useState(true)
+
+    //リアルタイムカーソル
+    // TODO: 一旦止める
+    // const { renderCursors, onMouseMove } = useRealtimeCursor()
+
+    //視聴者数
+    const { onlineUserList } = useOnlineUsers()
 
     //データ取得
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) }, fetchPolicy: "no-cache" })
@@ -38,22 +54,61 @@ const Page = () => {
         }
     }, [user, slide])
 
+    useEffect(() => {
+        if (isSync) {
+            setLocalPageNumber(slideState.pageNumber)
+        }
+    }, [slideState.pageNumber])
+
+    useEffect(() => {
+        if (isAdmin) {
+            setSlideState({
+                ...slideState,
+                enableCursor: localAdminSlideState.cursor
+            })
+        }
+    }, [localAdminSlideState.cursor])
+
     const goNext = () => {
-        const nextPageNumber = localPageNumber + 1
-        if (nextPageNumber >= pages.length) return
-        setLocalPageNumber(nextPageNumber)
+        if (isAdmin) {
+            if (slideState.pageNumber >= pages.length - 1) return
+            slideState.pageNumber += 1
+            setSlideState(slideState)
+        } else {
+            const nextPageNumber = localPageNumber + 1
+            if (nextPageNumber >= pages.length) return
+            setIsSync(slideState.pageNumber === nextPageNumber)
+            setLocalPageNumber(nextPageNumber)
+        }
     }
 
     const goPrevious = () => {
-        const nextPageNumber = localPageNumber - 1
-        if (nextPageNumber < 0) return
-        setLocalPageNumber(nextPageNumber)
-
+        if (isAdmin) {
+            if (slideState.pageNumber <= 0) return
+            slideState.pageNumber -= 1
+            setSlideState(slideState)
+        } else {
+            const nextPageNumber = localPageNumber - 1
+            if (nextPageNumber < 0) return
+            setIsSync(slideState.pageNumber === nextPageNumber)
+            setLocalPageNumber(nextPageNumber)
+        }
     }
 
     const onChangePageNumber = (number: number) => {
-        const nextPageNumber = number
-        setLocalPageNumber(nextPageNumber)
+        if (isAdmin) {
+            slideState.pageNumber = number
+            setSlideState(slideState)
+        } else {
+            const nextPageNumber = number
+            setIsSync(slideState.pageNumber === nextPageNumber)
+            setLocalPageNumber(nextPageNumber)
+        }
+    }
+
+    const syncSlide = () => {
+        setIsSync(true)
+        setLocalPageNumber(slideState.pageNumber)
     }
 
     const onClickPageLink = (pageId: string) => {
@@ -66,6 +121,12 @@ const Page = () => {
 
     return (
         <div className={style.main}>
+            <AgoraClient
+                uid={uuid}
+                host={slide?.createdBy || ""}
+                channelName={slide?.createdBy || ""}
+                isHost={isAdmin} />
+
             {/* スライド */}
             <div className={style.deck_space} >
                 <div>
@@ -80,10 +141,13 @@ const Page = () => {
                     </div>
                     <SlideSlider
                         maxPageNumber={pages?.length || 0}
-                        pageNumber={localPageNumber}
+                        pageNumber={isSync ? slideState.pageNumber : localPageNumber}
                         onChangePageNumber={onChangePageNumber}
-                        isSync={false}
+                        isSync={isSync}
+                        syncSlide={syncSlide}
                     />
+                    {isAdmin ? <AdminSlideController /> : <div />}
+                    <Typography color="white" justifyContent="center">視聴者数: {onlineUserList ? onlineUserList.length : 0}人</Typography>
                 </div>
                 <div style={{
                     marginLeft: 60,

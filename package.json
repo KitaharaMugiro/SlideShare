@@ -16,6 +16,7 @@
     "@dhaiwat10/react-link-preview": "^1.9.1",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "@fontsource/roboto": "^4.5.1",
     "@mui/icons-material": "^5.0.3",
     "@mui/material": "^5.0.3",
     "@typeform/embed-react": "^1.1.3",
