@@ -33,11 +33,10 @@ const Page = () => {
     const [isSync, setIsSync] = useState(true)
 
     //リアルタイムカーソル
-    // TODO: 一旦止める
-    // const { renderCursors, onMouseMove } = useRealtimeCursor()
+    const { renderCursors, onMouseMove } = useRealtimeCursor(100)
 
     //視聴者数
-    const { onlineUserList } = useOnlineUsers()
+    const { onlineUserList } = useOnlineUsers(100000)
 
     //データ取得
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) }, fetchPolicy: "no-cache" })
@@ -130,14 +129,15 @@ const Page = () => {
             {/* スライド */}
             <div className={style.deck_space} >
                 <div>
-                    <div style={{ position: "relative" }}>
-                        {/* onMouseMove={isAdmin && slideState.enableCursor ? onMouseMove : undefined}> */}
+                    <div style={{ position: "relative" }}
+                        onMouseMove={isAdmin && slideState.enableCursor ? onMouseMove : undefined}>
+                        {slideState.enableCursor ? renderCursors() : <div />}
                         <PageViewController
                             viewingPage={viewingPage}
                             onClickLeft={goPrevious}
                             onClickRight={goNext}
                         />
-                        {/* {slideState.enableCursor ? renderCursors() : <div />} */}
+
                     </div>
                     <SlideSlider
                         maxPageNumber={pages?.length || 0}

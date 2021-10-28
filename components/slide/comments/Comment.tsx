@@ -18,7 +18,7 @@ export default (props: Props) => {
     return (
         <ListItem alignItems="flex-start">
             <ListItemAvatar>
-                <Avatar alt={props.name || "Anon"} src="/static/images/avatar/1.jpg" />
+                <Avatar alt={props.name || "Anon"} />
             </ListItemAvatar>
             <ListItemText
                 secondary={

@@ -35,7 +35,7 @@
     "react-notion-x": "^4.11.0",
     "react-social-login-buttons": "^3.6.0",
     "react-transition-group": "^4.4.2",
-    "realtimely": "^3.3.0",
+    "realtimely": "^3.6.0",
     "serverless-python-requirements": "^5.1.1",
     "subscriptions-transport-ws": "^0.9.19",
     "ts-react-codepen-embed": "^0.4.0",
