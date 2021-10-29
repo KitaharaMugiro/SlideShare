@@ -36,7 +36,7 @@ const Page = () => {
     const { renderCursors, onMouseMove } = useRealtimeCursor(100)
 
     //視聴者数
-    const { onlineUserList } = useOnlineUsers(100000)
+    const { onlineUserList } = useOnlineUsers(10000)
 
     //データ取得
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) }, fetchPolicy: "no-cache" })
@@ -131,12 +131,12 @@ const Page = () => {
                 <div>
                     <div style={{ position: "relative" }}
                         onMouseMove={isAdmin && slideState.enableCursor ? onMouseMove : undefined}>
-                        {slideState.enableCursor ? renderCursors() : <div />}
                         <PageViewController
                             viewingPage={viewingPage}
                             onClickLeft={goPrevious}
                             onClickRight={goNext}
                         />
+                        {slideState.enableCursor ? renderCursors() : <div />}
 
                     </div>
                     <SlideSlider

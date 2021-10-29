@@ -1,3 +1,3 @@
 import { atom } from "jotai";
 
-export const HeaderTitleAtom = atom<string>("KnowledgeStock")
+export const HeaderTitleAtom = atom<string>("Confs")
