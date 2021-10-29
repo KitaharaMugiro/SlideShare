@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default (props: Props) => {
-
+    console.log({ videoUrl: props.page.videoUrl })
     return (
         <iframe width={props.width} height={props.height}
             src={props.page.videoUrl || ""}

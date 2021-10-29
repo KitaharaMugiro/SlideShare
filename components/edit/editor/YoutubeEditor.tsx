@@ -47,7 +47,7 @@ export default (props: Props) => {
             }
 
             const page = Object.assign({}, props.page)
-            page.videoUrl = url
+            page.videoUrl = youtubeEmbedUrl
             updatePage(page)
         } catch {
             //TODO: URLが不正
