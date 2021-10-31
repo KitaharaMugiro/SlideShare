@@ -37,14 +37,17 @@ const Home = () => {
         const slideId = createdSlide.data?.insert_slideshare_Slide_one?.id
         if (!slideId) { return }
         let pageNumber = 0
+        const promises = []
         for (const imageUrl of pngList) {
             const newPage = createNewPage() as any //TODO: anyを使わない方法を知りたい
             newPage.type = Slideshare_PageType_Enum.Image
             newPage.imageUrl = imageUrl
             newPage.pageNumber = pageNumber
             pageNumber += 1
-            createPageMutation({ variables: { object: { ...newPage, slideId } } })
+            const promise = createPageMutation({ variables: { object: { ...newPage, slideId } } })
+            promises.push(promise)
         }
+        await Promise.all(promises)
         finishLoading()
         router.push(`/edit/${slideId}`)
     }
