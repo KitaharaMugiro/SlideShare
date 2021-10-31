@@ -36,6 +36,7 @@ export const usePageList = () => {
         const index = pageList.findIndex((page) => targetPage.id === page.id);
         //Not found, return same reference.
         if (-1 === index) {
+            console.warn("updatePage: page not found in pageList")
             return pageList;
         }
         //Return clone of items before and clone of items after.
@@ -66,6 +67,7 @@ export const usePageList = () => {
         }
         //Return clone of items before and clone of items after.
         const newPageList = [...pageList.slice(0, index), ...pageList.slice(index + 1)];
+        reorderPageList(newPageList)
         setPageList(newPageList)
         deletePageMutation({ variables: { id: pageId } })
     }

@@ -18,10 +18,11 @@ export default () => {
     return <>
         <div style={{ width: 400 }}>
             <Typography variant="h5" align="center">Add a page</Typography>
-            <MenuButton
+            {/* Bugが多いので一旦コメントアウト */}
+            {/* <MenuButton
                 onClick={() => onClick(Slideshare_PageType_Enum.Text)}
                 imageUrl="/static/page_select/text.png" title="Text" description="You can write markdown text" />
-            <div style={{ height: 5 }} />
+            <div style={{ height: 5 }} /> */}
             <MenuButton
                 onClick={() => onClick(Slideshare_PageType_Enum.FreeImage)}
                 imageUrl="/static/page_select/image.png" title="Image/Gif" description="Upload your image or embed with a link" />

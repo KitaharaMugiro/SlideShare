@@ -13,6 +13,7 @@ export default (props: Props) => {
     const { updatePage } = usePageList()
 
     useEffect(() => {
+        console.log("useEffect!")
         try {
             if (!url) throw Error()
             const splittedUrl = url.split("/")
@@ -38,19 +39,24 @@ export default (props: Props) => {
             const url_ = new URL(url);
             const params = new URLSearchParams(url_.search);
 
+            let idPart: string | null = null
             if (params.get("v")) {
-                const idPart = params.get("v")
-                setEmbedUrl(`https://www.youtube.com/embed/${idPart}`)
-            } else if (splittedUrl.length !== 1) {
-                const idPart = splittedUrl[splittedUrl.length - 1]
-                setEmbedUrl(`https://www.youtube.com/embed/${idPart}`)
+                idPart = params.get("v")
             }
-
+            if (idPart == null && splittedUrl.length !== 1) {
+                idPart = splittedUrl[splittedUrl.length - 1]
+            }
+            if (!idPart) {
+                throw Error("idPartを取得失敗しました")
+            }
+            const youtubeEmbedUrl = `https://www.youtube.com/embed/${idPart}`
+            setEmbedUrl(youtubeEmbedUrl)
             const page = Object.assign({}, props.page)
             page.videoUrl = youtubeEmbedUrl
             updatePage(page)
-        } catch {
+        } catch (e) {
             //TODO: URLが不正
+            console.warn(e)
         }
 
     }
