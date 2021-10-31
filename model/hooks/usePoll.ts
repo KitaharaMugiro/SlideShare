@@ -1,13 +1,18 @@
 import { useInsertPollMutation } from "../../src/generated/graphql"
+import { Page } from "../Page"
+import { usePageList } from "./usePageList"
 
 export default () => {
+    const { updatePage } = usePageList()
     const [insertPollMutation] = useInsertPollMutation()
 
-    const createPoll = async (pageId: string, question: string, option1: string, option2: string, option3?: string, option4?: string) => {
+    const createPoll = async (page: Page, question: string, option1: string, option2: string, option3?: string, option4?: string) => {
+        page.Poll = { question, option1, option2, option3, option4 }
+        updatePage(page, true)
         await insertPollMutation({
             variables: {
                 question,
-                pageId,
+                pageId: page.id,
                 option1,
                 option2,
                 option3,

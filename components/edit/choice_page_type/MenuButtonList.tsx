@@ -23,7 +23,7 @@ export default () => {
                 imageUrl="/static/page_select/text.png" title="Text" description="You can write markdown text" />
             <div style={{ height: 5 }} />
             <MenuButton
-                onClick={() => onClick(Slideshare_PageType_Enum.Image)}
+                onClick={() => onClick(Slideshare_PageType_Enum.FreeImage)}
                 imageUrl="/static/page_select/image.png" title="Image/Gif" description="Upload your image or embed with a link" />
             <div style={{ height: 5 }} />
             <MenuButton

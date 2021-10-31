@@ -14,55 +14,45 @@ export default (props: Props) => {
     const [insertFile] = useInsertFileMutation()
     const [deleteFile] = useDeleteFileMutation()
 
-    const onFileUpload = (acceptedFiles: any[]) => {
-        console.log("onFileUpload")
-        console.log(acceptedFiles)
-        acceptedFiles.forEach((file: any) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                //TODO: as anyで逃げてる
-                const fileAsArrayBuffer = new Uint8Array(reader.result as any);
-                // do whatever you want with the file content
-                const fileName = "Page#" + props.page.id + "/Name#" + file.name
-                //TODO: できたらユーザごとにフォルダ分けたいけどCognitoUserのsubの取り方がわからない
-                console.log("Before upload")
-                Storage.put(`upload/${fileName}`, fileAsArrayBuffer,
-                    { contentType: file.type })
-                    .then(result => {
-                        console.log("After upload")
-                        const key = result.key
-                        insertFile({
-                            variables: {
-                                path: key,
-                                pageId: props.page.id,
-                                filename: file.name
-                            }
-                        }).then(r => {
-                            console.log("After insert data")
-                            const d = r.data?.insert_slideshare_File_one
-                            if (files) {
-                                console.log("set file")
-                                setFiles([...files, { id: d?.id!, path: key, filename: file.name }])
-                            } else {
-                                console.log("set file")
-                                setFiles([{ id: d?.id!, path: key, filename: file.name }])
-                            }
-                        })
-                        return true;
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        return true;
-                    });
+    const handleEachFile = async (file: any) => {
+        return new Promise((resolve, reject) => {
+            let fileReader = new FileReader();
+            fileReader.onload = () => {
+                resolve(fileReader.result);
             };
-            reader.onabort = () => {
-                console.log("Reading file was aborted");
-            }
-            reader.onerror = () => {
-                console.log("Reading file has failed");
-            }
-            reader.readAsArrayBuffer(file);
+            fileReader.onerror = reject;
+            fileReader.readAsText(file);
         });
+    }
+
+
+    const onFileUpload = async (acceptedFiles: any[]) => {
+        const promises = []
+        for (const file of acceptedFiles) {
+            const fileResult: any = await handleEachFile(file) //TODO: as anyで逃げてる
+            const fileAsArrayBuffer = new Uint8Array(fileResult);
+            // do whatever you want with the file content
+            const fileName = "Page#" + props.page.id + "/Name#" + file.name
+            //TODO: できたらユーザごとにフォルダ分けたいけどCognitoUserのsubの取り方がわからない
+            const result = await Storage.put(`upload/${fileName}`, fileAsArrayBuffer,
+                { contentType: file.type })
+
+            const key = result.key
+            const r = await insertFile({
+                variables: {
+                    path: key,
+                    pageId: props.page.id,
+                    filename: file.name
+                }
+            })
+            const d = r.data?.insert_slideshare_File_one
+            promises.push({ id: d?.id!, path: key, filename: file.name })
+        }
+        if (files) {
+            setFiles([...files, ...promises])
+        } else {
+            setFiles(promises)
+        }
     }
 
     const onClickDonwload = async (key: string, filename: string) => {

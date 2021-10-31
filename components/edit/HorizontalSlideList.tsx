@@ -30,7 +30,7 @@ export default () => {
         const isFocus = page.id === focusId
         if (page.type === Slideshare_PageType_Enum.Temp) {
             return <SimpleFrame key={page.id} text="" isFocus={isFocus} />
-        } else if (page.type === Slideshare_PageType_Enum.Image && page.imageUrl) {
+        } else if ((page.type === Slideshare_PageType_Enum.Image || page.type === Slideshare_PageType_Enum.FreeImage) && page.imageUrl) {
             return <ImageFrame key={page.id} imageUrl={page.imageUrl} isFocus={isFocus} />
         } else {
             return <SimpleFrame key={page.id} text={page.title || page.type} isFocus={isFocus} />

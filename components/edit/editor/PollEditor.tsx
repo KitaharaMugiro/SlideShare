@@ -18,6 +18,7 @@ export default (props: Props) => {
         option3: props.page.Poll?.option3 || "",
         option4: props.page.Poll?.option4 || "",
     })
+    const [isEdited, setIsEdited] = useState(false)
     const [loading, setLoading] = useState(false)
 
     const onChangeOption = (text: string, order: number) => {
@@ -30,6 +31,7 @@ export default (props: Props) => {
         } else if (order === 3) {
             setPoll({ ...poll, option4: text })
         }
+        setIsEdited(true)
     }
 
     const onChangeQuestion = (text: string) => {
@@ -38,8 +40,9 @@ export default (props: Props) => {
 
     const onConfirm = async () => {
         setLoading(true)
-        await createPoll(props.page.id, poll.question, poll.option1, poll.option2, poll.option3, poll.option4)
+        await createPoll(props.page, poll.question, poll.option1, poll.option2, poll.option3, poll.option4)
         setLoading(false)
+        setIsEdited(false)
     }
 
     return <>
@@ -50,6 +53,7 @@ export default (props: Props) => {
             <TextField value={poll.option3} onChange={(e) => onChangeOption(e.target.value, 2)} margin="dense" label="選択肢3(オプション)" variant="filled" fullWidth />
             <TextField value={poll.option4} onChange={(e) => onChangeOption(e.target.value, 3)} margin="dense" label="選択肢4(オプション)" variant="filled" fullWidth />
             <Button
+                disabled={!isEdited}
                 onClick={onConfirm} fullWidth variant="contained">{loading ? "保存中..." : "保存"}</Button>
         </div>
     </>

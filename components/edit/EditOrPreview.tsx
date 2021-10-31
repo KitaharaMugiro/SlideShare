@@ -1,8 +1,6 @@
-import { Button } from "@mui/material"
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { usePageList } from "../../model/hooks/usePageList"
 import { Slideshare_PageType_Enum } from "../../src/generated/graphql"
-import { MultiplePoll } from "../slide/poll/MultiplePoll"
 import MenuButtonList from "./choice_page_type/MenuButtonList"
 import BookmarkEditor from "./editor/BookmarkEditor"
 import CodepenEditor from "./editor/CodepenEditor"
@@ -13,6 +11,7 @@ import NotionEditor from "./editor/NotionEditor"
 import PollEditor from "./editor/PollEditor"
 import TypeformEditor from "./editor/TypeformEditor"
 import YoutubeEditor from "./editor/YoutubeEditor"
+import FreeImagePreview from "./preview/FreeImagePreview"
 import ImagePreview from "./preview/ImagePreview"
 
 export default () => {
@@ -28,6 +27,12 @@ export default () => {
     if (focusedPage.type === Slideshare_PageType_Enum.Image) {
         if (focusedPage.imageUrl) {
             return <ImagePreview key={focusedPage.id} imageUrl={focusedPage.imageUrl} />
+        }
+        return <ImageEditor />
+    }
+    if (focusedPage.type === Slideshare_PageType_Enum.FreeImage) {
+        if (focusedPage.imageUrl) {
+            return <FreeImagePreview key={focusedPage.id} imageUrl={focusedPage.imageUrl} />
         }
         return <ImageEditor />
     }
@@ -65,7 +70,6 @@ export default () => {
     if (focusedPage.type === Slideshare_PageType_Enum.Notion) {
         return <div style={{ width: 500, position: "relative" }}>
             <NotionEditor key={focusedPage.id} page={focusedPage} />
-
         </div>
     }
     return <div>対応していないページです</div>

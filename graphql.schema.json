@@ -11287,6 +11287,12 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "FreeImage",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "bookmark",
             "description": null,
             "isDeprecated": false,

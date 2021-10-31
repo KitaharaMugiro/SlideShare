@@ -32,7 +32,7 @@ export const usePageList = () => {
         })
     }
 
-    const updatePage = (targetPage: Page) => {
+    const updatePage = (targetPage: Page, onlyUpdateStore: boolean = false) => {
         const index = pageList.findIndex((page) => targetPage.id === page.id);
         //Not found, return same reference.
         if (-1 === index) {
@@ -43,6 +43,7 @@ export const usePageList = () => {
         reorderPageList(newPageList)
         setPageList(newPageList)
 
+        if (onlyUpdateStore) return;
         //TODO: これ手動でやるのあほくさい。。。
         updatePageMutation({
             variables: {

@@ -15,3 +15,18 @@
     background-repeat: no-repeat;
     margin: 0 auto;
 }
+
+.free_size_paper {
+    width: 700px;
+    background-color: gray;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    position: relative;
+    transform: translateX(-20px);
+    margin-bottom: 20px;
+}
+
+.free_picture {
+    object-fit: contain;
+    width: 100%;
+}
+
