@@ -12,6 +12,7 @@ interface Props {
 function FileUploader(props: Props) {
 
     const multiple = true
+    const maxSize = 10485760 // 10MB
 
     const onDrop = useCallback(acceptedFiles => {
         console.log("onDrop")
@@ -20,7 +21,7 @@ function FileUploader(props: Props) {
     }, []);
 
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, multiple });
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, multiple, maxSize });
     return (
         <div>
             <section {...getRootProps({ className: 'dropzone' })} >

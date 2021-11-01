@@ -8,6 +8,7 @@ import UploadDragzoneDesign from '../upload/UploadDragzoneDesign';
 function ImageUploader() {
 
     const accept = "image/*"
+    const maxSize = 10485760 // 10MB
     const multiple = false
     const { focusedPage, updatePage } = usePageList()
 
@@ -46,7 +47,7 @@ function ImageUploader() {
     }, []);
 
 
-    const { acceptedFiles, getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept, multiple });
+    const { acceptedFiles, getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept, multiple, maxSize });
 
 
     return (

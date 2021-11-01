@@ -11,6 +11,8 @@ interface Props {
 }
 
 function PdfUploader(props: Props) {
+    const accept = "application/pdf"
+    const maxSize = 10485760 // 10MB
     const onDrop = useCallback(acceptedFiles => {
         acceptedFiles.forEach((file: any) => {
             const reader = new FileReader();
@@ -43,7 +45,7 @@ function PdfUploader(props: Props) {
     }, []);
 
     //TODO: pptxかpdfのみを受け付けるようにする
-    const { acceptedFiles, getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+    const { acceptedFiles, getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept, maxSize });
 
     return (
         <div>

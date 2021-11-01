@@ -1,0 +1,20 @@
+.heroine {
+    background-image: url("https://d1q41gc9t1djbb.cloudfront.net/assets/heroine-89662cc99efa2f6acb75dd07b05ef478dcaf0b4f54ae965284214bb91b25359e.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: -1px;
+    box-shadow: inset rgb(0 0 0 / 7%) 0 1px 0, inset rgb(0 0 0 / 7%) 0 -1px 0;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.lead {
+    line-height: 1.2;
+    color: #575757;
+    font-weight: 400;
+}

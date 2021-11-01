@@ -9,11 +9,11 @@ interface Props {
 export default (props: Props) => {
     let text = ""
     if (props.type === "PDF") {
-        text = "Drag 'n' drop a PDF here"
+        text = "Drag 'n' drop a PDF here (~10MB)"
     } else if (props.type === "Image") {
-        text = "Drag 'n' drop a Image or GIF file here"
+        text = "Drag 'n' drop a Image or GIF file here (~10MB)"
     } else if (props.type === "Files") {
-        text = "Drag 'n' drop files here"
+        text = "Drag 'n' drop files here (~10MB)"
     }
 
     return <>
