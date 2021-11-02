@@ -6,13 +6,11 @@ import MyDialog from "../../common/MyDialog";
 
 
 export default () => {
-    const options = ["Set Page Title", "Insert New Page", "Delete"]
+    const options = ["Insert New Page", "Delete"]
     const { focusedPage, removePage, createPage, updatePage } = usePageList()
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-
-    const [openDialog, setOpenDialog] = useState(false)
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -30,22 +28,11 @@ export default () => {
                 return
             }
             createPage(focusedPage.slideId, focusedPage.pageNumber + 1)
-        } else if (option === "Set Page Title") {
-            if (!focusedPage) return
-            //title編集モーダルを開く
-            setOpenDialog(true)
         }
         setAnchorEl(null);
     };
 
-    const onFinishDialog = (values: { key: string, value: string }[]) => {
-        setOpenDialog(false)
-        if (!focusedPage) return
-        const value = values.find(v => v.key === "title")
-        if (!value) return
-        focusedPage.title = value.value
-        updatePage(focusedPage)
-    }
+
 
     return (
         <div style={{ position: "absolute", top: "10px", right: "10px" }}>
@@ -79,15 +66,6 @@ export default () => {
                     </MenuItem>
                 ))}
             </Menu>
-
-            <MyDialog
-                initialValues={[{ key: "title", value: focusedPage?.title || "" }]}
-                dialogTitle={"ページタイトルの設定"}
-                dialogDescription={"ページ上部に表示されます"}
-                open={openDialog}
-                onFinishEdit={onFinishDialog}
-                onClose={() => setOpenDialog(false)} />
-
         </div>
     );
 }

@@ -8,6 +8,7 @@ import EditOrPreview from "../../components/edit/EditOrPreview";
 import HorizontalSlideList from "../../components/edit/HorizontalSlideList";
 import { useLoading } from '../../model/hooks/useLoading';
 import { usePageList } from '../../model/hooks/usePageList';
+import useSignin from '../../model/hooks/useSignin';
 import useUser from '../../model/hooks/useUser';
 import { pageListAtom } from "../../model/jotai/PageList";
 import { Page } from '../../model/Page';
@@ -22,11 +23,11 @@ const Edit = () => {
     const [_, setEditingPageList] = useAtom(pageListAtom)
     const { updateAllPageNumber } = usePageList()
     const { startLoading, finishLoading } = useLoading()
-
+    const { goSignin } = useSignin()
 
     useEffect(() => {
         Auth.currentAuthenticatedUser().catch(() => {
-            router.push("/signin")
+            goSignin()
         })
     }, [])
 

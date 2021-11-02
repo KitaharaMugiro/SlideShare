@@ -1,7 +1,7 @@
 import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material';
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify, { Auth, Hub } from 'aws-amplify';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/dist/client/router';
 import React, { useEffect } from 'react';
@@ -25,6 +25,7 @@ import 'rc-dropdown/assets/index.css'
 // used for rendering equations (optional)
 import 'katex/dist/katex.min.css'
 import '../styles/globals.css';
+import { ConsoleLogger } from '@aws-amplify/core';
 
 
 function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
@@ -66,6 +67,21 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       }
     }
     getUser()
+  }, [])
+
+  useEffect(() => {
+    Hub.listen('auth', ({ payload: { event, data } }) => {
+      console.log(event)
+      switch (event) {
+        case 'signIn':
+          // console.log('User has signed in!', data);
+          break
+        case 'customOAuthState':
+          console.log("you logged in ", data)
+          router.push(data)
+          break;
+      }
+    })
   }, [])
 
   const darkModePathList = ["/slide", "/presentation"]

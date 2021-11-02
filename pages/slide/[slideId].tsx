@@ -77,6 +77,7 @@ const Page = () => {
 
     if (loading) return <div></div>
     if (error) return <div>{JSON.stringify(error)}</div>
+    if (!slide) return <div>存在しないスライドです</div>
 
     if (isMobile) {
         return <MobileSlideView />

@@ -5,6 +5,7 @@ import { useRouter } from "next/dist/client/router"
 import React, { useEffect } from "react"
 import PdfUploader from "../../components/upload/PdfUploader"
 import { useLoading } from "../../model/hooks/useLoading"
+import useSignin from "../../model/hooks/useSignin"
 import { createNewPage, Page } from "../../model/Page"
 import { Slideshare_PageType_Enum, useCreateSlideMutation, useInsertPageMutation, useUploadPdfMutation } from "../../src/generated/graphql"
 import style from "./index.module.css"
@@ -14,10 +15,11 @@ const Home = () => {
     const [uploadPdf] = useUploadPdfMutation()
     const { startLoading, finishLoading } = useLoading("このまま30秒ほどお待ちください")
     const router = useRouter()
+    const { goSignin } = useSignin()
 
     useEffect(() => {
         Auth.currentAuthenticatedUser().catch(() => {
-            router.push("/signin")
+            goSignin()
         })
     }, [])
 

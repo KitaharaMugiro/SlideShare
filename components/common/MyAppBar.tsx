@@ -7,6 +7,7 @@ import { Auth } from 'aws-amplify';
 import { useAtom } from 'jotai';
 import Link from "next/link";
 import * as React from 'react';
+import useSignin from '../../model/hooks/useSignin';
 import useUser from '../../model/hooks/useUser';
 import { HeaderTitleAtom } from '../../model/jotai/HeaderTitle';
 const MyAppBar = () => {
@@ -20,13 +21,14 @@ const MyAppBar = () => {
             console.log('error signing out: ', error);
         }
     }
+    const { goSignin } = useSignin()
 
 
     const renderSigninOrOutButton = () => {
         if (user) {
             return <Button color="inherit" onClick={signOut}>Logout</Button>
         } else {
-            return <Button color="inherit" href="/signin">Login</Button>
+            return <Button color="inherit" onClick={goSignin}>Login</Button>
         }
     }
 
