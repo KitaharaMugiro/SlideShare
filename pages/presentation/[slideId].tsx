@@ -16,6 +16,7 @@ import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
 import MobileSlideView from "../../components/common/MobileSlideView";
 import { isMobile } from 'react-device-detect';
+import { useLoading } from "../../model/hooks/useLoading";
 
 const Page = () => {
     const router = useRouter()
@@ -24,6 +25,8 @@ const Page = () => {
     const [isAdmin, setIsAdmin] = useState(false)
     const { user } = useUser()
     const [uuid] = useState(uuidv4())
+
+    const { startLoading, finishLoading } = useLoading()
 
     //slide状態変数
     const [localAdminSlideState] = useAtom(SlideStateAtom)
@@ -54,6 +57,14 @@ const Page = () => {
             }
         }
     }, [user, slide])
+
+    useEffect(() => {
+        if (loading) {
+            startLoading()
+        } else {
+            finishLoading()
+        }
+    }, [loading])
 
     useEffect(() => {
         if (isSync) {
@@ -117,7 +128,7 @@ const Page = () => {
         onChangePageNumber(targetPage?.pageNumber || 0)
     }
 
-    if (loading) return <div>ロード中</div>
+    if (loading) return <div></div>
     if (error) return <div>{JSON.stringify(error)}</div>
     if (isMobile) {
         return <MobileSlideView />

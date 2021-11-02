@@ -6,6 +6,7 @@ import { useRouter } from "next/dist/client/router";
 import React, { useEffect } from "react";
 import EditOrPreview from "../../components/edit/EditOrPreview";
 import HorizontalSlideList from "../../components/edit/HorizontalSlideList";
+import { useLoading } from '../../model/hooks/useLoading';
 import { usePageList } from '../../model/hooks/usePageList';
 import useUser from '../../model/hooks/useUser';
 import { pageListAtom } from "../../model/jotai/PageList";
@@ -20,12 +21,22 @@ const Edit = () => {
     const { user } = useUser()
     const [_, setEditingPageList] = useAtom(pageListAtom)
     const { updateAllPageNumber } = usePageList()
+    const { startLoading, finishLoading } = useLoading()
+
 
     useEffect(() => {
         Auth.currentAuthenticatedUser().catch(() => {
             router.push("/signin")
         })
     }, [])
+
+    useEffect(() => {
+        if (loading) {
+            startLoading()
+        } else {
+            finishLoading()
+        }
+    }, [loading])
 
     useEffect(() => {
         if (user) {
@@ -60,7 +71,9 @@ const Edit = () => {
 
     //TODO: もっとマシにしよう
     if (error) return <div>{error}</div>
-    if (loading) return <div>ロード中</div>
+    if (loading) {
+        return <div></div>
+    }
 
     return <>
         <HorizontalSlideList />

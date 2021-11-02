@@ -44,7 +44,7 @@ export default (props: Props) => {
             }
         })
     }
-    if (loading) return <div>ロード中</div>
+    if (loading) return <div></div>
     if (error) return <div>エラー</div>
     return <>
         <MultiplePoll

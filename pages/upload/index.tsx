@@ -12,7 +12,7 @@ const Home = () => {
     const [createNewSlide] = useCreateSlideMutation()
     const [createPageMutation] = useInsertPageMutation()
     const [uploadPdf] = useUploadPdfMutation()
-    const { startLoading, finishLoading } = useLoading()
+    const { startLoading, finishLoading } = useLoading("このまま30秒ほどお待ちください")
     const router = useRouter()
 
     useEffect(() => {
@@ -48,8 +48,8 @@ const Home = () => {
             promises.push(promise)
         }
         await Promise.all(promises)
-        finishLoading()
         router.push(`/edit/${slideId}`)
+        finishLoading()
     }
 
     return (<>

@@ -33,6 +33,12 @@ export default (props: Props) => {
         height,
         backgroundSize: `${width}px ${height}px`
     }
+    const freeImageSizeStyle = {
+        width,
+        height,
+        backgroundPosition: "center",
+        backgroundSize: "contain"
+    }
 
     const renderPageView = () => {
         if (props.viewingPage.type === Slideshare_PageType_Enum.Image) {
@@ -40,6 +46,13 @@ export default (props: Props) => {
                 key={props.viewingPage.id}
                 imageUrl={props.viewingPage?.imageUrl}
                 imageSizeStyle={imageSizeStyle}
+            />
+        }
+        if (props.viewingPage.type === Slideshare_PageType_Enum.FreeImage) {
+            return <ImagePageView
+                key={props.viewingPage.id}
+                imageUrl={props.viewingPage?.imageUrl}
+                imageSizeStyle={freeImageSizeStyle}
             />
         }
         if (props.viewingPage.type === Slideshare_PageType_Enum.Poll) {

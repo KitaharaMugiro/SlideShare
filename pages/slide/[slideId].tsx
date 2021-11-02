@@ -13,6 +13,7 @@ import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
 import { isMobile } from 'react-device-detect';
 import MobileSlideView from "../../components/common/MobileSlideView";
+import { useLoading } from "../../model/hooks/useLoading";
 const Page = () => {
     const router = useRouter()
     const { slideId } = router.query
@@ -30,6 +31,17 @@ const Page = () => {
     const slide = initialSlide?.slideshare_Slide_by_pk
     const pages = slide?.Pages ? [...slide?.Pages].sort((a, b) => a.pageNumber - b.pageNumber) : []
     const viewingPage = pages[localPageNumber]
+
+    const { startLoading, finishLoading } = useLoading()
+
+
+    useEffect(() => {
+        if (loading) {
+            startLoading()
+        } else {
+            finishLoading()
+        }
+    }, [loading])
 
     useEffect(() => {
         //TODO: Realtimely側をsecureにしないと意味ない
@@ -63,7 +75,7 @@ const Page = () => {
         onChangePageNumber(targetPage?.pageNumber || 0)
     }
 
-    if (loading) return <div>ロード中</div>
+    if (loading) return <div></div>
     if (error) return <div>{JSON.stringify(error)}</div>
 
     if (isMobile) {
