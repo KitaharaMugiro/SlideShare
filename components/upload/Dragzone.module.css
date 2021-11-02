@@ -1,8 +1,8 @@
 .container {
     border: 1px dashed grey;
     padding: 100px;
-    width:500px;
     cursor: pointer;
+    max-width: 500px;
 }
 
 .text {

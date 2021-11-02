@@ -37,7 +37,7 @@ export default () => {
         return <ImageEditor />
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Video) {
-        return <div style={{ width: 500 }}>
+        return <div style={{ width: "100%", maxWidth: 500 }}>
             <YoutubeEditor key={focusedPage.id} page={focusedPage} />
         </div>
     }
@@ -47,20 +47,22 @@ export default () => {
         </div>
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Poll) {
-        return <PollEditor key={focusedPage.id} page={focusedPage} />
+        return <div style={{ width: "100%", maxWidth: 500 }}>
+            <PollEditor key={focusedPage.id} page={focusedPage} />
+        </div>
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Typeform) {
-        return <div style={{ width: 500 }}>
+        return <div style={{ width: "100%", maxWidth: 500 }}>
             <TypeformEditor key={focusedPage.id} page={focusedPage} />
         </div>
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Codepen) {
-        return <div style={{ width: 500 }}>
+        return <div style={{ width: "100%", maxWidth: 500 }}>
             <CodepenEditor key={focusedPage.id} page={focusedPage} />
         </div>
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Bookmark) {
-        return <div style={{ width: 500 }}>
+        return <div style={{ width: "100%", maxWidth: 500 }}>
             <BookmarkEditor key={focusedPage.id} page={focusedPage} />
         </div>
     }
@@ -68,7 +70,7 @@ export default () => {
         return <FileEditor key={focusedPage.id} page={focusedPage} />
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Notion) {
-        return <div style={{ width: 500, position: "relative" }}>
+        return <div style={{ width: "100%", maxWidth: 500, position: "relative" }}>
             <NotionEditor key={focusedPage.id} page={focusedPage} />
         </div>
     }

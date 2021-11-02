@@ -56,6 +56,6 @@ export default (props: Props) => {
         <p>対応リンク形式<br />
             ・ https://XXX.typeform.com/to/YYY<br />
         </p>
-        {idPart ? <Widget id={idPart} style={{ width: 560, height: 315 }} /> : <div />}
+        {idPart ? <Widget id={idPart} style={{ width: "100%", maxWidth: 560, height: 315 }} /> : <div />}
     </>
 }

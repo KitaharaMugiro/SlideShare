@@ -46,7 +46,7 @@ export default (props: Props) => {
     }
 
     return <>
-        <div style={{ width: 500 }}>
+        <>
             <TextField value={poll.question} onChange={(e) => onChangeQuestion(e.target.value)} margin="dense" label="質問をする" variant="standard" fullWidth />
             <TextField value={poll.option1} onChange={(e) => onChangeOption(e.target.value, 0)} margin="dense" label="選択肢1" variant="filled" fullWidth />
             <TextField value={poll.option2} onChange={(e) => onChangeOption(e.target.value, 1)} margin="dense" label="選択肢2" variant="filled" fullWidth />
@@ -55,6 +55,6 @@ export default (props: Props) => {
             <Button
                 disabled={!isEdited}
                 onClick={onConfirm} fullWidth variant="contained">{loading ? "保存中..." : "保存"}</Button>
-        </div>
+        </>
     </>
 }

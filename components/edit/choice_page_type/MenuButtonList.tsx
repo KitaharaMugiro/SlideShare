@@ -16,7 +16,7 @@ export default () => {
     }
 
     return <>
-        <div style={{ width: 400 }}>
+        <div style={{ width: "100%", maxWidth: 400 }}>
             <Typography variant="h5" align="center">Add a page</Typography>
             {/* Bugが多いので一旦コメントアウト */}
             {/* <MenuButton

@@ -1,14 +1,15 @@
 .paper {
-    width: 700px;
+    width:100%;
+    max-width: 700px;
     height: 500px;
     background-color: gray;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
     position: relative;
-    transform: translateX(-20px);
 }
 
 .picture {
-    width: 700px;
+    width:100%;
+    max-width: 700px;
     height: 500px;
     padding-top: 59px;
     background-size: 700px 500px;
@@ -17,11 +18,11 @@
 }
 
 .free_size_paper {
-    width: 700px;
+    width:100%;
+    max-width: 700px;
     background-color: gray;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
     position: relative;
-    transform: translateX(-20px);
     margin-bottom: 20px;
 }
 

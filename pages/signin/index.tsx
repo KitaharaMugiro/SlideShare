@@ -7,7 +7,7 @@ import Amplify, { Auth, Hub } from 'aws-amplify';
 export default () => {
     return <div className={style.center}>
         <div style={{ height: 30 }} />
-        <div style={{ minWidth: 400 }}>
+        <div>
             <SocialSignin />
         </div>
 

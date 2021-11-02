@@ -12,8 +12,8 @@ export default (props: Props) => {
     const [customizeWidth, setWidth] = useState(750)
     const width = customizeWidth + "px"
     const height = (customizeWidth / 16 * 9) + "px"
-    const sizeStyle = { width, height }
-    const imageSizeStyle = { width, height, backgroundSize: `${width} ${height}` }
+    const sizeStyle = { minWidth: width, height, width: "100%" }
+    const imageSizeStyle = { width: "100%", minWidth: width, height, backgroundSize: `${width} ${height}` }
 
     //TODO: 画像ひとつ表示するだけでこれはきつい・・・
     const [url, setUrl] = useState("")

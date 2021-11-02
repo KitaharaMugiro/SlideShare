@@ -73,10 +73,26 @@ export default (props: Props) => {
             ・ https://www.youtube.com/embed/XXX<br />
             ・ https://www.youtube.com/watch?v=XXX<br />
             ・ https://youtu.be/XXX<br /></p>
-        <iframe
-            width="560" height="315"
-            src={youtubeEmbedUrl}
-            frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen>
-        </iframe>
+        <div
+            style={{
+                position: "relative",
+                width: "100%",
+                maxWidth: 560,
+                paddingTop: "75%",
+                height: 0
+            }}>
+            <iframe
+                style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%"
+                }}
+                width="560" height="315"
+                src={youtubeEmbedUrl}
+                frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen>
+            </iframe>
+        </div>
     </>
 }

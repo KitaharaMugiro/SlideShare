@@ -56,7 +56,7 @@ const Home = () => {
 
         <div className={style.center}>
             <div style={{ height: 30 }} />
-            <Typography variant="h2">Upload your PDF</Typography>
+            <Typography variant="h2" textAlign="center">Upload your PDF</Typography>
             <div style={{ height: 30 }} />
             <PdfUploader onSuccessUpload={onSuccessUpload} />
 
