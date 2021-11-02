@@ -14,6 +14,8 @@ import useUser from "../../model/hooks/useUser";
 import { SlideStateAtom } from "../../model/jotai/SlideState";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
+import MobileSlideView from "../../components/common/MobileSlideView";
+import { isMobile } from 'react-device-detect';
 
 const Page = () => {
     const router = useRouter()
@@ -117,7 +119,9 @@ const Page = () => {
 
     if (loading) return <div>ロード中</div>
     if (error) return <div>{JSON.stringify(error)}</div>
-
+    if (isMobile) {
+        return <MobileSlideView />
+    }
     return (
         <div className={style.main}>
             <AgoraClient

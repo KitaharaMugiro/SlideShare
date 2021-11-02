@@ -11,7 +11,8 @@ import useUser from "../../model/hooks/useUser";
 import { SlideStateAtom } from "../../model/jotai/SlideState";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
-
+import { isMobile } from 'react-device-detect';
+import MobileSlideView from "../../components/common/MobileSlideView";
 const Page = () => {
     const router = useRouter()
     const { slideId } = router.query
@@ -65,19 +66,20 @@ const Page = () => {
     if (loading) return <div>ロード中</div>
     if (error) return <div>{JSON.stringify(error)}</div>
 
+    if (isMobile) {
+        return <MobileSlideView />
+    }
     return (
         <div className={style.main}>
             {/* スライド */}
             <div className={style.deck_space} >
                 <div>
                     <div style={{ position: "relative" }}>
-                        {/* onMouseMove={isAdmin && slideState.enableCursor ? onMouseMove : undefined}> */}
                         <PageViewController
                             viewingPage={viewingPage}
                             onClickLeft={goPrevious}
                             onClickRight={goNext}
                         />
-                        {/* {slideState.enableCursor ? renderCursors() : <div />} */}
                     </div>
                     <SlideSlider
                         maxPageNumber={pages?.length || 0}
