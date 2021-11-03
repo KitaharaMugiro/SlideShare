@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react"
 import { Collection, CollectionRow, NotionRenderer } from 'react-notion-x'
+import useNotion from "../../../model/hooks/useNotion"
 import { Page } from "../../../model/Page"
 
 interface Props {
@@ -11,32 +12,20 @@ interface Props {
 
 export default (props: Props) => {
     const { width, height, page } = props
-    const [data, setData] = useState<any>()
-    useEffect(() => {
-        const load = async () => {
-            const d = await (await fetch("/api/notion")).json()
-            console.log({ d })
-            setData(d)
-        }
-        load()
-    }, [])
-
+    const { notionData } = useNotion(page.videoUrl || "")
 
     return <div style={{
         width, height,
         overflowY: "scroll",
-        // display: "flex",
-        // flexDirection: "column",
-        // alignItems: "center",
     }}>
-        {data ? <NotionRenderer
+        {notionData ? <NotionRenderer
             components={{
                 collection: Collection,
                 collectionRow: CollectionRow
             }}
             darkMode={true}
             mapPageUrl={(pageId) => "#"}
-            recordMap={data} /> : <div />}
+            recordMap={notionData} /> : <div />}
 
     </div>
 }

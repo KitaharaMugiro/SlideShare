@@ -3,56 +3,26 @@ import { usePageList } from '../../../model/hooks/usePageList';
 import { Page } from '../../../model/Page';
 import UrlEditor from "../../common/UrlEditor";
 import { Collection, CollectionRow, NotionRenderer } from 'react-notion-x'
+import useNotion from "../../../model/hooks/useNotion";
 
 interface Props {
     page: Page
 }
 
 export default (props: Props) => {
-    const [url, setUrl] = useState(props.page.videoUrl)
-    const [notionId, setNotionId] = useState("")
-    const [data, setData] = useState<any>()
+    const [url, setUrl] = useState(props.page.videoUrl || "")
     const { updatePage } = usePageList()
+    const { notionData } = useNotion(url)
 
-    useEffect(() => {
-        const load = async () => {
-            if (!notionId) return
-            const d = await (await fetch("/api/notion", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ notionId })
-            })).json()
-            setData(d)
-        }
-        load()
-    }, [notionId])
-
-    useEffect(() => {
-        if (!url) return
-        const id = url.split("/").pop()
-        if (!id) return
-        setNotionId(id)
-    }, [])
 
     const onClickSave = () => {
         try {
-            if (!url) throw Error()
-            const splittedUrl = url.split("/")
-
-            if (splittedUrl.length !== 1) {
-                const idPart = splittedUrl[splittedUrl.length - 1]
-                setNotionId(idPart)
-            }
-
             const page = Object.assign({}, props.page)
-            page.videoUrl = url
+            page.videoUrl = url //TODO: videoUrlに渡すのをやめたい
             updatePage(page)
         } catch {
             //TODO: URLが不正
         }
-
     }
 
 
@@ -67,7 +37,7 @@ export default (props: Props) => {
             ・ https://www.notion.so/XXX<br />
             ※ 公開設定になっている必要があります。
         </p>
-        {data ? <NotionRenderer
+        {notionData ? <NotionRenderer
             components={{
                 collection: Collection,
                 collectionRow: CollectionRow
@@ -75,6 +45,6 @@ export default (props: Props) => {
             mapPageUrl={(pageId) => "#"}
             fullPage={false}
             darkMode={false}
-            recordMap={data} /> : <div />}
+            recordMap={notionData} /> : <div />}
     </>
 }

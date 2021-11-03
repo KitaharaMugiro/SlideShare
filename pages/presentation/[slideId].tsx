@@ -164,7 +164,7 @@ const Page = () => {
                         syncSlide={syncSlide}
                     />
                     {isAdmin ? <AdminPresentationController /> : <div />}
-                    <Typography color="white" justifyContent="center">視聴者数: {onlineUserList ? onlineUserList.length : 0}人</Typography>
+                    <Typography color="white" justifyContent="center">Viewer: {onlineUserList ? onlineUserList.length : 0} people watching</Typography>
                 </div>
                 <div style={{
                     marginLeft: 60,

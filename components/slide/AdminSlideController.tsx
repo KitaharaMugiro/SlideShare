@@ -21,7 +21,7 @@ export default (props: Props) => {
 
     return <>
         <Stack direction="row" spacing={2}>
-            <Button onClick={goPresentation}>プレゼンテーションモードで開く</Button>
+            <Button onClick={goPresentation}>Open with Presentation Mode</Button>
         </Stack>
     </>
 }

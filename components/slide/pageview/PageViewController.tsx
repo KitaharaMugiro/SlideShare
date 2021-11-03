@@ -91,7 +91,8 @@ export default (props: Props) => {
         if (props.viewingPage.type === Slideshare_PageType_Enum.Video ||
             props.viewingPage.type === Slideshare_PageType_Enum.Text ||
             props.viewingPage.type === Slideshare_PageType_Enum.Typeform ||
-            props.viewingPage.type === Slideshare_PageType_Enum.Codepen
+            props.viewingPage.type === Slideshare_PageType_Enum.Codepen ||
+            props.viewingPage.type === Slideshare_PageType_Enum.Notion
         ) {
             return <>
                 <Button

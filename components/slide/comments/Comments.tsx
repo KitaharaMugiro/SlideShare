@@ -22,7 +22,7 @@ export default function Comments(props: Props) {
         if (data?.slideshare_Comment.length === 0) {
             return (
                 <Alert variant="filled" severity="info">
-                    最初のコメントを書こう
+                    Let's write the first comment.
                 </Alert>
             )
         }
