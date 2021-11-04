@@ -51,6 +51,10 @@ export default () => {
                 imageUrl="/static/page_select/codepen.png" title="CodePen" description="Embed with codepen link" />
             <div style={{ height: 5 }} />
             <MenuButton
+                onClick={() => onClick(Slideshare_PageType_Enum.GoogleForm)}
+                imageUrl="/static/page_select/googleform.png" title="GoogleForm" description="Embed with typeform link" />
+            <div style={{ height: 5 }} />
+            <MenuButton
                 onClick={() => onClick(Slideshare_PageType_Enum.Typeform)}
                 imageUrl="/static/page_select/typeform.png" title="Typeform" description="Embed with typeform link" />
             <div style={{ height: 5 }} />

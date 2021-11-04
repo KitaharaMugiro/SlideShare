@@ -5,6 +5,7 @@ import MenuButtonList from "./choice_page_type/MenuButtonList"
 import BookmarkEditor from "./editor/BookmarkEditor"
 import CodepenEditor from "./editor/CodepenEditor"
 import FileEditor from "./editor/FileEditor"
+import GoogleFormEditor from "./editor/GoogleFormEditor"
 import ImageEditor from "./editor/ImageEditor"
 import MarkdownEditor from "./editor/MarkdownEditor"
 import NotionEditor from "./editor/NotionEditor"
@@ -49,6 +50,11 @@ export default () => {
     if (focusedPage.type === Slideshare_PageType_Enum.Poll) {
         return <div style={{ width: "100%", maxWidth: 500 }}>
             <PollEditor key={focusedPage.id} page={focusedPage} />
+        </div>
+    }
+    if (focusedPage.type === Slideshare_PageType_Enum.GoogleForm) {
+        return <div style={{ width: "100%", maxWidth: 500 }}>
+            <GoogleFormEditor key={focusedPage.id} page={focusedPage} />
         </div>
     }
     if (focusedPage.type === Slideshare_PageType_Enum.Typeform) {

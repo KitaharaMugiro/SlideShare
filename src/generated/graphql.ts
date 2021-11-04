@@ -1595,6 +1595,7 @@ export type Slideshare_PageType_Bool_Exp = {
 
 export enum Slideshare_PageType_Enum {
   FreeImage = 'FreeImage',
+  GoogleForm = 'GoogleForm',
   Bookmark = 'bookmark',
   Codepen = 'codepen',
   File = 'file',

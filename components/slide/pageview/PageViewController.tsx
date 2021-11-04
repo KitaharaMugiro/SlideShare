@@ -8,6 +8,7 @@ import PollController from "../poll/PollController"
 import BookmarkPageView from "./BookmarkPageView"
 import CodepenPageView from "./CodepenPageView"
 import FilePageView from "./FilePageView"
+import GoogleFormPageView from "./GoogleFormPageView"
 import ImagePageView from "./ImagePageView"
 import style from "./ImagePageView.module.css"
 import NotionPageView from "./NotionPageView"
@@ -71,6 +72,9 @@ export default (props: Props) => {
         if (props.viewingPage.type === Slideshare_PageType_Enum.Codepen) {
             return <CodepenPageView key={props.viewingPage.id} width={width} height={height} page={props.viewingPage} />
         }
+        if (props.viewingPage.type === Slideshare_PageType_Enum.GoogleForm) {
+            return <GoogleFormPageView key={props.viewingPage.id} width={width} height={height} page={props.viewingPage} />
+        }
         if (props.viewingPage.type === Slideshare_PageType_Enum.Typeform) {
             return <TypeformPageView key={props.viewingPage.id} width={width} height={height} page={props.viewingPage} />
         }
@@ -92,7 +96,8 @@ export default (props: Props) => {
             props.viewingPage.type === Slideshare_PageType_Enum.Text ||
             props.viewingPage.type === Slideshare_PageType_Enum.Typeform ||
             props.viewingPage.type === Slideshare_PageType_Enum.Codepen ||
-            props.viewingPage.type === Slideshare_PageType_Enum.Notion
+            props.viewingPage.type === Slideshare_PageType_Enum.Notion ||
+            props.viewingPage.type === Slideshare_PageType_Enum.GoogleForm
         ) {
             return <>
                 <Button
