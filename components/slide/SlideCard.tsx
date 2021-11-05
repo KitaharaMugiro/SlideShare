@@ -61,14 +61,9 @@ export default function SlideCard(props: Props) {
             </CardActionArea>
             <CardActions>
                 <Button
-                    onClick={() => router.push(`/slide/${props.slideId}`)}
+                    onClick={() => router.push(`/edit/${props.slideId}`)}
                     size="small" color="primary">
-                    Slide
-                </Button>
-                <Button
-                    onClick={() => router.push(`/presentation/${props.slideId}`)}
-                    size="small" color="secondary">
-                    Presentation
+                    Edit
                 </Button>
                 <Button
                     onClick={onClickDelete}

@@ -26,7 +26,10 @@ export default (page: Page) => {
         onFinishEdit={onFinishDialog}
         onClose={() => setOpenDialog(false)} />
 
-    const button = <Button onClick={() => setOpenDialog(true)}>タイトル追加</Button>
+    const button = <>
+        <Button onClick={() => setOpenDialog(true)}>タイトル追加</Button>
+        {page?.title}
+    </>
 
     return { modal, button }
 }

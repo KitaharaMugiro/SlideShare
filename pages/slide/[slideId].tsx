@@ -14,7 +14,9 @@ import style from "./style.module.css";
 import { isMobile } from 'react-device-detect';
 import MobileSlideView from "../../components/common/MobileSlideView";
 import { useLoading } from "../../model/hooks/useLoading";
-const Page = () => {
+import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
+import SlideOgp from "../../model/ogp/SlideOgp";
+const Page = ({ imageUrl }: any) => { //TODO: anyである必要なし
     const router = useRouter()
     const { slideId } = router.query
 
@@ -62,7 +64,6 @@ const Page = () => {
         const nextPageNumber = localPageNumber - 1
         if (nextPageNumber < 0) return
         setLocalPageNumber(nextPageNumber)
-
     }
 
     const onChangePageNumber = (number: number) => {
@@ -84,6 +85,7 @@ const Page = () => {
     }
     return (
         <div className={style.main}>
+            <SlideOgp pageImg={imageUrl} />
             {/* スライド */}
             <div className={style.deck_space} >
                 <div>
@@ -117,6 +119,10 @@ const Page = () => {
             </div>
         </div>
     )
+}
+
+export async function getServerSideProps(context: any) {
+    return getOgpInfo(context)
 }
 
 export default Page
