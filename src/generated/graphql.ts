@@ -2773,6 +2773,21 @@ export type QuerySlideQueryVariables = Exact<{
 
 export type QuerySlideQuery = { __typename?: 'query_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, title?: string | null | undefined, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number, Bookmarks: Array<{ __typename?: 'slideshare_Bookmark', id: number, url: string }>, Poll?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined } | null | undefined, Files: Array<{ __typename?: 'slideshare_File', id: number, path: string, filename: string }> }> } | null | undefined };
 
+export type QueryUserSlideQueryVariables = Exact<{
+  userId: Scalars['String'];
+  offset: Scalars['Int'];
+}>;
+
+
+export type QueryUserSlideQuery = { __typename?: 'query_root', slideshare_Slide: Array<{ __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, imageUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined }> }> };
+
+export type DeleteSlideMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeleteSlideMutation = { __typename?: 'mutation_root', delete_slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number } | null | undefined };
+
 export type UploadPdfMutationVariables = Exact<{
   pdfName: Scalars['String'];
 }>;
@@ -3513,6 +3528,88 @@ export function useQuerySlideLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type QuerySlideQueryHookResult = ReturnType<typeof useQuerySlideQuery>;
 export type QuerySlideLazyQueryHookResult = ReturnType<typeof useQuerySlideLazyQuery>;
 export type QuerySlideQueryResult = Apollo.QueryResult<QuerySlideQuery, QuerySlideQueryVariables>;
+export const QueryUserSlideDocument = gql`
+    query queryUserSlide($userId: String!, $offset: Int!) {
+  slideshare_Slide(
+    where: {createdBy: {_eq: $userId}}
+    order_by: {createdAt: desc}
+    offset: $offset
+    limit: 10
+  ) {
+    id
+    createdBy
+    Pages(where: {pageNumber: {_eq: 0}}, limit: 1) {
+      id
+      type
+      imageUrl
+      createdAt
+      updatedAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useQueryUserSlideQuery__
+ *
+ * To run a query within a React component, call `useQueryUserSlideQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryUserSlideQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryUserSlideQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useQueryUserSlideQuery(baseOptions: Apollo.QueryHookOptions<QueryUserSlideQuery, QueryUserSlideQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QueryUserSlideQuery, QueryUserSlideQueryVariables>(QueryUserSlideDocument, options);
+      }
+export function useQueryUserSlideLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryUserSlideQuery, QueryUserSlideQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QueryUserSlideQuery, QueryUserSlideQueryVariables>(QueryUserSlideDocument, options);
+        }
+export type QueryUserSlideQueryHookResult = ReturnType<typeof useQueryUserSlideQuery>;
+export type QueryUserSlideLazyQueryHookResult = ReturnType<typeof useQueryUserSlideLazyQuery>;
+export type QueryUserSlideQueryResult = Apollo.QueryResult<QueryUserSlideQuery, QueryUserSlideQueryVariables>;
+export const DeleteSlideDocument = gql`
+    mutation deleteSlide($id: Int!) {
+  delete_slideshare_Slide_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteSlideMutationFn = Apollo.MutationFunction<DeleteSlideMutation, DeleteSlideMutationVariables>;
+
+/**
+ * __useDeleteSlideMutation__
+ *
+ * To run a mutation, you first call `useDeleteSlideMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteSlideMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteSlideMutation, { data, loading, error }] = useDeleteSlideMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteSlideMutation(baseOptions?: Apollo.MutationHookOptions<DeleteSlideMutation, DeleteSlideMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteSlideMutation, DeleteSlideMutationVariables>(DeleteSlideDocument, options);
+      }
+export type DeleteSlideMutationHookResult = ReturnType<typeof useDeleteSlideMutation>;
+export type DeleteSlideMutationResult = Apollo.MutationResult<DeleteSlideMutation>;
+export type DeleteSlideMutationOptions = Apollo.BaseMutationOptions<DeleteSlideMutation, DeleteSlideMutationVariables>;
 export const UploadPdfDocument = gql`
     mutation UploadPdf($pdfName: String!) {
   uploadPdf(pdfName: $pdfName) {

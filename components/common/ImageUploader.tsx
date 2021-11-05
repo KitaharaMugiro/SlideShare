@@ -12,7 +12,6 @@ function ImageUploader() {
     const multiple = false
     const { focusedPage, updatePage } = usePageList()
 
-
     const onDrop = useCallback(acceptedFiles => {
         acceptedFiles.forEach((file: any) => {
             const reader = new FileReader();

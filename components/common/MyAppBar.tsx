@@ -10,7 +10,11 @@ import * as React from 'react';
 import useSignin from '../../model/hooks/useSignin';
 import useUser from '../../model/hooks/useUser';
 import { HeaderTitleAtom } from '../../model/jotai/HeaderTitle';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import { IconButton, Menu, MenuItem } from '@mui/material';
+import { useRouter } from 'next/dist/client/router';
 const MyAppBar = () => {
+    const router = useRouter()
     const { user } = useUser()
     const [headerTitle] = useAtom(HeaderTitleAtom)
     const signOut = async () => {
@@ -23,10 +27,55 @@ const MyAppBar = () => {
     }
     const { goSignin } = useSignin()
 
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const goToMyAccount = () => {
+        router.push("/mypage")
+        setAnchorEl(null);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
 
     const renderSigninOrOutButton = () => {
         if (user) {
-            return <Button color="inherit" onClick={signOut}>Logout</Button>
+            //return <Button color="inherit" onClick={signOut}>Logout</Button>
+            return <div>
+                <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleMenu}
+                    color="inherit"
+                >
+                    <AccountCircle />
+                </IconButton>
+                <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                >
+                    <MenuItem onClick={goToMyAccount}>My account</MenuItem>
+                    <MenuItem onClick={signOut}>Logout</MenuItem>
+                </Menu>
+            </div>
         } else {
             return <Button color="inherit" onClick={goSignin}>Login</Button>
         }
