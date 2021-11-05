@@ -23,7 +23,6 @@ export default () => {
         } else if (option === "Insert New Page") {
             if (!focusedPage) return
             if (!focusedPage.slideId) {
-                //TODO: 新しく作られたスライドなんかはここが引っかかるが、この状態はなくしたい
                 console.warn("pageにslideIdが付与されていない")
                 return
             }

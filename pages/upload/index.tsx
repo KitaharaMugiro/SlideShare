@@ -41,7 +41,7 @@ const Home = () => {
         let pageNumber = 0
         const promises = []
         for (const imageUrl of pngList) {
-            const newPage = createNewPage() as any //TODO: anyを使わない方法を知りたい
+            const newPage = createNewPage(slideId) as any //TODO: anyを使わない方法を知りたい
             newPage.type = Slideshare_PageType_Enum.Image
             newPage.imageUrl = imageUrl
             newPage.pageNumber = pageNumber

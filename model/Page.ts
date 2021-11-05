@@ -28,11 +28,11 @@ export type Page = {
     }[] | null
 }
 
-export const createNewPage = () => {
+export const createNewPage = (slideId: number) => {
     const id = uuid.v4()
     const type = Slideshare_PageType_Enum.Temp
     const pageNumber = 999
-    return { id, type, pageNumber }
+    return { id, type, pageNumber, slideId }
 }
 
 export const reorderPageList = (pageList: Page[]) => {

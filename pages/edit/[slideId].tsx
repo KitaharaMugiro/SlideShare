@@ -21,7 +21,7 @@ const Edit = () => {
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) } })
     const { user } = useUser()
     const [_, setEditingPageList] = useAtom(pageListAtom)
-    const { updateAllPageNumber } = usePageList()
+    const { updateAllPageNumber, pageList } = usePageList()
     const { startLoading, finishLoading } = useLoading()
     const { goSignin } = useSignin()
 
@@ -65,7 +65,10 @@ const Edit = () => {
     }, [initialSlide])
 
     const onClickSend = async () => {
-        //TODO:これ必要？？
+        if (pageList.length === 0) {
+            alert("スライドのページ枚数が0です")
+            return
+        }
         await updateAllPageNumber()
         router.push(`/slide/${slideId}`)
     }
@@ -88,7 +91,7 @@ const Edit = () => {
             <Button
                 onClick={onClickSend}
                 size="large" variant="contained" endIcon={<SendIcon />}>
-                Send
+                スライドページへ
             </Button>
         </div>
     </>

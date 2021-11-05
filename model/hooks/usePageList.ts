@@ -21,7 +21,7 @@ export const usePageList = () => {
     }
 
     const createPage = async (slideId: number, index?: number) => {
-        const newPage = createNewPage()
+        const newPage = createNewPage(slideId)
         if (!index) index = pageList.length
         const newPageList = [...pageList.slice(0, index), newPage, ...pageList.slice(index)];
         reorderPageList(newPageList)
