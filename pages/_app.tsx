@@ -26,6 +26,8 @@ import 'rc-dropdown/assets/index.css'
 import 'katex/dist/katex.min.css'
 import '../styles/globals.css';
 import { ConsoleLogger } from '@aws-amplify/core';
+import getOgpInfo from '../model/serverSideRender/getOgpInfo';
+import OgpTag, { OpgMetaData } from '../model/ogp/OgpTag';
 
 
 function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
@@ -53,7 +55,7 @@ awsConfig.oauth.redirectSignIn = redirectSignIn
 awsConfig.oauth.redirectSignOut = redirectSignIn
 Amplify.configure(awsConfig);
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const MyApp = ({ Component, pageProps, ogpInfo }: AppProps & { ogpInfo: OpgMetaData }) => {
   const { setUser } = useUser()
   const router = useRouter()
 
@@ -94,6 +96,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   return <>
     <ApolloProvider client={MyApolloClient}>
+      <OgpTag ogpInfo={ogpInfo} />
       <ThemeProvider theme={darkTheme}>
         <MyAppBar />
         <MyBackdrop />
@@ -102,4 +105,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     </ApolloProvider>
   </>
 }
+
+export async function getServerSideProps(context: any) {
+  return getOgpInfo(context)
+}
+
 export default MyApp

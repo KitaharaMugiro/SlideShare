@@ -17,6 +17,8 @@ import style from "./style.module.css";
 import MobileSlideView from "../../components/common/MobileSlideView";
 import { isMobile } from 'react-device-detect';
 import { useLoading } from "../../model/hooks/useLoading";
+import SlideOgp from "../../model/ogp/OgpTag";
+import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
 
 const Page = () => {
     const router = useRouter()

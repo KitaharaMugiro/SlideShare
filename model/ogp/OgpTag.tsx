@@ -1,30 +1,40 @@
 import { VFC } from 'react'
 import Head from 'next/head'
 
-interface MetaData {
-    pageTitle?: string
-    pageDescription?: string
+export interface OpgMetaData {
+    pageTitle: string
+    pageDescription: string
     pagePath?: string
     pageImg?: string
     pageImgWidth?: number
     pageImgHeight?: number
+
 }
 
-const SlideOgp: VFC<MetaData> = ({
-    pageTitle,
-    pageDescription,
-    pagePath,
-    pageImg,
-    pageImgWidth,
-    pageImgHeight
-}) => {
-    const defaultTitle = 'PresenShare'
-    const defaultDescription = 'スライド公開中'
+interface Props {
+    ogpInfo: {
+        pageTitle: string
+        pageDescription: string
+        pagePath?: string
+        pageImg?: string
+        pageImgWidth?: number
+        pageImgHeight?: number
+    }
+}
 
-    const title = pageTitle ? `${pageTitle} | ${defaultTitle}` : defaultTitle
-    const description = pageDescription ? pageDescription : defaultDescription
+const OgpTag = (props: Props) => {
+    const {
+        pageTitle,
+        pageDescription,
+        pagePath,
+        pageImg,
+        pageImgWidth,
+        pageImgHeight
+    } = props.ogpInfo
+    const title = pageTitle
+    const description = pageDescription
     const url = pagePath
-    const imgUrl = pageImg
+    const imgUrl = pageImg ? pageImg : '/static/default_slide.png'
     const imgWidth = pageImgWidth ? pageImgWidth : 1280
     const imgHeight = pageImgHeight ? pageImgHeight : 640
 
@@ -51,4 +61,4 @@ const SlideOgp: VFC<MetaData> = ({
     )
 }
 
-export default SlideOgp
+export default OgpTag

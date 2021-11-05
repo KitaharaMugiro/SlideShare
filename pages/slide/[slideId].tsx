@@ -1,28 +1,24 @@
 import { useAtom } from "jotai";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { isMobile } from 'react-device-detect';
+import MobileSlideView from "../../components/common/MobileSlideView";
 import AdminSlideController from "../../components/slide/AdminSlideController";
 import Comments from "../../components/slide/comments/Comments";
 import PageViewController from "../../components/slide/pageview/PageViewController";
 import ProfileCardController from "../../components/slide/ProfileCardController";
 import SlideSlider from "../../components/slide/SlideSlider";
+import { useLoading } from "../../model/hooks/useLoading";
 import useUser from "../../model/hooks/useUser";
 import { SlideStateAtom } from "../../model/jotai/SlideState";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
-import { isMobile } from 'react-device-detect';
-import MobileSlideView from "../../components/common/MobileSlideView";
-import { useLoading } from "../../model/hooks/useLoading";
-import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
-import SlideOgp from "../../model/ogp/SlideOgp";
-const Page = ({ imageUrl }: any) => { //TODO: anyである必要なし
+const Page = () => {
     const router = useRouter()
     const { slideId } = router.query
 
     const [isAdmin, setIsAdmin] = useState(false)
     const { user } = useUser()
-    const [uuid] = useState(uuidv4())
 
     //slide状態変数
     const [localAdminSlideState] = useAtom(SlideStateAtom)
@@ -85,7 +81,6 @@ const Page = ({ imageUrl }: any) => { //TODO: anyである必要なし
     }
     return (
         <div className={style.main}>
-            <SlideOgp pageImg={imageUrl} />
             {/* スライド */}
             <div className={style.deck_space} >
                 <div>
@@ -119,10 +114,6 @@ const Page = ({ imageUrl }: any) => { //TODO: anyである必要なし
             </div>
         </div>
     )
-}
-
-export async function getServerSideProps(context: any) {
-    return getOgpInfo(context)
 }
 
 export default Page
