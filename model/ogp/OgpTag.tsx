@@ -28,7 +28,7 @@ const OgpTag = (props: Props) => {
     const title = pageTitle || "PresenShare"
     const description = pageDescription || "スライドをアップロードしてプレゼンを始めよう"
     const url = pagePath
-    const imgUrl = pageImg || '/static/default_ogp.png'
+    const imgUrl = pageImg || 'https://dqp0o9eebp5qj.cloudfront.net/static/default_ogp.png'
     const imgWidth = pageImgWidth ? pageImgWidth : 1280
     const imgHeight = pageImgHeight ? pageImgHeight : 640
 

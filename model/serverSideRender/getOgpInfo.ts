@@ -31,7 +31,6 @@ export default async function getServerSideProps(context: any) {
             pageDescription: "プレゼン公開中",
             pageImg: signedURL
         }
-        console.log("b : " + ogpInfo)
         return {
             props: {
                 ogpInfo
@@ -43,9 +42,8 @@ export default async function getServerSideProps(context: any) {
     const ogpInfo: OpgMetaData = {
         pageTitle: "PresenShare",
         pageDescription: "スライドをアップロードしてプレゼンを開始しよう",
-        pageImg: "/static/default_ogp.png"
+        pageImg: "https://dqp0o9eebp5qj.cloudfront.net/static/default_ogp.png"
     }
-    console.log("a : " + ogpInfo)
     return {
         props: {
             ogpInfo
