@@ -84,12 +84,12 @@ const Call = (props: {
             await client.join(appId, name, token, uid);
             if (isHost) {
                 await client.setClientRole("host");
-                if (track) await client.publish(track);
+                if (track?.enabled) await client.publish(track);
             }
         };
 
         if (ready && track) {
-            console.log("init ready");
+            console.log("init ready = " + channelName);
             init(channelName);
         }
 
@@ -159,7 +159,8 @@ export const Controls = (props: {
     const [trackState] = useAtom(TrackStateAtom);
 
     useEffect(() => {
-        track.setEnabled(trackState.audio);
+        track.setMuted(!trackState.audio);
+        track.setEnabled(true);
     }, [trackState])
 
 

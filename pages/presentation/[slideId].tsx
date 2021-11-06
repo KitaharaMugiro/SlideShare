@@ -8,6 +8,7 @@ import { useOnlineUsers, useRealtimeCursor, useRealtimeSharedState } from "realt
 import { v4 as uuidv4 } from "uuid";
 import MobileSlideView from "../../components/common/MobileSlideView";
 import AdminPresentationController from "../../components/presentation/AdminPresentationController";
+import ConfirmationModal from "../../components/presentation/ConfirmationModal";
 import UserActionDisplay from "../../components/presentation/UserActionDisplay";
 import UserPresentationController from "../../components/presentation/UserPresentationController";
 import AgoraClient from "../../components/slide/AgoraClient";
@@ -156,11 +157,14 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     return (
         <div className={style.main}>
             <OgpTag ogpInfo={ogpInfo} />
-            <AgoraClient
-                uid={uuid}
-                host={slide?.createdBy || ""}
-                channelName={slide?.createdBy || ""}
-                isHost={isAdmin} />
+            {!isAdmin && <ConfirmationModal />}
+            {slide ?
+                < AgoraClient
+                    uid={uuid}
+                    host={slide.createdBy}
+                    channelName={`${slide.createdBy}-${slide.id}`}
+                    isHost={isAdmin} />
+                : <div />}
 
             {/* スライド */}
             <div className={style.deck_space} >
