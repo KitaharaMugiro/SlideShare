@@ -18,7 +18,7 @@ import useUser from "../../model/hooks/useUser";
 import { SlideStateAtom } from "../../model/jotai/SlideState";
 import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag";
 import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
-import { useQuerySlideQuery } from "../../src/generated/graphql";
+import { Slideshare_PageType_Enum, useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
 
 const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
@@ -87,8 +87,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const goNext = () => {
         if (isAdmin) {
             if (slideState.pageNumber >= pages.length - 1) return
-            slideState.pageNumber += 1
-            setSlideState(slideState)
+            onChangePageNumber(slideState.pageNumber + 1)
         } else {
             const nextPageNumber = localPageNumber + 1
             if (nextPageNumber >= pages.length) return
@@ -100,8 +99,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const goPrevious = () => {
         if (isAdmin) {
             if (slideState.pageNumber <= 0) return
-            slideState.pageNumber -= 1
-            setSlideState(slideState)
+            onChangePageNumber(slideState.pageNumber - 1)
         } else {
             const nextPageNumber = localPageNumber - 1
             if (nextPageNumber < 0) return
@@ -112,6 +110,20 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
     const onChangePageNumber = (number: number) => {
         if (isAdmin) {
+            if (viewingPage.type === Slideshare_PageType_Enum.GoogleForm || viewingPage.type === Slideshare_PageType_Enum.Typeform) {
+                window.confirm("ページを切り替えると参加者が入力できなくなります。次のページに移動しますか？") && setSlideState({
+                    ...slideState,
+                    pageNumber: number
+                })
+                return
+            }
+            if (viewingPage.type === Slideshare_PageType_Enum.Video) {
+                window.confirm("ページを切り替えると参加者は動画を見れなく無くなります。次のページに移動しますか？") && setSlideState({
+                    ...slideState,
+                    pageNumber: number
+                })
+                return
+            }
             slideState.pageNumber = number
             setSlideState(slideState)
         } else {
