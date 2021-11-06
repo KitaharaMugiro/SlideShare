@@ -24,6 +24,6 @@ export default (props: Props) => {
             value={props.pageNumber}
             color={props.isSync ? "secondary" : "primary"}
         />
-        {!props.isSync && props.syncSlide ? <Button onClick={props.syncSlide}>発表者と同じスライドへ移動</Button> : <div />}
+        {!props.isSync && props.syncSlide ? <Button onClick={props.syncSlide}>発表者と同じスライドへ移動</Button> : <div style={{ height: 20 }} />}
     </>
 }

@@ -64,7 +64,7 @@ export default (props: Props) => {
             </>
         }
         if (props.viewingPage.type === Slideshare_PageType_Enum.Video) {
-            return <YoutubePageView key={props.viewingPage.id} width={width} height={height} page={props.viewingPage} />
+            return <YoutubePageView key={props.viewingPage.id} width={width} height={height} page={props.viewingPage} autoPlay={true} />
         }
         if (props.viewingPage.type === Slideshare_PageType_Enum.Text) {
             return <MarkdownEditor key={props.viewingPage.id} editable={false} height={height} page={props.viewingPage} />

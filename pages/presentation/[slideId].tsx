@@ -7,7 +7,9 @@ import { isMobile } from 'react-device-detect';
 import { useOnlineUsers, useRealtimeCursor, useRealtimeSharedState } from "realtimely";
 import { v4 as uuidv4 } from "uuid";
 import MobileSlideView from "../../components/common/MobileSlideView";
-import AdminPresentationController from "../../components/slide/AdminPresentationController";
+import AdminPresentationController from "../../components/presentation/AdminPresentationController";
+import UserActionDisplay from "../../components/presentation/UserActionDisplay";
+import UserPresentationController from "../../components/presentation/UserPresentationController";
 import AgoraClient from "../../components/slide/AgoraClient";
 import Comments from "../../components/slide/comments/Comments";
 import PageViewController from "../../components/slide/pageview/PageViewController";
@@ -35,13 +37,13 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const [localAdminSlideState] = useAtom(SlideStateAtom)
     const [slideState, setSlideState] = useRealtimeSharedState({
         pageNumber: 0,
-        enableCursor: true
+        enableCursor: false
     }, "slideState")
     const [localPageNumber, setLocalPageNumber] = useState(0)
     const [isSync, setIsSync] = useState(true)
 
     //リアルタイムカーソル
-    const { renderCursors, onMouseMove } = useRealtimeCursor(100)
+    const { renderCursors, onMouseMove } = useRealtimeCursor(1000)
 
     //視聴者数
     const { onlineUserList } = useOnlineUsers(10000)
@@ -180,8 +182,9 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                         isSync={isSync}
                         syncSlide={syncSlide}
                     />
-                    {isAdmin ? <AdminPresentationController /> : <div />}
+                    {isAdmin ? <AdminPresentationController /> : <UserPresentationController />}
                     <Typography color="white" justifyContent="center">Viewer: {onlineUserList ? onlineUserList.length : 0} people watching</Typography>
+                    <UserActionDisplay />
                 </div>
                 <div style={{
                     marginLeft: 60,
