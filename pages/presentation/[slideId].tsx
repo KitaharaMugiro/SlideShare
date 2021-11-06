@@ -2,26 +2,23 @@ import { Typography } from "@mui/material";
 import { useAtom } from "jotai";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
+import { isMobile } from 'react-device-detect';
 import { useOnlineUsers, useRealtimeCursor, useRealtimeSharedState } from "realtimely";
 import { v4 as uuidv4 } from "uuid";
+import MobileSlideView from "../../components/common/MobileSlideView";
+import AdminPresentationController from "../../components/slide/AdminPresentationController";
 import AgoraClient from "../../components/slide/AgoraClient";
 import Comments from "../../components/slide/comments/Comments";
 import PageViewController from "../../components/slide/pageview/PageViewController";
 import ProfileCardController from "../../components/slide/ProfileCardController";
-import AdminPresentationController from "../../components/slide/AdminPresentationController";
 import SlideSlider from "../../components/slide/SlideSlider";
+import { useLoading } from "../../model/hooks/useLoading";
 import useUser from "../../model/hooks/useUser";
 import { SlideStateAtom } from "../../model/jotai/SlideState";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
-import MobileSlideView from "../../components/common/MobileSlideView";
-import { isMobile } from 'react-device-detect';
-import { useLoading } from "../../model/hooks/useLoading";
-import SlideOgp, { OpgMetaData } from "../../model/ogp/OgpTag";
-import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
-import OgpTag from "../../model/ogp/OgpTag";
 
-const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
+const Page = () => {
     const router = useRouter()
     const { slideId } = router.query
 
@@ -139,8 +136,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
         return <MobileSlideView />
     }
     return (
-        <div className={style.main}>
-            <OgpTag ogpInfo={ogpInfo} />
+        <div className={style.main}>¥
             <AgoraClient
                 uid={uuid}
                 host={slide?.createdBy || ""}
@@ -184,10 +180,6 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
             </div>
         </div>
     )
-}
-
-export async function getServerSideProps(context: any) {
-    return getOgpInfo(context)
 }
 
 export default Page

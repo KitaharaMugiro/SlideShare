@@ -1,33 +1,31 @@
 import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from '@emotion/react';
-import { createTheme } from '@mui/material';
-import Amplify, { Auth, Hub } from 'aws-amplify';
-import type { AppProps } from 'next/app';
-import { useRouter } from 'next/dist/client/router';
-import React, { useEffect } from 'react';
-import MyApolloClient from '../api/MyApolloClient';
-import MyAppBar from '../components/common/MyAppBar';
-import MyBackdrop from '../components/common/MyBackdrop';
-import useUser from '../model/hooks/useUser';
-import awsConfig from '../src/aws-exports';
-
 //material ui font
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-// core styles shared by all of react-notion-x (required)
-import 'react-notion-x/src/styles.css'
-// used for code syntax highlighting (optional)
-import 'prismjs/themes/prism-tomorrow.css'
-// used for collection views (optional)
-import 'rc-dropdown/assets/index.css'
+import { createTheme } from '@mui/material';
+import Amplify, { Auth, Hub } from 'aws-amplify';
 // used for rendering equations (optional)
-import 'katex/dist/katex.min.css'
+import 'katex/dist/katex.min.css';
+import type { AppProps } from 'next/app';
+import { useRouter } from 'next/dist/client/router';
+// used for code syntax highlighting (optional)
+import 'prismjs/themes/prism-tomorrow.css';
+// used for collection views (optional)
+import 'rc-dropdown/assets/index.css';
+import React, { useEffect } from 'react';
+// core styles shared by all of react-notion-x (required)
+import 'react-notion-x/src/styles.css';
+import MyApolloClient from '../api/MyApolloClient';
+import MyAppBar from '../components/common/MyAppBar';
+import MyBackdrop from '../components/common/MyBackdrop';
+import useUser from '../model/hooks/useUser';
+import OgpTag from '../model/ogp/OgpTag';
+import awsConfig from '../src/aws-exports';
 import '../styles/globals.css';
-import { ConsoleLogger } from '@aws-amplify/core';
-import getOgpInfo from '../model/serverSideRender/getOgpInfo';
-import OgpTag, { OpgMetaData } from '../model/ogp/OgpTag';
+
 
 
 function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
@@ -55,7 +53,7 @@ awsConfig.oauth.redirectSignIn = redirectSignIn
 awsConfig.oauth.redirectSignOut = redirectSignIn
 Amplify.configure(awsConfig);
 
-const MyApp = ({ Component, pageProps }: AppProps & { ogpInfo: OpgMetaData }) => {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   const { setUser } = useUser()
   const router = useRouter()
 
