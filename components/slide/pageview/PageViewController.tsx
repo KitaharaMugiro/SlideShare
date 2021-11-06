@@ -46,7 +46,7 @@ export default (props: Props) => {
             return <ImagePageView
                 key={props.viewingPage.id}
                 imageUrl={props.viewingPage?.imageUrl}
-                imageSizeStyle={imageSizeStyle}
+                imageSizeStyle={freeImageSizeStyle}
             />
         }
         if (props.viewingPage.type === Slideshare_PageType_Enum.FreeImage) {
