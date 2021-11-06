@@ -17,10 +17,11 @@ import style from "./style.module.css";
 import MobileSlideView from "../../components/common/MobileSlideView";
 import { isMobile } from 'react-device-detect';
 import { useLoading } from "../../model/hooks/useLoading";
-import SlideOgp from "../../model/ogp/OgpTag";
+import SlideOgp, { OpgMetaData } from "../../model/ogp/OgpTag";
 import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
+import OgpTag from "../../model/ogp/OgpTag";
 
-const Page = () => {
+const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const router = useRouter()
     const { slideId } = router.query
 
@@ -139,6 +140,7 @@ const Page = () => {
     }
     return (
         <div className={style.main}>
+            <OgpTag ogpInfo={ogpInfo} />
             <AgoraClient
                 uid={uuid}
                 host={slide?.createdBy || ""}
@@ -182,6 +184,10 @@ const Page = () => {
             </div>
         </div>
     )
+}
+
+export async function getServerSideProps(context: any) {
+    return getOgpInfo(context)
 }
 
 export default Page

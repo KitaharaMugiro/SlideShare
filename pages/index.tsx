@@ -1,11 +1,13 @@
 import { Button, Paper, Typography } from '@mui/material'
 import type { NextPage } from 'next'
 import React from 'react'
+import OgpTag from '../model/ogp/OgpTag'
 import styles from './index.module.css'
 
 const Home: NextPage = () => {
   return (
     <div>
+      <OgpTag ogpInfo={{}} />
       <div className={styles.heroine}>
         <div className={styles.center}>
           <Paper elevation={3} style={{ margin: 40, padding: 40 }}>

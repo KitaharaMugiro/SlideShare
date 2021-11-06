@@ -55,7 +55,7 @@ awsConfig.oauth.redirectSignIn = redirectSignIn
 awsConfig.oauth.redirectSignOut = redirectSignIn
 Amplify.configure(awsConfig);
 
-const MyApp = ({ Component, pageProps, ogpInfo }: AppProps & { ogpInfo: OpgMetaData }) => {
+const MyApp = ({ Component, pageProps }: AppProps & { ogpInfo: OpgMetaData }) => {
   const { setUser } = useUser()
   const router = useRouter()
 
@@ -96,7 +96,6 @@ const MyApp = ({ Component, pageProps, ogpInfo }: AppProps & { ogpInfo: OpgMetaD
 
   return <>
     <ApolloProvider client={MyApolloClient}>
-      <OgpTag ogpInfo={ogpInfo} />
       <ThemeProvider theme={darkTheme}>
         <MyAppBar />
         <MyBackdrop />
@@ -104,10 +103,6 @@ const MyApp = ({ Component, pageProps, ogpInfo }: AppProps & { ogpInfo: OpgMetaD
       </ThemeProvider>
     </ApolloProvider>
   </>
-}
-
-export async function getServerSideProps(context: any) {
-  return getOgpInfo(context)
 }
 
 export default MyApp

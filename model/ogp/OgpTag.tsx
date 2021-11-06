@@ -2,8 +2,8 @@ import { VFC } from 'react'
 import Head from 'next/head'
 
 export interface OpgMetaData {
-    pageTitle: string
-    pageDescription: string
+    pageTitle?: string
+    pageDescription?: string
     pagePath?: string
     pageImg?: string
     pageImgWidth?: number
@@ -12,17 +12,11 @@ export interface OpgMetaData {
 }
 
 interface Props {
-    ogpInfo: {
-        pageTitle: string
-        pageDescription: string
-        pagePath?: string
-        pageImg?: string
-        pageImgWidth?: number
-        pageImgHeight?: number
-    }
+    ogpInfo: OpgMetaData
 }
 
 const OgpTag = (props: Props) => {
+    if (!props.ogpInfo) return <div />
     const {
         pageTitle,
         pageDescription,
@@ -31,10 +25,10 @@ const OgpTag = (props: Props) => {
         pageImgWidth,
         pageImgHeight
     } = props.ogpInfo
-    const title = pageTitle
-    const description = pageDescription
+    const title = pageTitle || "PresenShare"
+    const description = pageDescription || "スライドをアップロードしてプレゼンを始めよう"
     const url = pagePath
-    const imgUrl = pageImg ? pageImg : '/static/default_slide.png'
+    const imgUrl = pageImg || '/static/default_ogp.png'
     const imgWidth = pageImgWidth ? pageImgWidth : 1280
     const imgHeight = pageImgHeight ? pageImgHeight : 640
 

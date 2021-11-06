@@ -11,9 +11,11 @@ import SlideSlider from "../../components/slide/SlideSlider";
 import { useLoading } from "../../model/hooks/useLoading";
 import useUser from "../../model/hooks/useUser";
 import { SlideStateAtom } from "../../model/jotai/SlideState";
+import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag";
+import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
-const Page = () => {
+const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const router = useRouter()
     const { slideId } = router.query
 
@@ -81,6 +83,7 @@ const Page = () => {
     }
     return (
         <div className={style.main}>
+            <OgpTag ogpInfo={ogpInfo} />
             {/* スライド */}
             <div className={style.deck_space} >
                 <div>
@@ -115,5 +118,10 @@ const Page = () => {
         </div>
     )
 }
+
+export async function getServerSideProps(context: any) {
+    return getOgpInfo(context)
+}
+
 
 export default Page
