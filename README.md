@@ -1,6 +1,5 @@
 # URL
-https://dqp0o9eebp5qj.cloudfront.net/
-
+https://presen-share.yunomy.com/
 
 # Backend url
 https://adequate-guinea-56.hasura.app

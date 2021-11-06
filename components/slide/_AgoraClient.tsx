@@ -147,7 +147,6 @@ const Subscribe = (props: {
 
     return (
         <div>
-            聞き専
         </div>
     );
 };

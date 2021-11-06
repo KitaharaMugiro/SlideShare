@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { useAtom } from "jotai";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { isMobile } from 'react-device-detect';
@@ -15,10 +16,12 @@ import SlideSlider from "../../components/slide/SlideSlider";
 import { useLoading } from "../../model/hooks/useLoading";
 import useUser from "../../model/hooks/useUser";
 import { SlideStateAtom } from "../../model/jotai/SlideState";
+import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag";
+import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
 
-const Page = () => {
+const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const router = useRouter()
     const { slideId } = router.query
 
@@ -128,7 +131,8 @@ const Page = () => {
         onChangePageNumber(targetPage?.pageNumber || 0)
     }
 
-    if (loading) return <div></div>
+    //WARN: 早期リターンしているがOGP情報だけは返却する
+    if (loading) return <div><OgpTag ogpInfo={ogpInfo} /></div>
     if (error) return <div>{JSON.stringify(error)}</div>
     if (!slide) return <div>存在しないスライドです</div>
 
@@ -136,7 +140,8 @@ const Page = () => {
         return <MobileSlideView />
     }
     return (
-        <div className={style.main}>¥
+        <div className={style.main}>
+            <OgpTag ogpInfo={ogpInfo} />
             <AgoraClient
                 uid={uuid}
                 host={slide?.createdBy || ""}
@@ -180,6 +185,10 @@ const Page = () => {
             </div>
         </div>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    return getOgpInfo(context)
 }
 
 export default Page
