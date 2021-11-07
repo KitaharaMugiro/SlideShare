@@ -2916,6 +2916,24 @@ export type InsertConferenceMutationVariables = Exact<{
 
 export type InsertConferenceMutation = { __typename?: 'mutation_root', insert_slideshare_Conference_one?: { __typename?: 'slideshare_Conference', id: number } | null | undefined };
 
+export type UpdateConferenceStartDateMutationVariables = Exact<{
+  conferenceId: Scalars['Int'];
+  startDate: Scalars['numeric'];
+}>;
+
+
+export type UpdateConferenceStartDateMutation = { __typename?: 'mutation_root', update_slideshare_Conference_by_pk?: { __typename?: 'slideshare_Conference', id: number } | null | undefined };
+
+export type UpdateConferenceMutationVariables = Exact<{
+  conferenceId: Scalars['Int'];
+  startDate: Scalars['numeric'];
+  endDate: Scalars['numeric'];
+  title: Scalars['String'];
+}>;
+
+
+export type UpdateConferenceMutation = { __typename?: 'mutation_root', update_slideshare_Conference_by_pk?: { __typename?: 'slideshare_Conference', id: number } | null | undefined };
+
 export type QueryConferenceBySlideIdQueryVariables = Exact<{
   slideId: Scalars['Int'];
 }>;
@@ -3397,6 +3415,82 @@ export function useInsertConferenceMutation(baseOptions?: Apollo.MutationHookOpt
 export type InsertConferenceMutationHookResult = ReturnType<typeof useInsertConferenceMutation>;
 export type InsertConferenceMutationResult = Apollo.MutationResult<InsertConferenceMutation>;
 export type InsertConferenceMutationOptions = Apollo.BaseMutationOptions<InsertConferenceMutation, InsertConferenceMutationVariables>;
+export const UpdateConferenceStartDateDocument = gql`
+    mutation updateConferenceStartDate($conferenceId: Int!, $startDate: numeric!) {
+  update_slideshare_Conference_by_pk(
+    pk_columns: {id: $conferenceId}
+    _set: {startDate: $startDate}
+  ) {
+    id
+  }
+}
+    `;
+export type UpdateConferenceStartDateMutationFn = Apollo.MutationFunction<UpdateConferenceStartDateMutation, UpdateConferenceStartDateMutationVariables>;
+
+/**
+ * __useUpdateConferenceStartDateMutation__
+ *
+ * To run a mutation, you first call `useUpdateConferenceStartDateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateConferenceStartDateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateConferenceStartDateMutation, { data, loading, error }] = useUpdateConferenceStartDateMutation({
+ *   variables: {
+ *      conferenceId: // value for 'conferenceId'
+ *      startDate: // value for 'startDate'
+ *   },
+ * });
+ */
+export function useUpdateConferenceStartDateMutation(baseOptions?: Apollo.MutationHookOptions<UpdateConferenceStartDateMutation, UpdateConferenceStartDateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateConferenceStartDateMutation, UpdateConferenceStartDateMutationVariables>(UpdateConferenceStartDateDocument, options);
+      }
+export type UpdateConferenceStartDateMutationHookResult = ReturnType<typeof useUpdateConferenceStartDateMutation>;
+export type UpdateConferenceStartDateMutationResult = Apollo.MutationResult<UpdateConferenceStartDateMutation>;
+export type UpdateConferenceStartDateMutationOptions = Apollo.BaseMutationOptions<UpdateConferenceStartDateMutation, UpdateConferenceStartDateMutationVariables>;
+export const UpdateConferenceDocument = gql`
+    mutation updateConference($conferenceId: Int!, $startDate: numeric!, $endDate: numeric!, $title: String!) {
+  update_slideshare_Conference_by_pk(
+    pk_columns: {id: $conferenceId}
+    _set: {startDate: $startDate, endDate: $endDate, title: $title}
+  ) {
+    id
+  }
+}
+    `;
+export type UpdateConferenceMutationFn = Apollo.MutationFunction<UpdateConferenceMutation, UpdateConferenceMutationVariables>;
+
+/**
+ * __useUpdateConferenceMutation__
+ *
+ * To run a mutation, you first call `useUpdateConferenceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateConferenceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateConferenceMutation, { data, loading, error }] = useUpdateConferenceMutation({
+ *   variables: {
+ *      conferenceId: // value for 'conferenceId'
+ *      startDate: // value for 'startDate'
+ *      endDate: // value for 'endDate'
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useUpdateConferenceMutation(baseOptions?: Apollo.MutationHookOptions<UpdateConferenceMutation, UpdateConferenceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateConferenceMutation, UpdateConferenceMutationVariables>(UpdateConferenceDocument, options);
+      }
+export type UpdateConferenceMutationHookResult = ReturnType<typeof useUpdateConferenceMutation>;
+export type UpdateConferenceMutationResult = Apollo.MutationResult<UpdateConferenceMutation>;
+export type UpdateConferenceMutationOptions = Apollo.BaseMutationOptions<UpdateConferenceMutation, UpdateConferenceMutationVariables>;
 export const QueryConferenceBySlideIdDocument = gql`
     query queryConferenceBySlideId($slideId: Int!) {
   slideshare_Conference(

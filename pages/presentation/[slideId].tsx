@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import MobileSlideView from "../../components/common/MobileSlideView";
 import ConferenceText from "../../components/conference/ConferenceText";
 import AdminPresentationController from "../../components/presentation/AdminPresentationController";
+import AdminWarningMessage from "../../components/presentation/AdminWarningMessage";
 import ConfirmationModal from "../../components/presentation/ConfirmationModal";
 import UserActionDisplay from "../../components/presentation/UserActionDisplay";
 import UserPresentationController from "../../components/presentation/UserPresentationController";
@@ -149,8 +150,9 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                     <Alert severity="success">
                         <AlertTitle>{format(startDate, "yyyy/MM/dd HH:mm")} から開催します。</AlertTitle>
                         <strong>「{latestConference?.title}」</strong>を忘れずに参加しましょう。
-                        <div style={{ height: 10 }} />
-                        <Button variant="contained">申し込む</Button>
+                        {/* TODO: 実装予定 */}
+                        {/* <div style={{ height: 10 }} />
+                        <Button variant="contained">申し込む</Button> */}
                     </Alert>
                 </div>
             }
@@ -189,17 +191,12 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                     isHost={isAdmin} />
                 : <div />}
 
-            {startDate > new Date() && <Alert severity="error">
-                <AlertTitle>{format(startDate, "yyyy/MM/dd HH:mm")} から開始します。</AlertTitle>
-                まだ参加者はこのページにアクセスできません。<br />
-                <div style={{ height: 10 }} />
-                <Button variant="contained">今から始める</Button>
-            </Alert>}
-            {endDate < new Date() && <Alert severity="error">
-                <AlertTitle>登壇時間は終了しました。</AlertTitle>
-                {format(endDate, "yyyy/MM/dd HH:mm")} に終了しました。<br />
-                参加者はこのページにアクセスできません。
-            </Alert>}
+            {latestConference &&
+                <AdminWarningMessage
+                    conferenceId={latestConference.id}
+                    startDate={startDate}
+                    endDate={endDate} />}
+
 
             {/* スライド */}
             <div className={style.deck_space} >

@@ -14,18 +14,24 @@ import ConferenceDatePicker from './ConferenceDatePicker';
 
 interface Props {
   slideId: number
+  initialTitle?: string
+  initialStartDate?: Date
+  initialEndDate?: Date
+  updateConferenceId?: number
 }
 
 export default function ConferenceInfoModalButton(props: Props) {
   const today = new Date();
   const router = useRouter()
+
+  //local states
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [conferenceName, setConferenceName] = useState('');
-  const [conferenceStartDate, setConferenceStartDate] = useState(today);
-  const [conferenceEndDate, setConferenceEndDate] = useState(addHours(today, 1));
+  const [conferenceName, setConferenceName] = useState(props.initialTitle || "");
+  const [conferenceStartDate, setConferenceStartDate] = useState(props.initialStartDate || today);
+  const [conferenceEndDate, setConferenceEndDate] = useState(addHours(props.initialEndDate || today, 1));
 
-  const { createConference } = useConference()
+  const { createConference, updateConference } = useConference()
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -36,8 +42,16 @@ export default function ConferenceInfoModalButton(props: Props) {
   };
 
   const onClickOk = async () => {
+    if (!conferenceName) {
+      window.alert("Please enter a conference name")
+      return
+    }
     setLoading(true);
-    await createConference(props.slideId, conferenceName, conferenceStartDate, conferenceEndDate)
+    if (props.updateConferenceId) {
+      await updateConference(props.updateConferenceId, conferenceName, conferenceStartDate, conferenceEndDate);
+    } else {
+      await createConference(props.slideId, conferenceName, conferenceStartDate, conferenceEndDate)
+    }
     setOpen(false);
     setLoading(false);
     router.push(`/presentation/${props.slideId}`)
@@ -46,7 +60,7 @@ export default function ConferenceInfoModalButton(props: Props) {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        このスライドで発表する
+        {props.updateConferenceId ? props.initialTitle + "を修正する" : "このスライドで発表する"}
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>開催日時を設定する</DialogTitle>

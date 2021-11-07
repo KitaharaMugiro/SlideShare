@@ -25,7 +25,6 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const { user } = useUser()
 
     //slide状態変数
-    const [localAdminSlideState] = useAtom(SlideStateAtom)
     const [localPageNumber, setLocalPageNumber] = useState(0)
 
     //データ取得
@@ -102,7 +101,8 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                         onChangePageNumber={onChangePageNumber}
                         isSync={false}
                     />
-                    {isAdmin ? <AdminSlideController /> : <div />}
+                    {isAdmin ? <AdminSlideController
+                        slideId={Number(slideId)} /> : <div />}
 
                 </div>
                 <div style={{

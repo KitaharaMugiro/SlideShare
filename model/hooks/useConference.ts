@@ -1,7 +1,10 @@
-import { useInsertConferenceMutation } from "../../src/generated/graphql"
+import { useInsertConferenceMutation, useUpdateConferenceMutation, useUpdateConferenceStartDateMutation } from "../../src/generated/graphql"
 
 export default () => {
     const [insertConferenceMutation] = useInsertConferenceMutation()
+    const [updateConferenceStartDateMutation] = useUpdateConferenceStartDateMutation()
+    const [updateConferenceMutation] = useUpdateConferenceMutation()
+
     const createConference = async (slideId: number, title: string, startDate: Date, endDate: Date) => {
         await insertConferenceMutation({
             variables: {
@@ -13,5 +16,26 @@ export default () => {
         })
     }
 
-    return { createConference }
+    const updateStartDate = async (conferenceId: number, startDate: Date) => {
+        await updateConferenceStartDateMutation({
+            variables: {
+                conferenceId,
+                startDate: startDate.getTime()
+            }
+        })
+    }
+
+    const updateConference = async (conferenceId: number, title: string, startDate: Date, endDate: Date) => {
+        await updateConferenceMutation({
+            variables: {
+                conferenceId,
+                startDate: startDate.getTime(),
+                endDate: endDate.getTime(),
+                title
+            }
+        })
+    }
+
+
+    return { createConference, updateStartDate, updateConference }
 }

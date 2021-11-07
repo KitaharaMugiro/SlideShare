@@ -4,6 +4,21 @@ mutation insertConference($title: String!, $startDate: numeric!, $slideId: Int!,
   }
 }
 
+mutation updateConferenceStartDate($conferenceId:Int!, $startDate: numeric!) {
+  update_slideshare_Conference_by_pk(pk_columns:{id:$conferenceId}, _set:{startDate:$startDate}) {
+    id
+  }
+}
+
+mutation updateConference($conferenceId:Int!, $startDate: numeric!, $endDate: numeric!, $title: String!) {
+  update_slideshare_Conference_by_pk(pk_columns:{id:$conferenceId}, _set:{
+    startDate:$startDate, endDate:$endDate, title:$title
+    }) {
+    id
+  }
+}
+
+
 query queryConferenceBySlideId($slideId: Int!) {
   slideshare_Conference(where: {slideId: {_eq: $slideId}},  order_by:{createdAt:desc}) {
     id
