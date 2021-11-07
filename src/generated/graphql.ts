@@ -424,6 +424,10 @@ export type Mutation_Root = {
   delete_slideshare_Comment?: Maybe<Slideshare_Comment_Mutation_Response>;
   /** delete single row from the table: "slideshare.Comment" */
   delete_slideshare_Comment_by_pk?: Maybe<Slideshare_Comment>;
+  /** delete data from the table: "slideshare.Conference" */
+  delete_slideshare_Conference?: Maybe<Slideshare_Conference_Mutation_Response>;
+  /** delete single row from the table: "slideshare.Conference" */
+  delete_slideshare_Conference_by_pk?: Maybe<Slideshare_Conference>;
   /** delete data from the table: "slideshare.File" */
   delete_slideshare_File?: Maybe<Slideshare_File_Mutation_Response>;
   /** delete single row from the table: "slideshare.File" */
@@ -452,6 +456,10 @@ export type Mutation_Root = {
   insert_slideshare_Comment?: Maybe<Slideshare_Comment_Mutation_Response>;
   /** insert a single row into the table: "slideshare.Comment" */
   insert_slideshare_Comment_one?: Maybe<Slideshare_Comment>;
+  /** insert data into the table: "slideshare.Conference" */
+  insert_slideshare_Conference?: Maybe<Slideshare_Conference_Mutation_Response>;
+  /** insert a single row into the table: "slideshare.Conference" */
+  insert_slideshare_Conference_one?: Maybe<Slideshare_Conference>;
   /** insert data into the table: "slideshare.File" */
   insert_slideshare_File?: Maybe<Slideshare_File_Mutation_Response>;
   /** insert a single row into the table: "slideshare.File" */
@@ -484,6 +492,10 @@ export type Mutation_Root = {
   update_slideshare_Bookmark?: Maybe<Slideshare_Bookmark_Mutation_Response>;
   /** update single row of the table: "slideshare.Bookmark" */
   update_slideshare_Bookmark_by_pk?: Maybe<Slideshare_Bookmark>;
+  /** update data of the table: "slideshare.Conference" */
+  update_slideshare_Conference?: Maybe<Slideshare_Conference_Mutation_Response>;
+  /** update single row of the table: "slideshare.Conference" */
+  update_slideshare_Conference_by_pk?: Maybe<Slideshare_Conference>;
   /** update data of the table: "slideshare.Page" */
   update_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
   /** update single row of the table: "slideshare.Page" */
@@ -543,6 +555,18 @@ export type Mutation_RootDelete_Slideshare_CommentArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Slideshare_Comment_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_ConferenceArgs = {
+  where: Slideshare_Conference_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_Conference_By_PkArgs = {
   id: Scalars['Int'];
 };
 
@@ -632,6 +656,20 @@ export type Mutation_RootInsert_Slideshare_CommentArgs = {
 /** mutation root */
 export type Mutation_RootInsert_Slideshare_Comment_OneArgs = {
   object: Slideshare_Comment_Insert_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_ConferenceArgs = {
+  objects: Array<Slideshare_Conference_Insert_Input>;
+  on_conflict?: Maybe<Slideshare_Conference_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_Conference_OneArgs = {
+  object: Slideshare_Conference_Insert_Input;
+  on_conflict?: Maybe<Slideshare_Conference_On_Conflict>;
 };
 
 
@@ -750,6 +788,22 @@ export type Mutation_RootUpdate_Slideshare_Bookmark_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Slideshare_ConferenceArgs = {
+  _inc?: Maybe<Slideshare_Conference_Inc_Input>;
+  _set?: Maybe<Slideshare_Conference_Set_Input>;
+  where: Slideshare_Conference_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Slideshare_Conference_By_PkArgs = {
+  _inc?: Maybe<Slideshare_Conference_Inc_Input>;
+  _set?: Maybe<Slideshare_Conference_Set_Input>;
+  pk_columns: Slideshare_Conference_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Slideshare_PageArgs = {
   _inc?: Maybe<Slideshare_Page_Inc_Input>;
   _set?: Maybe<Slideshare_Page_Set_Input>;
@@ -861,6 +915,10 @@ export type Query_Root = {
   slideshare_Comment: Array<Slideshare_Comment>;
   /** fetch data from the table: "slideshare.Comment" using primary key columns */
   slideshare_Comment_by_pk?: Maybe<Slideshare_Comment>;
+  /** fetch data from the table: "slideshare.Conference" */
+  slideshare_Conference: Array<Slideshare_Conference>;
+  /** fetch data from the table: "slideshare.Conference" using primary key columns */
+  slideshare_Conference_by_pk?: Maybe<Slideshare_Conference>;
   /** fetch data from the table: "slideshare.File" */
   slideshare_File: Array<Slideshare_File>;
   /** fetch data from the table: "slideshare.File" using primary key columns */
@@ -944,6 +1002,20 @@ export type Query_RootSlideshare_CommentArgs = {
 
 
 export type Query_RootSlideshare_Comment_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Query_RootSlideshare_ConferenceArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Conference_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Conference_Order_By>>;
+  where?: Maybe<Slideshare_Conference_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_Conference_By_PkArgs = {
   id: Scalars['Int'];
 };
 
@@ -1380,6 +1452,129 @@ export type Slideshare_Comment_Variance_Order_By = {
   id?: Maybe<Order_By>;
   slideId?: Maybe<Order_By>;
 };
+
+/** columns and relationships of "slideshare.Conference" */
+export type Slideshare_Conference = {
+  __typename?: 'slideshare_Conference';
+  /** An object relationship */
+  Slide: Slideshare_Slide;
+  createdAt: Scalars['timestamptz'];
+  createdBy: Scalars['String'];
+  endDate: Scalars['numeric'];
+  id: Scalars['Int'];
+  slideId: Scalars['Int'];
+  startDate: Scalars['numeric'];
+  title?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['timestamptz'];
+};
+
+/** Boolean expression to filter rows from the table "slideshare.Conference". All fields are combined with a logical 'AND'. */
+export type Slideshare_Conference_Bool_Exp = {
+  Slide?: Maybe<Slideshare_Slide_Bool_Exp>;
+  _and?: Maybe<Array<Slideshare_Conference_Bool_Exp>>;
+  _not?: Maybe<Slideshare_Conference_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_Conference_Bool_Exp>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  createdBy?: Maybe<String_Comparison_Exp>;
+  endDate?: Maybe<Numeric_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  slideId?: Maybe<Int_Comparison_Exp>;
+  startDate?: Maybe<Numeric_Comparison_Exp>;
+  title?: Maybe<String_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "slideshare.Conference" */
+export enum Slideshare_Conference_Constraint {
+  /** unique or primary key constraint */
+  ConferencePkey = 'Conference_pkey'
+}
+
+/** input type for incrementing numeric columns in table "slideshare.Conference" */
+export type Slideshare_Conference_Inc_Input = {
+  endDate?: Maybe<Scalars['numeric']>;
+  startDate?: Maybe<Scalars['numeric']>;
+};
+
+/** input type for inserting data into table "slideshare.Conference" */
+export type Slideshare_Conference_Insert_Input = {
+  Slide?: Maybe<Slideshare_Slide_Obj_Rel_Insert_Input>;
+  endDate?: Maybe<Scalars['numeric']>;
+  slideId?: Maybe<Scalars['Int']>;
+  startDate?: Maybe<Scalars['numeric']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "slideshare.Conference" */
+export type Slideshare_Conference_Mutation_Response = {
+  __typename?: 'slideshare_Conference_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Slideshare_Conference>;
+};
+
+/** on conflict condition type for table "slideshare.Conference" */
+export type Slideshare_Conference_On_Conflict = {
+  constraint: Slideshare_Conference_Constraint;
+  update_columns?: Array<Slideshare_Conference_Update_Column>;
+  where?: Maybe<Slideshare_Conference_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "slideshare.Conference". */
+export type Slideshare_Conference_Order_By = {
+  Slide?: Maybe<Slideshare_Slide_Order_By>;
+  createdAt?: Maybe<Order_By>;
+  createdBy?: Maybe<Order_By>;
+  endDate?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+  startDate?: Maybe<Order_By>;
+  title?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: slideshare_Conference */
+export type Slideshare_Conference_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "slideshare.Conference" */
+export enum Slideshare_Conference_Select_Column {
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  CreatedBy = 'createdBy',
+  /** column name */
+  EndDate = 'endDate',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  SlideId = 'slideId',
+  /** column name */
+  StartDate = 'startDate',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  UpdatedAt = 'updatedAt'
+}
+
+/** input type for updating data in table "slideshare.Conference" */
+export type Slideshare_Conference_Set_Input = {
+  endDate?: Maybe<Scalars['numeric']>;
+  startDate?: Maybe<Scalars['numeric']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "slideshare.Conference" */
+export enum Slideshare_Conference_Update_Column {
+  /** column name */
+  EndDate = 'endDate',
+  /** column name */
+  StartDate = 'startDate',
+  /** column name */
+  Title = 'title'
+}
 
 /** columns and relationships of "slideshare.File" */
 export type Slideshare_File = {
@@ -2415,6 +2610,10 @@ export type Subscription_Root = {
   slideshare_Comment: Array<Slideshare_Comment>;
   /** fetch data from the table: "slideshare.Comment" using primary key columns */
   slideshare_Comment_by_pk?: Maybe<Slideshare_Comment>;
+  /** fetch data from the table: "slideshare.Conference" */
+  slideshare_Conference: Array<Slideshare_Conference>;
+  /** fetch data from the table: "slideshare.Conference" using primary key columns */
+  slideshare_Conference_by_pk?: Maybe<Slideshare_Conference>;
   /** fetch data from the table: "slideshare.File" */
   slideshare_File: Array<Slideshare_File>;
   /** fetch data from the table: "slideshare.File" using primary key columns */
@@ -2498,6 +2697,20 @@ export type Subscription_RootSlideshare_CommentArgs = {
 
 
 export type Subscription_RootSlideshare_Comment_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Subscription_RootSlideshare_ConferenceArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Conference_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Conference_Order_By>>;
+  where?: Maybe<Slideshare_Conference_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_Conference_By_PkArgs = {
   id: Scalars['Int'];
 };
 
@@ -2692,6 +2905,30 @@ export type SendCommentMutationVariables = Exact<{
 
 
 export type SendCommentMutation = { __typename?: 'mutation_root', insert_slideshare_Comment_one?: { __typename?: 'slideshare_Comment', id: number } | null | undefined };
+
+export type InsertConferenceMutationVariables = Exact<{
+  title: Scalars['String'];
+  startDate: Scalars['numeric'];
+  slideId: Scalars['Int'];
+  endDate: Scalars['numeric'];
+}>;
+
+
+export type InsertConferenceMutation = { __typename?: 'mutation_root', insert_slideshare_Conference_one?: { __typename?: 'slideshare_Conference', id: number } | null | undefined };
+
+export type QueryConferenceBySlideIdQueryVariables = Exact<{
+  slideId: Scalars['Int'];
+}>;
+
+
+export type QueryConferenceBySlideIdQuery = { __typename?: 'query_root', slideshare_Conference: Array<{ __typename?: 'slideshare_Conference', id: number, startDate: any, endDate: any, createdAt: any, title?: string | null | undefined, updatedAt: any }> };
+
+export type QueryConferenceByUserIdQueryVariables = Exact<{
+  userId: Scalars['String'];
+}>;
+
+
+export type QueryConferenceByUserIdQuery = { __typename?: 'query_root', slideshare_Conference: Array<{ __typename?: 'slideshare_Conference', id: number, startDate: any, endDate: any, createdAt: any, title?: string | null | undefined, updatedAt: any }> };
 
 export type CreateSlideMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -3122,6 +3359,130 @@ export function useSendCommentMutation(baseOptions?: Apollo.MutationHookOptions<
 export type SendCommentMutationHookResult = ReturnType<typeof useSendCommentMutation>;
 export type SendCommentMutationResult = Apollo.MutationResult<SendCommentMutation>;
 export type SendCommentMutationOptions = Apollo.BaseMutationOptions<SendCommentMutation, SendCommentMutationVariables>;
+export const InsertConferenceDocument = gql`
+    mutation insertConference($title: String!, $startDate: numeric!, $slideId: Int!, $endDate: numeric!) {
+  insert_slideshare_Conference_one(
+    object: {title: $title, startDate: $startDate, slideId: $slideId, endDate: $endDate}
+  ) {
+    id
+  }
+}
+    `;
+export type InsertConferenceMutationFn = Apollo.MutationFunction<InsertConferenceMutation, InsertConferenceMutationVariables>;
+
+/**
+ * __useInsertConferenceMutation__
+ *
+ * To run a mutation, you first call `useInsertConferenceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertConferenceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertConferenceMutation, { data, loading, error }] = useInsertConferenceMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *      startDate: // value for 'startDate'
+ *      slideId: // value for 'slideId'
+ *      endDate: // value for 'endDate'
+ *   },
+ * });
+ */
+export function useInsertConferenceMutation(baseOptions?: Apollo.MutationHookOptions<InsertConferenceMutation, InsertConferenceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertConferenceMutation, InsertConferenceMutationVariables>(InsertConferenceDocument, options);
+      }
+export type InsertConferenceMutationHookResult = ReturnType<typeof useInsertConferenceMutation>;
+export type InsertConferenceMutationResult = Apollo.MutationResult<InsertConferenceMutation>;
+export type InsertConferenceMutationOptions = Apollo.BaseMutationOptions<InsertConferenceMutation, InsertConferenceMutationVariables>;
+export const QueryConferenceBySlideIdDocument = gql`
+    query queryConferenceBySlideId($slideId: Int!) {
+  slideshare_Conference(
+    where: {slideId: {_eq: $slideId}}
+    order_by: {createdAt: desc}
+  ) {
+    id
+    startDate
+    endDate
+    createdAt
+    title
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useQueryConferenceBySlideIdQuery__
+ *
+ * To run a query within a React component, call `useQueryConferenceBySlideIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryConferenceBySlideIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryConferenceBySlideIdQuery({
+ *   variables: {
+ *      slideId: // value for 'slideId'
+ *   },
+ * });
+ */
+export function useQueryConferenceBySlideIdQuery(baseOptions: Apollo.QueryHookOptions<QueryConferenceBySlideIdQuery, QueryConferenceBySlideIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QueryConferenceBySlideIdQuery, QueryConferenceBySlideIdQueryVariables>(QueryConferenceBySlideIdDocument, options);
+      }
+export function useQueryConferenceBySlideIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryConferenceBySlideIdQuery, QueryConferenceBySlideIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QueryConferenceBySlideIdQuery, QueryConferenceBySlideIdQueryVariables>(QueryConferenceBySlideIdDocument, options);
+        }
+export type QueryConferenceBySlideIdQueryHookResult = ReturnType<typeof useQueryConferenceBySlideIdQuery>;
+export type QueryConferenceBySlideIdLazyQueryHookResult = ReturnType<typeof useQueryConferenceBySlideIdLazyQuery>;
+export type QueryConferenceBySlideIdQueryResult = Apollo.QueryResult<QueryConferenceBySlideIdQuery, QueryConferenceBySlideIdQueryVariables>;
+export const QueryConferenceByUserIdDocument = gql`
+    query queryConferenceByUserId($userId: String!) {
+  slideshare_Conference(
+    where: {createdBy: {_eq: $userId}}
+    order_by: {createdAt: desc}
+  ) {
+    id
+    startDate
+    endDate
+    createdAt
+    title
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useQueryConferenceByUserIdQuery__
+ *
+ * To run a query within a React component, call `useQueryConferenceByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryConferenceByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryConferenceByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useQueryConferenceByUserIdQuery(baseOptions: Apollo.QueryHookOptions<QueryConferenceByUserIdQuery, QueryConferenceByUserIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QueryConferenceByUserIdQuery, QueryConferenceByUserIdQueryVariables>(QueryConferenceByUserIdDocument, options);
+      }
+export function useQueryConferenceByUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryConferenceByUserIdQuery, QueryConferenceByUserIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QueryConferenceByUserIdQuery, QueryConferenceByUserIdQueryVariables>(QueryConferenceByUserIdDocument, options);
+        }
+export type QueryConferenceByUserIdQueryHookResult = ReturnType<typeof useQueryConferenceByUserIdQuery>;
+export type QueryConferenceByUserIdLazyQueryHookResult = ReturnType<typeof useQueryConferenceByUserIdLazyQuery>;
+export type QueryConferenceByUserIdQueryResult = Apollo.QueryResult<QueryConferenceByUserIdQuery, QueryConferenceByUserIdQueryVariables>;
 export const CreateSlideDocument = gql`
     mutation createSlide {
   insert_slideshare_Slide_one(object: {}) {

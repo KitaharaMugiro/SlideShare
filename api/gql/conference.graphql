@@ -1,0 +1,27 @@
+mutation insertConference($title: String!, $startDate: numeric!, $slideId: Int!, $endDate: numeric!) {
+  insert_slideshare_Conference_one(object: {title: $title, startDate: $startDate, slideId: $slideId, endDate: $endDate}) {
+    id
+  }
+}
+
+query queryConferenceBySlideId($slideId: Int!) {
+  slideshare_Conference(where: {slideId: {_eq: $slideId}},  order_by:{createdAt:desc}) {
+    id
+    startDate
+    endDate
+    createdAt
+    title
+    updatedAt
+  }
+}
+
+query queryConferenceByUserId($userId: String!) {
+  slideshare_Conference(where: {createdBy: {_eq: $userId}}, order_by:{createdAt:desc}) {
+    id
+    startDate
+    endDate
+    createdAt
+    title
+    updatedAt
+  }
+}
