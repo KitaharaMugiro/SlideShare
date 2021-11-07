@@ -31,6 +31,15 @@ query querySlide($slideId: Int!) {
       }
     }
   }
+
+  slideshare_Conference(where: {slideId: {_eq: $slideId}},  order_by:{createdAt:desc}, limit:1) {
+    id
+    startDate
+    endDate
+    createdAt
+    title
+    updatedAt
+  }
 }
 
 query queryUserSlide($userId: String!, $offset: Int!) {

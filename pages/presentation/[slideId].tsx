@@ -1,4 +1,5 @@
-import { Typography } from "@mui/material";
+import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material";
+import { format } from "date-fns";
 import { useAtom } from "jotai";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/dist/client/router";
@@ -7,6 +8,7 @@ import { isMobile } from 'react-device-detect';
 import { useOnlineUsers, useRealtimeCursor, useRealtimeSharedState } from "realtimely";
 import { v4 as uuidv4 } from "uuid";
 import MobileSlideView from "../../components/common/MobileSlideView";
+import ConferenceText from "../../components/conference/ConferenceText";
 import AdminPresentationController from "../../components/presentation/AdminPresentationController";
 import ConfirmationModal from "../../components/presentation/ConfirmationModal";
 import UserActionDisplay from "../../components/presentation/UserActionDisplay";
@@ -28,7 +30,6 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const router = useRouter()
     const { slideId } = router.query
 
-    const [isAdmin, setIsAdmin] = useState(false)
     const { user } = useUser()
     const [uuid] = useState(uuidv4())
 
@@ -52,17 +53,10 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     //データ取得
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) }, fetchPolicy: "no-cache" })
     const slide = initialSlide?.slideshare_Slide_by_pk
+    const latestConference = initialSlide?.slideshare_Conference.at(0)
     const pages = slide?.Pages ? [...slide?.Pages].sort((a, b) => a.pageNumber - b.pageNumber) : []
     const viewingPage = pages[localPageNumber]
-
-    useEffect(() => {
-        //TODO: Realtimely側をsecureにしないと意味ない
-        if (slide && user) {
-            if (slide?.createdBy === user?.attributes.sub) {
-                setIsAdmin(true)
-            }
-        }
-    }, [user, slide])
+    const isAdmin = slide?.createdBy === user?.attributes.sub
 
     useEffect(() => {
         if (loading) {
@@ -146,17 +140,46 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
         onChangePageNumber(targetPage?.pageNumber || 0)
     }
 
-    //WARN: 早期リターンしているがOGP情報だけは返却する
-    if (loading) return <div><OgpTag ogpInfo={ogpInfo} /></div>
-    if (error) return <div>{JSON.stringify(error)}</div>
-    if (!slide) return <div>存在しないスライドです</div>
-
-    if (isMobile) {
-        return <MobileSlideView />
-    }
-    return (
-        <div className={style.main}>
-            <OgpTag ogpInfo={ogpInfo} />
+    const renderSlideIfActiveConference = () => {
+        const startDate = new Date(latestConference?.startDate)
+        const endDate = new Date(latestConference?.endDate)
+        if (!isAdmin) {
+            if (startDate > new Date()) {
+                return <div>
+                    <Alert severity="success">
+                        <AlertTitle>{format(startDate, "yyyy/MM/dd HH:mm")} から開催します。</AlertTitle>
+                        <strong>「{latestConference?.title}」</strong>を忘れずに参加しましょう。
+                        <div style={{ height: 10 }} />
+                        <Button variant="contained">申し込む</Button>
+                    </Alert>
+                </div>
+            }
+            if (endDate < new Date()) {
+                return (
+                    <div>
+                        <Dialog
+                            open={true}
+                        >
+                            <DialogTitle id="alert-dialog-title">
+                                登壇は終了しました
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    {format(endDate, "yyyy/MM/dd HH:mm")}に終了しました。<br />
+                                    引き続き登壇資料を見ることはできます。
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => router.push(`/slide/${slideId}`)} autoFocus>
+                                    スライドを見る
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </div>
+                );
+            }
+        }
+        return <>
             {!isAdmin && <ConfirmationModal />}
             {slide ?
                 < AgoraClient
@@ -165,6 +188,18 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                     channelName={`${slide.createdBy}-${slide.id}`}
                     isHost={isAdmin} />
                 : <div />}
+
+            {startDate > new Date() && <Alert severity="error">
+                <AlertTitle>{format(startDate, "yyyy/MM/dd HH:mm")} から開始します。</AlertTitle>
+                まだ参加者はこのページにアクセスできません。<br />
+                <div style={{ height: 10 }} />
+                <Button variant="contained">今から始める</Button>
+            </Alert>}
+            {endDate < new Date() && <Alert severity="error">
+                <AlertTitle>登壇時間は終了しました。</AlertTitle>
+                {format(endDate, "yyyy/MM/dd HH:mm")} に終了しました。<br />
+                参加者はこのページにアクセスできません。
+            </Alert>}
 
             {/* スライド */}
             <div className={style.deck_space} >
@@ -187,7 +222,12 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                         syncSlide={syncSlide}
                     />
                     {isAdmin ? <AdminPresentationController /> : <UserPresentationController />}
-                    <Typography color="white" justifyContent="center">Viewer: {onlineUserList ? onlineUserList.length : 0} people watching</Typography>
+                    {latestConference ? <ConferenceText
+                        title={latestConference.title || ""}
+                        startDate={latestConference.startDate || ""}
+                        endDate={latestConference.endDate || ""}
+                    /> : <div />}
+                    <Typography color="white" justifyContent="center">{onlineUserList ? onlineUserList.length : 0} watching</Typography>
                     <UserActionDisplay />
                 </div>
                 <div style={{
@@ -202,6 +242,21 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                     />
                 </div>
             </div>
+        </>
+    }
+
+    //WARN: 早期リターンしているがOGP情報だけは返却する
+    if (loading) return <div><OgpTag ogpInfo={ogpInfo} /></div>
+    if (error) return <div>{JSON.stringify(error)}</div>
+    if (!slide) return <div>存在しないスライドです</div>
+
+    if (isMobile) {
+        return <MobileSlideView />
+    }
+    return (
+        <div className={style.main}>
+            <OgpTag ogpInfo={ogpInfo} />
+            {renderSlideIfActiveConference()}
         </div>
     )
 }
