@@ -97,11 +97,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return <>
     <ApolloProvider client={MyApolloClient}>
       <OgpTag ogpInfo={{}} />
-      <ThemeProvider theme={darkTheme}>
-        <MyAppBar />
-        <MyBackdrop />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <ThemeProvider theme={darkTheme}>
+          <MyAppBar />
+          <MyBackdrop />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </LocalizationProvider>
     </ApolloProvider>
   </>
 }
