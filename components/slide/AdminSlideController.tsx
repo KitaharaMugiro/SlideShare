@@ -17,8 +17,7 @@ export default (props: Props) => {
 
     return <>
         <Stack direction="row" spacing={2}>
-            <Button onClick={goPresentation}>Open with Presentation Mode</Button>
-            <ConferenceInfoModalButton />
+            <ConferenceInfoModalButton slideId={Number(slideId)} />
         </Stack>
     </>
 }

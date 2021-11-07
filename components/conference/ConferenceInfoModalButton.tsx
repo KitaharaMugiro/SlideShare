@@ -1,23 +1,31 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useState } from 'react';
-import ConferenceDatePicker from './ConferenceDatePicker';
+import TextField from '@mui/material/TextField';
 import { addHours } from 'date-fns';
+import { useRouter } from 'next/dist/client/router';
+import * as React from 'react';
+import { useState } from 'react';
+import useConference from '../../model/hooks/useConference';
+import ConferenceDatePicker from './ConferenceDatePicker';
 
+interface Props {
+  slideId: number
+}
 
-export default function ConferenceInfoModalButton() {
+export default function ConferenceInfoModalButton(props: Props) {
   const today = new Date();
+  const router = useRouter()
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [conferenceName, setConferenceName] = useState('');
   const [conferenceStartDate, setConferenceStartDate] = useState(today);
   const [conferenceEndDate, setConferenceEndDate] = useState(addHours(today, 1));
 
+  const { createConference } = useConference()
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -27,8 +35,12 @@ export default function ConferenceInfoModalButton() {
     setOpen(false);
   };
 
-  const onClickOk = () => {
+  const onClickOk = async () => {
+    setLoading(true);
+    await createConference(props.slideId, conferenceName, conferenceStartDate, conferenceEndDate)
     setOpen(false);
+    setLoading(false);
+    router.push(`/presentation/${props.slideId}`)
   }
 
   return (
@@ -73,7 +85,7 @@ export default function ConferenceInfoModalButton() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={onClickOk}>OK</Button>
+          <Button onClick={onClickOk}>{loading ? "Loading..." : "OK"}</Button>
         </DialogActions>
       </Dialog>
     </div>
