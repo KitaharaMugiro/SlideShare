@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react"
-import { Collection, CollectionRow, NotionRenderer } from 'react-notion-x'
+import { Collection, CollectionRow, NotionRenderer, Equation, Code } from 'react-notion-x'
 import useNotion from "../../../model/hooks/useNotion"
 import { Page } from "../../../model/Page"
 
@@ -20,6 +20,8 @@ export default (props: Props) => {
     }}>
         {notionData ? <NotionRenderer
             components={{
+                equation: Equation,
+                code: Code,
                 collection: Collection,
                 collectionRow: CollectionRow
             }}

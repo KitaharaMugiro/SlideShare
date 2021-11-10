@@ -28,7 +28,7 @@
     "jotai": "^1.4.2",
     "next": "12.0.3",
     "next-remove-imports": "^1.0.6",
-    "notion-client": "^4.10.0",
+    "notion-client": "^4.11.1",
     "react": "17.0.2",
     "react-beautiful-dnd": "^13.1.0",
     "react-device-detect": "^2.1.2",

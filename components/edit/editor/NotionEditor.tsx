@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { usePageList } from '../../../model/hooks/usePageList';
 import { Page } from '../../../model/Page';
 import UrlEditor from "../../common/UrlEditor";
-import { Collection, CollectionRow, NotionRenderer } from 'react-notion-x'
+import { Collection, CollectionRow, NotionRenderer, Equation, Code } from 'react-notion-x'
 import useNotion from "../../../model/hooks/useNotion";
 
 interface Props {
@@ -39,6 +39,8 @@ export default (props: Props) => {
         </p>
         {notionData ? <NotionRenderer
             components={{
+                equation: Equation,
+                code: Code,
                 collection: Collection,
                 collectionRow: CollectionRow
             }}
