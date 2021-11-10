@@ -1,0 +1,5 @@
+# デプロイ
+
+```
+npx serverless deploy
+```
