@@ -3,10 +3,3 @@
   background-color: #181818;
   min-height: 100vh;  
 }
-
-.deck_space {
-  position:relative;
-  left:20px;
-  top:20px;
-  display: flex;
-}
