@@ -15,7 +15,9 @@ import useUser from "../../model/hooks/useUser";
 import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag";
 import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
+import StaticSlideView from "../../components/slideview/StaticSlideView";
 import style from "./style.module.css";
+import ConferenceSubscribeMessage from "../../components/conference/ConferenceSubscribeMessage";
 
 const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const router = useRouter()
@@ -47,13 +49,15 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
         if (!isAdmin) {
             if (startDate > new Date()) {
                 return <div>
-                    <Alert severity="success">
-                        <AlertTitle>{format(startDate, "yyyy/MM/dd HH:mm")} から開催します。</AlertTitle>
-                        <strong>「{latestConference?.title}」</strong>を忘れずに参加しましょう。
-                        {/* TODO: 実装予定 */}
-                        {/* <div style={{ height: 10 }} />
-                        <Button variant="contained">申し込む</Button> */}
-                    </Alert>
+                    <ConferenceSubscribeMessage
+                        startDate={startDate}
+                        title={latestConference?.title || ""}
+                        conferenceId={latestConference?.id || 0} />
+                    {/* TODO: このunwrap微妙 */}
+                    {/* スライド */}
+                    {initialSlide &&
+                        <StaticSlideView initialSlide={initialSlide} isAdmin={isAdmin} />}
+
                 </div>
             }
             if (endDate < new Date()) {
@@ -99,7 +103,8 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
 
             {/* スライド */}
-            <PresentationSlideView initialSlide={initialSlide} isAdmin={isAdmin} />
+            {initialSlide &&
+                <PresentationSlideView initialSlide={initialSlide} isAdmin={isAdmin} />}
 
         </>
     }

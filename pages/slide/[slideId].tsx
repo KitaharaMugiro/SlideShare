@@ -1,17 +1,11 @@
-import { useAtom } from "jotai";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { isMobile } from 'react-device-detect';
 import MobileSlideView from "../../components/common/MobileSlideView";
-import AdminSlideController from "../../components/slide/AdminSlideController";
-import Comments from "../../components/slide/comments/Comments";
-import PageViewController from "../../components/slide/pageview/PageViewController";
-import ProfileCardController from "../../components/slide/ProfileCardController";
-import SlideSlider from "../../components/slide/SlideSlider";
+import StaticSlideView from "../../components/slideview/StaticSlideView";
 import { useLoading } from "../../model/hooks/useLoading";
 import useUser from "../../model/hooks/useUser";
-import { SlideStateAtom } from "../../model/jotai/SlideState";
 import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag";
 import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
@@ -21,20 +15,13 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const router = useRouter()
     const { slideId } = router.query
 
-    const [isAdmin, setIsAdmin] = useState(false)
     const { user } = useUser()
-
-    //slide状態変数
-    const [localPageNumber, setLocalPageNumber] = useState(0)
+    const [isAdmin, setIsAdmin] = useState(false)
+    const { startLoading, finishLoading } = useLoading()
 
     //データ取得
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) }, fetchPolicy: "no-cache" })
     const slide = initialSlide?.slideshare_Slide_by_pk
-    const pages = slide?.Pages ? [...slide?.Pages].sort((a, b) => a.pageNumber - b.pageNumber) : []
-    const viewingPage = pages[localPageNumber]
-
-    const { startLoading, finishLoading } = useLoading()
-
 
     useEffect(() => {
         if (loading) {
@@ -53,28 +40,6 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
         }
     }, [user, slide])
 
-    const goNext = () => {
-        const nextPageNumber = localPageNumber + 1
-        if (nextPageNumber >= pages.length) return
-        setLocalPageNumber(nextPageNumber)
-    }
-
-    const goPrevious = () => {
-        const nextPageNumber = localPageNumber - 1
-        if (nextPageNumber < 0) return
-        setLocalPageNumber(nextPageNumber)
-    }
-
-    const onChangePageNumber = (number: number) => {
-        const nextPageNumber = number
-        setLocalPageNumber(nextPageNumber)
-    }
-
-    const onClickPageLink = (pageId: string) => {
-        const targetPage = pages.find(p => p.id === pageId)
-        onChangePageNumber(targetPage?.pageNumber || 0)
-    }
-
     if (loading) return <div><OgpTag ogpInfo={ogpInfo} /></div>
     if (error) return <div>{JSON.stringify(error)}</div>
     if (!slide) return <div>存在しないスライドです</div>
@@ -85,38 +50,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     return (
         <div className={style.main}>
             <OgpTag ogpInfo={ogpInfo} />
-            {/* スライド */}
-            <div className={style.deck_space} >
-                <div>
-                    <div style={{ position: "relative" }}>
-                        <PageViewController
-                            viewingPage={viewingPage}
-                            onClickLeft={goPrevious}
-                            onClickRight={goNext}
-                        />
-                    </div>
-                    <SlideSlider
-                        maxPageNumber={pages?.length || 0}
-                        pageNumber={localPageNumber}
-                        onChangePageNumber={onChangePageNumber}
-                        isSync={false}
-                    />
-                    {isAdmin ? <AdminSlideController
-                        slideId={Number(slideId)} /> : <div />}
-
-                </div>
-                <div style={{
-                    marginLeft: 60,
-                    marginRight: 30,
-                    width: "100%",
-                }}>
-                    <ProfileCardController isAdmin={isAdmin} userId={slide?.createdBy || ""} />
-                    <Comments
-                        viewingPage={viewingPage}
-                        onClickLink={onClickPageLink}
-                    />
-                </div>
-            </div>
+            <StaticSlideView initialSlide={initialSlide} isAdmin={isAdmin} />
         </div>
     )
 }

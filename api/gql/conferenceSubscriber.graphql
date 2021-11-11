@@ -1,0 +1,11 @@
+mutation insertSubscribe($conferenceId: Int!) {
+  insert_slideshare_ConferenceSubscriber_one(object: {conferenceId: $conferenceId}) {
+    id
+  }
+}
+
+query querySubscribe($conferenceId: Int!, $userId: String) {
+  	slideshare_ConferenceSubscriber(where:{conferenceId:{_eq:$conferenceId}, _and:{userId:{_eq:$userId}}}) {
+    id
+  }
+}

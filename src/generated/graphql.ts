@@ -458,6 +458,10 @@ export type Mutation_Root = {
   insert_slideshare_Comment_one?: Maybe<Slideshare_Comment>;
   /** insert data into the table: "slideshare.Conference" */
   insert_slideshare_Conference?: Maybe<Slideshare_Conference_Mutation_Response>;
+  /** insert data into the table: "slideshare.ConferenceSubscriber" */
+  insert_slideshare_ConferenceSubscriber?: Maybe<Slideshare_ConferenceSubscriber_Mutation_Response>;
+  /** insert a single row into the table: "slideshare.ConferenceSubscriber" */
+  insert_slideshare_ConferenceSubscriber_one?: Maybe<Slideshare_ConferenceSubscriber>;
   /** insert a single row into the table: "slideshare.Conference" */
   insert_slideshare_Conference_one?: Maybe<Slideshare_Conference>;
   /** insert data into the table: "slideshare.File" */
@@ -663,6 +667,18 @@ export type Mutation_RootInsert_Slideshare_Comment_OneArgs = {
 export type Mutation_RootInsert_Slideshare_ConferenceArgs = {
   objects: Array<Slideshare_Conference_Insert_Input>;
   on_conflict?: Maybe<Slideshare_Conference_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_ConferenceSubscriberArgs = {
+  objects: Array<Slideshare_ConferenceSubscriber_Insert_Input>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_ConferenceSubscriber_OneArgs = {
+  object: Slideshare_ConferenceSubscriber_Insert_Input;
 };
 
 
@@ -917,6 +933,10 @@ export type Query_Root = {
   slideshare_Comment_by_pk?: Maybe<Slideshare_Comment>;
   /** fetch data from the table: "slideshare.Conference" */
   slideshare_Conference: Array<Slideshare_Conference>;
+  /** fetch data from the table: "slideshare.ConferenceSubscriber" */
+  slideshare_ConferenceSubscriber: Array<Slideshare_ConferenceSubscriber>;
+  /** fetch data from the table: "slideshare.ConferenceSubscriber" using primary key columns */
+  slideshare_ConferenceSubscriber_by_pk?: Maybe<Slideshare_ConferenceSubscriber>;
   /** fetch data from the table: "slideshare.Conference" using primary key columns */
   slideshare_Conference_by_pk?: Maybe<Slideshare_Conference>;
   /** fetch data from the table: "slideshare.File" */
@@ -1012,6 +1032,20 @@ export type Query_RootSlideshare_ConferenceArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Slideshare_Conference_Order_By>>;
   where?: Maybe<Slideshare_Conference_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_ConferenceSubscriberArgs = {
+  distinct_on?: Maybe<Array<Slideshare_ConferenceSubscriber_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_ConferenceSubscriber_Order_By>>;
+  where?: Maybe<Slideshare_ConferenceSubscriber_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_ConferenceSubscriber_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -1467,6 +1501,65 @@ export type Slideshare_Conference = {
   title?: Maybe<Scalars['String']>;
   updatedAt: Scalars['timestamptz'];
 };
+
+/** columns and relationships of "slideshare.ConferenceSubscriber" */
+export type Slideshare_ConferenceSubscriber = {
+  __typename?: 'slideshare_ConferenceSubscriber';
+  conferenceId: Scalars['Int'];
+  createdAt: Scalars['timestamptz'];
+  id: Scalars['Int'];
+  updatedAt: Scalars['timestamptz'];
+  userId: Scalars['String'];
+};
+
+/** Boolean expression to filter rows from the table "slideshare.ConferenceSubscriber". All fields are combined with a logical 'AND'. */
+export type Slideshare_ConferenceSubscriber_Bool_Exp = {
+  _and?: Maybe<Array<Slideshare_ConferenceSubscriber_Bool_Exp>>;
+  _not?: Maybe<Slideshare_ConferenceSubscriber_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_ConferenceSubscriber_Bool_Exp>>;
+  conferenceId?: Maybe<Int_Comparison_Exp>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+  userId?: Maybe<String_Comparison_Exp>;
+};
+
+/** input type for inserting data into table "slideshare.ConferenceSubscriber" */
+export type Slideshare_ConferenceSubscriber_Insert_Input = {
+  conferenceId?: Maybe<Scalars['Int']>;
+};
+
+/** response of any mutation on the table "slideshare.ConferenceSubscriber" */
+export type Slideshare_ConferenceSubscriber_Mutation_Response = {
+  __typename?: 'slideshare_ConferenceSubscriber_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Slideshare_ConferenceSubscriber>;
+};
+
+/** Ordering options when selecting data from "slideshare.ConferenceSubscriber". */
+export type Slideshare_ConferenceSubscriber_Order_By = {
+  conferenceId?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** select columns of table "slideshare.ConferenceSubscriber" */
+export enum Slideshare_ConferenceSubscriber_Select_Column {
+  /** column name */
+  ConferenceId = 'conferenceId',
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updatedAt',
+  /** column name */
+  UserId = 'userId'
+}
 
 /** Boolean expression to filter rows from the table "slideshare.Conference". All fields are combined with a logical 'AND'. */
 export type Slideshare_Conference_Bool_Exp = {
@@ -2612,6 +2705,10 @@ export type Subscription_Root = {
   slideshare_Comment_by_pk?: Maybe<Slideshare_Comment>;
   /** fetch data from the table: "slideshare.Conference" */
   slideshare_Conference: Array<Slideshare_Conference>;
+  /** fetch data from the table: "slideshare.ConferenceSubscriber" */
+  slideshare_ConferenceSubscriber: Array<Slideshare_ConferenceSubscriber>;
+  /** fetch data from the table: "slideshare.ConferenceSubscriber" using primary key columns */
+  slideshare_ConferenceSubscriber_by_pk?: Maybe<Slideshare_ConferenceSubscriber>;
   /** fetch data from the table: "slideshare.Conference" using primary key columns */
   slideshare_Conference_by_pk?: Maybe<Slideshare_Conference>;
   /** fetch data from the table: "slideshare.File" */
@@ -2707,6 +2804,20 @@ export type Subscription_RootSlideshare_ConferenceArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Slideshare_Conference_Order_By>>;
   where?: Maybe<Slideshare_Conference_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_ConferenceSubscriberArgs = {
+  distinct_on?: Maybe<Array<Slideshare_ConferenceSubscriber_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_ConferenceSubscriber_Order_By>>;
+  where?: Maybe<Slideshare_ConferenceSubscriber_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_ConferenceSubscriber_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -2947,6 +3058,21 @@ export type QueryConferenceByUserIdQueryVariables = Exact<{
 
 
 export type QueryConferenceByUserIdQuery = { __typename?: 'query_root', slideshare_Conference: Array<{ __typename?: 'slideshare_Conference', id: number, startDate: any, endDate: any, createdAt: any, title?: string | null | undefined, updatedAt: any }> };
+
+export type InsertSubscribeMutationVariables = Exact<{
+  conferenceId: Scalars['Int'];
+}>;
+
+
+export type InsertSubscribeMutation = { __typename?: 'mutation_root', insert_slideshare_ConferenceSubscriber_one?: { __typename?: 'slideshare_ConferenceSubscriber', id: number } | null | undefined };
+
+export type QuerySubscribeQueryVariables = Exact<{
+  conferenceId: Scalars['Int'];
+  userId?: Maybe<Scalars['String']>;
+}>;
+
+
+export type QuerySubscribeQuery = { __typename?: 'query_root', slideshare_ConferenceSubscriber: Array<{ __typename?: 'slideshare_ConferenceSubscriber', id: number }> };
 
 export type CreateSlideMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -3577,6 +3703,79 @@ export function useQueryConferenceByUserIdLazyQuery(baseOptions?: Apollo.LazyQue
 export type QueryConferenceByUserIdQueryHookResult = ReturnType<typeof useQueryConferenceByUserIdQuery>;
 export type QueryConferenceByUserIdLazyQueryHookResult = ReturnType<typeof useQueryConferenceByUserIdLazyQuery>;
 export type QueryConferenceByUserIdQueryResult = Apollo.QueryResult<QueryConferenceByUserIdQuery, QueryConferenceByUserIdQueryVariables>;
+export const InsertSubscribeDocument = gql`
+    mutation insertSubscribe($conferenceId: Int!) {
+  insert_slideshare_ConferenceSubscriber_one(
+    object: {conferenceId: $conferenceId}
+  ) {
+    id
+  }
+}
+    `;
+export type InsertSubscribeMutationFn = Apollo.MutationFunction<InsertSubscribeMutation, InsertSubscribeMutationVariables>;
+
+/**
+ * __useInsertSubscribeMutation__
+ *
+ * To run a mutation, you first call `useInsertSubscribeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertSubscribeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertSubscribeMutation, { data, loading, error }] = useInsertSubscribeMutation({
+ *   variables: {
+ *      conferenceId: // value for 'conferenceId'
+ *   },
+ * });
+ */
+export function useInsertSubscribeMutation(baseOptions?: Apollo.MutationHookOptions<InsertSubscribeMutation, InsertSubscribeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertSubscribeMutation, InsertSubscribeMutationVariables>(InsertSubscribeDocument, options);
+      }
+export type InsertSubscribeMutationHookResult = ReturnType<typeof useInsertSubscribeMutation>;
+export type InsertSubscribeMutationResult = Apollo.MutationResult<InsertSubscribeMutation>;
+export type InsertSubscribeMutationOptions = Apollo.BaseMutationOptions<InsertSubscribeMutation, InsertSubscribeMutationVariables>;
+export const QuerySubscribeDocument = gql`
+    query querySubscribe($conferenceId: Int!, $userId: String) {
+  slideshare_ConferenceSubscriber(
+    where: {conferenceId: {_eq: $conferenceId}, _and: {userId: {_eq: $userId}}}
+  ) {
+    id
+  }
+}
+    `;
+
+/**
+ * __useQuerySubscribeQuery__
+ *
+ * To run a query within a React component, call `useQuerySubscribeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQuerySubscribeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQuerySubscribeQuery({
+ *   variables: {
+ *      conferenceId: // value for 'conferenceId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useQuerySubscribeQuery(baseOptions: Apollo.QueryHookOptions<QuerySubscribeQuery, QuerySubscribeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QuerySubscribeQuery, QuerySubscribeQueryVariables>(QuerySubscribeDocument, options);
+      }
+export function useQuerySubscribeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QuerySubscribeQuery, QuerySubscribeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QuerySubscribeQuery, QuerySubscribeQueryVariables>(QuerySubscribeDocument, options);
+        }
+export type QuerySubscribeQueryHookResult = ReturnType<typeof useQuerySubscribeQuery>;
+export type QuerySubscribeLazyQueryHookResult = ReturnType<typeof useQuerySubscribeLazyQuery>;
+export type QuerySubscribeQueryResult = Apollo.QueryResult<QuerySubscribeQuery, QuerySubscribeQueryVariables>;
 export const CreateSlideDocument = gql`
     mutation createSlide {
   insert_slideshare_Slide_one(object: {}) {
