@@ -6,12 +6,14 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import { Button } from "@mui/material";
+import FollowButton from "../common/FollowButton";
 
 interface Props {
     name: string
     subtitle: string
     description: string
     isAdmin: boolean
+    userId?: string | null
     onClickEdit: () => void
 }
 
@@ -35,8 +37,7 @@ export default function ProfileCard(props: Props) {
 
             </CardContent>
             <div style={{ position: "absolute", top: 10, right: 10 }}>
-                {props.isAdmin ? <Button onClick={props.onClickEdit}>編集する</Button> : <div />}
-
+                {props.isAdmin ? <Button onClick={props.onClickEdit}>編集する</Button> : <FollowButton userId={props.userId} />}
             </div>
         </Card>
     );

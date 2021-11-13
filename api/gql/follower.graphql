@@ -1,0 +1,12 @@
+mutation follow($follow_user_id: String!) {
+  insert_slideshare_Follower_one(object: {follow_user_id: $follow_user_id}) {
+    follow_user_id
+  }
+}
+
+
+mutation unfollow($follow_user_id: String!, $follower_user_id: String!) {
+  delete_slideshare_Follower_by_pk(follow_user_id: $follow_user_id, follower_user_id: $follower_user_id) {
+    follow_user_id
+  }
+}

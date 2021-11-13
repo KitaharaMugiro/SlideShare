@@ -432,6 +432,10 @@ export type Mutation_Root = {
   delete_slideshare_File?: Maybe<Slideshare_File_Mutation_Response>;
   /** delete single row from the table: "slideshare.File" */
   delete_slideshare_File_by_pk?: Maybe<Slideshare_File>;
+  /** delete data from the table: "slideshare.Follower" */
+  delete_slideshare_Follower?: Maybe<Slideshare_Follower_Mutation_Response>;
+  /** delete single row from the table: "slideshare.Follower" */
+  delete_slideshare_Follower_by_pk?: Maybe<Slideshare_Follower>;
   /** delete data from the table: "slideshare.Page" */
   delete_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
   /** delete single row from the table: "slideshare.Page" */
@@ -468,6 +472,10 @@ export type Mutation_Root = {
   insert_slideshare_File?: Maybe<Slideshare_File_Mutation_Response>;
   /** insert a single row into the table: "slideshare.File" */
   insert_slideshare_File_one?: Maybe<Slideshare_File>;
+  /** insert data into the table: "slideshare.Follower" */
+  insert_slideshare_Follower?: Maybe<Slideshare_Follower_Mutation_Response>;
+  /** insert a single row into the table: "slideshare.Follower" */
+  insert_slideshare_Follower_one?: Maybe<Slideshare_Follower>;
   /** insert data into the table: "slideshare.Page" */
   insert_slideshare_Page?: Maybe<Slideshare_Page_Mutation_Response>;
   /** insert a single row into the table: "slideshare.Page" */
@@ -588,6 +596,19 @@ export type Mutation_RootDelete_Slideshare_File_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Slideshare_FollowerArgs = {
+  where: Slideshare_Follower_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_Follower_By_PkArgs = {
+  follow_user_id: Scalars['String'];
+  follower_user_id: Scalars['String'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_Slideshare_PageArgs = {
   where: Slideshare_Page_Bool_Exp;
 };
@@ -698,6 +719,18 @@ export type Mutation_RootInsert_Slideshare_FileArgs = {
 /** mutation root */
 export type Mutation_RootInsert_Slideshare_File_OneArgs = {
   object: Slideshare_File_Insert_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_FollowerArgs = {
+  objects: Array<Slideshare_Follower_Insert_Input>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_Follower_OneArgs = {
+  object: Slideshare_Follower_Insert_Input;
 };
 
 
@@ -943,6 +976,10 @@ export type Query_Root = {
   slideshare_File: Array<Slideshare_File>;
   /** fetch data from the table: "slideshare.File" using primary key columns */
   slideshare_File_by_pk?: Maybe<Slideshare_File>;
+  /** fetch data from the table: "slideshare.Follower" */
+  slideshare_Follower: Array<Slideshare_Follower>;
+  /** fetch data from the table: "slideshare.Follower" using primary key columns */
+  slideshare_Follower_by_pk?: Maybe<Slideshare_Follower>;
   /** fetch data from the table: "slideshare.Page" */
   slideshare_Page: Array<Slideshare_Page>;
   /** fetch data from the table: "slideshare.PageType" */
@@ -1065,6 +1102,21 @@ export type Query_RootSlideshare_FileArgs = {
 
 export type Query_RootSlideshare_File_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+export type Query_RootSlideshare_FollowerArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Follower_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Follower_Order_By>>;
+  where?: Maybe<Slideshare_Follower_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_Follower_By_PkArgs = {
+  follow_user_id: Scalars['String'];
+  follower_user_id: Scalars['String'];
 };
 
 
@@ -1807,6 +1859,50 @@ export type Slideshare_File_Var_Samp_Order_By = {
 export type Slideshare_File_Variance_Order_By = {
   id?: Maybe<Order_By>;
 };
+
+/** columns and relationships of "slideshare.Follower" */
+export type Slideshare_Follower = {
+  __typename?: 'slideshare_Follower';
+  follow_user_id: Scalars['String'];
+  follower_user_id: Scalars['String'];
+};
+
+/** Boolean expression to filter rows from the table "slideshare.Follower". All fields are combined with a logical 'AND'. */
+export type Slideshare_Follower_Bool_Exp = {
+  _and?: Maybe<Array<Slideshare_Follower_Bool_Exp>>;
+  _not?: Maybe<Slideshare_Follower_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_Follower_Bool_Exp>>;
+  follow_user_id?: Maybe<String_Comparison_Exp>;
+  follower_user_id?: Maybe<String_Comparison_Exp>;
+};
+
+/** input type for inserting data into table "slideshare.Follower" */
+export type Slideshare_Follower_Insert_Input = {
+  follow_user_id?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "slideshare.Follower" */
+export type Slideshare_Follower_Mutation_Response = {
+  __typename?: 'slideshare_Follower_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Slideshare_Follower>;
+};
+
+/** Ordering options when selecting data from "slideshare.Follower". */
+export type Slideshare_Follower_Order_By = {
+  follow_user_id?: Maybe<Order_By>;
+  follower_user_id?: Maybe<Order_By>;
+};
+
+/** select columns of table "slideshare.Follower" */
+export enum Slideshare_Follower_Select_Column {
+  /** column name */
+  FollowUserId = 'follow_user_id',
+  /** column name */
+  FollowerUserId = 'follower_user_id'
+}
 
 /** columns and relationships of "slideshare.Page" */
 export type Slideshare_Page = {
@@ -2715,6 +2811,10 @@ export type Subscription_Root = {
   slideshare_File: Array<Slideshare_File>;
   /** fetch data from the table: "slideshare.File" using primary key columns */
   slideshare_File_by_pk?: Maybe<Slideshare_File>;
+  /** fetch data from the table: "slideshare.Follower" */
+  slideshare_Follower: Array<Slideshare_Follower>;
+  /** fetch data from the table: "slideshare.Follower" using primary key columns */
+  slideshare_Follower_by_pk?: Maybe<Slideshare_Follower>;
   /** fetch data from the table: "slideshare.Page" */
   slideshare_Page: Array<Slideshare_Page>;
   /** fetch data from the table: "slideshare.PageType" */
@@ -2837,6 +2937,21 @@ export type Subscription_RootSlideshare_FileArgs = {
 
 export type Subscription_RootSlideshare_File_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+export type Subscription_RootSlideshare_FollowerArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Follower_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Follower_Order_By>>;
+  where?: Maybe<Slideshare_Follower_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_Follower_By_PkArgs = {
+  follow_user_id: Scalars['String'];
+  follower_user_id: Scalars['String'];
 };
 
 
@@ -3094,6 +3209,21 @@ export type DeleteFileMutationVariables = Exact<{
 
 
 export type DeleteFileMutation = { __typename?: 'mutation_root', delete_slideshare_File_by_pk?: { __typename?: 'slideshare_File', id: number } | null | undefined };
+
+export type FollowMutationVariables = Exact<{
+  follow_user_id: Scalars['String'];
+}>;
+
+
+export type FollowMutation = { __typename?: 'mutation_root', insert_slideshare_Follower_one?: { __typename?: 'slideshare_Follower', follow_user_id: string } | null | undefined };
+
+export type UnfollowMutationVariables = Exact<{
+  follow_user_id: Scalars['String'];
+  follower_user_id: Scalars['String'];
+}>;
+
+
+export type UnfollowMutation = { __typename?: 'mutation_root', delete_slideshare_Follower_by_pk?: { __typename?: 'slideshare_Follower', follow_user_id: string } | null | undefined };
 
 export type GenerateAgoraTokenMutationVariables = Exact<{
   channelName: Scalars['String'];
@@ -3887,6 +4017,76 @@ export function useDeleteFileMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeleteFileMutationHookResult = ReturnType<typeof useDeleteFileMutation>;
 export type DeleteFileMutationResult = Apollo.MutationResult<DeleteFileMutation>;
 export type DeleteFileMutationOptions = Apollo.BaseMutationOptions<DeleteFileMutation, DeleteFileMutationVariables>;
+export const FollowDocument = gql`
+    mutation follow($follow_user_id: String!) {
+  insert_slideshare_Follower_one(object: {follow_user_id: $follow_user_id}) {
+    follow_user_id
+  }
+}
+    `;
+export type FollowMutationFn = Apollo.MutationFunction<FollowMutation, FollowMutationVariables>;
+
+/**
+ * __useFollowMutation__
+ *
+ * To run a mutation, you first call `useFollowMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFollowMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [followMutation, { data, loading, error }] = useFollowMutation({
+ *   variables: {
+ *      follow_user_id: // value for 'follow_user_id'
+ *   },
+ * });
+ */
+export function useFollowMutation(baseOptions?: Apollo.MutationHookOptions<FollowMutation, FollowMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FollowMutation, FollowMutationVariables>(FollowDocument, options);
+      }
+export type FollowMutationHookResult = ReturnType<typeof useFollowMutation>;
+export type FollowMutationResult = Apollo.MutationResult<FollowMutation>;
+export type FollowMutationOptions = Apollo.BaseMutationOptions<FollowMutation, FollowMutationVariables>;
+export const UnfollowDocument = gql`
+    mutation unfollow($follow_user_id: String!, $follower_user_id: String!) {
+  delete_slideshare_Follower_by_pk(
+    follow_user_id: $follow_user_id
+    follower_user_id: $follower_user_id
+  ) {
+    follow_user_id
+  }
+}
+    `;
+export type UnfollowMutationFn = Apollo.MutationFunction<UnfollowMutation, UnfollowMutationVariables>;
+
+/**
+ * __useUnfollowMutation__
+ *
+ * To run a mutation, you first call `useUnfollowMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnfollowMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unfollowMutation, { data, loading, error }] = useUnfollowMutation({
+ *   variables: {
+ *      follow_user_id: // value for 'follow_user_id'
+ *      follower_user_id: // value for 'follower_user_id'
+ *   },
+ * });
+ */
+export function useUnfollowMutation(baseOptions?: Apollo.MutationHookOptions<UnfollowMutation, UnfollowMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UnfollowMutation, UnfollowMutationVariables>(UnfollowDocument, options);
+      }
+export type UnfollowMutationHookResult = ReturnType<typeof useUnfollowMutation>;
+export type UnfollowMutationResult = Apollo.MutationResult<UnfollowMutation>;
+export type UnfollowMutationOptions = Apollo.BaseMutationOptions<UnfollowMutation, UnfollowMutationVariables>;
 export const GenerateAgoraTokenDocument = gql`
     mutation GenerateAgoraToken($channelName: String!, $uid: String, $host: String!) {
   GenerateAgoraToken(input: {channelName: $channelName, uid: $uid, host: $host}) {

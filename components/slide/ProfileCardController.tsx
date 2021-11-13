@@ -44,6 +44,7 @@ export default (props: Props) => {
             subtitle="Contributions: 328"
             description={profile?.profile || "未設定"}
             isAdmin={props.isAdmin}
+            userId={profile?.userId}
             onClickEdit={onClickEdit}
         />
     </>
