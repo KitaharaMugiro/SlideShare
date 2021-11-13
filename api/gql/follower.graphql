@@ -10,3 +10,9 @@ mutation unfollow($follow_user_id: String!, $follower_user_id: String!) {
     follow_user_id
   }
 }
+
+query isFollow($follow_user_id:String!, $follower_user_id:String!) {
+  slideshare_Follower_by_pk(follow_user_id:$follow_user_id, follower_user_id:$follower_user_id) {
+    follow_user_id
+  }
+}

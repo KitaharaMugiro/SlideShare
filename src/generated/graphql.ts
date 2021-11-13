@@ -3225,6 +3225,14 @@ export type UnfollowMutationVariables = Exact<{
 
 export type UnfollowMutation = { __typename?: 'mutation_root', delete_slideshare_Follower_by_pk?: { __typename?: 'slideshare_Follower', follow_user_id: string } | null | undefined };
 
+export type IsFollowQueryVariables = Exact<{
+  follow_user_id: Scalars['String'];
+  follower_user_id: Scalars['String'];
+}>;
+
+
+export type IsFollowQuery = { __typename?: 'query_root', slideshare_Follower_by_pk?: { __typename?: 'slideshare_Follower', follow_user_id: string } | null | undefined };
+
 export type GenerateAgoraTokenMutationVariables = Exact<{
   channelName: Scalars['String'];
   uid?: Maybe<Scalars['String']>;
@@ -4087,6 +4095,45 @@ export function useUnfollowMutation(baseOptions?: Apollo.MutationHookOptions<Unf
 export type UnfollowMutationHookResult = ReturnType<typeof useUnfollowMutation>;
 export type UnfollowMutationResult = Apollo.MutationResult<UnfollowMutation>;
 export type UnfollowMutationOptions = Apollo.BaseMutationOptions<UnfollowMutation, UnfollowMutationVariables>;
+export const IsFollowDocument = gql`
+    query isFollow($follow_user_id: String!, $follower_user_id: String!) {
+  slideshare_Follower_by_pk(
+    follow_user_id: $follow_user_id
+    follower_user_id: $follower_user_id
+  ) {
+    follow_user_id
+  }
+}
+    `;
+
+/**
+ * __useIsFollowQuery__
+ *
+ * To run a query within a React component, call `useIsFollowQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIsFollowQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useIsFollowQuery({
+ *   variables: {
+ *      follow_user_id: // value for 'follow_user_id'
+ *      follower_user_id: // value for 'follower_user_id'
+ *   },
+ * });
+ */
+export function useIsFollowQuery(baseOptions: Apollo.QueryHookOptions<IsFollowQuery, IsFollowQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<IsFollowQuery, IsFollowQueryVariables>(IsFollowDocument, options);
+      }
+export function useIsFollowLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IsFollowQuery, IsFollowQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<IsFollowQuery, IsFollowQueryVariables>(IsFollowDocument, options);
+        }
+export type IsFollowQueryHookResult = ReturnType<typeof useIsFollowQuery>;
+export type IsFollowLazyQueryHookResult = ReturnType<typeof useIsFollowLazyQuery>;
+export type IsFollowQueryResult = Apollo.QueryResult<IsFollowQuery, IsFollowQueryVariables>;
 export const GenerateAgoraTokenDocument = gql`
     mutation GenerateAgoraToken($channelName: String!, $uid: String, $host: String!) {
   GenerateAgoraToken(input: {channelName: $channelName, uid: $uid, host: $host}) {

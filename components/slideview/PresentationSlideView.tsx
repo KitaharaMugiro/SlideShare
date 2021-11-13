@@ -45,7 +45,7 @@ export default (props: Props) => {
     const { onlineUserList } = useOnlineUsers(10000)
 
     useEffect(() => {
-        if (isSync) {
+        if (isSync && !isAdmin) {
             setLocalPageNumber(slideState.pageNumber)
         }
     }, [slideState.pageNumber])
@@ -96,21 +96,14 @@ export default (props: Props) => {
     const onChangePageNumber = (number: number) => {
         if (isAdmin) {
             if (viewingPage.type === Slideshare_PageType_Enum.GoogleForm || viewingPage.type === Slideshare_PageType_Enum.Typeform) {
-                window.confirm("ページを切り替えると参加者が入力できなくなります。次のページに移動しますか？") && setSlideState({
-                    ...slideState,
-                    pageNumber: number
-                })
-                return
+                window.confirm("ページを切り替えると参加者が入力できなくなります。次のページに移動しますか？")
             }
             if (viewingPage.type === Slideshare_PageType_Enum.Video) {
-                window.confirm("ページを切り替えると参加者は動画を見れなく無くなります。次のページに移動しますか？") && setSlideState({
-                    ...slideState,
-                    pageNumber: number
-                })
-                return
+                window.confirm("ページを切り替えると参加者は動画を見れなく無くなります。次のページに移動しますか？")
             }
             slideState.pageNumber = number
             setSlideState(slideState)
+            setLocalPageNumber(number)
         } else {
             const nextPageNumber = number
             setIsSync(slideState.pageNumber === nextPageNumber)
