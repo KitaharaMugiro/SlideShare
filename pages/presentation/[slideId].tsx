@@ -18,6 +18,7 @@ import { useQuerySlideQuery } from "../../src/generated/graphql";
 import StaticSlideView from "../../components/slideview/StaticSlideView";
 import style from "./style.module.css";
 import ConferenceSubscribeMessage from "../../components/conference/ConferenceSubscribeMessage";
+import Conference from "../../model/Conference";
 
 const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const router = useRouter()
@@ -32,6 +33,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) }, fetchPolicy: "no-cache" })
     const slide = initialSlide?.slideshare_Slide_by_pk
     const latestConference = initialSlide?.slideshare_Conference.at(0)
+    const conferenceModel = Conference(latestConference)
     const isAdmin = slide?.createdBy === user?.attributes.sub
 
     useEffect(() => {
@@ -44,13 +46,11 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
 
     const renderSlideIfActiveConference = () => {
-        const startDate = new Date(latestConference?.startDate)
-        const endDate = new Date(latestConference?.endDate)
         if (!isAdmin) {
-            if (startDate > new Date()) {
+            if (conferenceModel?.state === "beforeStart") {
                 return <div>
                     <ConferenceSubscribeMessage
-                        startDate={startDate}
+                        startDate={conferenceModel.startDate}
                         title={latestConference?.title || ""}
                         conferenceId={latestConference?.id || 0} />
                     {/* TODO: このunwrap微妙 */}
@@ -60,7 +60,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
                 </div>
             }
-            if (endDate < new Date()) {
+            if (conferenceModel?.state === "completeEnd") {
                 return (
                     <div>
                         <Dialog
@@ -71,7 +71,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText id="alert-dialog-description">
-                                    {format(endDate, "yyyy/MM/dd HH:mm")}に終了しました。<br />
+                                    {conferenceModel.endDateString}に終了しました。<br />
                                     引き続き登壇資料を見ることはできます。
                                 </DialogContentText>
                             </DialogContent>
@@ -85,6 +85,8 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                 );
             }
         }
+
+        //ongoing もしくは isAdmin
         return <>
             {!isAdmin && <ConfirmationModal />}
             {slide ?
@@ -95,11 +97,9 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                     isHost={isAdmin} />
                 : <div />}
 
-            {latestConference &&
+            {isAdmin && conferenceModel &&
                 <AdminWarningMessage
-                    conferenceId={latestConference.id}
-                    startDate={startDate}
-                    endDate={endDate} />}
+                    conferenceModel={conferenceModel} />}
 
 
             {/* スライド */}

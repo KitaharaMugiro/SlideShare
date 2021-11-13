@@ -5,7 +5,7 @@ import os
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 user_pool_id = "ap-northeast-1_WilzuDo5l"
-source_mail = "ngthornym@yahoo.co.jp"  # "no-reply@yunomy.com"
+source_mail = "no-reply@yunomy.com"
 htmls = {"ConfirmationForSubscribing": "ConfirmationForSubscribing.html"}
 # SESでメールを送信するためのハンドラ
 def lambda_handler(event, context):
