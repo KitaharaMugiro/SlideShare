@@ -28,6 +28,7 @@ import '../styles/globals.css';
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import MySnackbar from '../components/common/MySnackbar';
 
 
 function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
@@ -101,6 +102,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <ThemeProvider theme={darkTheme}>
           <MyAppBar />
           <MyBackdrop />
+          <MySnackbar />
           <Component {...pageProps} />
         </ThemeProvider>
       </LocalizationProvider>
