@@ -1,5 +1,6 @@
 import { Button } from "@mui/material"
 import React from "react"
+import { useTranslations } from "use-intl"
 import useFollower from "../../model/hooks/useFollower"
 import useSignin from "../../model/hooks/useSignin"
 import useUser from "../../model/hooks/useUser"
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export default (props: Props) => {
+    const t = useTranslations("User")
     const { user } = useUser()
     const { goSignin } = useSignin()
     const { useIsFollowQuery, follow, unfollow } = useFollower()
@@ -41,6 +43,6 @@ export default (props: Props) => {
 
 
     return <>
-        {isFollow ? <Button onClick={onClickUnfollow} color="warning">Unfollow</Button> : <Button onClick={onClickFollow} variant="contained">Follow</Button>}
+        {isFollow ? <Button onClick={onClickUnfollow} color="warning">{t("unfollow")}</Button> : <Button onClick={onClickFollow} variant="contained">{t("follow")}</Button>}
     </>
 }

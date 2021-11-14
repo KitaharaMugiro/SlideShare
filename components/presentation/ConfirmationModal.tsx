@@ -5,8 +5,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useTranslations } from 'use-intl';
 
 export default function AlertDialog() {
+    const t = useTranslations("Presentation")
     const [open, setOpen] = React.useState(true);
 
     const handleClose = () => {
@@ -22,17 +24,17 @@ export default function AlertDialog() {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    プレゼン開催中です
+                    {t("conference-now")}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        プレゼンターが話していると音声が流れます。
-                        あなたの声は聞こえません。
+                        {t("presantation-warn1")} <br />
+                        {t("presantation-warn2")}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} autoFocus>
-                        参加する
+                        {t("join")}
                     </Button>
                 </DialogActions>
             </Dialog>

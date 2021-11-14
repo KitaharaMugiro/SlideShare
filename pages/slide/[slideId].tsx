@@ -1,4 +1,5 @@
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetStaticPropsContext } from "next";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { isMobile } from 'react-device-detect';
@@ -11,6 +12,7 @@ import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
 const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
+    const t = useTranslations('Slide');
 
     const router = useRouter()
     const { slideId } = router.query
@@ -42,7 +44,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
     if (loading) return <div><OgpTag ogpInfo={ogpInfo} /></div>
     if (error) return <div>{JSON.stringify(error)}</div>
-    if (!slide) return <div>存在しないスライドです</div>
+    if (!slide) return <div>{t("not-found")}</div>
 
     if (isMobile) {
         return <MobileSlideView />
@@ -55,8 +57,15 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     )
 }
 
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    return getOgpInfo(context)
+    const data = JSON.parse(JSON.stringify(await import(`../../messages/${context.locale}.json`)))
+    return {
+        ...getOgpInfo(context),
+        props: {
+            messages: data
+        }
+    }
 }
 
 export default Page

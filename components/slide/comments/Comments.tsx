@@ -6,6 +6,7 @@ import Comment from "./Comment";
 import SendIcon from '@mui/icons-material/Send';
 import { useQueryCommentSubscription, useSendCommentMutation } from '../../../src/generated/graphql';
 import { Page } from '../../../model/Page';
+import { useTranslations } from 'use-intl';
 
 interface Props {
     viewingPage: Page
@@ -14,6 +15,7 @@ interface Props {
 
 
 export default function Comments(props: Props) {
+    const t = useTranslations("Comment")
     const { data, loading, error } = useQueryCommentSubscription({ variables: { slideId: props.viewingPage.slideId } })
     const [sendComment] = useSendCommentMutation()
     const [comment, setComment] = React.useState("")
@@ -22,7 +24,7 @@ export default function Comments(props: Props) {
         if (data?.slideshare_Comment.length === 0) {
             return (
                 <Alert variant="filled" severity="info">
-                    Let's write the first comment.
+                    {t("lets-first-comment")}
                 </Alert>
             )
         }
@@ -87,7 +89,7 @@ export default function Comments(props: Props) {
             />
             <div style={{ width: WIDTH, display: "flex", flexDirection: "row-reverse" }}>
                 <Button onClick={onClickSend} variant="contained" endIcon={<SendIcon />}>
-                    Send
+                    {t("send")}
                 </Button>
             </div>
         </>

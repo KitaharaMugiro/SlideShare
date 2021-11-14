@@ -9,6 +9,7 @@ import { addHours } from 'date-fns';
 import { useRouter } from 'next/dist/client/router';
 import * as React from 'react';
 import { useState } from 'react';
+import { useTranslations } from 'use-intl';
 import useConference from '../../model/hooks/useConference';
 import ConferenceDatePicker from './ConferenceDatePicker';
 
@@ -21,6 +22,8 @@ interface Props {
 }
 
 export default function ConferenceInfoModalButton(props: Props) {
+  const t = useTranslations("Conference")
+
   const today = new Date();
   const router = useRouter()
 
@@ -60,19 +63,19 @@ export default function ConferenceInfoModalButton(props: Props) {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        {props.updateConferenceId ? props.initialTitle + "を修正する" : "このスライドで発表する"}
+        {props.updateConferenceId ? t("fix-presentation-date") : t("present-with-this-slide")}
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>開催日時を設定する</DialogTitle>
+        <DialogTitle>{t("set-the-date")}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            あなたがスライドを発表する日時を設定します。
+            {t("set-the-date-description")}
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="タイトル"
+            label={t("title-placeholder")}
             value={conferenceName}
             onChange={(e) => setConferenceName(e.target.value)}
             fullWidth
@@ -83,7 +86,7 @@ export default function ConferenceInfoModalButton(props: Props) {
           />
           <div style={{ height: 20 }} />
           <div style={{ display: "flex", alignItems: "center" }}>
-            <div style={{ marginRight: 10 }}>開始日時:</div>
+            <div style={{ marginRight: 10 }}>{t("start-date")}:</div>
             <ConferenceDatePicker
               value={conferenceStartDate}
               onChange={setConferenceStartDate}
@@ -91,7 +94,7 @@ export default function ConferenceInfoModalButton(props: Props) {
           </div>
           <div style={{ height: 5 }} />
           <div style={{ display: "flex", alignItems: "center" }}>
-            <div style={{ marginRight: 10 }}>終了日時:</div>
+            <div style={{ marginRight: 10 }}>{t("end-date")}:</div>
             <ConferenceDatePicker
               value={conferenceEndDate}
               onChange={setConferenceEndDate} />

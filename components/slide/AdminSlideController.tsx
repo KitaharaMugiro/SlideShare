@@ -1,6 +1,7 @@
 import { Button, Stack } from "@mui/material";
 import { useRouter } from "next/dist/client/router";
 import React from "react";
+import { useTranslations } from "use-intl";
 import useConference from "../../model/hooks/useConference";
 import { useQueryConferenceBySlideIdQuery } from "../../src/generated/graphql";
 import ConferenceInfoModalButton from "../conference/ConferenceInfoModalButton";
@@ -10,6 +11,8 @@ interface Props {
 }
 
 export default (props: Props) => {
+    const t = useTranslations("Conference")
+
     const router = useRouter()
     const { slideId } = props
     const { data, loading, error } = useQueryConferenceBySlideIdQuery({ variables: { slideId } })
@@ -24,7 +27,7 @@ export default (props: Props) => {
         if (latestConference) {
             if (new Date(latestConference.endDate) > new Date()) {
                 return <>
-                    <Button onClick={goPresentation}>Open Presentation Mode</Button>
+                    <Button onClick={goPresentation}>{t("open-with-presentation-mode")}</Button>
                     <ConferenceInfoModalButton
                         slideId={Number(slideId)}
                         updateConferenceId={latestConference.id}

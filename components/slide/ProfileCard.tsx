@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import { Button } from "@mui/material";
 import FollowButton from "../common/FollowButton";
+import { useTranslations } from "use-intl";
 
 interface Props {
     name: string
@@ -18,13 +19,14 @@ interface Props {
 }
 
 export default function ProfileCard(props: Props) {
+    const t = useTranslations("Profile")
 
     return (
         <Card sx={{ maxWidth: 345 }} style={{ position: "relative" }}>
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        R
+                        {props.name.charAt(0) || "R"}
                     </Avatar>
                 }
                 title={props.name}
@@ -37,7 +39,7 @@ export default function ProfileCard(props: Props) {
 
             </CardContent>
             <div style={{ position: "absolute", top: 10, right: 10 }}>
-                {props.isAdmin ? <Button onClick={props.onClickEdit}>編集する</Button> : <FollowButton userId={props.userId} />}
+                {props.isAdmin ? <Button onClick={props.onClickEdit}>{t("edit")}</Button> : <FollowButton userId={props.userId} />}
             </div>
         </Card>
     );

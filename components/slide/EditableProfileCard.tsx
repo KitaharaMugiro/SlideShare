@@ -1,6 +1,7 @@
 
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
 import React, { useState } from "react";
+import { useTranslations } from "use-intl";
 
 interface Props {
     name: string
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default function EditableProfileCard(props: Props) {
+    const t = useTranslations("Profile")
     const [name, setName] = useState(props.name)
     const [profile, setProfile] = useState(props.description)
     const handleClose = () => {
@@ -18,10 +20,10 @@ export default function EditableProfileCard(props: Props) {
 
     return (
         <Dialog open={props.open} onClose={handleClose}>
-            <DialogTitle>Profile</DialogTitle>
+            <DialogTitle>{t("profile")}</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Show your profile for audience
+                    {t("edit-description")}
                 </DialogContentText>
                 <TextField
                     InputProps={{

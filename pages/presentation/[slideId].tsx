@@ -1,26 +1,27 @@
-import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-import { format } from "date-fns";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { isMobile } from 'react-device-detect';
+import { useTranslations } from "use-intl";
 import { v4 as uuidv4 } from "uuid";
 import MobileSlideView from "../../components/common/MobileSlideView";
+import ConferenceSubscribeMessage from "../../components/conference/ConferenceSubscribeMessage";
 import AdminWarningMessage from "../../components/presentation/AdminWarningMessage";
 import ConfirmationModal from "../../components/presentation/ConfirmationModal";
 import AgoraClient from "../../components/slide/AgoraClient";
 import PresentationSlideView from "../../components/slideview/PresentationSlideView";
+import StaticSlideView from "../../components/slideview/StaticSlideView";
+import Conference from "../../model/Conference";
 import { useLoading } from "../../model/hooks/useLoading";
 import useUser from "../../model/hooks/useUser";
 import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag";
 import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
-import StaticSlideView from "../../components/slideview/StaticSlideView";
 import style from "./style.module.css";
-import ConferenceSubscribeMessage from "../../components/conference/ConferenceSubscribeMessage";
-import Conference from "../../model/Conference";
 
 const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
+    const t = useTranslations("Presentation")
     const router = useRouter()
     const { slideId } = router.query
 
@@ -50,9 +51,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
             if (conferenceModel?.state === "beforeStart") {
                 return <div>
                     <ConferenceSubscribeMessage
-                        startDate={conferenceModel.startDate}
-                        title={latestConference?.title || ""}
-                        conferenceId={latestConference?.id || 0} />
+                        conference={conferenceModel} />
                     {/* TODO: このunwrap微妙 */}
                     {/* スライド */}
                     {initialSlide &&
@@ -67,17 +66,17 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                             open={true}
                         >
                             <DialogTitle id="alert-dialog-title">
-                                登壇は終了しました
+                                {t("finished-conference")}
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText id="alert-dialog-description">
-                                    {conferenceModel.endDateString}に終了しました。<br />
-                                    引き続き登壇資料を見ることはできます。
+                                    {t("finished-conference-description1", { date: conferenceModel.endDateString })}<br />
+                                    {t("finished-conference-description2")}
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
                                 <Button onClick={() => router.push(`/slide/${slideId}`)} autoFocus>
-                                    スライドを見る
+                                    {t("go-to-slide")}
                                 </Button>
                             </DialogActions>
                         </Dialog>
@@ -112,7 +111,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     //WARN: 早期リターンしているがOGP情報だけは返却する
     if (loading) return <div><OgpTag ogpInfo={ogpInfo} /></div>
     if (error) return <div>{JSON.stringify(error)}</div>
-    if (!slide) return <div>存在しないスライドです</div>
+    if (!slide) return <div>{t("not-found")}</div>
 
     if (isMobile) {
         return <MobileSlideView />
@@ -126,7 +125,14 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    return getOgpInfo(context)
+    const data = JSON.parse(JSON.stringify(await import(`../../messages/${context.locale}.json`)))
+    return {
+        ...getOgpInfo(context),
+        props: {
+            messages: data
+        }
+    }
 }
+
 
 export default Page

@@ -1,5 +1,8 @@
+import { useTranslations } from "next-intl";
+
 export default () => {
+    const t = useTranslations('Slide');
     return <div>
-        まだモバイル対応しておりません😭 <br />
-        PCで閲覧お願いします。</div>
+        {t("no-mobile")} <br />
+        {t("please-from-pc")}</div>
 }

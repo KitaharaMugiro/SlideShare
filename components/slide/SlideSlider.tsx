@@ -1,5 +1,6 @@
 import { Button, Slider } from "@mui/material"
 import React from "react"
+import { useTranslations } from "use-intl"
 
 interface Props {
     pageNumber: number
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default (props: Props) => {
+    const t = useTranslations("Presentation")
     const handleChange = (event: Event, newValue: number | number[]) => {
         props.onChangePageNumber(newValue as number);
     }
@@ -24,6 +26,6 @@ export default (props: Props) => {
             value={props.pageNumber}
             color={props.isSync ? "secondary" : "primary"}
         />
-        {!props.isSync && props.syncSlide ? <Button onClick={props.syncSlide}>発表者と同じスライドへ移動</Button> : <div style={{ height: 20 }} />}
+        {!props.isSync && props.syncSlide ? <Button onClick={props.syncSlide}>{t("go-to-same-slide")}</Button> : <div style={{ height: 20 }} />}
     </>
 }

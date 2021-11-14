@@ -3,5 +3,52 @@
         "hero-message": "Let's hold a study session",
         "hero-description": "Let's get started by uploading your slides.",
         "hero-button": "Upload your slides"
+    },
+    "Slide": {
+        "not-found": "The slide is not found",
+        "no-mobile": "We don't have mobile support yet😭",
+        "please-from-pc": "Please view on a Desktop"
+    },
+    "Presentation": {
+        "not-found": "The slide is not found",
+        "finished-conference": "The speech has been closed.",
+        "finished-conference-description1": "The speech is finished at {date}",
+        "finished-conference-description2": "You can continue to view the speakers' materials.",
+        "go-to-slide": "View Slide",
+        "conference-now": "The presentation is now open!",
+        "presantation-warn1": "When the presenter is speaking, audio will be played.",
+        "presantation-warn2": "Nobody can hear you.",
+        "join": "Join",
+        "mute": "Mute",
+        "unmute": "Unmute",
+        "cursor": "Cursor",
+        "go-to-same-slide": "Go to the same slide as the presenter"
+    },
+    "Comment": {
+        "lets-first-comment": "Let's write your first comment",
+        "send": "send"
+    },
+    "User": {
+        "follow": "follow",
+        "unfollow": "unfollow"
+    },
+    "Profile": {
+        "edit": "edit profile",
+        "profile": "Profile",
+        "edit-description": "write a profile for your audience."
+    },
+    "Conference": {
+        "present-with-this-slide": "Present with this slide",
+        "fix-presentation-date": "Correct the date and time of the event.",
+        "open-with-presentation-mode": "Go to the presentation",
+        "set-the-date": "Set the date and time of the event.",
+        "set-the-date-description": "Set a date and time when you will present the slides.",
+        "start-date": "Start date",
+        "end-date": "End date",
+        "title-placeholder": "title",
+        "start-date-description": "The presentation will be held at {date}",
+        "dont-forget": "Don't forget to participate in",
+        "apply": "Apply",
+        "applied": "Applied"
     }
 }
