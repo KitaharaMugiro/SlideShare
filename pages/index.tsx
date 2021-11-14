@@ -1,18 +1,20 @@
 import { Button, Paper, Typography } from '@mui/material'
-import type { NextPage } from 'next'
+import type { GetStaticPropsContext, NextPage } from 'next'
+import { useTranslations } from 'next-intl'
 import React from 'react'
 import OgpTag from '../model/ogp/OgpTag'
 import styles from './index.module.css'
 
 const Home: NextPage = () => {
+  const t = useTranslations('Home');
   return (
     <div>
       <OgpTag ogpInfo={{}} />
       <div className={styles.heroine}>
         <div className={styles.center}>
           <Paper elevation={3} style={{ margin: 40, padding: 40 }}>
-            <Typography variant="h3">勉強会を開こう</Typography>
-            <Typography className={styles.lead}>まずはスライドをアップロードして始めよう</Typography>
+            <Typography variant="h3">{t("hero-message")}</Typography>
+            <Typography className={styles.lead}>{t("hero-description")}</Typography>
 
             <Button
               variant="contained"
@@ -20,7 +22,7 @@ const Home: NextPage = () => {
               href="/upload"
               disableElevation
               style={{ marginTop: 40 }} >
-              Upload your slide</Button>
+              {t("hero-button")}</Button>
           </Paper>
         </div>
       </div>
@@ -28,6 +30,15 @@ const Home: NextPage = () => {
       {/* ここにおすすめの勉強会、もしくは直近の勉強会を載せる */}
     </div>
   )
+}
+
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
+  const data = JSON.parse(JSON.stringify(await import(`../messages/${locale}.json`)))
+  return {
+    props: {
+      messages: data
+    }
+  };
 }
 
 export default Home

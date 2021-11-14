@@ -30,6 +30,9 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import MySnackbar from '../components/common/MySnackbar';
 
+//next intl
+import { NextIntlProvider } from 'next-intl';
+
 
 function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
   if (urlStrings.length === 1) return urlStrings[0];
@@ -97,15 +100,17 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   return <>
     <ApolloProvider client={MyApolloClient}>
-      <OgpTag ogpInfo={{}} />
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <ThemeProvider theme={darkTheme}>
-          <MyAppBar />
-          <MyBackdrop />
-          <MySnackbar />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </LocalizationProvider>
+      <NextIntlProvider messages={pageProps.messages}>
+        <OgpTag ogpInfo={{}} />
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <ThemeProvider theme={darkTheme}>
+            <MyAppBar />
+            <MyBackdrop />
+            <MySnackbar />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </LocalizationProvider>
+      </NextIntlProvider>
     </ApolloProvider>
   </>
 }
