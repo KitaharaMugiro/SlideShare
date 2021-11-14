@@ -45,7 +45,7 @@ export default (props: Props) => {
     const { onlineUserList } = useOnlineUsers(10000)
 
     useEffect(() => {
-        if (isSync && !isAdmin) {
+        if (isSync) {
             setLocalPageNumber(slideState.pageNumber)
         }
     }, [slideState.pageNumber])

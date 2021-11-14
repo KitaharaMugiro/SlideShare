@@ -1,3 +1,3 @@
 import { atom } from "jotai";
 
-export const SlideStateAtom = atom({ cursor: true })
+export const SlideStateAtom = atom({ cursor: false })

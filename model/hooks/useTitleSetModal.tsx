@@ -14,7 +14,7 @@ export default (page: Page) => {
         const value = values.find(v => v.key === "title")
         if (!value) return
         const newPage = Object.assign({}, page)
-        page.title = value.value
+        newPage.title = value.value
         updatePage(newPage)
     }
 
