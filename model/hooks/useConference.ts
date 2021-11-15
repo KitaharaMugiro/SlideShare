@@ -1,9 +1,11 @@
 import { useInsertConferenceMutation, useUpdateConferenceMutation, useUpdateConferenceStartDateMutation } from "../../src/generated/graphql"
+import { useSnackMessage } from "./useSnackMessage"
 
 export default () => {
-    const [insertConferenceMutation] = useInsertConferenceMutation()
-    const [updateConferenceStartDateMutation] = useUpdateConferenceStartDateMutation()
-    const [updateConferenceMutation] = useUpdateConferenceMutation()
+    const { displayErrorMessage } = useSnackMessage()
+    const [insertConferenceMutation] = useInsertConferenceMutation({ onError: (e) => displayErrorMessage(e.message) })
+    const [updateConferenceStartDateMutation] = useUpdateConferenceStartDateMutation({ onError: (e) => displayErrorMessage(e.message) })
+    const [updateConferenceMutation] = useUpdateConferenceMutation({ onError: (e) => displayErrorMessage(e.message) })
 
     const createConference = async (slideId: number, title: string, startDate: Date, endDate: Date) => {
         await insertConferenceMutation({

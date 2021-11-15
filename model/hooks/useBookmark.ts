@@ -2,11 +2,13 @@ import { useState } from "react"
 import { useDeleteBookmarkMutation, useInsertBookmarkMutation, useInsertPollMutation } from "../../src/generated/graphql"
 import { Page } from "../Page"
 import { usePageList } from "./usePageList"
+import { useSnackMessage } from "./useSnackMessage"
 
 export default (initialState?: { id: number, url: string }[] | null) => {
+    const { displayErrorMessage } = useSnackMessage()
     const { updatePage } = usePageList()
-    const [insertBookmarkMutation] = useInsertBookmarkMutation()
-    const [deleteBookmarkMutation] = useDeleteBookmarkMutation()
+    const [insertBookmarkMutation] = useInsertBookmarkMutation({ onError: (e) => displayErrorMessage(e.message) })
+    const [deleteBookmarkMutation] = useDeleteBookmarkMutation({ onError: (e) => displayErrorMessage(e.message) })
     const [bookmarks, setBookmarks] = useState(initialState || [])
 
     const createBookmark = async (page: Page, url: string) => {

@@ -3,21 +3,24 @@ import { useDeletePageMutation, useInsertPageMutation, useUpdatePageMutation, us
 import { focusedPageIdAtom } from "../jotai/FocusedPageId"
 import { pageListAtom } from "../jotai/PageList"
 import { createNewPage, Page, reorderPageList } from "../Page"
+import { useSnackMessage } from "./useSnackMessage"
 
 export const usePageList = () => {
-
+    const { displayErrorMessage } = useSnackMessage()
     const [pageList, setPageList] = useAtom(pageListAtom)
     const [focusId, setFocusedId] = useAtom(focusedPageIdAtom)
     const focusedPage = pageList.find(p => p.id === focusId)
-    const [createPageMutation] = useInsertPageMutation()
-    const [updatePageMutation] = useUpdatePageMutation()
-    const [deletePageMutation] = useDeletePageMutation()
-    const [updatePageNumberMutation] = useUpdatePageNumberMutation()
+    const [createPageMutation] = useInsertPageMutation({ onError: (e) => displayErrorMessage(e.message) })
+    const [updatePageMutation] = useUpdatePageMutation({ onError: (e) => displayErrorMessage(e.message) })
+    const [deletePageMutation] = useDeletePageMutation({ onError: (e) => displayErrorMessage(e.message) })
+    const [updatePageNumberMutation] = useUpdatePageNumberMutation({ onError: (e) => displayErrorMessage(e.message) })
 
     const updateAllPageNumber = async () => {
         reorderPageList(pageList)
         const requestObjects = pageList.map(o => { return { id: o.id, pageNumber: o.pageNumber, slideId: 0 } })
-        updatePageNumberMutation({ variables: { objects: requestObjects } })
+        await updatePageNumberMutation({
+            variables: { objects: requestObjects }
+        })
     }
 
     const createPage = async (slideId: number, index?: number) => {
@@ -81,7 +84,9 @@ export const usePageList = () => {
 
         //TODO: イケてなさすぎ
         const requestObjects = array.map(o => { return { id: o.id, pageNumber: o.pageNumber, slideId: 0 } })
-        updatePageNumberMutation({ variables: { objects: requestObjects } })
+        updatePageNumberMutation({
+            variables: { objects: requestObjects }
+        })
     }
 
     return { pageList, focusedPage, updatePage, removePage, createPage, changeOrderPage, updateAllPageNumber }

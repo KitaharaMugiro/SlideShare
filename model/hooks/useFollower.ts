@@ -1,6 +1,8 @@
 import { useFollowMutation, useIsFollowQuery, useUnfollowMutation } from "../../src/generated/graphql"
+import { useSnackMessage } from "./useSnackMessage"
 
 export default () => {
+    const { displayErrorMessage } = useSnackMessage()
     const [followMutation] = useFollowMutation()
     const [unfollowMutation] = useUnfollowMutation()
 

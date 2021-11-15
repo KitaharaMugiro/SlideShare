@@ -9,6 +9,7 @@ import HorizontalSlideList from "../../components/edit/HorizontalSlideList";
 import { useLoading } from '../../model/hooks/useLoading';
 import { usePageList } from '../../model/hooks/usePageList';
 import useSignin from '../../model/hooks/useSignin';
+import { useSnackMessage } from '../../model/hooks/useSnackMessage';
 import useUser from '../../model/hooks/useUser';
 import { pageListAtom } from "../../model/jotai/PageList";
 import { Page } from '../../model/Page';
@@ -16,6 +17,7 @@ import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./index.module.css";
 
 const Edit = () => {
+
     const router = useRouter()
     const { slideId } = router.query
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) } })
