@@ -29,7 +29,7 @@ export default (conference?: Conference): ConferenceModel | null => {
     const completeEndDate = addHours(endDate, 1) //1時間後に完全終了
 
     let state: ConferenceState = "beforeStart"
-    if (startDate > new Date()) {
+    if (startDate >= new Date()) {
         state = "beforeStart"
     } else if (endDate < new Date() && new Date() < completeEndDate) {
         state = "afterEnd"
