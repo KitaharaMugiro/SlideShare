@@ -13,7 +13,7 @@ interface Props {
 export default (props: Props) => {
     const t = useTranslations("Presentation")
     const handleChange = (event: Event, newValue: number | number[]) => {
-        props.onChangePageNumber(newValue as number);
+        props.onChangePageNumber(newValue as number - 1);
     }
     return <>
         <Slider
@@ -21,9 +21,9 @@ export default (props: Props) => {
             valueLabelDisplay="auto"
             step={1}
             marks
-            min={0}
-            max={props.maxPageNumber - 1}
-            value={props.pageNumber}
+            min={1}
+            max={props.maxPageNumber}
+            value={props.pageNumber + 1}
             color={props.isSync ? "secondary" : "primary"}
         />
         {!props.isSync && props.syncSlide ? <Button onClick={props.syncSlide}>{t("go-to-same-slide")}</Button> : <div style={{ height: 20 }} />}
