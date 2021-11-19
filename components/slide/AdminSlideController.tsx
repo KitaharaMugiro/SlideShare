@@ -16,7 +16,7 @@ export default (props: Props) => {
     const router = useRouter()
     const { slideId } = props
     const { data, loading, error } = useQueryConferenceBySlideIdQuery({ variables: { slideId } })
-    const latestConference = data?.slideshare_Conference.at(0)
+    const latestConference = data?.slideshare_Conference ? data?.slideshare_Conference[0] : undefined
 
 
     const goPresentation = () => {

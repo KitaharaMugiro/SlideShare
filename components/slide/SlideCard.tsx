@@ -42,7 +42,7 @@ export default function SlideCard(props: Props) {
     }
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ width: 280, height: 185 }}>
             <CardActionArea onClick={() => router.push(`/slide/${props.slideId}`)}>
                 <CardMedia
                     component="img"

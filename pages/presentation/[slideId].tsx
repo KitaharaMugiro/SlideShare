@@ -33,7 +33,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     //データ取得
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) }, fetchPolicy: "no-cache" })
     const slide = initialSlide?.slideshare_Slide_by_pk
-    const latestConference = initialSlide?.slideshare_Conference.at(0)
+    const latestConference = initialSlide?.slideshare_Conference ? initialSlide?.slideshare_Conference[0] : undefined
     const conferenceModel = Conference(latestConference)
     const isAdmin = slide?.createdBy === user?.attributes.sub
 

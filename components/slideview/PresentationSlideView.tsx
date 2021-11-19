@@ -23,7 +23,7 @@ interface Props {
 export default (props: Props) => {
     const { initialSlide, isAdmin } = props
     const slide = initialSlide?.slideshare_Slide_by_pk
-    const latestConference = initialSlide?.slideshare_Conference.at(0)
+    const latestConference = initialSlide?.slideshare_Conference ? initialSlide?.slideshare_Conference[0] : undefined
     const [localPageNumber, setLocalPageNumber] = useState(0)
     const [isSync, setIsSync] = useState(true)
 
