@@ -2,6 +2,7 @@ import { Typography } from "@mui/material"
 import { useAtom } from "jotai"
 import React, { useEffect, useState } from "react"
 import { useRealtimeCursor, useOnlineUsers, useRealtimeSharedState } from "realtimely"
+import { useWindowDimensions } from "../../model/hooks/useWindowDimentions"
 import { SlideStateAtom } from "../../model/jotai/SlideState"
 import pages from "../../pages"
 import { QuerySlideQuery, Slideshare_PageType_Enum } from "../../src/generated/graphql"
@@ -39,7 +40,7 @@ export default (props: Props) => {
 
 
     //リアルタイムカーソル
-    const { renderCursors, onMouseMove } = useRealtimeCursor(1000)
+    // const { renderCursors, onMouseMove } = useRealtimeCursor(1000)
 
     //視聴者数
     const { onlineUserList } = useOnlineUsers(10000)
@@ -111,47 +112,70 @@ export default (props: Props) => {
         }
     }
 
+    //スライドサイズの計算
+    const { width } = useWindowDimensions()
+    const isRow = width > 800
+    const COMMENT_WIDTH = isRow ? 340 : 0
+    const MARGIN = isRow ? 100 : 40
+    const slideWidth = width - COMMENT_WIDTH - MARGIN
+
 
     return (
-        <div className={style.deck_space} >
-            <div>
-                <div style={{ position: "relative" }}
-                    onMouseMove={isAdmin && slideState.enableCursor ? onMouseMove : undefined}>
-                    <PageViewController
-                        viewingPage={viewingPage}
-                        onClickLeft={goPrevious}
-                        onClickRight={goNext}
-                    />
-                    {slideState.enableCursor ? renderCursors() : <div />}
+        <>
+            <div className={style.deck_space} >
+                <div>
+                    <div style={{ position: "relative" }}
+                        onMouseMove={isAdmin && slideState.enableCursor ? undefined : undefined}>
+                        <PageViewController
+                            viewingPage={viewingPage}
+                            customizeWidth={slideWidth}
+                            onClickLeft={goPrevious}
+                            onClickRight={goNext}
+                        />
+                        {/* {slideState.enableCursor ? renderCursors() : <div />} */}
 
+                    </div>
+                    <SlideSlider
+                        maxPageNumber={pages?.length || 0}
+                        pageNumber={isSync ? slideState.pageNumber : localPageNumber}
+                        onChangePageNumber={onChangePageNumber}
+                        isSync={isSync}
+                        syncSlide={syncSlide}
+                    />
+                    {isAdmin ? <AdminPresentationController /> : <UserPresentationController />}
+                    {latestConference ? <ConferenceText
+                        title={latestConference.title || ""}
+                        startDate={latestConference.startDate || ""}
+                        endDate={latestConference.endDate || ""}
+                    /> : <div />}
+                    <Typography color="white" justifyContent="center">{onlineUserList ? onlineUserList.length : 0} watching</Typography>
+                    <UserActionDisplay />
                 </div>
-                <SlideSlider
-                    maxPageNumber={pages?.length || 0}
-                    pageNumber={isSync ? slideState.pageNumber : localPageNumber}
-                    onChangePageNumber={onChangePageNumber}
-                    isSync={isSync}
-                    syncSlide={syncSlide}
-                />
-                {isAdmin ? <AdminPresentationController /> : <UserPresentationController />}
-                {latestConference ? <ConferenceText
-                    title={latestConference.title || ""}
-                    startDate={latestConference.startDate || ""}
-                    endDate={latestConference.endDate || ""}
-                /> : <div />}
-                <Typography color="white" justifyContent="center">{onlineUserList ? onlineUserList.length : 0} watching</Typography>
-                <UserActionDisplay />
+                {isRow ?
+                    <div style={{
+                        marginLeft: 60,
+                        marginRight: 30,
+                    }}>
+                        <ProfileCardController isAdmin={isAdmin} userId={slide?.createdBy || ""} />
+                        <Comments
+                            viewingPage={viewingPage}
+                            onClickLink={onClickPageLink}
+                        />
+                    </div> : <div />}
             </div>
-            <div style={{
-                marginLeft: 60,
-                marginRight: 30,
-                width: "100%",
-            }}>
-                <ProfileCardController isAdmin={isAdmin} userId={slide?.createdBy || ""} />
-                <Comments
-                    viewingPage={viewingPage}
-                    onClickLink={onClickPageLink}
-                />
-            </div>
-        </div>
+            {!isRow ?
+                <div style={{
+                    marginTop: 60,
+                    marginLeft: 10,
+                    marginRight: 10
+                }}>
+                    <ProfileCardController isAdmin={isAdmin} userId={slide?.createdBy || ""} />
+                    <Comments
+                        viewingPage={viewingPage}
+                        onClickLink={onClickPageLink}
+                    />
+                </div> : <div />
+            }
+        </>
     )
 }

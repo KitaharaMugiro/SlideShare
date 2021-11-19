@@ -27,7 +27,7 @@ export default (props: Props) => {
                 <Button startIcon={<MicIcon />} onClick={onClickAudioTrackChange}>{t("mute")}</Button>
                 : <Button startIcon={<MicOffIcon />} onClick={onClickAudioTrackChange}>{t("unmute")}</Button>
             }
-            <FormControlLabel control={<Switch checked={slideState.cursor} onChange={onClickEnableCursorChange} />} label={t("cursor")} style={{ color: "white" }} />
+            {/* <FormControlLabel control={<Switch checked={slideState.cursor} onChange={onClickEnableCursorChange} />} label={t("cursor")} style={{ color: "white" }} /> */}
 
         </Stack>
     </>

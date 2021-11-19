@@ -25,7 +25,6 @@ interface Props {
 export default (props: Props) => {
     //制御変数
     const { customizeWidth } = props
-    // const [customizeWidth, setWidth] = useState(350) //850
 
     //スライドサイズは16:9, 4:3から選ぶ
     const width = customizeWidth

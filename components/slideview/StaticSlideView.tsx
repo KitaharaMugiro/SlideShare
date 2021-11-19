@@ -17,7 +17,6 @@ interface Props {
 export default (props: Props) => {
     const { initialSlide, isAdmin } = props
     //slide状態変数
-    const { width, height } = useWindowDimensions()
     const [localPageNumber, setLocalPageNumber] = useState(0)
     const slide = initialSlide?.slideshare_Slide_by_pk
     const pages = slide?.Pages ? [...slide?.Pages].sort((a, b) => a.pageNumber - b.pageNumber) : []
@@ -45,6 +44,8 @@ export default (props: Props) => {
         onChangePageNumber(targetPage?.pageNumber || 0)
     }
 
+    //スライドサイズの計算
+    const { width } = useWindowDimensions()
     const isRow = width > 800
     const COMMENT_WIDTH = isRow ? 340 : 0
     const MARGIN = isRow ? 100 : 40
