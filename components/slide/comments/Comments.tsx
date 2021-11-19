@@ -10,6 +10,7 @@ import { useTranslations } from 'use-intl';
 
 interface Props {
     viewingPage: Page
+    presenterUserId?: string
     onClickLink: (pageId: string) => void
 }
 
@@ -29,6 +30,8 @@ export default function Comments(props: Props) {
             )
         }
         return data?.slideshare_Comment.map((comment) => {
+            console.log({ comment: comment.createdBy, presenter: props.presenterUserId, isSame: comment.createdBy === props.presenterUserId })
+            const isPresenter = props.presenterUserId ? comment.createdBy === props.presenterUserId : false
             return <>
                 <Comment
                     name={comment.Profile?.name}
@@ -36,6 +39,7 @@ export default function Comments(props: Props) {
                     pageId={comment.pageId}
                     comment={comment.text}
                     onClickLink={props.onClickLink}
+                    isPresenter={isPresenter}
                 />
                 <Divider variant="inset" component="li" />
             </>

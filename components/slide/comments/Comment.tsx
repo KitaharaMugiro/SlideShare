@@ -8,6 +8,7 @@ interface Props {
     pageId: string
     comment: string
     onClickLink: (pageId: string) => void
+    isPresenter: boolean
 }
 
 export default (props: Props) => {
@@ -16,7 +17,7 @@ export default (props: Props) => {
     }
 
     return (
-        <ListItem alignItems="flex-start">
+        <ListItem alignItems="flex-start" sx={{ backgroundColor: props.isPresenter ? "#8B0000" : "" }}>
             <ListItemAvatar>
                 <Avatar alt={props.name || "Anon"} />
             </ListItemAvatar>

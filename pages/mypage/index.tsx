@@ -29,7 +29,7 @@ export default () => {
             return <div key={slide.id} style={{ margin: 30 }}>
                 <SlideCard
                     slideId={slide.id}
-                    imageUrl={slide.Pages ? slide.Pages[0].imageUrl : undefined}
+                    imageUrl={slide.Pages ? slide.Pages[0]?.imageUrl : undefined}
                     onDeleteCard={onDeleteCard} />
 
             </div>

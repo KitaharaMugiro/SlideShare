@@ -83,6 +83,7 @@ export default (props: Props) => {
                     <Comments
                         viewingPage={viewingPage}
                         onClickLink={onClickPageLink}
+                        presenterUserId={slide?.createdBy}
                     />
                 </div> : <div />}
         </div>
@@ -97,6 +98,7 @@ export default (props: Props) => {
                 <Comments
                     viewingPage={viewingPage}
                     onClickLink={onClickPageLink}
+                    presenterUserId={slide?.createdBy}
                 />
             </div> : <div />
         }

@@ -24,7 +24,7 @@ export default async function getServerSideProps(context: any) {
             },
         });
         const res = data.slideshare_Slide_by_pk;
-        const imageUrl = 1 === res.Pages.length ? res.Pages[0].imageUrl : "";
+        const imageUrl = 1 === res.Pages.length ? res.Pages[0]?.imageUrl : "";
         const signedURL = await Storage.get(imageUrl);
         const ogpInfo: OpgMetaData = {
             pageTitle: "PresenShare",
