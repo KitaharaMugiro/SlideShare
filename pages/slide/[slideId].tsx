@@ -45,10 +45,6 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     if (loading) return <div><OgpTag ogpInfo={ogpInfo} /></div>
     if (error) return <div>{JSON.stringify(error)}</div>
     if (!slide) return <div>{t("not-found")}</div>
-
-    if (isMobile) {
-        return <MobileSlideView />
-    }
     return (
         <div className={style.main}>
             <OgpTag ogpInfo={ogpInfo} />
