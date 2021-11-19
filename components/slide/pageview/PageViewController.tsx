@@ -17,13 +17,14 @@ import YoutubePageView from "./YoutubePageView"
 
 interface Props {
     viewingPage: Page
+    customizeWidth: number
     onClickLeft: () => void
     onClickRight: () => void
 }
 
 export default (props: Props) => {
     //制御変数
-    const [customizeWidth, setWidth] = useState(850)
+    const { customizeWidth } = props
 
     //スライドサイズは16:9, 4:3から選ぶ
     const width = customizeWidth

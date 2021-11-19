@@ -1,4 +1,6 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import { isMobile } from "react-device-detect"
+import { useWindowDimensions } from "../../model/hooks/useWindowDimentions"
 import { QuerySlideQuery } from "../../src/generated/graphql"
 import AdminSlideController from "../slide/AdminSlideController"
 import Comments from "../slide/comments/Comments"
@@ -42,13 +44,22 @@ export default (props: Props) => {
         onChangePageNumber(targetPage?.pageNumber || 0)
     }
 
+    //スライドサイズの計算
+    const { width } = useWindowDimensions()
+    const isRow = width > 800
+    const COMMENT_WIDTH = isRow ? 340 : 0
+    const MARGIN = isRow ? 100 : 40
+    const slideWidth = width - COMMENT_WIDTH - MARGIN
+
     return <>
         {/* スライド */}
         <div className={style.deck_space} >
-            <div>
+            <div >
+
                 <div style={{ position: "relative" }}>
                     <PageViewController
                         viewingPage={viewingPage}
+                        customizeWidth={slideWidth}
                         onClickLeft={goPrevious}
                         onClickRight={goNext}
                     />
@@ -61,19 +72,33 @@ export default (props: Props) => {
                 />
                 {isAdmin ? <AdminSlideController
                     slideId={Number(slide?.id)} /> : <div />}
-
             </div>
+
+            {isRow ?
+                <div style={{
+                    marginLeft: 60,
+                    marginRight: 30,
+                }}>
+                    <ProfileCardController isAdmin={isAdmin} userId={slide?.createdBy || ""} />
+                    <Comments
+                        viewingPage={viewingPage}
+                        onClickLink={onClickPageLink}
+                    />
+                </div> : <div />}
+        </div>
+
+        {!isRow ?
             <div style={{
-                marginLeft: 60,
-                marginRight: 30,
-                width: "100%",
+                marginTop: 60,
+                marginLeft: 10,
+                marginRight: 10
             }}>
                 <ProfileCardController isAdmin={isAdmin} userId={slide?.createdBy || ""} />
                 <Comments
                     viewingPage={viewingPage}
                     onClickLink={onClickPageLink}
                 />
-            </div>
-        </div>
+            </div> : <div />
+        }
     </>
 }
