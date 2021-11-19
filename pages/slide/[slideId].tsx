@@ -49,6 +49,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
         <div className={style.main}>
             <OgpTag ogpInfo={ogpInfo} />
             <StaticSlideView initialSlide={initialSlide} isAdmin={isAdmin} />
+            <div style={{ height: 30 }} />
         </div>
     )
 }
