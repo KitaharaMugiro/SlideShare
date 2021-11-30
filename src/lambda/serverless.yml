@@ -29,10 +29,3 @@ functions:
           path: /token
           method: post
           cors: true
-  mail:
-    handler: mail_handler.lambda_handler
-    events:
-      - http:
-          path: /mail
-          method: post
-          cors: true

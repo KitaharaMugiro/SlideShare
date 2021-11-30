@@ -2,10 +2,8 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
-import { isMobile } from 'react-device-detect';
 import { useTranslations } from "use-intl";
 import { v4 as uuidv4 } from "uuid";
-import MobileSlideView from "../../components/common/MobileSlideView";
 import ConferenceSubscribeMessage from "../../components/conference/ConferenceSubscribeMessage";
 import AdminWarningMessage from "../../components/presentation/AdminWarningMessage";
 import ConfirmationModal from "../../components/presentation/ConfirmationModal";
@@ -51,7 +49,8 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
             if (conferenceModel?.state === "beforeStart") {
                 return <div>
                     <ConferenceSubscribeMessage
-                        conference={conferenceModel} />
+                        conference={conferenceModel}
+                        slideId={Number(slideId)} />
                     {/* TODO: このunwrap微妙 */}
                     {/* スライド */}
                     {initialSlide &&

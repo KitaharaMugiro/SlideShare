@@ -2,6 +2,7 @@ import { Alert, AlertTitle, Button } from "@mui/material"
 import { format } from "date-fns"
 import React from "react"
 import { useTranslations } from "use-intl"
+import subscribe from "../../api/rest/subscribe"
 import { ConferenceModel } from "../../model/Conference"
 import useSignin from "../../model/hooks/useSignin"
 import useUser from "../../model/hooks/useUser"
@@ -9,6 +10,7 @@ import { useInsertSubscribeMutation, useQuerySubscribeQuery } from "../../src/ge
 
 interface Props {
     conference: ConferenceModel
+    slideId: number
 }
 
 export default (props: Props) => {
@@ -28,11 +30,11 @@ export default (props: Props) => {
             goSignin()
             return
         }
-        await subsribeMutation({
-            variables: {
-                conferenceId: props.conference.id
-            }
-        })
+        const conferenceId = props.conference.id
+        const conferenceTitle = props.conference.title
+        const startDate = props.conference.startDateString
+        const url = `https://presen-share.yunomy.com/presentation/${props.slideId}`
+        await subscribe(conferenceId, conferenceTitle, startDate, url)
         await refetch()
     }
 
