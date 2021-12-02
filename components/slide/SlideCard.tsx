@@ -65,14 +65,13 @@ export default function SlideCard(props: Props) {
                 </a>
             </Link>
             <CardActions>
-                <Link href={`/edit/${props.slideId}`}>
-                    <a>
-                        <Button
-                            size="small" color="primary">
-                            Edit
-                        </Button>
-                    </a>
-                </Link>
+
+                <Button
+                    href={`/edit/${props.slideId}`}
+                    size="small" color="primary">
+                    Edit
+                </Button>
+
 
                 <Button
                     onClick={onClickDelete}
