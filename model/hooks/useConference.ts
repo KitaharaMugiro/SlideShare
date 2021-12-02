@@ -1,5 +1,5 @@
 import { useInsertConferenceMutation, useUpdateConferenceMutation, useUpdateConferenceStartDateMutation } from "../../src/generated/graphql"
-import { useSnackMessage } from "./useSnackMessage"
+import { useSnackMessage } from "../util-hooks/useSnackMessage"
 
 export default () => {
     const { displayErrorMessage } = useSnackMessage()

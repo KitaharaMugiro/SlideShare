@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react"
 import { Collection, CollectionRow, NotionRenderer, Equation, Code } from 'react-notion-x'
-import useNotion from "../../../model/hooks/useNotion"
+import useNotion from "../../../model/util-hooks/useNotion"
 import { Page } from "../../../model/Page"
 
 interface Props {

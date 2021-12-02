@@ -2,8 +2,8 @@ import { Button } from "@mui/material"
 import React from "react"
 import { useTranslations } from "use-intl"
 import useFollower from "../../model/hooks/useFollower"
-import useSignin from "../../model/hooks/useSignin"
-import useUser from "../../model/hooks/useUser"
+import useSignin from "../../model/util-hooks/useSignin"
+import useUser from "../../model/util-hooks/useUser"
 
 interface Props {
     userId?: string | null

@@ -3,7 +3,7 @@ import Amplify, { Auth, Hub } from 'aws-amplify';
 import { FacebookLoginButton, GoogleLoginButton, } from "react-social-login-buttons";
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
 import { useRouter } from 'next/dist/client/router';
-import useSignin from '../../model/hooks/useSignin';
+import useSignin from '../../model/util-hooks/useSignin';
 export default () => {
     const { url } = useSignin()
 

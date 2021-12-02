@@ -4,8 +4,8 @@ import React from "react"
 import { useTranslations } from "use-intl"
 import subscribe from "../../api/rest/subscribe"
 import { ConferenceModel } from "../../model/Conference"
-import useSignin from "../../model/hooks/useSignin"
-import useUser from "../../model/hooks/useUser"
+import useSignin from "../../model/util-hooks/useSignin"
+import useUser from "../../model/util-hooks/useUser"
 import { useInsertSubscribeMutation, useQuerySubscribeQuery } from "../../src/generated/graphql"
 
 interface Props {

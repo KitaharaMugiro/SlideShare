@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import useUser from "../../../model/hooks/useUser"
+import useUser from "../../../model/util-hooks/useUser"
 import { useInsertPollMutation, useInsertPollResultMutation, useSubscribePollResultsSubscription } from "../../../src/generated/graphql"
 import { MultiplePoll } from "./MultiplePoll"
 

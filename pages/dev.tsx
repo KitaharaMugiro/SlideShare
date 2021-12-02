@@ -1,5 +1,5 @@
 import { Button } from "@mui/material"
-import { useSnackMessage } from "../model/hooks/useSnackMessage"
+import { useSnackMessage } from "../model/util-hooks/useSnackMessage"
 
 export default () => {
     const { displayErrorMessage, displayInfoMessage } = useSnackMessage()

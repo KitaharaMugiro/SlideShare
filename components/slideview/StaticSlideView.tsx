@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { isMobile } from "react-device-detect"
-import { useWindowDimensions } from "../../model/hooks/useWindowDimentions"
+import useArrowKeyboardEvent from "../../model/util-hooks/useArrowKeyboardEvent"
+import { useWindowDimensions } from "../../model/util-hooks/useWindowDimentions"
 import { QuerySlideQuery } from "../../src/generated/graphql"
 import AdminSlideController from "../slide/AdminSlideController"
 import Comments from "../slide/comments/Comments"
@@ -16,6 +17,8 @@ interface Props {
 
 export default (props: Props) => {
     const { initialSlide, isAdmin } = props
+
+
     //slide状態変数
     const [localPageNumber, setLocalPageNumber] = useState(0)
     const slide = initialSlide?.slideshare_Slide_by_pk
@@ -33,6 +36,9 @@ export default (props: Props) => {
         if (nextPageNumber < 0) return
         setLocalPageNumber(nextPageNumber)
     }
+
+    //keyboard event
+    useArrowKeyboardEvent(goPrevious, goNext)
 
     const onChangePageNumber = (number: number) => {
         const nextPageNumber = number

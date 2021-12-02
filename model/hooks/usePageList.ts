@@ -3,7 +3,7 @@ import { useDeletePageMutation, useInsertPageMutation, useUpdatePageMutation, us
 import { focusedPageIdAtom } from "../jotai/FocusedPageId"
 import { pageListAtom } from "../jotai/PageList"
 import { createNewPage, Page, reorderPageList } from "../Page"
-import { useSnackMessage } from "./useSnackMessage"
+import { useSnackMessage } from "../util-hooks/useSnackMessage"
 
 export const usePageList = () => {
     const { displayErrorMessage } = useSnackMessage()

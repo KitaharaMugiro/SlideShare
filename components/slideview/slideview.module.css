@@ -1,8 +1,8 @@
 
 .deck_space {
     position:relative;
-    left:20px;
     top:20px;
+    margin-left:20px;
     display: flex;
   }
   

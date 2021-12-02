@@ -1,14 +1,12 @@
-import { GetServerSideProps, GetStaticPropsContext } from "next";
+import { GetServerSideProps } from "next";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
-import { isMobile } from 'react-device-detect';
-import MobileSlideView from "../../components/common/MobileSlideView";
 import StaticSlideView from "../../components/slideview/StaticSlideView";
-import { useLoading } from "../../model/hooks/useLoading";
-import useUser from "../../model/hooks/useUser";
 import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag";
 import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
+import { useLoading } from "../../model/util-hooks/useLoading";
+import useUser from "../../model/util-hooks/useUser";
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
 const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {

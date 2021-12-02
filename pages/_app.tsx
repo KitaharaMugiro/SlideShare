@@ -21,7 +21,7 @@ import 'react-notion-x/src/styles.css';
 import MyApolloClient from '../api/MyApolloClient';
 import MyAppBar from '../components/common/MyAppBar';
 import MyBackdrop from '../components/common/MyBackdrop';
-import useUser from '../model/hooks/useUser';
+import useUser from '../model/util-hooks/useUser';
 import OgpTag from '../model/ogp/OgpTag';
 import awsConfig from '../src/aws-exports';
 import '../styles/globals.css';

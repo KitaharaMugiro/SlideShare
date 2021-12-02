@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import useSignin from "../../model/hooks/useSignin";
-import useUser from "../../model/hooks/useUser";
+import useSignin from "../../model/util-hooks/useSignin";
+import useUser from "../../model/util-hooks/useUser";
 import { QueryUserSlideQuery, QueryUserSlideQueryResult, Slideshare_Slide, useQueryUserSlideLazyQuery, useQueryUserSlideQuery } from "../../src/generated/graphql";
 import { Auth } from 'aws-amplify';
 import SlideCard from "../../components/slide/SlideCard";

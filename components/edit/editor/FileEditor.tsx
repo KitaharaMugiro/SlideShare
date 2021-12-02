@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import useFiles from "../../../model/hooks/useFiles";
-import useTitleSetModal from "../../../model/hooks/useTitleSetModal";
+import useTitleSetModal from "../../../model/util-hooks/useTitleSetModal";
 import { Page } from "../../../model/Page";
 import { useDeleteFileMutation, useInsertFileMutation } from "../../../src/generated/graphql";
 import FilePaperList from '../../common/FilePaperList';

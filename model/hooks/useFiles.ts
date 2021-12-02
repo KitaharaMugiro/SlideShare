@@ -3,7 +3,7 @@ import { useDeleteBookmarkMutation, useDeleteFileMutation, useInsertBookmarkMuta
 import { Page } from "../Page"
 import { usePageList } from "./usePageList"
 import { Storage } from "aws-amplify";
-import { useSnackMessage } from "./useSnackMessage";
+import { useSnackMessage } from "../util-hooks/useSnackMessage";
 
 export default (initialState?: { id: number, path: string, filename: string }[] | null) => {
     const { displayErrorMessage } = useSnackMessage()

@@ -19,15 +19,11 @@ export default (props: Props) => {
     const latestConference = data?.slideshare_Conference ? data?.slideshare_Conference[0] : undefined
 
 
-    const goPresentation = () => {
-        router.push(`/presentation/${slideId}`)
-    }
-
     const renderConference = () => {
         if (latestConference) {
             if (new Date(latestConference.endDate) > new Date()) {
                 return <>
-                    <Button onClick={goPresentation}>{t("open-with-presentation-mode")}</Button>
+                    <Button href={`/presentation/${slideId}`}>{t("open-with-presentation-mode")}</Button>
                     <ConferenceInfoModalButton
                         slideId={Number(slideId)}
                         updateConferenceId={latestConference.id}

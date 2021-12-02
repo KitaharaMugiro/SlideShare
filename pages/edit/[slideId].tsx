@@ -6,13 +6,12 @@ import { useRouter } from "next/dist/client/router";
 import React, { useEffect } from "react";
 import EditOrPreview from "../../components/edit/EditOrPreview";
 import HorizontalSlideList from "../../components/edit/HorizontalSlideList";
-import { useLoading } from '../../model/hooks/useLoading';
 import { usePageList } from '../../model/hooks/usePageList';
-import useSignin from '../../model/hooks/useSignin';
-import { useSnackMessage } from '../../model/hooks/useSnackMessage';
-import useUser from '../../model/hooks/useUser';
 import { pageListAtom } from "../../model/jotai/PageList";
 import { Page } from '../../model/Page';
+import { useLoading } from '../../model/util-hooks/useLoading';
+import useSignin from '../../model/util-hooks/useSignin';
+import useUser from '../../model/util-hooks/useUser';
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./index.module.css";
 

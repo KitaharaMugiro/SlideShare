@@ -1,7 +1,7 @@
 import { useInsertPollMutation } from "../../src/generated/graphql"
 import { Page } from "../Page"
 import { usePageList } from "./usePageList"
-import { useSnackMessage } from "./useSnackMessage"
+import { useSnackMessage } from "../util-hooks/useSnackMessage"
 
 export default () => {
     const { displayErrorMessage } = useSnackMessage()

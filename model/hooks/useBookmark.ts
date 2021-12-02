@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useDeleteBookmarkMutation, useInsertBookmarkMutation, useInsertPollMutation } from "../../src/generated/graphql"
 import { Page } from "../Page"
 import { usePageList } from "./usePageList"
-import { useSnackMessage } from "./useSnackMessage"
+import { useSnackMessage } from "../util-hooks/useSnackMessage"
 
 export default (initialState?: { id: number, url: string }[] | null) => {
     const { displayErrorMessage } = useSnackMessage()

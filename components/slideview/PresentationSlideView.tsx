@@ -2,7 +2,7 @@ import { Typography } from "@mui/material"
 import { useAtom } from "jotai"
 import React, { useEffect, useState } from "react"
 import { useRealtimeCursor, useOnlineUsers, useRealtimeSharedState } from "realtimely"
-import { useWindowDimensions } from "../../model/hooks/useWindowDimentions"
+import { useWindowDimensions } from "../../model/util-hooks/useWindowDimentions"
 import { SlideStateAtom } from "../../model/jotai/SlideState"
 import pages from "../../pages"
 import { QuerySlideQuery, Slideshare_PageType_Enum } from "../../src/generated/graphql"
@@ -15,6 +15,7 @@ import PageViewController from "../slide/pageview/PageViewController"
 import ProfileCardController from "../slide/ProfileCardController"
 import SlideSlider from "../slide/SlideSlider"
 import style from "./slideview.module.css"
+import useArrowKeyboardEvent from "../../model/util-hooks/useArrowKeyboardEvent"
 
 interface Props {
     initialSlide: QuerySlideQuery
@@ -83,6 +84,8 @@ export default (props: Props) => {
             setLocalPageNumber(nextPageNumber)
         }
     }
+
+    useArrowKeyboardEvent(goPrevious, goNext)
 
     const syncSlide = () => {
         setIsSync(true)
