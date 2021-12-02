@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Storage } from "aws-amplify"
 import { useRouter } from 'next/dist/client/router';
 import useSlide from '../../model/hooks/useSlide';
+import Link from 'next/link';
 
 interface Props {
     imageUrl: string | undefined | null
@@ -43,13 +44,15 @@ export default function SlideCard(props: Props) {
 
     return (
         <Card sx={{ width: 280, height: 185 }}>
-            <CardActionArea onClick={() => router.push(`/slide/${props.slideId}`)}>
-                <CardMedia
-                    component="img"
-                    height="140"
-                    image={url}
-                />
-                {/* <CardContent>
+            <Link href={`/slide/${props.slideId}`}>
+                <a>
+                    <CardActionArea>
+                        <CardMedia
+                            component="img"
+                            height="140"
+                            image={url}
+                        />
+                        {/* <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                         Lizard
                     </Typography>
@@ -58,13 +61,19 @@ export default function SlideCard(props: Props) {
                         species, ranging across all continents except Antarctica
                     </Typography>
                 </CardContent> */}
-            </CardActionArea>
+                    </CardActionArea>
+                </a>
+            </Link>
             <CardActions>
-                <Button
-                    onClick={() => router.push(`/edit/${props.slideId}`)}
-                    size="small" color="primary">
-                    Edit
-                </Button>
+                <Link href={`/edit/${props.slideId}`}>
+                    <a>
+                        <Button
+                            size="small" color="primary">
+                            Edit
+                        </Button>
+                    </a>
+                </Link>
+
                 <Button
                     onClick={onClickDelete}
                     size="small" color="error">

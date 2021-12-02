@@ -31,7 +31,6 @@ export default () => {
                     slideId={slide.id}
                     imageUrl={slide.Pages ? slide.Pages[0]?.imageUrl : undefined}
                     onDeleteCard={onDeleteCard} />
-
             </div>
         })
     }
