@@ -6,3 +6,18 @@
     display: flex;
   }
   
+
+.controller_on_slide {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 60px;
+  z-index: 4;
+  background-color: rgb(204, 204, 204);
+  display: flex;
+  padding: 0 10px 15px;
+  align-items: flex-end;
+  transition: transform 0.3s ease;
+  border-radius: 0 0 6px 6px;
+}

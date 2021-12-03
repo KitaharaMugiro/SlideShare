@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react"
-import { isMobile } from "react-device-detect"
+import React, { useState } from "react"
 import useArrowKeyboardEvent from "../../model/util-hooks/useArrowKeyboardEvent"
 import { useWindowDimensions } from "../../model/util-hooks/useWindowDimentions"
 import { QuerySlideQuery } from "../../src/generated/graphql"
@@ -8,8 +7,9 @@ import Comments from "../slide/comments/Comments"
 import PageViewController from "../slide/pageview/PageViewController"
 import ProfileCardController from "../slide/ProfileCardController"
 import SlideSlider from "../slide/SlideSlider"
+import ControllerOnSlide from "./ControllerOnSlide"
 import style from "./slideview.module.css"
-
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 interface Props {
     initialSlide: QuerySlideQuery
     isAdmin: boolean
@@ -18,6 +18,8 @@ interface Props {
 export default (props: Props) => {
     const { initialSlide, isAdmin } = props
 
+    const [appearController, setAppearController] = useState(false)
+    const fullscreenHandle = useFullScreenHandle();
 
     //slide状態変数
     const [localPageNumber, setLocalPageNumber] = useState(0)
@@ -50,26 +52,39 @@ export default (props: Props) => {
         onChangePageNumber(targetPage?.pageNumber || 0)
     }
 
+    const onClickFullScreen = () => {
+        fullscreenHandle.enter();
+    }
+
     //スライドサイズの計算
     const { width } = useWindowDimensions()
     const isRow = width > 800
     const COMMENT_WIDTH = isRow ? 340 : 0
     const MARGIN = isRow ? 100 : 40
-    const slideWidth = width - COMMENT_WIDTH - MARGIN
+    let slideWidth = width - COMMENT_WIDTH - MARGIN
+    if (fullscreenHandle.active) {
+        slideWidth = width
+    }
 
     return <>
         {/* スライド */}
-        <div className={style.deck_space} >
+        <div className={style.deck_space}>
             <div >
-
-                <div style={{ position: "relative" }}>
-                    <PageViewController
-                        viewingPage={viewingPage}
-                        customizeWidth={slideWidth}
-                        onClickLeft={goPrevious}
-                        onClickRight={goNext}
-                    />
-                </div>
+                <FullScreen handle={fullscreenHandle}>
+                    <div style={{ position: "relative" }}
+                        onMouseEnter={() => setAppearController(true)}
+                        onMouseLeave={() => setAppearController(false)}>
+                        <PageViewController
+                            viewingPage={viewingPage}
+                            customizeWidth={slideWidth}
+                            onClickLeft={goPrevious}
+                            onClickRight={goNext}
+                        />
+                        <ControllerOnSlide
+                            appear={appearController}
+                            onClickFullScreen={onClickFullScreen} />
+                    </div>
+                </FullScreen>
                 <SlideSlider
                     maxPageNumber={pages?.length || 0}
                     pageNumber={localPageNumber}
