@@ -18,6 +18,7 @@ interface Props {
 export default (props: Props) => {
     const { initialSlide, isAdmin } = props
 
+    //スライドコントローラ
     const [appearController, setAppearController] = useState(false)
     const fullscreenHandle = useFullScreenHandle();
 
@@ -52,10 +53,6 @@ export default (props: Props) => {
         onChangePageNumber(targetPage?.pageNumber || 0)
     }
 
-    const onClickFullScreen = () => {
-        fullscreenHandle.enter();
-    }
-
     //スライドサイズの計算
     const { width } = useWindowDimensions()
     const isRow = width > 800
@@ -82,7 +79,7 @@ export default (props: Props) => {
                         />
                         <ControllerOnSlide
                             appear={appearController}
-                            onClickFullScreen={onClickFullScreen} />
+                            onClickFullScreen={fullscreenHandle.active ? fullscreenHandle.exit : fullscreenHandle.enter} />
                     </div>
                 </FullScreen>
                 <SlideSlider

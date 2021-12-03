@@ -16,6 +16,8 @@ import ProfileCardController from "../slide/ProfileCardController"
 import SlideSlider from "../slide/SlideSlider"
 import style from "./slideview.module.css"
 import useArrowKeyboardEvent from "../../model/util-hooks/useArrowKeyboardEvent"
+import { FullScreen, useFullScreenHandle } from "react-full-screen"
+import ControllerOnSlide from "./ControllerOnSlide"
 
 interface Props {
     initialSlide: QuerySlideQuery
@@ -31,6 +33,11 @@ export default (props: Props) => {
 
     const pages = slide?.Pages ? [...slide?.Pages].sort((a, b) => a.pageNumber - b.pageNumber) : []
     const viewingPage = pages[localPageNumber]
+
+    //スライドコントローラ
+    const [appearController, setAppearController] = useState(false)
+    const fullscreenHandle = useFullScreenHandle();
+
 
     //slide状態変数
     const [localAdminSlideState] = useAtom(SlideStateAtom)
@@ -121,24 +128,32 @@ export default (props: Props) => {
     const isRow = width > 800
     const COMMENT_WIDTH = isRow ? 340 : 0
     const MARGIN = isRow ? 100 : 40
-    const slideWidth = width - COMMENT_WIDTH - MARGIN
-
+    let slideWidth = width - COMMENT_WIDTH - MARGIN
+    if (fullscreenHandle.active) {
+        slideWidth = width
+    }
 
     return (
         <>
             <div className={style.deck_space} >
                 <div>
-                    <div style={{ position: "relative" }}
-                        onMouseMove={isAdmin && slideState.enableCursor ? undefined : undefined}>
-                        <PageViewController
-                            viewingPage={viewingPage}
-                            customizeWidth={slideWidth}
-                            onClickLeft={goPrevious}
-                            onClickRight={goNext}
-                        />
-                        {/* {slideState.enableCursor ? renderCursors() : <div />} */}
-
-                    </div>
+                    <FullScreen handle={fullscreenHandle}>
+                        <div style={{ position: "relative" }}
+                            onMouseMove={isAdmin && slideState.enableCursor ? undefined : undefined}
+                            onMouseEnter={() => setAppearController(true)}
+                            onMouseLeave={() => setAppearController(false)}>
+                            <PageViewController
+                                viewingPage={viewingPage}
+                                customizeWidth={slideWidth}
+                                onClickLeft={goPrevious}
+                                onClickRight={goNext}
+                            />
+                            {/* {slideState.enableCursor ? renderCursors() : <div />} */}
+                            <ControllerOnSlide
+                                appear={appearController}
+                                onClickFullScreen={fullscreenHandle.active ? fullscreenHandle.exit : fullscreenHandle.enter} />
+                        </div>
+                    </FullScreen>
                     <SlideSlider
                         maxPageNumber={pages?.length || 0}
                         pageNumber={isSync ? slideState.pageNumber : localPageNumber}
