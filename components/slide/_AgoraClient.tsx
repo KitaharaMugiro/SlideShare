@@ -14,6 +14,7 @@ const config: ClientConfig = {
 
 const appId: string = "b2a72b031fc64276bfee7398c7eb6d7b"; //ENTER APP ID HERE
 
+//TODO :それぞれどういう意味でどういう役割だっけ？
 interface Props {
     channelName: string
     uid: string
@@ -22,14 +23,24 @@ interface Props {
 }
 
 const App = ({ channelName, uid, host, isHost }: Props) => {
-    const [getToken, { data, loading, error }] = useGenerateAgoraTokenMutation({ variables: { channelName, uid, host } })
+    const [getToken, { data, loading, error }] = useGenerateAgoraTokenMutation({ variables: { channelName, uid, host }, fetchPolicy: "no-cache" });
+
     useEffect(() => {
-        getToken()
-    }, [])
+        const _getToken = async () => {
+            console.log("------get token------")
+            const r = await getToken({ variables: { channelName, uid, host }, fetchPolicy: "no-cache" })
+            console.log("________token________")
+            console.log(r.data?.GenerateAgoraToken?.token)
+        }
+        _getToken()
+
+    }, [channelName])
+
     if (loading) return <div>ローディング</div>
     if (error) return <div>エラー</div>
     const token = data?.GenerateAgoraToken?.token
     if (!token) return <div>トークンエラー</div>
+    console.log({ token })
     return (
         <div>
             {isHost ?
@@ -61,7 +72,7 @@ const Call = (props: {
 
     useEffect(() => {
         // function to initialise the SDK
-        let init = async (name: string) => {
+        let init = async (channelName: string) => {
             client.on("user-published", async (user, mediaType) => {
                 await client.subscribe(user, mediaType);
                 console.log("subscribe success");
@@ -81,7 +92,13 @@ const Call = (props: {
                 console.log("leaving", user);
             });
 
-            await client.join(appId, name, token, uid);
+
+            console.log("leave from connected room");
+            await client.leave();
+
+            console.log("join to new room");
+            console.log({ token, uid, channelName })
+            await client.join(appId, channelName, token, uid);
             if (isHost) {
                 await client.setClientRole("host");
                 if (track?.enabled) await client.publish(track);
@@ -94,7 +111,6 @@ const Call = (props: {
         }
 
     }, [channelName, client, ready, track, token]);
-
 
     return (
         <div>
@@ -137,7 +153,20 @@ const Subscribe = (props: {
                 console.log("leaving", user);
             });
 
-            await client.join(appId, name, token, uid);
+            try {
+                console.log("leave from connected room");
+                await client.leave();
+            } catch (e) {
+                console.log("leave error", e)
+            }
+
+            try {
+                console.log("leave from connected room");
+                await client.join(appId, name, token, uid);
+            } catch (e) {
+                console.log("join error", e)
+            }
+
         };
 
 

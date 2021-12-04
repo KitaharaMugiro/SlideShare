@@ -1,0 +1,5 @@
+mutation JoinRoomMutation($roomId: Int!) {
+  insert_slideshare_RoomParticipant_one(object: {roomId: $roomId}, on_conflict: {constraint: RoomParticipant_pkey, update_columns: [roomId]}) {
+    roomId
+  }
+}

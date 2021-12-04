@@ -1,8 +1,8 @@
 import { Button } from "@mui/material"
 import React, { useState } from "react"
 import MyDialog from "../../components/common/MyDialog"
+import { usePageList } from "../hooks/usePageList"
 import { Page } from "../Page"
-import { usePageList } from "./usePageList"
 
 export default (page: Page) => {
     const [openDialog, setOpenDialog] = useState(false)
@@ -19,7 +19,7 @@ export default (page: Page) => {
     }
 
     const modal = <MyDialog
-        initialValues={[{ key: "title", value: page?.title || "" }]}
+        initialValues={[{ key: "title", value: page?.title || "", title: "title" }]}
         dialogTitle={"ページタイトルの設定"}
         dialogDescription={"ページ上部に表示されます"}
         open={openDialog}

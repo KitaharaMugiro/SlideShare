@@ -1,0 +1,15 @@
+.root {
+    background-color: rgb(234, 238, 243);
+    min-height: 100vh;
+}
+
+
+.card {
+    margin:20px;
+}
+
+.card_list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}

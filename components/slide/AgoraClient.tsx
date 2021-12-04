@@ -1,10 +1,10 @@
 import dynamic from "next/dynamic";
 
-const ClientSideControls = dynamic(
+const AgoraClient = dynamic(
     () => {
         return import("./_AgoraClient");
     },
     { ssr: false }
 );
 
-export default ClientSideControls
+export default AgoraClient

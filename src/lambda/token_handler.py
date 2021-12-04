@@ -8,7 +8,7 @@ from RtcTokenBuilder import RtcTokenBuilder, Role_Subscriber, Role_Publisher
 
 appID = os.environ.get("appID")
 appCertificate = os.environ.get("appCertificate")
-expireTimeInSeconds = 3600
+expireTimeInSeconds = 3600 * 3
 currentTimestamp = int(time.time())
 privilegeExpiredTs = currentTimestamp + expireTimeInSeconds
 
@@ -21,19 +21,18 @@ def hello(event, context):
     print(input)
     channelName: str = input["channelName"]
     uid: str = input.get("uid")
-    host: str = input.get("host")
-    session_variables = body.get("session_variables")
-    role = Role_Subscriber
-    if session_variables:
-        userAccount = session_variables.get("x-hasura-user-id")
-        if userAccount == host:
-            # Speaker
-            role = Role_Publisher
 
-    if role == Role_Subscriber:
-        print("role: audience")
-    elif role == Role_Publisher:
-        print("role: host")
+    # 参加者かホストかは自分で決める
+    # host: str = input.get("host")
+    # session_variables = body.get("session_variables")
+    # role = Role_Subscriber
+    # if session_variables:
+    #     userAccount = session_variables.get("x-hasura-user-id")
+    #     if userAccount == host:
+    #         # Speaker
+    #         role = Role_Publisher
+
+    role = Role_Publisher
 
     token = RtcTokenBuilder.buildTokenWithUid(
         appID, appCertificate, channelName, uid, role, privilegeExpiredTs
@@ -45,12 +44,3 @@ def hello(event, context):
     response = {"statusCode": 200, "body": json.dumps(body)}
 
     return response
-
-    # Use this code if you don't use the http event with the LAMBDA-PROXY
-    # integration
-    """
-    return {
-        "message": "Go Serverless v1.0! Your function executed successfully!",
-        "event": event
-    }
-    """

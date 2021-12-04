@@ -1,12 +1,8 @@
-import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import useBookmark from "../../../model/hooks/useBookmark";
-import { usePageList } from "../../../model/hooks/usePageList";
-import useTitleSetModal from "../../../model/util-hooks/useTitleSetModal";
 import { Page } from "../../../model/Page";
-import { useDeleteBookmarkMutation, useInsertBookmarkMutation } from "../../../src/generated/graphql";
+import useTitleSetModal from "../../../model/util-hooks/useTitleSetModal";
 import BookmarkList from "../../common/BookmarkList";
-import MyDialog from "../../common/MyDialog";
 import UrlEditor from "../../common/UrlEditor";
 
 interface Props {

@@ -1,0 +1,32 @@
+mutation createRoom($name: String!, $description: String!) {
+  insert_slideshare_Room_one(object: {name: $name, description: $description}) {
+    id
+  }
+}
+
+mutation updateRoom($name: String, $description: String, $id: Int!,  $presentingSlide: Int ) {
+  update_slideshare_Room_by_pk(pk_columns: {id: $id}, _set: {description: $description, presentingSlide: $presentingSlide, name: $name}) {
+    id
+  }
+}
+
+subscription rooms {
+  slideshare_Room {
+    id
+    description
+    Slide {
+      id
+    }
+    RoomParticipants {
+      userId
+      Profile {
+        name
+        profile
+      }
+    }
+    name
+    createdAt
+    updatedAt
+    createdBy
+  }
+}

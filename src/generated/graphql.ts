@@ -104,6 +104,11 @@ export type Int_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Int']>>;
 };
 
+export type Message = {
+  __typename?: 'Message';
+  message?: Maybe<Scalars['String']>;
+};
+
 /** columns and relationships of "Note" */
 export type Note = {
   __typename?: 'Note';
@@ -357,6 +362,16 @@ export type Note_Variance_Order_By = {
   Y?: Maybe<Order_By>;
 };
 
+export type SampleInput = {
+  password: Scalars['String'];
+  username: Scalars['String'];
+};
+
+export type SampleOutput = {
+  __typename?: 'SampleOutput';
+  accessToken: Scalars['String'];
+};
+
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
   _eq?: Maybe<Scalars['String']>;
@@ -412,6 +427,7 @@ export type Bigint_Comparison_Exp = {
 export type Mutation_Root = {
   __typename?: 'mutation_root';
   GenerateAgoraToken?: Maybe<GenerateAgoraTokenOutput>;
+  actionName?: Maybe<SampleOutput>;
   /** delete data from the table: "Note" */
   delete_Note?: Maybe<Note_Mutation_Response>;
   /** delete single row from the table: "Note" */
@@ -444,6 +460,14 @@ export type Mutation_Root = {
   delete_slideshare_Poll?: Maybe<Slideshare_Poll_Mutation_Response>;
   /** delete single row from the table: "slideshare.Poll" */
   delete_slideshare_Poll_by_pk?: Maybe<Slideshare_Poll>;
+  /** delete data from the table: "slideshare.Room" */
+  delete_slideshare_Room?: Maybe<Slideshare_Room_Mutation_Response>;
+  /** delete data from the table: "slideshare.RoomParticipant" */
+  delete_slideshare_RoomParticipant?: Maybe<Slideshare_RoomParticipant_Mutation_Response>;
+  /** delete single row from the table: "slideshare.RoomParticipant" */
+  delete_slideshare_RoomParticipant_by_pk?: Maybe<Slideshare_RoomParticipant>;
+  /** delete single row from the table: "slideshare.Room" */
+  delete_slideshare_Room_by_pk?: Maybe<Slideshare_Room>;
   /** delete data from the table: "slideshare.Slide" */
   delete_slideshare_Slide?: Maybe<Slideshare_Slide_Mutation_Response>;
   /** delete single row from the table: "slideshare.Slide" */
@@ -492,10 +516,19 @@ export type Mutation_Root = {
   insert_slideshare_Profile?: Maybe<Slideshare_Profile_Mutation_Response>;
   /** insert a single row into the table: "slideshare.Profile" */
   insert_slideshare_Profile_one?: Maybe<Slideshare_Profile>;
+  /** insert data into the table: "slideshare.Room" */
+  insert_slideshare_Room?: Maybe<Slideshare_Room_Mutation_Response>;
+  /** insert data into the table: "slideshare.RoomParticipant" */
+  insert_slideshare_RoomParticipant?: Maybe<Slideshare_RoomParticipant_Mutation_Response>;
+  /** insert a single row into the table: "slideshare.RoomParticipant" */
+  insert_slideshare_RoomParticipant_one?: Maybe<Slideshare_RoomParticipant>;
+  /** insert a single row into the table: "slideshare.Room" */
+  insert_slideshare_Room_one?: Maybe<Slideshare_Room>;
   /** insert data into the table: "slideshare.Slide" */
   insert_slideshare_Slide?: Maybe<Slideshare_Slide_Mutation_Response>;
   /** insert a single row into the table: "slideshare.Slide" */
   insert_slideshare_Slide_one?: Maybe<Slideshare_Slide>;
+  subscribe?: Maybe<Message>;
   /** update data of the table: "Note" */
   update_Note?: Maybe<Note_Mutation_Response>;
   /** update single row of the table: "Note" */
@@ -524,6 +557,14 @@ export type Mutation_Root = {
   update_slideshare_Profile?: Maybe<Slideshare_Profile_Mutation_Response>;
   /** update single row of the table: "slideshare.Profile" */
   update_slideshare_Profile_by_pk?: Maybe<Slideshare_Profile>;
+  /** update data of the table: "slideshare.Room" */
+  update_slideshare_Room?: Maybe<Slideshare_Room_Mutation_Response>;
+  /** update data of the table: "slideshare.RoomParticipant" */
+  update_slideshare_RoomParticipant?: Maybe<Slideshare_RoomParticipant_Mutation_Response>;
+  /** update single row of the table: "slideshare.RoomParticipant" */
+  update_slideshare_RoomParticipant_by_pk?: Maybe<Slideshare_RoomParticipant>;
+  /** update single row of the table: "slideshare.Room" */
+  update_slideshare_Room_by_pk?: Maybe<Slideshare_Room>;
   /** PDFをPNGに変えてPageにする */
   uploadPdf?: Maybe<UploadPdfOutput>;
 };
@@ -532,6 +573,12 @@ export type Mutation_Root = {
 /** mutation root */
 export type Mutation_RootGenerateAgoraTokenArgs = {
   input: GenerateAgoraTokenInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootActionNameArgs = {
+  arg1: SampleInput;
 };
 
 
@@ -629,6 +676,30 @@ export type Mutation_RootDelete_Slideshare_PollArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Slideshare_Poll_By_PkArgs = {
   pageId: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_RoomArgs = {
+  where: Slideshare_Room_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_RoomParticipantArgs = {
+  where: Slideshare_RoomParticipant_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_RoomParticipant_By_PkArgs = {
+  userId: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_Room_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -791,6 +862,34 @@ export type Mutation_RootInsert_Slideshare_Profile_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Slideshare_RoomArgs = {
+  objects: Array<Slideshare_Room_Insert_Input>;
+  on_conflict?: Maybe<Slideshare_Room_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_RoomParticipantArgs = {
+  objects: Array<Slideshare_RoomParticipant_Insert_Input>;
+  on_conflict?: Maybe<Slideshare_RoomParticipant_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_RoomParticipant_OneArgs = {
+  object: Slideshare_RoomParticipant_Insert_Input;
+  on_conflict?: Maybe<Slideshare_RoomParticipant_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_Room_OneArgs = {
+  object: Slideshare_Room_Insert_Input;
+  on_conflict?: Maybe<Slideshare_Room_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Slideshare_SlideArgs = {
   objects: Array<Slideshare_Slide_Insert_Input>;
   on_conflict?: Maybe<Slideshare_Slide_On_Conflict>;
@@ -801,6 +900,12 @@ export type Mutation_RootInsert_Slideshare_SlideArgs = {
 export type Mutation_RootInsert_Slideshare_Slide_OneArgs = {
   object: Slideshare_Slide_Insert_Input;
   on_conflict?: Maybe<Slideshare_Slide_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootSubscribeArgs = {
+  conferenceId?: Maybe<Scalars['Int']>;
 };
 
 
@@ -913,6 +1018,38 @@ export type Mutation_RootUpdate_Slideshare_Profile_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Slideshare_RoomArgs = {
+  _inc?: Maybe<Slideshare_Room_Inc_Input>;
+  _set?: Maybe<Slideshare_Room_Set_Input>;
+  where: Slideshare_Room_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Slideshare_RoomParticipantArgs = {
+  _inc?: Maybe<Slideshare_RoomParticipant_Inc_Input>;
+  _set?: Maybe<Slideshare_RoomParticipant_Set_Input>;
+  where: Slideshare_RoomParticipant_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Slideshare_RoomParticipant_By_PkArgs = {
+  _inc?: Maybe<Slideshare_RoomParticipant_Inc_Input>;
+  _set?: Maybe<Slideshare_RoomParticipant_Set_Input>;
+  pk_columns: Slideshare_RoomParticipant_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Slideshare_Room_By_PkArgs = {
+  _inc?: Maybe<Slideshare_Room_Inc_Input>;
+  _set?: Maybe<Slideshare_Room_Set_Input>;
+  pk_columns: Slideshare_Room_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUploadPdfArgs = {
   pdfName: Scalars['String'];
 };
@@ -1000,6 +1137,14 @@ export type Query_Root = {
   slideshare_Profile: Array<Slideshare_Profile>;
   /** fetch data from the table: "slideshare.Profile" using primary key columns */
   slideshare_Profile_by_pk?: Maybe<Slideshare_Profile>;
+  /** fetch data from the table: "slideshare.Room" */
+  slideshare_Room: Array<Slideshare_Room>;
+  /** fetch data from the table: "slideshare.RoomParticipant" */
+  slideshare_RoomParticipant: Array<Slideshare_RoomParticipant>;
+  /** fetch data from the table: "slideshare.RoomParticipant" using primary key columns */
+  slideshare_RoomParticipant_by_pk?: Maybe<Slideshare_RoomParticipant>;
+  /** fetch data from the table: "slideshare.Room" using primary key columns */
+  slideshare_Room_by_pk?: Maybe<Slideshare_Room>;
   /** fetch data from the table: "slideshare.Slide" */
   slideshare_Slide: Array<Slideshare_Slide>;
   /** fetch data from the table: "slideshare.Slide" using primary key columns */
@@ -1187,6 +1332,34 @@ export type Query_RootSlideshare_ProfileArgs = {
 
 export type Query_RootSlideshare_Profile_By_PkArgs = {
   userId: Scalars['String'];
+};
+
+
+export type Query_RootSlideshare_RoomArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Room_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Room_Order_By>>;
+  where?: Maybe<Slideshare_Room_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_RoomParticipantArgs = {
+  distinct_on?: Maybe<Array<Slideshare_RoomParticipant_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_RoomParticipant_Order_By>>;
+  where?: Maybe<Slideshare_RoomParticipant_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_RoomParticipant_By_PkArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type Query_RootSlideshare_Room_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -1557,6 +1730,8 @@ export type Slideshare_Conference = {
 /** columns and relationships of "slideshare.ConferenceSubscriber" */
 export type Slideshare_ConferenceSubscriber = {
   __typename?: 'slideshare_ConferenceSubscriber';
+  /** An object relationship */
+  Conference: Slideshare_Conference;
   conferenceId: Scalars['Int'];
   createdAt: Scalars['timestamptz'];
   id: Scalars['Int'];
@@ -1566,6 +1741,7 @@ export type Slideshare_ConferenceSubscriber = {
 
 /** Boolean expression to filter rows from the table "slideshare.ConferenceSubscriber". All fields are combined with a logical 'AND'. */
 export type Slideshare_ConferenceSubscriber_Bool_Exp = {
+  Conference?: Maybe<Slideshare_Conference_Bool_Exp>;
   _and?: Maybe<Array<Slideshare_ConferenceSubscriber_Bool_Exp>>;
   _not?: Maybe<Slideshare_ConferenceSubscriber_Bool_Exp>;
   _or?: Maybe<Array<Slideshare_ConferenceSubscriber_Bool_Exp>>;
@@ -1578,6 +1754,7 @@ export type Slideshare_ConferenceSubscriber_Bool_Exp = {
 
 /** input type for inserting data into table "slideshare.ConferenceSubscriber" */
 export type Slideshare_ConferenceSubscriber_Insert_Input = {
+  Conference?: Maybe<Slideshare_Conference_Obj_Rel_Insert_Input>;
   conferenceId?: Maybe<Scalars['Int']>;
 };
 
@@ -1592,6 +1769,7 @@ export type Slideshare_ConferenceSubscriber_Mutation_Response = {
 
 /** Ordering options when selecting data from "slideshare.ConferenceSubscriber". */
 export type Slideshare_ConferenceSubscriber_Order_By = {
+  Conference?: Maybe<Slideshare_Conference_Order_By>;
   conferenceId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
@@ -1657,6 +1835,13 @@ export type Slideshare_Conference_Mutation_Response = {
   affected_rows: Scalars['Int'];
   /** data from the rows affected by the mutation */
   returning: Array<Slideshare_Conference>;
+};
+
+/** input type for inserting object relation for remote table "slideshare.Conference" */
+export type Slideshare_Conference_Obj_Rel_Insert_Input = {
+  data: Slideshare_Conference_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Slideshare_Conference_On_Conflict>;
 };
 
 /** on conflict condition type for table "slideshare.Conference" */
@@ -2687,6 +2872,345 @@ export enum Slideshare_Profile_Update_Column {
   Profile = 'profile'
 }
 
+/** columns and relationships of "slideshare.Room" */
+export type Slideshare_Room = {
+  __typename?: 'slideshare_Room';
+  /** An array relationship */
+  RoomParticipants: Array<Slideshare_RoomParticipant>;
+  /** An object relationship */
+  Slide?: Maybe<Slideshare_Slide>;
+  createdAt: Scalars['timestamptz'];
+  createdBy: Scalars['String'];
+  description: Scalars['String'];
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  presentingSlide?: Maybe<Scalars['Int']>;
+  updatedAt: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "slideshare.Room" */
+export type Slideshare_RoomRoomParticipantsArgs = {
+  distinct_on?: Maybe<Array<Slideshare_RoomParticipant_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_RoomParticipant_Order_By>>;
+  where?: Maybe<Slideshare_RoomParticipant_Bool_Exp>;
+};
+
+/** columns and relationships of "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant = {
+  __typename?: 'slideshare_RoomParticipant';
+  /** An object relationship */
+  Profile: Slideshare_Profile;
+  /** An object relationship */
+  Room: Slideshare_Room;
+  /** An object relationship */
+  Slide?: Maybe<Slideshare_Slide>;
+  createdAt: Scalars['timestamptz'];
+  roomId: Scalars['Int'];
+  slideId?: Maybe<Scalars['Int']>;
+  updatedAt: Scalars['timestamptz'];
+  userId: Scalars['String'];
+};
+
+/** order by aggregate values of table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Aggregate_Order_By = {
+  avg?: Maybe<Slideshare_RoomParticipant_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Slideshare_RoomParticipant_Max_Order_By>;
+  min?: Maybe<Slideshare_RoomParticipant_Min_Order_By>;
+  stddev?: Maybe<Slideshare_RoomParticipant_Stddev_Order_By>;
+  stddev_pop?: Maybe<Slideshare_RoomParticipant_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Slideshare_RoomParticipant_Stddev_Samp_Order_By>;
+  sum?: Maybe<Slideshare_RoomParticipant_Sum_Order_By>;
+  var_pop?: Maybe<Slideshare_RoomParticipant_Var_Pop_Order_By>;
+  var_samp?: Maybe<Slideshare_RoomParticipant_Var_Samp_Order_By>;
+  variance?: Maybe<Slideshare_RoomParticipant_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Arr_Rel_Insert_Input = {
+  data: Array<Slideshare_RoomParticipant_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Slideshare_RoomParticipant_On_Conflict>;
+};
+
+/** order by avg() on columns of table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Avg_Order_By = {
+  roomId?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "slideshare.RoomParticipant". All fields are combined with a logical 'AND'. */
+export type Slideshare_RoomParticipant_Bool_Exp = {
+  Profile?: Maybe<Slideshare_Profile_Bool_Exp>;
+  Room?: Maybe<Slideshare_Room_Bool_Exp>;
+  Slide?: Maybe<Slideshare_Slide_Bool_Exp>;
+  _and?: Maybe<Array<Slideshare_RoomParticipant_Bool_Exp>>;
+  _not?: Maybe<Slideshare_RoomParticipant_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_RoomParticipant_Bool_Exp>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  roomId?: Maybe<Int_Comparison_Exp>;
+  slideId?: Maybe<Int_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+  userId?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "slideshare.RoomParticipant" */
+export enum Slideshare_RoomParticipant_Constraint {
+  /** unique or primary key constraint */
+  RoomParticipantPkey = 'RoomParticipant_pkey'
+}
+
+/** input type for incrementing numeric columns in table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Inc_Input = {
+  roomId?: Maybe<Scalars['Int']>;
+  slideId?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Insert_Input = {
+  Profile?: Maybe<Slideshare_Profile_Obj_Rel_Insert_Input>;
+  Room?: Maybe<Slideshare_Room_Obj_Rel_Insert_Input>;
+  Slide?: Maybe<Slideshare_Slide_Obj_Rel_Insert_Input>;
+  roomId?: Maybe<Scalars['Int']>;
+  slideId?: Maybe<Scalars['Int']>;
+};
+
+/** order by max() on columns of table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Max_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  roomId?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** order by min() on columns of table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Min_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  roomId?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Mutation_Response = {
+  __typename?: 'slideshare_RoomParticipant_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Slideshare_RoomParticipant>;
+};
+
+/** on conflict condition type for table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_On_Conflict = {
+  constraint: Slideshare_RoomParticipant_Constraint;
+  update_columns?: Array<Slideshare_RoomParticipant_Update_Column>;
+  where?: Maybe<Slideshare_RoomParticipant_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "slideshare.RoomParticipant". */
+export type Slideshare_RoomParticipant_Order_By = {
+  Profile?: Maybe<Slideshare_Profile_Order_By>;
+  Room?: Maybe<Slideshare_Room_Order_By>;
+  Slide?: Maybe<Slideshare_Slide_Order_By>;
+  createdAt?: Maybe<Order_By>;
+  roomId?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: slideshare_RoomParticipant */
+export type Slideshare_RoomParticipant_Pk_Columns_Input = {
+  userId: Scalars['String'];
+};
+
+/** select columns of table "slideshare.RoomParticipant" */
+export enum Slideshare_RoomParticipant_Select_Column {
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  RoomId = 'roomId',
+  /** column name */
+  SlideId = 'slideId',
+  /** column name */
+  UpdatedAt = 'updatedAt',
+  /** column name */
+  UserId = 'userId'
+}
+
+/** input type for updating data in table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Set_Input = {
+  roomId?: Maybe<Scalars['Int']>;
+  slideId?: Maybe<Scalars['Int']>;
+};
+
+/** order by stddev() on columns of table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Stddev_Order_By = {
+  roomId?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by stddev_pop() on columns of table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Stddev_Pop_Order_By = {
+  roomId?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by stddev_samp() on columns of table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Stddev_Samp_Order_By = {
+  roomId?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by sum() on columns of table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Sum_Order_By = {
+  roomId?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** update columns of table "slideshare.RoomParticipant" */
+export enum Slideshare_RoomParticipant_Update_Column {
+  /** column name */
+  RoomId = 'roomId',
+  /** column name */
+  SlideId = 'slideId'
+}
+
+/** order by var_pop() on columns of table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Var_Pop_Order_By = {
+  roomId?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by var_samp() on columns of table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Var_Samp_Order_By = {
+  roomId?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** order by variance() on columns of table "slideshare.RoomParticipant" */
+export type Slideshare_RoomParticipant_Variance_Order_By = {
+  roomId?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "slideshare.Room". All fields are combined with a logical 'AND'. */
+export type Slideshare_Room_Bool_Exp = {
+  RoomParticipants?: Maybe<Slideshare_RoomParticipant_Bool_Exp>;
+  Slide?: Maybe<Slideshare_Slide_Bool_Exp>;
+  _and?: Maybe<Array<Slideshare_Room_Bool_Exp>>;
+  _not?: Maybe<Slideshare_Room_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_Room_Bool_Exp>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  createdBy?: Maybe<String_Comparison_Exp>;
+  description?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  presentingSlide?: Maybe<Int_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "slideshare.Room" */
+export enum Slideshare_Room_Constraint {
+  /** unique or primary key constraint */
+  RoomPkey = 'Room_pkey'
+}
+
+/** input type for incrementing numeric columns in table "slideshare.Room" */
+export type Slideshare_Room_Inc_Input = {
+  presentingSlide?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "slideshare.Room" */
+export type Slideshare_Room_Insert_Input = {
+  RoomParticipants?: Maybe<Slideshare_RoomParticipant_Arr_Rel_Insert_Input>;
+  Slide?: Maybe<Slideshare_Slide_Obj_Rel_Insert_Input>;
+  description?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  presentingSlide?: Maybe<Scalars['Int']>;
+};
+
+/** response of any mutation on the table "slideshare.Room" */
+export type Slideshare_Room_Mutation_Response = {
+  __typename?: 'slideshare_Room_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Slideshare_Room>;
+};
+
+/** input type for inserting object relation for remote table "slideshare.Room" */
+export type Slideshare_Room_Obj_Rel_Insert_Input = {
+  data: Slideshare_Room_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Slideshare_Room_On_Conflict>;
+};
+
+/** on conflict condition type for table "slideshare.Room" */
+export type Slideshare_Room_On_Conflict = {
+  constraint: Slideshare_Room_Constraint;
+  update_columns?: Array<Slideshare_Room_Update_Column>;
+  where?: Maybe<Slideshare_Room_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "slideshare.Room". */
+export type Slideshare_Room_Order_By = {
+  RoomParticipants_aggregate?: Maybe<Slideshare_RoomParticipant_Aggregate_Order_By>;
+  Slide?: Maybe<Slideshare_Slide_Order_By>;
+  createdAt?: Maybe<Order_By>;
+  createdBy?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  presentingSlide?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: slideshare_Room */
+export type Slideshare_Room_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "slideshare.Room" */
+export enum Slideshare_Room_Select_Column {
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  CreatedBy = 'createdBy',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  PresentingSlide = 'presentingSlide',
+  /** column name */
+  UpdatedAt = 'updatedAt'
+}
+
+/** input type for updating data in table "slideshare.Room" */
+export type Slideshare_Room_Set_Input = {
+  description?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  presentingSlide?: Maybe<Scalars['Int']>;
+};
+
+/** update columns of table "slideshare.Room" */
+export enum Slideshare_Room_Update_Column {
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  PresentingSlide = 'presentingSlide'
+}
+
 /** columns and relationships of "slideshare.Slide" */
 export type Slideshare_Slide = {
   __typename?: 'slideshare_Slide';
@@ -2835,6 +3359,14 @@ export type Subscription_Root = {
   slideshare_Profile: Array<Slideshare_Profile>;
   /** fetch data from the table: "slideshare.Profile" using primary key columns */
   slideshare_Profile_by_pk?: Maybe<Slideshare_Profile>;
+  /** fetch data from the table: "slideshare.Room" */
+  slideshare_Room: Array<Slideshare_Room>;
+  /** fetch data from the table: "slideshare.RoomParticipant" */
+  slideshare_RoomParticipant: Array<Slideshare_RoomParticipant>;
+  /** fetch data from the table: "slideshare.RoomParticipant" using primary key columns */
+  slideshare_RoomParticipant_by_pk?: Maybe<Slideshare_RoomParticipant>;
+  /** fetch data from the table: "slideshare.Room" using primary key columns */
+  slideshare_Room_by_pk?: Maybe<Slideshare_Room>;
   /** fetch data from the table: "slideshare.Slide" */
   slideshare_Slide: Array<Slideshare_Slide>;
   /** fetch data from the table: "slideshare.Slide" using primary key columns */
@@ -3022,6 +3554,34 @@ export type Subscription_RootSlideshare_ProfileArgs = {
 
 export type Subscription_RootSlideshare_Profile_By_PkArgs = {
   userId: Scalars['String'];
+};
+
+
+export type Subscription_RootSlideshare_RoomArgs = {
+  distinct_on?: Maybe<Array<Slideshare_Room_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_Room_Order_By>>;
+  where?: Maybe<Slideshare_Room_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_RoomParticipantArgs = {
+  distinct_on?: Maybe<Array<Slideshare_RoomParticipant_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_RoomParticipant_Order_By>>;
+  where?: Maybe<Slideshare_RoomParticipant_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_RoomParticipant_By_PkArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type Subscription_RootSlideshare_Room_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -3306,6 +3866,36 @@ export type DeleteSlideMutationVariables = Exact<{
 
 
 export type DeleteSlideMutation = { __typename?: 'mutation_root', delete_slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number } | null | undefined };
+
+export type CreateRoomMutationVariables = Exact<{
+  name: Scalars['String'];
+  description: Scalars['String'];
+}>;
+
+
+export type CreateRoomMutation = { __typename?: 'mutation_root', insert_slideshare_Room_one?: { __typename?: 'slideshare_Room', id: number } | null | undefined };
+
+export type UpdateRoomMutationVariables = Exact<{
+  name?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  presentingSlide?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type UpdateRoomMutation = { __typename?: 'mutation_root', update_slideshare_Room_by_pk?: { __typename?: 'slideshare_Room', id: number } | null | undefined };
+
+export type RoomsSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RoomsSubscription = { __typename?: 'subscription_root', slideshare_Room: Array<{ __typename?: 'slideshare_Room', id: number, description: string, name: string, createdAt: any, updatedAt: any, createdBy: string, Slide?: { __typename?: 'slideshare_Slide', id: number } | null | undefined, RoomParticipants: Array<{ __typename?: 'slideshare_RoomParticipant', userId: string, Profile: { __typename?: 'slideshare_Profile', name?: string | null | undefined, profile?: string | null | undefined } }> }> };
+
+export type JoinRoomMutationMutationVariables = Exact<{
+  roomId: Scalars['Int'];
+}>;
+
+
+export type JoinRoomMutationMutation = { __typename?: 'mutation_root', insert_slideshare_RoomParticipant_one?: { __typename?: 'slideshare_RoomParticipant', roomId: number } | null | undefined };
 
 export type UploadPdfMutationVariables = Exact<{
   pdfName: Scalars['String'];
@@ -4523,6 +5113,159 @@ export function useDeleteSlideMutation(baseOptions?: Apollo.MutationHookOptions<
 export type DeleteSlideMutationHookResult = ReturnType<typeof useDeleteSlideMutation>;
 export type DeleteSlideMutationResult = Apollo.MutationResult<DeleteSlideMutation>;
 export type DeleteSlideMutationOptions = Apollo.BaseMutationOptions<DeleteSlideMutation, DeleteSlideMutationVariables>;
+export const CreateRoomDocument = gql`
+    mutation createRoom($name: String!, $description: String!) {
+  insert_slideshare_Room_one(object: {name: $name, description: $description}) {
+    id
+  }
+}
+    `;
+export type CreateRoomMutationFn = Apollo.MutationFunction<CreateRoomMutation, CreateRoomMutationVariables>;
+
+/**
+ * __useCreateRoomMutation__
+ *
+ * To run a mutation, you first call `useCreateRoomMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateRoomMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createRoomMutation, { data, loading, error }] = useCreateRoomMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      description: // value for 'description'
+ *   },
+ * });
+ */
+export function useCreateRoomMutation(baseOptions?: Apollo.MutationHookOptions<CreateRoomMutation, CreateRoomMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateRoomMutation, CreateRoomMutationVariables>(CreateRoomDocument, options);
+      }
+export type CreateRoomMutationHookResult = ReturnType<typeof useCreateRoomMutation>;
+export type CreateRoomMutationResult = Apollo.MutationResult<CreateRoomMutation>;
+export type CreateRoomMutationOptions = Apollo.BaseMutationOptions<CreateRoomMutation, CreateRoomMutationVariables>;
+export const UpdateRoomDocument = gql`
+    mutation updateRoom($name: String, $description: String, $id: Int!, $presentingSlide: Int) {
+  update_slideshare_Room_by_pk(
+    pk_columns: {id: $id}
+    _set: {description: $description, presentingSlide: $presentingSlide, name: $name}
+  ) {
+    id
+  }
+}
+    `;
+export type UpdateRoomMutationFn = Apollo.MutationFunction<UpdateRoomMutation, UpdateRoomMutationVariables>;
+
+/**
+ * __useUpdateRoomMutation__
+ *
+ * To run a mutation, you first call `useUpdateRoomMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateRoomMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateRoomMutation, { data, loading, error }] = useUpdateRoomMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      description: // value for 'description'
+ *      id: // value for 'id'
+ *      presentingSlide: // value for 'presentingSlide'
+ *   },
+ * });
+ */
+export function useUpdateRoomMutation(baseOptions?: Apollo.MutationHookOptions<UpdateRoomMutation, UpdateRoomMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateRoomMutation, UpdateRoomMutationVariables>(UpdateRoomDocument, options);
+      }
+export type UpdateRoomMutationHookResult = ReturnType<typeof useUpdateRoomMutation>;
+export type UpdateRoomMutationResult = Apollo.MutationResult<UpdateRoomMutation>;
+export type UpdateRoomMutationOptions = Apollo.BaseMutationOptions<UpdateRoomMutation, UpdateRoomMutationVariables>;
+export const RoomsDocument = gql`
+    subscription rooms {
+  slideshare_Room {
+    id
+    description
+    Slide {
+      id
+    }
+    RoomParticipants {
+      userId
+      Profile {
+        name
+        profile
+      }
+    }
+    name
+    createdAt
+    updatedAt
+    createdBy
+  }
+}
+    `;
+
+/**
+ * __useRoomsSubscription__
+ *
+ * To run a query within a React component, call `useRoomsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useRoomsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRoomsSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRoomsSubscription(baseOptions?: Apollo.SubscriptionHookOptions<RoomsSubscription, RoomsSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<RoomsSubscription, RoomsSubscriptionVariables>(RoomsDocument, options);
+      }
+export type RoomsSubscriptionHookResult = ReturnType<typeof useRoomsSubscription>;
+export type RoomsSubscriptionResult = Apollo.SubscriptionResult<RoomsSubscription>;
+export const JoinRoomMutationDocument = gql`
+    mutation JoinRoomMutation($roomId: Int!) {
+  insert_slideshare_RoomParticipant_one(
+    object: {roomId: $roomId}
+    on_conflict: {constraint: RoomParticipant_pkey, update_columns: [roomId]}
+  ) {
+    roomId
+  }
+}
+    `;
+export type JoinRoomMutationMutationFn = Apollo.MutationFunction<JoinRoomMutationMutation, JoinRoomMutationMutationVariables>;
+
+/**
+ * __useJoinRoomMutationMutation__
+ *
+ * To run a mutation, you first call `useJoinRoomMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useJoinRoomMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [joinRoomMutationMutation, { data, loading, error }] = useJoinRoomMutationMutation({
+ *   variables: {
+ *      roomId: // value for 'roomId'
+ *   },
+ * });
+ */
+export function useJoinRoomMutationMutation(baseOptions?: Apollo.MutationHookOptions<JoinRoomMutationMutation, JoinRoomMutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<JoinRoomMutationMutation, JoinRoomMutationMutationVariables>(JoinRoomMutationDocument, options);
+      }
+export type JoinRoomMutationMutationHookResult = ReturnType<typeof useJoinRoomMutationMutation>;
+export type JoinRoomMutationMutationResult = Apollo.MutationResult<JoinRoomMutationMutation>;
+export type JoinRoomMutationMutationOptions = Apollo.BaseMutationOptions<JoinRoomMutationMutation, JoinRoomMutationMutationVariables>;
 export const UploadPdfDocument = gql`
     mutation UploadPdf($pdfName: String!) {
   uploadPdf(pdfName: $pdfName) {

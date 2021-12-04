@@ -22,8 +22,8 @@ functions:
   token:
     handler: token_handler.hello
     environment:
-      appID: ${file(../../secrets.json):appId}
-      appCertificate: ${file(../../secrets.json):appCertificate}
+      appID: ${file(./secrets.json):appId}
+      appCertificate: ${file(./secrets.json):appCertificate}
     events:
       - http:
           path: /token

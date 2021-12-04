@@ -30,7 +30,6 @@ export default function Comments(props: Props) {
             )
         }
         return data?.slideshare_Comment.map((comment) => {
-            console.log({ comment: comment.createdBy, presenter: props.presenterUserId, isSame: comment.createdBy === props.presenterUserId })
             const isPresenter = props.presenterUserId ? comment.createdBy === props.presenterUserId : false
             return <>
                 <Comment
