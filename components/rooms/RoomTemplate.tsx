@@ -14,12 +14,15 @@ export default () => {
     const { joinRoom } = useRoomParticipantMutation()
     const { user } = useUser()
 
-    const [state, setState] = useState<MyRoomState>({ participatedRoomId: 2, role: "participant" });
+    const [state, setState] = useState<MyRoomState>({ participatedRoomId: 0, role: "participant" });
     const joinedRoom = rooms.find(room => room.id === state.participatedRoomId)
 
     const onClickJoin = async (roomId: number) => {
         await joinRoom(roomId)
-        setState({ participatedRoomId: roomId, role: "participant" });
+        const joinedRoom = rooms.find(room => room.id === roomId)
+        const isRoomAdmin = joinedRoom?.createdBy === user?.attributes.sub
+
+        setState({ participatedRoomId: roomId, role: isRoomAdmin ? "owner" : "participant" });
     }
 
     const { button, modal } = useRoomSetModal()
@@ -41,6 +44,7 @@ export default () => {
                         <RoomCard
                             room={room}
                             onClickJoin={onClickJoin}
+                            role={state.role}
                             joined={state.participatedRoomId === room.id} />
                     </div>
                 ))}
@@ -53,19 +57,24 @@ export default () => {
                         <RoomCard
                             room={room}
                             onClickJoin={onClickJoin}
+                            role={state.role}
                             joined={state.participatedRoomId === room.id} />
                     </div>
                 ))}
             </div>
 
-            {joinedRoom && <div style={{
-                position: "fixed",
-                bottom: "0",
-                width: "100%",
-                height: "200px"
-            }}>
-                <SlidePicker />
-            </div>}
+            {joinedRoom &&
+                <>
+                    <div style={{
+                        position: "fixed",
+                        bottom: "0",
+                        width: "100%",
+                        height: "200px"
+                    }}>
+                        <SlidePicker />
+                    </div> <div style={{ height: "200px" }} />
+                </>}
+
         </div>
     )
 }

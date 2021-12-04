@@ -5,19 +5,12 @@ import { QueryUserSlideQuery, QueryUserSlideQueryResult, Slideshare_Slide, useQu
 import { Auth } from 'aws-amplify';
 import SlideCard from "../../components/slide/SlideCard";
 import { Button, Typography } from "@mui/material";
+import useMySlidePagenation from "../../model/util-hooks/useMySlidePagenation";
 
+//TODO: Pagenationをhooksに落とし込めないかな
 export default () => {
-    const { user } = useUser()
+    const { localSlides, onDeleteCard, loadMore } = useMySlidePagenation()
     const { goSignin } = useSignin()
-    const [offset, setOffset] = useState(0)
-    const { data, loading, error, refetch } = useQueryUserSlideQuery({
-        variables: {
-            offset: offset,
-            userId: user?.attributes.sub || ""
-        }
-    })
-    const [localSlides, setLocalSlides] = useState<QueryUserSlideQuery | undefined>(undefined)
-
     useEffect(() => {
         Auth.currentAuthenticatedUser().catch(() => {
             goSignin()
@@ -30,44 +23,13 @@ export default () => {
                 <SlideCard
                     slideId={slide.id}
                     imageUrl={slide.Pages ? slide.Pages[0]?.imageUrl : undefined}
-                    onDeleteCard={onDeleteCard} />
+                    onDeleteCard={onDeleteCard}
+                    linkTo="slide"
+                    actionMode="mypage" />
             </div>
         })
     }
 
-    const onDeleteCard = (slideId: number) => {
-        if (localSlides) {
-            const newSlides = localSlides.slideshare_Slide.filter((slide) => {
-                return slide.id !== slideId
-            })
-            setLocalSlides({
-                ...data,
-                slideshare_Slide: newSlides
-            })
-        }
-    }
-
-    //TODO: クエリでとってきたものをローカルに持って表示するケースのベストプラクティスは？
-    useEffect(() => {
-        if (data?.slideshare_Slide && !localSlides) {
-            setLocalSlides(data)
-        }
-    }, [data])
-
-    const loadMore = async () => {
-        const { data: newData } = await refetch({
-            userId: user?.attributes.sub || "",
-            offset: offset + 10
-        })
-        if (localSlides) {
-            const newSlides = localSlides.slideshare_Slide.concat(newData?.slideshare_Slide)
-            setLocalSlides({
-                ...data,
-                slideshare_Slide: newSlides
-            })
-            setOffset(offset + 10)
-        }
-    }
 
     return (
         <div>

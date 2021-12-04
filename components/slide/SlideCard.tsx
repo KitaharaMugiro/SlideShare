@@ -1,23 +1,23 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
-import { useEffect, useState } from "react";
-import { Storage } from "aws-amplify"
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import { Storage } from "aws-amplify";
 import { useRouter } from 'next/dist/client/router';
-import useSlide from '../../model/hooks/useSlide';
 import Link from 'next/link';
+import * as React from 'react';
+import { useEffect, useState } from "react";
+import useSlide from '../../model/hooks/useSlide';
 
 interface Props {
     imageUrl: string | undefined | null
     slideId: number
+    actionMode: "mypage" | "pick" | "none"
+    linkTo: "slide" | "presentation"
     onDeleteCard?: (slideId: number) => void
+    onClickPick?: (slideId: number) => void
 }
 
 export default function SlideCard(props: Props) {
-    const router = useRouter()
     const { deleteSlide } = useSlide()
 
     const [url, setUrl] = useState("")
@@ -42,42 +42,58 @@ export default function SlideCard(props: Props) {
         }
     }
 
+    const renderActionsAccordingToMode = () => {
+        switch (props.actionMode) {
+            case "mypage":
+                return <>
+                    <Button
+                        href={`/edit/${props.slideId}`}
+                        size="small" color="primary">
+                        Edit
+                    </Button>
+                    <Button
+                        onClick={onClickDelete}
+                        size="small" color="error">
+                        Delete
+                    </Button>
+                </>
+            case "pick":
+                return <>
+                    <span style={{ marginRight: 10 }}>
+                        {"ID: " + props.slideId}
+                    </span>
+                    <Button
+                        onClick={() => { props.onClickPick && props.onClickPick(props.slideId) }}
+                        size="small" color="primary" variant="outlined">
+                        Use this
+                    </Button>
+                </>
+            case "none":
+                return <>
+                    <span style={{ marginRight: 10 }}>
+                        {"ID: " + props.slideId}
+                    </span>
+                </>
+            default:
+                return <div />
+        }
+    }
+
     return (
         <Card sx={{ width: 280, height: 185 }}>
-            <Link href={`/slide/${props.slideId}`}>
-                <a>
+            <Link href={`/${props.linkTo || "slide"}/${props.slideId}`} passHref>
+                <a target="_blank" rel="noreferrer">
                     <CardActionArea>
                         <CardMedia
                             component="img"
                             height="140"
                             image={url}
                         />
-                        {/* <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        Lizard
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000
-                        species, ranging across all continents except Antarctica
-                    </Typography>
-                </CardContent> */}
                     </CardActionArea>
                 </a>
             </Link>
             <CardActions>
-
-                <Button
-                    href={`/edit/${props.slideId}`}
-                    size="small" color="primary">
-                    Edit
-                </Button>
-
-
-                <Button
-                    onClick={onClickDelete}
-                    size="small" color="error">
-                    Delete
-                </Button>
+                {renderActionsAccordingToMode()}
             </CardActions>
         </Card>
     );

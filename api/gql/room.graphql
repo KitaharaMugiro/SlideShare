@@ -16,12 +16,21 @@ subscription rooms {
     description
     Slide {
       id
+      Pages(order_by:{pageNumber: asc}, limit:1) {
+          imageUrl
+      }
     }
     RoomParticipants {
       userId
       Profile {
         name
         profile
+      }
+      Slide {
+        id
+        Pages(order_by:{pageNumber: asc}, limit:1) {
+          imageUrl
+        }
       }
     }
     name

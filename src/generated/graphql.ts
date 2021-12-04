@@ -3888,7 +3888,7 @@ export type UpdateRoomMutation = { __typename?: 'mutation_root', update_slidesha
 export type RoomsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RoomsSubscription = { __typename?: 'subscription_root', slideshare_Room: Array<{ __typename?: 'slideshare_Room', id: number, description: string, name: string, createdAt: any, updatedAt: any, createdBy: string, Slide?: { __typename?: 'slideshare_Slide', id: number } | null | undefined, RoomParticipants: Array<{ __typename?: 'slideshare_RoomParticipant', userId: string, Profile: { __typename?: 'slideshare_Profile', name?: string | null | undefined, profile?: string | null | undefined } }> }> };
+export type RoomsSubscription = { __typename?: 'subscription_root', slideshare_Room: Array<{ __typename?: 'slideshare_Room', id: number, description: string, name: string, createdAt: any, updatedAt: any, createdBy: string, Slide?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', imageUrl?: string | null | undefined }> } | null | undefined, RoomParticipants: Array<{ __typename?: 'slideshare_RoomParticipant', userId: string, Profile: { __typename?: 'slideshare_Profile', name?: string | null | undefined, profile?: string | null | undefined }, Slide?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', imageUrl?: string | null | undefined }> } | null | undefined }> }> };
 
 export type JoinRoomMutationMutationVariables = Exact<{
   roomId: Scalars['Int'];
@@ -3896,6 +3896,14 @@ export type JoinRoomMutationMutationVariables = Exact<{
 
 
 export type JoinRoomMutationMutation = { __typename?: 'mutation_root', insert_slideshare_RoomParticipant_one?: { __typename?: 'slideshare_RoomParticipant', roomId: number } | null | undefined };
+
+export type UpdateRoomParticipantMutationMutationVariables = Exact<{
+  userId: Scalars['String'];
+  slideId: Scalars['Int'];
+}>;
+
+
+export type UpdateRoomParticipantMutationMutation = { __typename?: 'mutation_root', update_slideshare_RoomParticipant_by_pk?: { __typename?: 'slideshare_RoomParticipant', roomId: number } | null | undefined };
 
 export type UploadPdfMutationVariables = Exact<{
   pdfName: Scalars['String'];
@@ -5193,12 +5201,21 @@ export const RoomsDocument = gql`
     description
     Slide {
       id
+      Pages(order_by: {pageNumber: asc}, limit: 1) {
+        imageUrl
+      }
     }
     RoomParticipants {
       userId
       Profile {
         name
         profile
+      }
+      Slide {
+        id
+        Pages(order_by: {pageNumber: asc}, limit: 1) {
+          imageUrl
+        }
       }
     }
     name
@@ -5266,6 +5283,43 @@ export function useJoinRoomMutationMutation(baseOptions?: Apollo.MutationHookOpt
 export type JoinRoomMutationMutationHookResult = ReturnType<typeof useJoinRoomMutationMutation>;
 export type JoinRoomMutationMutationResult = Apollo.MutationResult<JoinRoomMutationMutation>;
 export type JoinRoomMutationMutationOptions = Apollo.BaseMutationOptions<JoinRoomMutationMutation, JoinRoomMutationMutationVariables>;
+export const UpdateRoomParticipantMutationDocument = gql`
+    mutation updateRoomParticipantMutation($userId: String!, $slideId: Int!) {
+  update_slideshare_RoomParticipant_by_pk(
+    pk_columns: {userId: $userId}
+    _set: {slideId: $slideId}
+  ) {
+    roomId
+  }
+}
+    `;
+export type UpdateRoomParticipantMutationMutationFn = Apollo.MutationFunction<UpdateRoomParticipantMutationMutation, UpdateRoomParticipantMutationMutationVariables>;
+
+/**
+ * __useUpdateRoomParticipantMutationMutation__
+ *
+ * To run a mutation, you first call `useUpdateRoomParticipantMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateRoomParticipantMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateRoomParticipantMutationMutation, { data, loading, error }] = useUpdateRoomParticipantMutationMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      slideId: // value for 'slideId'
+ *   },
+ * });
+ */
+export function useUpdateRoomParticipantMutationMutation(baseOptions?: Apollo.MutationHookOptions<UpdateRoomParticipantMutationMutation, UpdateRoomParticipantMutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateRoomParticipantMutationMutation, UpdateRoomParticipantMutationMutationVariables>(UpdateRoomParticipantMutationDocument, options);
+      }
+export type UpdateRoomParticipantMutationMutationHookResult = ReturnType<typeof useUpdateRoomParticipantMutationMutation>;
+export type UpdateRoomParticipantMutationMutationResult = Apollo.MutationResult<UpdateRoomParticipantMutationMutation>;
+export type UpdateRoomParticipantMutationMutationOptions = Apollo.BaseMutationOptions<UpdateRoomParticipantMutationMutation, UpdateRoomParticipantMutationMutationVariables>;
 export const UploadPdfDocument = gql`
     mutation UploadPdf($pdfName: String!) {
   uploadPdf(pdfName: $pdfName) {

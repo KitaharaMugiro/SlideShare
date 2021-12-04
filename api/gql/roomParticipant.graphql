@@ -3,3 +3,9 @@ mutation JoinRoomMutation($roomId: Int!) {
     roomId
   }
 }
+
+mutation updateRoomParticipantMutation($userId: String!, $slideId: Int!) {
+  update_slideshare_RoomParticipant_by_pk(pk_columns: {userId: $userId}, _set: {slideId: $slideId}) {
+    roomId
+  }
+}

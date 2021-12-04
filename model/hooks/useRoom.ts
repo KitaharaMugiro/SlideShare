@@ -1,8 +1,9 @@
 import { addHours, format } from "date-fns"
 import { useState } from "react"
-import { useCreateRoomMutation, useJoinRoomMutationMutation, useRoomsSubscription, useUpdateRoomMutation } from "../../src/generated/graphql"
+import { useCreateRoomMutation, useJoinRoomMutationMutation, useRoomsSubscription, useUpdateRoomMutation, useUpdateRoomParticipantMutationMutation } from "../../src/generated/graphql"
 import { Room } from "../Room"
 import { useSnackMessage } from "../util-hooks/useSnackMessage"
+import useUser from "../util-hooks/useUser"
 
 export default () => {
     const [date] = useState(addHours(new Date(), -3))
@@ -14,8 +15,9 @@ export default () => {
             id: r.id,
             name: r.name,
             description: r.description,
-            participants: r.RoomParticipants.map(p => { return { id: p.userId, name: p.Profile.name || "Anon" } }) || [],
+            participants: r.RoomParticipants.map(p => { return { id: p.userId, name: p.Profile.name || "Anon", slideId: p.Slide?.id, slideImageUrl: (p.Slide?.Pages && p.Slide?.Pages.length > 0) ? p.Slide?.Pages[0].imageUrl : null } }) || [],
             status: r.Slide ? "open" : "waiting",
+            presentingSlide: { slideId: r.Slide?.id, slideImageUrl: r.Slide?.Pages && r.Slide?.Pages.length > 0 ? r.Slide?.Pages[0].imageUrl : null },
             createdBy: r.createdBy
         }
     }) || []
@@ -55,12 +57,25 @@ export const useRoomMutation = () => {
 }
 
 export const useRoomParticipantMutation = () => {
+    const { user } = useUser()
     const { displayErrorMessage } = useSnackMessage()
     const [joinRoomMutation] = useJoinRoomMutationMutation({ onError: (e) => displayErrorMessage(e.message) })
+    const [updateRoomMutation] = useUpdateRoomParticipantMutationMutation({ onError: (e) => displayErrorMessage(e.message) })
 
     const joinRoom = async (roomId: number) => {
         await joinRoomMutation({ variables: { roomId } })
     }
 
-    return { joinRoom }
+    const updatePresentingSlide = async (slideId: number) => {
+        const sub = user?.attributes.sub
+        if (!sub) return
+        await updateRoomMutation({
+            variables: {
+                userId: sub,
+                slideId: slideId
+            }
+        })
+    }
+
+    return { joinRoom, updatePresentingSlide }
 }
