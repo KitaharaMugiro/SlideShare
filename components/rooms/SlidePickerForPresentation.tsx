@@ -17,9 +17,9 @@ interface Props {
 }
 
 export default (props: Props) => {
-    const { startPresentation } = useRoomMutation()
+    const { updatePresentingSlide } = useRoomMutation()
     const onClickPick = async (slideId: number) => {
-        await startPresentation(props.roomId, slideId)
+        await updatePresentingSlide(props.roomId, slideId)
     }
 
     const renderCards = () => {

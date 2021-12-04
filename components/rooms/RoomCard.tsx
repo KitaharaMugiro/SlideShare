@@ -5,6 +5,9 @@ import MuteButton from "../common/MuteButton";
 import RoomParticipants from "./RoomParticipants";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SlidePickerForPresentation from "./SlidePickerForPresentation";
+import SlideCard from "../slide/SlideCard";
+import { useRoomMutation } from "../../model/hooks/useRoom";
+import { Router, useRouter } from "next/dist/client/router";
 interface Props {
     joined: boolean
     room: Room
@@ -13,8 +16,31 @@ interface Props {
 }
 
 export default (props: Props) => {
+    const router = useRouter()
+    const { updatePresentingSlide } = useRoomMutation()
+
+    const onWithdrawPresentation = async () => {
+        await updatePresentingSlide(props.room.id, null)
+    }
+
+    const onGoingPresentation = async (slideId: number) => {
+        router.push(`presentation/${slideId}?roomId=${props.room.id}`)
+    }
+
 
     const renderSlides = () => {
+        if (props.room.presentingSlide) {
+            const slide = props.room.presentingSlide;
+            return <div style={{ marginLeft: 15 }}>
+                <SlideCard
+                    slideId={slide.slideId}
+                    imageUrl={slide.slideImageUrl}
+                    actionMode={props.role === "participant" ? "presenting-participant" : "presenting-owner"}
+                    onDeleteCard={onWithdrawPresentation}
+                    onClickPick={onGoingPresentation}
+                    linkTo="presentation" />
+            </div>
+        }
         if (!props.joined) return <div />
         const slides: { userName: string, slideId: number, imageUrl: string | null | undefined }[] = props.room.participants.filter(p => p.slideId).map(p => {
             return {

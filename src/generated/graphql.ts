@@ -3879,11 +3879,18 @@ export type UpdateRoomMutationVariables = Exact<{
   name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
-  presentingSlide?: Maybe<Scalars['Int']>;
 }>;
 
 
 export type UpdateRoomMutation = { __typename?: 'mutation_root', update_slideshare_Room_by_pk?: { __typename?: 'slideshare_Room', id: number } | null | undefined };
+
+export type UpdateRoomPresentationSlideIdMutationVariables = Exact<{
+  id: Scalars['Int'];
+  presentingSlide?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type UpdateRoomPresentationSlideIdMutation = { __typename?: 'mutation_root', update_slideshare_Room_by_pk?: { __typename?: 'slideshare_Room', id: number } | null | undefined };
 
 export type RoomsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -5156,10 +5163,10 @@ export type CreateRoomMutationHookResult = ReturnType<typeof useCreateRoomMutati
 export type CreateRoomMutationResult = Apollo.MutationResult<CreateRoomMutation>;
 export type CreateRoomMutationOptions = Apollo.BaseMutationOptions<CreateRoomMutation, CreateRoomMutationVariables>;
 export const UpdateRoomDocument = gql`
-    mutation updateRoom($name: String, $description: String, $id: Int!, $presentingSlide: Int) {
+    mutation updateRoom($name: String, $description: String, $id: Int!) {
   update_slideshare_Room_by_pk(
     pk_columns: {id: $id}
-    _set: {description: $description, presentingSlide: $presentingSlide, name: $name}
+    _set: {description: $description, name: $name}
   ) {
     id
   }
@@ -5183,7 +5190,6 @@ export type UpdateRoomMutationFn = Apollo.MutationFunction<UpdateRoomMutation, U
  *      name: // value for 'name'
  *      description: // value for 'description'
  *      id: // value for 'id'
- *      presentingSlide: // value for 'presentingSlide'
  *   },
  * });
  */
@@ -5194,6 +5200,43 @@ export function useUpdateRoomMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UpdateRoomMutationHookResult = ReturnType<typeof useUpdateRoomMutation>;
 export type UpdateRoomMutationResult = Apollo.MutationResult<UpdateRoomMutation>;
 export type UpdateRoomMutationOptions = Apollo.BaseMutationOptions<UpdateRoomMutation, UpdateRoomMutationVariables>;
+export const UpdateRoomPresentationSlideIdDocument = gql`
+    mutation updateRoomPresentationSlideId($id: Int!, $presentingSlide: Int) {
+  update_slideshare_Room_by_pk(
+    pk_columns: {id: $id}
+    _set: {presentingSlide: $presentingSlide}
+  ) {
+    id
+  }
+}
+    `;
+export type UpdateRoomPresentationSlideIdMutationFn = Apollo.MutationFunction<UpdateRoomPresentationSlideIdMutation, UpdateRoomPresentationSlideIdMutationVariables>;
+
+/**
+ * __useUpdateRoomPresentationSlideIdMutation__
+ *
+ * To run a mutation, you first call `useUpdateRoomPresentationSlideIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateRoomPresentationSlideIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateRoomPresentationSlideIdMutation, { data, loading, error }] = useUpdateRoomPresentationSlideIdMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      presentingSlide: // value for 'presentingSlide'
+ *   },
+ * });
+ */
+export function useUpdateRoomPresentationSlideIdMutation(baseOptions?: Apollo.MutationHookOptions<UpdateRoomPresentationSlideIdMutation, UpdateRoomPresentationSlideIdMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateRoomPresentationSlideIdMutation, UpdateRoomPresentationSlideIdMutationVariables>(UpdateRoomPresentationSlideIdDocument, options);
+      }
+export type UpdateRoomPresentationSlideIdMutationHookResult = ReturnType<typeof useUpdateRoomPresentationSlideIdMutation>;
+export type UpdateRoomPresentationSlideIdMutationResult = Apollo.MutationResult<UpdateRoomPresentationSlideIdMutation>;
+export type UpdateRoomPresentationSlideIdMutationOptions = Apollo.BaseMutationOptions<UpdateRoomPresentationSlideIdMutation, UpdateRoomPresentationSlideIdMutationVariables>;
 export const RoomsDocument = gql`
     subscription rooms {
   slideshare_Room {

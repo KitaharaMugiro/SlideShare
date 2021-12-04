@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material"
 import { useAtom } from "jotai"
 import React, { useEffect, useState } from "react"
-import { useRealtimeCursor, useOnlineUsers, useRealtimeSharedState } from "realtimely"
+import { useRealtimeCursor, useOnlineUsers, useRealtimeSharedState, useRealtimeUserAction } from "realtimely"
 import { useWindowDimensions } from "../../model/util-hooks/useWindowDimentions"
 import { SlideStateAtom } from "../../model/jotai/SlideState"
 import pages from "../../pages"
@@ -18,13 +18,16 @@ import style from "./slideview.module.css"
 import useArrowKeyboardEvent from "../../model/util-hooks/useArrowKeyboardEvent"
 import { FullScreen, useFullScreenHandle } from "react-full-screen"
 import ControllerOnSlide from "./ControllerOnSlide"
+import { useRouter } from "next/dist/client/router"
 
 interface Props {
     initialSlide: QuerySlideQuery
     isAdmin: boolean
+    roomId?: number
 }
 
 export default (props: Props) => {
+    const router = useRouter()
     const { initialSlide, isAdmin } = props
     const slide = initialSlide?.slideshare_Slide_by_pk
     const latestConference = initialSlide?.slideshare_Conference ? initialSlide?.slideshare_Conference[0] : undefined
@@ -45,7 +48,7 @@ export default (props: Props) => {
         pageNumber: 0,
         enableCursor: false
     }, "slideState")
-
+    const { pushUserAction, createdUserAction } = useRealtimeUserAction()
 
     //リアルタイムカーソル
     // const { renderCursors, onMouseMove } = useRealtimeCursor(1000)
@@ -123,6 +126,21 @@ export default (props: Props) => {
         }
     }
 
+    const onFinishPresentation = () => {
+        pushUserAction("finishPresentation", "finish")
+    }
+
+    useEffect(() => {
+        if (createdUserAction) {
+            window.alert("登壇が終了しました。")
+            if (props.roomId) {
+                router.push("/rooms?roomId=" + props.roomId)
+            } else {
+                router.push("/slide/" + slide?.id)
+            }
+        }
+    }, [createdUserAction])
+
     //スライドサイズの計算
     const { width } = useWindowDimensions()
     const isRow = width > 800
@@ -161,7 +179,7 @@ export default (props: Props) => {
                         isSync={isSync}
                         syncSlide={syncSlide}
                     />
-                    {isAdmin ? <AdminPresentationController /> : <UserPresentationController />}
+                    {isAdmin ? <AdminPresentationController onFinishPresentation={onFinishPresentation} /> : <UserPresentationController />}
                     {latestConference ? <ConferenceText
                         title={latestConference.title || ""}
                         startDate={latestConference.startDate || ""}

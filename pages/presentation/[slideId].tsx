@@ -21,7 +21,7 @@ import style from "./style.module.css";
 const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const t = useTranslations("Presentation")
     const router = useRouter()
-    const { slideId } = router.query
+    const { slideId, roomId } = router.query
 
     const { user } = useUser()
     const [uuid] = useState(uuidv4())
@@ -45,42 +45,44 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
 
     const renderSlideIfActiveConference = () => {
-        if (!isAdmin) {
-            if (conferenceModel?.state === "beforeStart") {
-                return <div>
-                    <ConferenceSubscribeMessage
-                        conference={conferenceModel}
-                        slideId={Number(slideId)} />
-                    {/* TODO: このunwrap微妙 */}
-                    {/* スライド */}
-                    {initialSlide &&
-                        <StaticSlideView initialSlide={initialSlide} isAdmin={isAdmin} />}
+        if (!roomId) {
+            if (!isAdmin) {
+                if (conferenceModel?.state === "beforeStart") {
+                    return <div>
+                        <ConferenceSubscribeMessage
+                            conference={conferenceModel}
+                            slideId={Number(slideId)} />
+                        {/* TODO: このunwrap微妙 */}
+                        {/* スライド */}
+                        {initialSlide &&
+                            <StaticSlideView initialSlide={initialSlide} isAdmin={isAdmin} />}
 
-                </div>
-            }
-            if (conferenceModel?.state === "completeEnd") {
-                return (
-                    <div>
-                        <Dialog
-                            open={true}
-                        >
-                            <DialogTitle id="alert-dialog-title">
-                                {t("finished-conference")}
-                            </DialogTitle>
-                            <DialogContent>
-                                <DialogContentText id="alert-dialog-description">
-                                    {t("finished-conference-description1", { date: conferenceModel.endDateString })}<br />
-                                    {t("finished-conference-description2")}
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={() => router.push(`/slide/${slideId}`)} autoFocus>
-                                    {t("go-to-slide")}
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
                     </div>
-                );
+                }
+                if (conferenceModel?.state === "completeEnd") {
+                    return (
+                        <div>
+                            <Dialog
+                                open={true}
+                            >
+                                <DialogTitle id="alert-dialog-title">
+                                    {t("finished-conference")}
+                                </DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText id="alert-dialog-description">
+                                        {t("finished-conference-description1", { date: conferenceModel.endDateString })}<br />
+                                        {t("finished-conference-description2")}
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={() => router.push(`/slide/${slideId}`)} autoFocus>
+                                        {t("go-to-slide")}
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
+                        </div>
+                    );
+                }
             }
         }
 
@@ -95,14 +97,17 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                     isHost={isAdmin} />
                 : <div />}
 
-            {isAdmin && conferenceModel &&
+            {!roomId && isAdmin && conferenceModel &&
                 <AdminWarningMessage
                     conferenceModel={conferenceModel} />}
 
 
             {/* スライド */}
             {initialSlide &&
-                <PresentationSlideView initialSlide={initialSlide} isAdmin={isAdmin} />}
+                <PresentationSlideView
+                    initialSlide={initialSlide}
+                    isAdmin={isAdmin}
+                    roomId={Number(roomId)} />}
 
         </>
     }

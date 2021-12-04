@@ -11,7 +11,7 @@ import useSlide from '../../model/hooks/useSlide';
 interface Props {
     imageUrl: string | undefined | null
     slideId: number
-    actionMode: "mypage" | "pick" | "none"
+    actionMode: "mypage" | "pick" | "presenting-participant" | "presenting-owner" | "none"
     linkTo: "slide" | "presentation"
     onDeleteCard?: (slideId: number) => void
     onClickPick?: (slideId: number) => void
@@ -67,6 +67,21 @@ export default function SlideCard(props: Props) {
                         size="small" color="primary" variant="outlined">
                         Use this
                     </Button>
+                </>
+            case "presenting-participant":
+                return <>
+                    <span style={{ marginRight: 10 }}>
+                        {"ID: " + props.slideId}
+                    </span>
+                    <Button onClick={() => props.onClickPick!(props.slideId)}>参加する</Button>
+                </>
+            case "presenting-owner":
+                return <>
+                    <span style={{ marginRight: 10 }}>
+                        {"ID: " + props.slideId}
+                    </span>
+                    <Button onClick={() => props.onClickPick!(props.slideId)}>参加する</Button>
+                    <Button color="warning" onClick={() => props.onDeleteCard!(props.slideId)}>取り下げる</Button>
                 </>
             case "none":
                 return <>

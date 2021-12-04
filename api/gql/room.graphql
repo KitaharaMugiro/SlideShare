@@ -4,8 +4,14 @@ mutation createRoom($name: String!, $description: String!) {
   }
 }
 
-mutation updateRoom($name: String, $description: String, $id: Int!,  $presentingSlide: Int ) {
-  update_slideshare_Room_by_pk(pk_columns: {id: $id}, _set: {description: $description, presentingSlide: $presentingSlide, name: $name}) {
+mutation updateRoom($name: String, $description: String, $id: Int! ) {
+  update_slideshare_Room_by_pk(pk_columns: {id: $id}, _set: {description: $description, name: $name}) {
+    id
+  }
+}
+
+mutation updateRoomPresentationSlideId($id: Int!,  $presentingSlide: Int ) {
+  update_slideshare_Room_by_pk(pk_columns: {id: $id}, _set: { presentingSlide: $presentingSlide}) {
     id
   }
 }

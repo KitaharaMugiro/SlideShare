@@ -1,5 +1,6 @@
 
-import React, { useState } from "react";
+import { useRouter } from "next/dist/client/router";
+import React, { useEffect, useState } from "react";
 import useRoom, { useRoomParticipantMutation } from "../../model/hooks/useRoom";
 import { MyRoomState } from "../../model/Room";
 import useRoomSetModal from "../../model/util-hooks/useRoomSetModal";
@@ -10,6 +11,8 @@ import RoomCard from "./RoomCard";
 import SlidePicker from "./SlidePicker";
 
 export default () => {
+    const router = useRouter()
+    const { roomId } = router.query
     const { rooms } = useRoom()
     const { joinRoom } = useRoomParticipantMutation()
     const { user } = useUser()
@@ -25,18 +28,25 @@ export default () => {
         setState({ participatedRoomId: roomId, role: isRoomAdmin ? "owner" : "participant" });
     }
 
+    useEffect(() => {
+        if (roomId) {
+            onClickJoin(Number(roomId))
+        }
+
+    }, [roomId])
+
     const { button, modal } = useRoomSetModal()
 
     return (
         <div className={style.root}>
             {button}
             {modal}
-            {/* {user && joinedRoom ?
+            {user && joinedRoom ?
                 < AgoraClient
                     uid={user.attributes.sub}
                     host={joinedRoom.createdBy}
                     channelName={`room-${joinedRoom.id}`}
-                    isHost={true} /> : <div />} */}
+                    isHost={true} /> : <div />}
             <h1>発表中</h1>
             <div className={style.card_list}>
                 {rooms.filter(room => room.status === "open").map(room => (
