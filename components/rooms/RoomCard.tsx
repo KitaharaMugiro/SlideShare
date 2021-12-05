@@ -1,5 +1,5 @@
-import { Button, Card, CardActions, CardHeader, IconButton } from "@mui/material";
-import React from "react";
+import { Button, Card, CardActions, CardHeader, IconButton, Menu, MenuItem } from "@mui/material";
+import React, { useState } from "react";
 import { Room } from "../../model/Room";
 import MuteButton from "../common/MuteButton";
 import RoomParticipants from "./RoomParticipants";
@@ -10,6 +10,7 @@ import { useRoomMutation } from "../../model/hooks/useRoom";
 import { Router, useRouter } from "next/dist/client/router";
 import AgoraClient from "../slide/AgoraClient";
 import useUser from "../../model/util-hooks/useUser";
+import RoomCardMenu from "./RoomCardMenu";
 interface Props {
     joined: boolean
     room: Room
@@ -67,21 +68,25 @@ export default (props: Props) => {
         </div>
     );
 
+    const [anchorEl, setAnchorEl] = useState<any>(null);
     return (
         <Card style={{ width: 330 }} >
             <CardHeader
                 title={props.room.name}
                 subheader={props.room.description}
                 action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
+                    <RoomCardMenu
+                        roomId={props.room.id}
+                        isOwner={props.role === "owner"} />
                 }
             />
             {renderSlides()}
             <CardActions>
                 {participantsView || <div />}
                 {!props.joined ? <Button size="small" onClick={() => props.onClickJoin(props.room.id)}>JOIN</Button> : <div />}
+            </CardActions>
+            <CardActions>
+                {props.joined ? <MuteButton /> : <div />}
                 {props.joined && user && props.room ?
                     < AgoraClient
                         uid={user.attributes.sub}
@@ -90,7 +95,6 @@ export default (props: Props) => {
                         isHost={true}
                         onClickLeave={props.onClickLeave} /> : <div />}
             </CardActions>
-            {props.joined ? <MuteButton /> : <div />}
         </Card>
     );
 

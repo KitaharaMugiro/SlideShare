@@ -1,6 +1,12 @@
 import { addHours, format } from "date-fns"
 import { useState } from "react"
-import { useCreateRoomMutation, useJoinRoomMutationMutation, useRoomsSubscription, useUpdateRoomMutation, useUpdateRoomParticipantMutationMutation, useUpdateRoomPresentationSlideIdMutation } from "../../src/generated/graphql"
+import {
+    useCreateRoomMutation,
+    useJoinRoomMutationMutation, useRoomsSubscription,
+    useUpdateRoomMutation, useUpdateRoomParticipantMutationMutation,
+    useUpdateRoomPresentationSlideIdMutation,
+    useDeleteRoomMutation
+} from "../../src/generated/graphql"
 import { Room } from "../Room"
 import { useSnackMessage } from "../util-hooks/useSnackMessage"
 import useUser from "../util-hooks/useUser"
@@ -31,17 +37,22 @@ export const useRoomMutation = () => {
     const [createRoomMutation] = useCreateRoomMutation({ onError: (e) => displayErrorMessage(e.message) })
     const [updateRoomMutation] = useUpdateRoomMutation({ onError: (e) => displayErrorMessage(e.message) })
     const [updateRoomPresantationSlideMutation] = useUpdateRoomPresentationSlideIdMutation({ onError: (e) => displayErrorMessage(e.message) })
+    const [deleteRoomMutation] = useDeleteRoomMutation({ onError: (e) => displayErrorMessage(e.message) })
 
     const createRoom = async (name: string, description: string) => {
         await createRoomMutation({ variables: { name, description } })
     }
 
-    const updateRoom = async (room: Room) => {
+    const deleteRoom = async (roomId: number) => {
+        await deleteRoomMutation({ variables: { id: roomId } })
+    }
+
+    const updateRoom = async (roomId: number, name: string, description: string) => {
         await updateRoomMutation({
             variables: {
-                id: room.id,
-                name: room.name,
-                description: room.description
+                id: roomId,
+                name: name,
+                description: description
             }
         })
     }
@@ -54,7 +65,7 @@ export const useRoomMutation = () => {
             }
         })
     }
-    return { createRoom, updateRoom, updatePresentingSlide }
+    return { createRoom, updateRoom, updatePresentingSlide, deleteRoom }
 }
 
 export const useRoomParticipantMutation = () => {

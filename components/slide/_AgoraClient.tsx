@@ -194,7 +194,7 @@ export const Controls = (props: {
     return (
         <div>
             {/* {trackState.audio ? "録音中" : "ミュート中"} */}
-            {props.onClickLeave ? <Button onClick={onClickLeave}>Leave</Button> : <div />}
+            {props.onClickLeave ? <Button color="warning" onClick={onClickLeave} disableElevation>退出する</Button> : <div />}
 
         </div>
     );

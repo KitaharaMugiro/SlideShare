@@ -30,7 +30,6 @@ export default () => {
     const onClickLeave = async () => {
         await joinRoom(undefined)
         setState({ participatedRoomId: undefined, role: "participant" });
-        //await client.leave()
     }
 
     useEffect(() => {

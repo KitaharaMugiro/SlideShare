@@ -5,17 +5,29 @@ import { usePageList } from "../hooks/usePageList"
 import { useRoomMutation } from "../hooks/useRoom"
 import { Page } from "../Page"
 
-export default () => {
+export default (updateRoomId?: number) => {
 
     const [openDialog, setOpenDialog] = useState(false)
-    const { createRoom } = useRoomMutation()
+    const { createRoom, updateRoom } = useRoomMutation()
+
 
     const onFinishDialog = async (values: { key: string, value: string }[]) => {
         setOpenDialog(false)
-        const name = values.find(v => v.key === "name")
-        const description = values.find(v => v.key === "description")
-        if (name && description) {
-            await createRoom(name.value, description.value)
+        if (updateRoomId) {
+            // update
+            const name = values.find(v => v.key === "name")
+            const description = values.find(v => v.key === "description")
+            if (name && description) {
+                await updateRoom(updateRoomId, name.value, description.value)
+            }
+        }
+        else {
+            // create
+            const name = values.find(v => v.key === "name")
+            const description = values.find(v => v.key === "description")
+            if (name && description) {
+                await createRoom(name.value, description.value)
+            }
         }
     }
 
@@ -35,5 +47,5 @@ export default () => {
         </Button>
     </>
 
-    return { modal, button }
+    return { modal, button, setOpenDialog }
 }

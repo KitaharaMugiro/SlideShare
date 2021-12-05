@@ -3892,6 +3892,13 @@ export type UpdateRoomPresentationSlideIdMutationVariables = Exact<{
 
 export type UpdateRoomPresentationSlideIdMutation = { __typename?: 'mutation_root', update_slideshare_Room_by_pk?: { __typename?: 'slideshare_Room', id: number } | null | undefined };
 
+export type DeleteRoomMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeleteRoomMutation = { __typename?: 'mutation_root', delete_slideshare_Room_by_pk?: { __typename?: 'slideshare_Room', id: number } | null | undefined };
+
 export type RoomsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5237,6 +5244,39 @@ export function useUpdateRoomPresentationSlideIdMutation(baseOptions?: Apollo.Mu
 export type UpdateRoomPresentationSlideIdMutationHookResult = ReturnType<typeof useUpdateRoomPresentationSlideIdMutation>;
 export type UpdateRoomPresentationSlideIdMutationResult = Apollo.MutationResult<UpdateRoomPresentationSlideIdMutation>;
 export type UpdateRoomPresentationSlideIdMutationOptions = Apollo.BaseMutationOptions<UpdateRoomPresentationSlideIdMutation, UpdateRoomPresentationSlideIdMutationVariables>;
+export const DeleteRoomDocument = gql`
+    mutation deleteRoom($id: Int!) {
+  delete_slideshare_Room_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteRoomMutationFn = Apollo.MutationFunction<DeleteRoomMutation, DeleteRoomMutationVariables>;
+
+/**
+ * __useDeleteRoomMutation__
+ *
+ * To run a mutation, you first call `useDeleteRoomMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteRoomMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteRoomMutation, { data, loading, error }] = useDeleteRoomMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteRoomMutation(baseOptions?: Apollo.MutationHookOptions<DeleteRoomMutation, DeleteRoomMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteRoomMutation, DeleteRoomMutationVariables>(DeleteRoomDocument, options);
+      }
+export type DeleteRoomMutationHookResult = ReturnType<typeof useDeleteRoomMutation>;
+export type DeleteRoomMutationResult = Apollo.MutationResult<DeleteRoomMutation>;
+export type DeleteRoomMutationOptions = Apollo.BaseMutationOptions<DeleteRoomMutation, DeleteRoomMutationVariables>;
 export const RoomsDocument = gql`
     subscription rooms {
   slideshare_Room {
