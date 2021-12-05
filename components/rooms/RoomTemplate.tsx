@@ -5,7 +5,6 @@ import useRoom, { useRoomParticipantMutation } from "../../model/hooks/useRoom";
 import { MyRoomState } from "../../model/Room";
 import useRoomSetModal from "../../model/util-hooks/useRoomSetModal";
 import useUser from "../../model/util-hooks/useUser";
-import AgoraClient from "../slide/AgoraClient";
 import style from "./room.module.css";
 import RoomCard from "./RoomCard";
 import SlidePicker from "./SlidePicker";
@@ -17,7 +16,7 @@ export default () => {
     const { joinRoom } = useRoomParticipantMutation()
     const { user } = useUser()
 
-    const [state, setState] = useState<MyRoomState>({ participatedRoomId: 0, role: "participant" });
+    const [state, setState] = useState<MyRoomState>({ participatedRoomId: undefined, role: "participant" });
     const joinedRoom = rooms.find(room => room.id === state.participatedRoomId)
 
     const onClickJoin = async (roomId: number) => {
@@ -26,6 +25,12 @@ export default () => {
         const isRoomAdmin = joinedRoom?.createdBy === user?.attributes.sub
 
         setState({ participatedRoomId: roomId, role: isRoomAdmin ? "owner" : "participant" });
+    }
+
+    const onClickLeave = async () => {
+        await joinRoom(undefined)
+        setState({ participatedRoomId: undefined, role: "participant" });
+        //await client.leave()
     }
 
     useEffect(() => {
@@ -41,12 +46,12 @@ export default () => {
         <div className={style.root}>
             {button}
             {modal}
-            {user && joinedRoom ?
+            {/* {user && joinedRoom ?
                 < AgoraClient
                     uid={user.attributes.sub}
                     host={joinedRoom.createdBy}
                     channelName={`room-${joinedRoom.id}`}
-                    isHost={true} /> : <div />}
+                    isHost={true} /> : <div />} */}
             <h1>発表中</h1>
             <div className={style.card_list}>
                 {rooms.filter(room => room.status === "open").map(room => (
@@ -54,6 +59,7 @@ export default () => {
                         <RoomCard
                             room={room}
                             onClickJoin={onClickJoin}
+                            onClickLeave={onClickLeave}
                             role={state.role}
                             joined={state.participatedRoomId === room.id} />
                     </div>
@@ -67,6 +73,7 @@ export default () => {
                         <RoomCard
                             room={room}
                             onClickJoin={onClickJoin}
+                            onClickLeave={onClickLeave}
                             role={state.role}
                             joined={state.participatedRoomId === room.id} />
                     </div>

@@ -63,7 +63,7 @@ export const useRoomParticipantMutation = () => {
     const [joinRoomMutation] = useJoinRoomMutationMutation({ onError: (e) => displayErrorMessage(e.message) })
     const [updateRoomMutation] = useUpdateRoomParticipantMutationMutation({ onError: (e) => displayErrorMessage(e.message) })
 
-    const joinRoom = async (roomId: number) => {
+    const joinRoom = async (roomId: number | undefined) => {
         await joinRoomMutation({ variables: { roomId } })
     }
 

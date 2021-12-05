@@ -16,6 +16,6 @@ export type Room = {
 }
 
 export type MyRoomState = {
-    participatedRoomId: number
+    participatedRoomId: number | undefined
     role: "owner" | "participant"
 }

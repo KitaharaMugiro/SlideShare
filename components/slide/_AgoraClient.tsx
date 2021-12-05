@@ -8,9 +8,6 @@ import React, { useEffect, useState } from "react";
 import { TrackStateAtom } from "../../model/jotai/TrackState";
 import { useGenerateAgoraTokenMutation } from "../../src/generated/graphql";
 
-const config: ClientConfig = {
-    mode: "live", codec: "vp8",
-};
 
 const appId: string = "b2a72b031fc64276bfee7398c7eb6d7b"; //ENTER APP ID HERE
 
@@ -20,9 +17,11 @@ interface Props {
     uid: string
     host: string
     isHost: boolean
+    onClickLeave?: () => void
 }
 
-const App = ({ channelName, uid, host, isHost }: Props) => {
+//Leaveボタンを返すという訳のわからない実装。dynamic importしないといけないのとuseClientが共有されないのが問題。
+const App = ({ channelName, uid, host, isHost, onClickLeave }: Props) => {
     const [getToken, { data, loading, error }] = useGenerateAgoraTokenMutation({ variables: { channelName, uid, host }, fetchPolicy: "no-cache" });
 
     useEffect(() => {
@@ -44,8 +43,8 @@ const App = ({ channelName, uid, host, isHost }: Props) => {
     return (
         <div>
             {isHost ?
-                <Call channelName={channelName} token={token} uid={uid} isHost={isHost} />
-                : <Subscribe channelName={channelName} token={token} uid={uid} isHost={isHost} />
+                <Call channelName={channelName} token={token} uid={uid} isHost={isHost} onClickLeave={onClickLeave} />
+                : <Subscribe channelName={channelName} token={token} uid={uid} isHost={isHost} onClickLeave={onClickLeave} />
             }
         </div>
     );
@@ -54,7 +53,7 @@ const App = ({ channelName, uid, host, isHost }: Props) => {
 // the create methods in the wrapper return a hook
 // the create method should be called outside the parent component
 // this hook can be used the get the client/stream in any component
-const useClient = createClient(config);
+const useClient = createClient({ mode: "live", codec: "vp8" });
 const useMicrophone = createMicrophoneAudioTrack();
 
 const Call = (props: {
@@ -62,8 +61,9 @@ const Call = (props: {
     token: string;
     uid: string;
     isHost: boolean;
+    onClickLeave?: () => void;
 }) => {
-    const { channelName, token, uid, isHost } = props;
+    const { channelName, token, uid, isHost, onClickLeave } = props;
     // using the hook to get access to the client object
     const client = useClient();
     // ready is a state variable, which returns true when the local tracks are initialized, untill then tracks variable is null
@@ -92,12 +92,8 @@ const Call = (props: {
                 console.log("leaving", user);
             });
 
-
-            console.log("leave from connected room");
             await client.leave();
 
-            console.log("join to new room");
-            console.log({ token, uid, channelName })
             await client.join(appId, channelName, token, uid);
             if (isHost) {
                 await client.setClientRole("host");
@@ -115,7 +111,7 @@ const Call = (props: {
     return (
         <div>
             {ready && track && (
-                <Controls track={track} />
+                <Controls track={track} onClickLeave={onClickLeave} />
             )}
         </div>
     );
@@ -126,10 +122,12 @@ const Subscribe = (props: {
     token: string;
     uid: string;
     isHost: boolean;
+    onClickLeave?: () => void;
 }) => {
-    const { channelName, token, uid, isHost } = props;
+    const { channelName, token, uid, isHost, onClickLeave } = props;
     // using the hook to get access to the client object
     const client = useClient();
+    const { ready, track } = useMicrophone();
 
     useEffect(() => {
         // function to initialise the SDK
@@ -153,19 +151,9 @@ const Subscribe = (props: {
                 console.log("leaving", user);
             });
 
-            try {
-                console.log("leave from connected room");
-                await client.leave();
-            } catch (e) {
-                console.log("leave error", e)
-            }
+            await client.leave();
 
-            try {
-                console.log("leave from connected room");
-                await client.join(appId, name, token, uid);
-            } catch (e) {
-                console.log("join error", e)
-            }
+            await client.join(appId, name, token, uid);
 
         };
 
@@ -176,6 +164,9 @@ const Subscribe = (props: {
 
     return (
         <div>
+            {ready && track && (
+                <Controls track={track} onClickLeave={onClickLeave} />
+            )}
         </div>
     );
 };
@@ -183,8 +174,10 @@ const Subscribe = (props: {
 
 export const Controls = (props: {
     track: IMicrophoneAudioTrack;
+    onClickLeave?: () => void;
 }) => {
     const { track } = props;
+    const client = useClient()
     const [trackState] = useAtom(TrackStateAtom);
 
     useEffect(() => {
@@ -192,12 +185,20 @@ export const Controls = (props: {
         track.setEnabled(true);
     }, [trackState])
 
+    const onClickLeave = async () => {
+        await client.leave()
+        if (props.onClickLeave) props.onClickLeave()
+    }
+
 
     return (
-        <div style={{ position: "absolute", left: 0 }}>
+        <div>
             {/* {trackState.audio ? "録音中" : "ミュート中"} */}
+            {props.onClickLeave ? <Button onClick={onClickLeave}>Leave</Button> : <div />}
+
         </div>
     );
 };
+
 
 export default App;

@@ -8,15 +8,19 @@ import SlidePickerForPresentation from "./SlidePickerForPresentation";
 import SlideCard from "../slide/SlideCard";
 import { useRoomMutation } from "../../model/hooks/useRoom";
 import { Router, useRouter } from "next/dist/client/router";
+import AgoraClient from "../slide/AgoraClient";
+import useUser from "../../model/util-hooks/useUser";
 interface Props {
     joined: boolean
     room: Room
     role: "owner" | "participant"
     onClickJoin: (id: number) => void
+    onClickLeave: () => void
 }
 
 export default (props: Props) => {
     const router = useRouter()
+    const { user } = useUser()
     const { updatePresentingSlide } = useRoomMutation()
 
     const onWithdrawPresentation = async () => {
@@ -78,6 +82,13 @@ export default (props: Props) => {
             <CardActions>
                 {participantsView || <div />}
                 {!props.joined ? <Button size="small" onClick={() => props.onClickJoin(props.room.id)}>JOIN</Button> : <div />}
+                {props.joined && user && props.room ?
+                    < AgoraClient
+                        uid={user.attributes.sub}
+                        host={props.room.createdBy}
+                        channelName={`room-${props.room.id}`}
+                        isHost={true}
+                        onClickLeave={props.onClickLeave} /> : <div />}
             </CardActions>
             {props.joined ? <MuteButton /> : <div />}
         </Card>

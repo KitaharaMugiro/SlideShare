@@ -2904,11 +2904,11 @@ export type Slideshare_RoomParticipant = {
   /** An object relationship */
   Profile: Slideshare_Profile;
   /** An object relationship */
-  Room: Slideshare_Room;
+  Room?: Maybe<Slideshare_Room>;
   /** An object relationship */
   Slide?: Maybe<Slideshare_Slide>;
   createdAt: Scalars['timestamptz'];
-  roomId: Scalars['Int'];
+  roomId?: Maybe<Scalars['Int']>;
   slideId?: Maybe<Scalars['Int']>;
   updatedAt: Scalars['timestamptz'];
   userId: Scalars['String'];
@@ -3898,11 +3898,11 @@ export type RoomsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 export type RoomsSubscription = { __typename?: 'subscription_root', slideshare_Room: Array<{ __typename?: 'slideshare_Room', id: number, description: string, name: string, createdAt: any, updatedAt: any, createdBy: string, Slide?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', imageUrl?: string | null | undefined }> } | null | undefined, RoomParticipants: Array<{ __typename?: 'slideshare_RoomParticipant', userId: string, Profile: { __typename?: 'slideshare_Profile', name?: string | null | undefined, profile?: string | null | undefined }, Slide?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', imageUrl?: string | null | undefined }> } | null | undefined }> }> };
 
 export type JoinRoomMutationMutationVariables = Exact<{
-  roomId: Scalars['Int'];
+  roomId?: Maybe<Scalars['Int']>;
 }>;
 
 
-export type JoinRoomMutationMutation = { __typename?: 'mutation_root', insert_slideshare_RoomParticipant_one?: { __typename?: 'slideshare_RoomParticipant', roomId: number } | null | undefined };
+export type JoinRoomMutationMutation = { __typename?: 'mutation_root', insert_slideshare_RoomParticipant_one?: { __typename?: 'slideshare_RoomParticipant', roomId?: number | null | undefined } | null | undefined };
 
 export type UpdateRoomParticipantMutationMutationVariables = Exact<{
   userId: Scalars['String'];
@@ -3910,7 +3910,7 @@ export type UpdateRoomParticipantMutationMutationVariables = Exact<{
 }>;
 
 
-export type UpdateRoomParticipantMutationMutation = { __typename?: 'mutation_root', update_slideshare_RoomParticipant_by_pk?: { __typename?: 'slideshare_RoomParticipant', roomId: number } | null | undefined };
+export type UpdateRoomParticipantMutationMutation = { __typename?: 'mutation_root', update_slideshare_RoomParticipant_by_pk?: { __typename?: 'slideshare_RoomParticipant', roomId?: number | null | undefined } | null | undefined };
 
 export type UploadPdfMutationVariables = Exact<{
   pdfName: Scalars['String'];
@@ -5291,7 +5291,7 @@ export function useRoomsSubscription(baseOptions?: Apollo.SubscriptionHookOption
 export type RoomsSubscriptionHookResult = ReturnType<typeof useRoomsSubscription>;
 export type RoomsSubscriptionResult = Apollo.SubscriptionResult<RoomsSubscription>;
 export const JoinRoomMutationDocument = gql`
-    mutation JoinRoomMutation($roomId: Int!) {
+    mutation JoinRoomMutation($roomId: Int) {
   insert_slideshare_RoomParticipant_one(
     object: {roomId: $roomId}
     on_conflict: {constraint: RoomParticipant_pkey, update_columns: [roomId]}
