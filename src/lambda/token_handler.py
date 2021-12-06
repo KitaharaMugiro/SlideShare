@@ -23,16 +23,17 @@ def hello(event, context):
     uid: str = input.get("uid")
 
     # 参加者かホストかは自分で決める
-    # host: str = input.get("host")
-    # session_variables = body.get("session_variables")
-    # role = Role_Subscriber
-    # if session_variables:
-    #     userAccount = session_variables.get("x-hasura-user-id")
-    #     if userAccount == host:
-    #         # Speaker
-    #         role = Role_Publisher
-
-    role = Role_Publisher
+    role = Role_Subscriber
+    if "presentation" in channelName:
+        host: str = input.get("host")
+        session_variables = body.get("session_variables")
+        if session_variables:
+            userAccount = session_variables.get("x-hasura-user-id")
+            if userAccount == host:
+                # Speaker
+                role = Role_Publisher
+    elif "room" in channelName:
+        role = Role_Publisher
 
     token = RtcTokenBuilder.buildTokenWithUid(
         appID, appCertificate, channelName, uid, role, privilegeExpiredTs
