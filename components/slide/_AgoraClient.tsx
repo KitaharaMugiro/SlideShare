@@ -127,7 +127,6 @@ const Subscribe = (props: {
     const { channelName, token, uid, isHost, onClickLeave } = props;
     // using the hook to get access to the client object
     const client = useClient();
-    const { ready, track } = useMicrophone();
 
     useEffect(() => {
         // function to initialise the SDK
@@ -164,16 +163,14 @@ const Subscribe = (props: {
 
     return (
         <div>
-            {ready && track && (
-                <Controls track={track} onClickLeave={onClickLeave} />
-            )}
+            <Controls onClickLeave={onClickLeave} />
         </div>
     );
 };
 
 
 export const Controls = (props: {
-    track: IMicrophoneAudioTrack;
+    track?: IMicrophoneAudioTrack;
     onClickLeave?: () => void;
 }) => {
     const { track } = props;
@@ -181,11 +178,19 @@ export const Controls = (props: {
     const [trackState] = useAtom(TrackStateAtom);
 
     useEffect(() => {
-        track.setMuted(!trackState.audio);
-        track.setEnabled(true);
+        if (track) {
+            track.setMuted(!trackState.audio);
+            track.setEnabled(true);
+        }
+
     }, [trackState])
 
     const onClickLeave = async () => {
+        if (track) {
+            console.log("!!stop track!!")
+            await track.setMuted(false)
+            await track.setEnabled(false)
+        }
         await client.leave()
         if (props.onClickLeave) props.onClickLeave()
     }

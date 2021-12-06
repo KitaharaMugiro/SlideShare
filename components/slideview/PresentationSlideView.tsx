@@ -49,6 +49,7 @@ export default (props: Props) => {
         pageNumber: 0,
         enableCursor: false
     }, "slideState")
+    const [finished, setFinished] = useState(false)
     const { pushUserAction, createdUserAction } = useRealtimeUserAction()
 
     //リアルタイムカーソル
@@ -134,12 +135,13 @@ export default (props: Props) => {
     useEffect(() => {
         const c = createdUserAction as RealtimeUserAction
         if (c) {
-            if (c.actionId === "finishPresentation") {
+            setFinished(true)
+            if (!finished && c.actionId === "finishPresentation") {
                 window.alert("登壇が終了しました。")
                 if (props.roomId) {
-                    router.push("/rooms?roomId=" + props.roomId)
+                    window.location.href = "/rooms?roomId=" + props.roomId
                 } else {
-                    router.push("/slide/" + slide?.id)
+                    window.location.href = "/slide/" + slide?.id
                 }
             }
         }
