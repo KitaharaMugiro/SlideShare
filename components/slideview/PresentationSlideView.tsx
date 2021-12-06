@@ -19,6 +19,7 @@ import useArrowKeyboardEvent from "../../model/util-hooks/useArrowKeyboardEvent"
 import { FullScreen, useFullScreenHandle } from "react-full-screen"
 import ControllerOnSlide from "./ControllerOnSlide"
 import { useRouter } from "next/dist/client/router"
+import { RealtimeUserAction } from "realtimely/dist/models/RealtimeUserAction"
 
 interface Props {
     initialSlide: QuerySlideQuery
@@ -131,12 +132,15 @@ export default (props: Props) => {
     }
 
     useEffect(() => {
-        if (createdUserAction) {
-            window.alert("登壇が終了しました。")
-            if (props.roomId) {
-                router.push("/rooms?roomId=" + props.roomId)
-            } else {
-                router.push("/slide/" + slide?.id)
+        const c = createdUserAction as RealtimeUserAction
+        if (c) {
+            if (c.actionId === "finishPresentation") {
+                window.alert("登壇が終了しました。")
+                if (props.roomId) {
+                    router.push("/rooms?roomId=" + props.roomId)
+                } else {
+                    router.push("/slide/" + slide?.id)
+                }
             }
         }
     }, [createdUserAction])

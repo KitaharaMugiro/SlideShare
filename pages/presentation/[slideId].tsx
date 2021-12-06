@@ -93,7 +93,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                 < AgoraClient
                     uid={uuid}
                     host={slide.createdBy}
-                    channelName={`${slide.createdBy}-${slide.id}`}
+                    channelName={`presentation-${slide.createdBy}-${slide.id}`}
                     isHost={isAdmin} />
                 : <div />}
 
