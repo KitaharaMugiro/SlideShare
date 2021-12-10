@@ -17,5 +17,5 @@ export type Room = {
 
 export type MyRoomState = {
     participatedRoomId: number | undefined
-    role: "owner" | "participant"
+    role: "owner" | "participant" | "public" | "none"
 }

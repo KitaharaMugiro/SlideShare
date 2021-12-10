@@ -1,4 +1,4 @@
-import { addHours, format } from "date-fns"
+import { addHours, addMinutes, format } from "date-fns"
 import { useState } from "react"
 import {
     useCreateRoomMutation,
@@ -12,9 +12,11 @@ import { useSnackMessage } from "../util-hooks/useSnackMessage"
 import useUser from "../util-hooks/useUser"
 
 export default () => {
-    const [date] = useState(addHours(new Date(), -3))
-    const dateStr = format(date, "yyyy-MM-dd'T'HH:mm:ss",)
-    const { data, error, loading } = useRoomsSubscription({ variables: {} })
+    const [today] = useState(new Date())
+    const utc = new Date(today.getTime() + today.getTimezoneOffset() * 60000);
+    const roomCreatedAt = format(addHours(utc, -24), "yyyy-MM-dd HH:mm:ss")
+    const participantUpdatedAt = format(addMinutes(utc, -30), "yyyy-MM-dd HH:mm:ss")
+    const { data, error, loading } = useRoomsSubscription({ variables: { roomCreatedAt, participantUpdatedAt } })
 
     const rooms: Room[] = data?.slideshare_Room.map(r => {
         return {

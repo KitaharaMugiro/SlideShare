@@ -135,14 +135,15 @@ export default (props: Props) => {
     useEffect(() => {
         const c = createdUserAction as RealtimeUserAction
         if (c) {
-            setFinished(true)
             if (!finished && c.actionId === "finishPresentation") {
+                setFinished(true)
                 window.alert("登壇が終了しました。")
                 if (props.roomId) {
                     window.location.href = "/rooms?roomId=" + props.roomId
                 } else {
                     window.location.href = "/slide/" + slide?.id
                 }
+
             }
         }
     }, [createdUserAction])

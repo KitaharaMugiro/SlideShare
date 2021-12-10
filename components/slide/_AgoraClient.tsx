@@ -187,7 +187,6 @@ export const Controls = (props: {
 
     const onClickLeave = async () => {
         if (track) {
-            console.log("!!stop track!!")
             await track.setMuted(false)
             await track.setEnabled(false)
         }

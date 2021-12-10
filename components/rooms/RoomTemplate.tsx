@@ -16,20 +16,41 @@ export default () => {
     const { joinRoom } = useRoomParticipantMutation()
     const { user } = useUser()
 
-    const [state, setState] = useState<MyRoomState>({ participatedRoomId: undefined, role: "participant" });
+    const [state, setState] = useState<MyRoomState>({ participatedRoomId: undefined, role: "none" });
     const joinedRoom = rooms.find(room => room.id === state.participatedRoomId)
 
     const onClickJoin = async (roomId: number) => {
-        await joinRoom(roomId)
-        const joinedRoom = rooms.find(room => room.id === roomId)
-        const isRoomAdmin = joinedRoom?.createdBy === user?.attributes.sub
-
-        setState({ participatedRoomId: roomId, role: isRoomAdmin ? "owner" : "participant" });
+        if (user) {
+            await joinRoom(roomId)
+            const joinedRoom = rooms.find(room => room.id === roomId)
+            const isRoomAdmin = joinedRoom?.createdBy === user?.attributes.sub
+            setState({ participatedRoomId: roomId, role: isRoomAdmin ? "owner" : "participant" });
+            router.replace(router.pathname, { query: { roomId } }, { shallow: true });
+        } else {
+            setState({ participatedRoomId: roomId, role: "public" });
+            router.replace(router.pathname, { query: { roomId } }, { shallow: true });
+        }
     }
 
+
+    useEffect(() => {
+        const time = 1000 * 60 * 20 //20min
+        const interval = setInterval(async () => {
+            if (joinedRoom) {
+                await joinRoom(joinedRoom.id);
+            }
+        }, time);
+        return () => {
+            clearInterval(interval);
+        };
+    }, [joinedRoom]);
+
     const onClickLeave = async () => {
-        await joinRoom(undefined)
-        setState({ participatedRoomId: undefined, role: "participant" });
+        if (user) {
+            await joinRoom(undefined)
+        }
+        setState({ participatedRoomId: undefined, role: "none" });
+        router.replace(router.pathname, undefined, { shallow: true });
     }
 
     useEffect(() => {
@@ -45,12 +66,6 @@ export default () => {
         <div className={style.root}>
             {button}
             {modal}
-            {/* {user && joinedRoom ?
-                < AgoraClient
-                    uid={user.attributes.sub}
-                    host={joinedRoom.createdBy}
-                    channelName={`room-${joinedRoom.id}`}
-                    isHost={true} /> : <div />} */}
             <h1>発表中</h1>
             <div className={style.card_list}>
                 {rooms.filter(room => room.status === "open").map(room => (
@@ -79,7 +94,7 @@ export default () => {
                 ))}
             </div>
 
-            {joinedRoom &&
+            {(joinedRoom && user) &&
                 <>
                     <div style={{
                         position: "fixed",

@@ -44,6 +44,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     }, [loading])
 
 
+    //TODO: もうちょっと見通しのいい関数にしたい
     const renderSlideIfActiveConference = () => {
         if (!roomId) {
             if (!isAdmin) {
@@ -86,7 +87,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
             }
         }
 
-        //ongoing もしくは isAdmin
+        //ongoing もしくは isAdmin もしくはroomIdが存在
         return <>
             {!isAdmin && <ConfirmationModal />}
             {slide ?

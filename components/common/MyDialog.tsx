@@ -28,10 +28,10 @@ export default function MyDialog(props: Props) {
     }
 
     const renderTextFields = () => {
-        return values.map(v => {
+        return values.map((v, index) => {
             return <div key={v.key}>
                 <TextField
-                    autoFocus
+                    autoFocus={index === 0}
                     margin="dense"
                     label={v.title || "Name"}
                     fullWidth

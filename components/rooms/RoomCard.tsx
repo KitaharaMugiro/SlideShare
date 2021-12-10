@@ -11,17 +11,20 @@ import { Router, useRouter } from "next/dist/client/router";
 import AgoraClient from "../slide/AgoraClient";
 import useUser from "../../model/util-hooks/useUser";
 import RoomCardMenu from "./RoomCardMenu";
+import useSignin from "../../model/util-hooks/useSignin";
 interface Props {
     joined: boolean
     room: Room
-    role: "owner" | "participant"
+    role: "owner" | "participant" | "public" | "none"
     onClickJoin: (id: number) => void
     onClickLeave: () => void
 }
 
 export default (props: Props) => {
     const router = useRouter()
-    const { user } = useUser()
+    const { goSignin } = useSignin()
+    const { user, tempUserId } = useUser()
+
     const { updatePresentingSlide } = useRoomMutation()
 
     const onWithdrawPresentation = async () => {
@@ -40,7 +43,7 @@ export default (props: Props) => {
                 <SlideCard
                     slideId={slide.slideId}
                     imageUrl={slide.slideImageUrl}
-                    actionMode={props.role === "participant" ? "presenting-participant" : "presenting-owner"}
+                    actionMode={props.role === "owner" ? "presenting-owner" : "presenting-participant"}
                     onDeleteCard={onWithdrawPresentation}
                     onClickPick={onGoingPresentation}
                     linkTo="presentation" />
@@ -68,7 +71,39 @@ export default (props: Props) => {
         </div>
     );
 
-    const [anchorEl, setAnchorEl] = useState<any>(null);
+    const renderAgora = () => {
+        if (props.joined && props.room) {
+            if (user) {
+                return < AgoraClient
+                    uid={user.attributes.sub}
+                    host={props.room.createdBy}
+                    channelName={`room-${props.room.id}`}
+                    isHost={true}
+                    onClickLeave={props.onClickLeave} />
+            } else {
+                return < AgoraClient
+                    uid={tempUserId}
+                    host={props.room.createdBy}
+                    channelName={`room-${props.room.id}`}
+                    isHost={false}
+                    onClickLeave={props.onClickLeave} />
+            }
+        }
+
+        return <div />
+    }
+
+    const renderMuteButton = () => {
+        if (props.joined && props.room) {
+            if (props.role === "owner" || props.role === "participant") {
+                return <MuteButton />
+            } else if (props.role === "public") {
+                return <Button color="error" onClick={goSignin}>話すにはログインが必要です</Button>
+            }
+        }
+    }
+
+
     return (
         <Card style={{ width: 330 }} >
             <CardHeader
@@ -86,14 +121,8 @@ export default (props: Props) => {
                 {!props.joined ? <Button size="small" onClick={() => props.onClickJoin(props.room.id)}>JOIN</Button> : <div />}
             </CardActions>
             <CardActions>
-                {props.joined ? <MuteButton /> : <div />}
-                {props.joined && user && props.room ?
-                    < AgoraClient
-                        uid={user.attributes.sub}
-                        host={props.room.createdBy}
-                        channelName={`room-${props.room.id}`}
-                        isHost={true}
-                        onClickLeave={props.onClickLeave} /> : <div />}
+                {renderMuteButton()}
+                {renderAgora()}
             </CardActions>
         </Card>
     );

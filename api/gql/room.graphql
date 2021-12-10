@@ -23,8 +23,8 @@ mutation deleteRoom($id: Int!) {
 }
 
 
-subscription rooms {
-  slideshare_Room {
+subscription rooms($roomCreatedAt: timestamptz, $participantUpdatedAt: timestamptz) {
+  slideshare_Room(where:{createdAt:{_gt: $roomCreatedAt}}) {
     id
     description
     Slide {
@@ -33,7 +33,7 @@ subscription rooms {
           imageUrl
       }
     }
-    RoomParticipants {
+    RoomParticipants(where: {updatedAt: {_gt: $participantUpdatedAt}}) {
       userId
       Profile {
         name

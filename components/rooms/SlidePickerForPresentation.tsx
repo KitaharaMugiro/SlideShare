@@ -13,7 +13,7 @@ interface Props {
         imageUrl: string | null | undefined
     }[],
     roomId: number,
-    role: "owner" | "participant"
+    role: "owner" | "participant" | "public" | "none"
 }
 
 export default (props: Props) => {

@@ -3899,7 +3899,10 @@ export type DeleteRoomMutationVariables = Exact<{
 
 export type DeleteRoomMutation = { __typename?: 'mutation_root', delete_slideshare_Room_by_pk?: { __typename?: 'slideshare_Room', id: number } | null | undefined };
 
-export type RoomsSubscriptionVariables = Exact<{ [key: string]: never; }>;
+export type RoomsSubscriptionVariables = Exact<{
+  roomCreatedAt?: Maybe<Scalars['timestamptz']>;
+  participantUpdatedAt?: Maybe<Scalars['timestamptz']>;
+}>;
 
 
 export type RoomsSubscription = { __typename?: 'subscription_root', slideshare_Room: Array<{ __typename?: 'slideshare_Room', id: number, description: string, name: string, createdAt: any, updatedAt: any, createdBy: string, Slide?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', imageUrl?: string | null | undefined }> } | null | undefined, RoomParticipants: Array<{ __typename?: 'slideshare_RoomParticipant', userId: string, Profile: { __typename?: 'slideshare_Profile', name?: string | null | undefined, profile?: string | null | undefined }, Slide?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', imageUrl?: string | null | undefined }> } | null | undefined }> }> };
@@ -5278,8 +5281,8 @@ export type DeleteRoomMutationHookResult = ReturnType<typeof useDeleteRoomMutati
 export type DeleteRoomMutationResult = Apollo.MutationResult<DeleteRoomMutation>;
 export type DeleteRoomMutationOptions = Apollo.BaseMutationOptions<DeleteRoomMutation, DeleteRoomMutationVariables>;
 export const RoomsDocument = gql`
-    subscription rooms {
-  slideshare_Room {
+    subscription rooms($roomCreatedAt: timestamptz, $participantUpdatedAt: timestamptz) {
+  slideshare_Room(where: {createdAt: {_gt: $roomCreatedAt}}) {
     id
     description
     Slide {
@@ -5288,7 +5291,7 @@ export const RoomsDocument = gql`
         imageUrl
       }
     }
-    RoomParticipants {
+    RoomParticipants(where: {updatedAt: {_gt: $participantUpdatedAt}}) {
       userId
       Profile {
         name
@@ -5321,6 +5324,8 @@ export const RoomsDocument = gql`
  * @example
  * const { data, loading, error } = useRoomsSubscription({
  *   variables: {
+ *      roomCreatedAt: // value for 'roomCreatedAt'
+ *      participantUpdatedAt: // value for 'participantUpdatedAt'
  *   },
  * });
  */
