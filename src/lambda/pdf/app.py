@@ -46,4 +46,5 @@ def lambda_handler(event, context):
         )  # amplifyはpublicしか読めないからpublicつける・・・
         keys.append(key)
         index += 1
+    print("process end")
     return {"statusCode": 200, "body": json.dumps({"keys": keys})}
