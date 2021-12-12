@@ -25,11 +25,10 @@ export default () => {
             const joinedRoom = rooms.find(room => room.id === roomId)
             const isRoomAdmin = joinedRoom?.createdBy === user?.attributes.sub
             setState({ participatedRoomId: roomId, role: isRoomAdmin ? "owner" : "participant" });
-            router.replace(router.pathname, { query: { roomId } }, { shallow: true });
         } else {
             setState({ participatedRoomId: roomId, role: "public" });
-            router.replace(router.pathname, { query: { roomId } }, { shallow: true });
         }
+        router.replace(router.pathname, { query: { roomId } }, { shallow: true });
     }
 
 
@@ -58,7 +57,7 @@ export default () => {
             onClickJoin(Number(roomId))
         }
 
-    }, [roomId])
+    }, [roomId, user])
 
     const { button, modal } = useRoomSetModal()
 

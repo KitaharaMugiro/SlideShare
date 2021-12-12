@@ -41,7 +41,7 @@ export default (props: Props) => {
     const fullscreenHandle = useFullScreenHandle();
 
     //録音機能
-    const { startSlideRecord, stopSlideRecord, changePage, seconds, minutes, hours } = useSlideRecorder()
+    const { startSlideRecord, stopSlideRecord, changePage, confirmedRecording, seconds, minutes, hours } = useSlideRecorder()
 
     //slide状態変数
     const [slideState, setSlideState] = useRealtimeSharedState({
@@ -131,13 +131,13 @@ export default (props: Props) => {
         if (c) {
             if (!finished && c.actionId === "finishPresentation") {
                 setFinished(true)
-                if (props.isAdmin) return
+                // if (props.isAdmin) return
                 window.alert("登壇が終了しました。")
+                //TODO: いい方法でマイクを解放する方法がないか
                 if (props.roomId) {
-                    //href使ってるのは確か録音を強制的に終わらせるためか。
-                    window.location.href = "/rooms?roomId=" + props.roomId
+                    router.push("/rooms?roomId=" + props.roomId)
                 } else {
-                    window.location.href = "/slide/" + slide?.id
+                    router.push("/slide/" + slide?.id)
                 }
 
             }
@@ -183,6 +183,9 @@ export default (props: Props) => {
                     {isAdmin ? <AdminPresentationController
                         onClickStartRecord={onClickStartRecord}
                         onFinishPresentation={onFinishPresentation}
+                        confirmedRecording={confirmedRecording}
+                        minutes={minutes}
+                        seconds={seconds}
                     /> : <UserPresentationController />}
                     {latestConference ? <ConferenceText
                         title={latestConference.title || ""}

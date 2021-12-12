@@ -6,7 +6,7 @@ import { Storage } from "aws-amplify"
 import { useSnackMessage } from "./useSnackMessage";
 import { useAtom } from "jotai";
 import { TrackStateAtom } from "../jotai/TrackState";
-
+import axios from "axios";
 export default () => {
     const [audioState] = useAtom(TrackStateAtom)
     const [confirmedRecording, setConfirmedRecording] = useState(false)
@@ -22,6 +22,7 @@ export default () => {
         status,
         startRecording,
         pauseRecording,
+        resumeRecording,
         stopRecording,
         mediaBlobUrl,
         previewAudioStream
@@ -39,13 +40,15 @@ export default () => {
 
     const startSlideRecord = async (slideId: number) => {
         const date = new Date()
-        const audioUrl = `record/${slideId}_${date.toISOString()}.mp3`;
+        const audioUrl = `record/${slideId}_${date.toISOString()}.webm`;
         const recordId = await insertSlideRecord(slideId, audioUrl)
         setRecordId(recordId)
         setAudioPath(audioUrl)
         setConfirmedRecording(true)
-        startRecording();
-        console.log("start Slide Record")
+
+        if (audioState.audio) {
+            startRecording();
+        }
     }
 
     const _onStop = async () => {
@@ -54,15 +57,18 @@ export default () => {
             displayErrorMessage("No audio path")
             return
         }
-        if (!previewAudioStream) {
-            displayErrorMessage("No previewAudioStream")
+        if (!mediaBlobUrl) {
+            displayErrorMessage("No media blob url")
             return
         }
+        const data = await axios.get(mediaBlobUrl, {
+            'responseType': 'blob'
+        })
 
         await Storage.put(
             audioPath,
-            previewAudioStream,
-            { contentType: "audio/mp3" }
+            data.data,
+            { contentType: "audio/webm" }
         )
         console.log("Stored audio")
     }
@@ -83,7 +89,7 @@ export default () => {
         if (confirmedRecording) {
             if (status === "recording") {
                 start();
-            } else if (status === "stopped") {
+            } else if (status === "paused") {
                 pause();
             }
         }
@@ -101,10 +107,14 @@ export default () => {
             if (!audioState.audio) {
                 pauseRecording()
             } else {
-                startRecording()
+                if (status === "paused") {
+                    resumeRecording()
+                } else {
+                    startRecording();
+                }
             }
         }
     }, [audioState])
 
-    return { startSlideRecord, stopSlideRecord, changePage, seconds, minutes, hours }
+    return { startSlideRecord, stopSlideRecord, changePage, seconds, minutes, hours, confirmedRecording }
 }
