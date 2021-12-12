@@ -1,10 +1,12 @@
 import { Typography } from "@mui/material"
-import { useAtom } from "jotai"
+import { useRouter } from "next/dist/client/router"
 import React, { useEffect, useState } from "react"
-import { useRealtimeCursor, useOnlineUsers, useRealtimeSharedState, useRealtimeUserAction } from "realtimely"
+import { FullScreen, useFullScreenHandle } from "react-full-screen"
+import { useOnlineUsers, useRealtimeSharedState, useRealtimeUserAction } from "realtimely"
+import { RealtimeUserAction } from "realtimely/dist/models/RealtimeUserAction"
+import useArrowKeyboardEvent from "../../model/util-hooks/useArrowKeyboardEvent"
+import useSlideRecorder from "../../model/util-hooks/useSlideRecorder"
 import { useWindowDimensions } from "../../model/util-hooks/useWindowDimentions"
-import { SlideStateAtom } from "../../model/jotai/SlideState"
-import pages from "../../pages"
 import { QuerySlideQuery, Slideshare_PageType_Enum } from "../../src/generated/graphql"
 import ConferenceText from "../conference/ConferenceText"
 import AdminPresentationController from "../presentation/AdminPresentationController"
@@ -14,12 +16,8 @@ import Comments from "../slide/comments/Comments"
 import PageViewController from "../slide/pageview/PageViewController"
 import ProfileCardController from "../slide/ProfileCardController"
 import SlideSlider from "../slide/SlideSlider"
-import style from "./slideview.module.css"
-import useArrowKeyboardEvent from "../../model/util-hooks/useArrowKeyboardEvent"
-import { FullScreen, useFullScreenHandle } from "react-full-screen"
 import ControllerOnSlide from "./ControllerOnSlide"
-import { useRouter } from "next/dist/client/router"
-import { RealtimeUserAction } from "realtimely/dist/models/RealtimeUserAction"
+import style from "./slideview.module.css"
 
 interface Props {
     initialSlide: QuerySlideQuery
@@ -42,18 +40,15 @@ export default (props: Props) => {
     const [appearController, setAppearController] = useState(false)
     const fullscreenHandle = useFullScreenHandle();
 
+    //録音機能
+    const { startSlideRecord, stopSlideRecord, changePage, seconds, minutes, hours } = useSlideRecorder()
 
     //slide状態変数
-    const [localAdminSlideState] = useAtom(SlideStateAtom)
     const [slideState, setSlideState] = useRealtimeSharedState({
-        pageNumber: 0,
-        enableCursor: false
+        pageNumber: 0
     }, "slideState")
     const [finished, setFinished] = useState(false)
     const { pushUserAction, createdUserAction } = useRealtimeUserAction()
-
-    //リアルタイムカーソル
-    // const { renderCursors, onMouseMove } = useRealtimeCursor(1000)
 
     //視聴者数
     const { onlineUserList } = useOnlineUsers(10000)
@@ -63,15 +58,6 @@ export default (props: Props) => {
             setLocalPageNumber(slideState.pageNumber)
         }
     }, [slideState.pageNumber])
-
-    useEffect(() => {
-        if (isAdmin) {
-            setSlideState({
-                ...slideState,
-                enableCursor: localAdminSlideState.cursor
-            })
-        }
-    }, [localAdminSlideState.cursor])
 
     const goNext = () => {
         if (isAdmin) {
@@ -121,6 +107,9 @@ export default (props: Props) => {
             slideState.pageNumber = number
             setSlideState(slideState)
             setLocalPageNumber(number)
+
+            //録音している場合はページチェンジを記録
+            changePage(pages[number].id)
         } else {
             const nextPageNumber = number
             setIsSync(slideState.pageNumber === nextPageNumber)
@@ -128,7 +117,12 @@ export default (props: Props) => {
         }
     }
 
+    const onClickStartRecord = () => {
+        if (slide) startSlideRecord(slide?.id)
+    }
+
     const onFinishPresentation = () => {
+        stopSlideRecord()
         pushUserAction("finishPresentation", "finish")
     }
 
@@ -137,8 +131,10 @@ export default (props: Props) => {
         if (c) {
             if (!finished && c.actionId === "finishPresentation") {
                 setFinished(true)
+                if (props.isAdmin) return
                 window.alert("登壇が終了しました。")
                 if (props.roomId) {
+                    //href使ってるのは確か録音を強制的に終わらせるためか。
                     window.location.href = "/rooms?roomId=" + props.roomId
                 } else {
                     window.location.href = "/slide/" + slide?.id
@@ -164,7 +160,6 @@ export default (props: Props) => {
                 <div>
                     <FullScreen handle={fullscreenHandle}>
                         <div style={{ position: "relative" }}
-                            onMouseMove={isAdmin && slideState.enableCursor ? undefined : undefined}
                             onMouseEnter={() => setAppearController(true)}
                             onMouseLeave={() => setAppearController(false)}>
                             <PageViewController
@@ -173,7 +168,6 @@ export default (props: Props) => {
                                 onClickLeft={goPrevious}
                                 onClickRight={goNext}
                             />
-                            {/* {slideState.enableCursor ? renderCursors() : <div />} */}
                             <ControllerOnSlide
                                 appear={appearController}
                                 onClickFullScreen={fullscreenHandle.active ? fullscreenHandle.exit : fullscreenHandle.enter} />
@@ -186,7 +180,10 @@ export default (props: Props) => {
                         isSync={isSync}
                         syncSlide={syncSlide}
                     />
-                    {isAdmin ? <AdminPresentationController onFinishPresentation={onFinishPresentation} /> : <UserPresentationController />}
+                    {isAdmin ? <AdminPresentationController
+                        onClickStartRecord={onClickStartRecord}
+                        onFinishPresentation={onFinishPresentation}
+                    /> : <UserPresentationController />}
                     {latestConference ? <ConferenceText
                         title={latestConference.title || ""}
                         startDate={latestConference.startDate || ""}

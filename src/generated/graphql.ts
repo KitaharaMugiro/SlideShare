@@ -470,6 +470,10 @@ export type Mutation_Root = {
   delete_slideshare_Room_by_pk?: Maybe<Slideshare_Room>;
   /** delete data from the table: "slideshare.Slide" */
   delete_slideshare_Slide?: Maybe<Slideshare_Slide_Mutation_Response>;
+  /** delete data from the table: "slideshare.SlideRecord" */
+  delete_slideshare_SlideRecord?: Maybe<Slideshare_SlideRecord_Mutation_Response>;
+  /** delete single row from the table: "slideshare.SlideRecord" */
+  delete_slideshare_SlideRecord_by_pk?: Maybe<Slideshare_SlideRecord>;
   /** delete single row from the table: "slideshare.Slide" */
   delete_slideshare_Slide_by_pk?: Maybe<Slideshare_Slide>;
   /** insert data into the table: "Note" */
@@ -526,6 +530,14 @@ export type Mutation_Root = {
   insert_slideshare_Room_one?: Maybe<Slideshare_Room>;
   /** insert data into the table: "slideshare.Slide" */
   insert_slideshare_Slide?: Maybe<Slideshare_Slide_Mutation_Response>;
+  /** insert data into the table: "slideshare.SlideRecord" */
+  insert_slideshare_SlideRecord?: Maybe<Slideshare_SlideRecord_Mutation_Response>;
+  /** insert data into the table: "slideshare.SlideRecordPiece" */
+  insert_slideshare_SlideRecordPiece?: Maybe<Slideshare_SlideRecordPiece_Mutation_Response>;
+  /** insert a single row into the table: "slideshare.SlideRecordPiece" */
+  insert_slideshare_SlideRecordPiece_one?: Maybe<Slideshare_SlideRecordPiece>;
+  /** insert a single row into the table: "slideshare.SlideRecord" */
+  insert_slideshare_SlideRecord_one?: Maybe<Slideshare_SlideRecord>;
   /** insert a single row into the table: "slideshare.Slide" */
   insert_slideshare_Slide_one?: Maybe<Slideshare_Slide>;
   subscribe?: Maybe<Message>;
@@ -565,6 +577,10 @@ export type Mutation_Root = {
   update_slideshare_RoomParticipant_by_pk?: Maybe<Slideshare_RoomParticipant>;
   /** update single row of the table: "slideshare.Room" */
   update_slideshare_Room_by_pk?: Maybe<Slideshare_Room>;
+  /** update data of the table: "slideshare.SlideRecord" */
+  update_slideshare_SlideRecord?: Maybe<Slideshare_SlideRecord_Mutation_Response>;
+  /** update single row of the table: "slideshare.SlideRecord" */
+  update_slideshare_SlideRecord_by_pk?: Maybe<Slideshare_SlideRecord>;
   /** PDFをPNGに変えてPageにする */
   uploadPdf?: Maybe<UploadPdfOutput>;
 };
@@ -706,6 +722,18 @@ export type Mutation_RootDelete_Slideshare_Room_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Slideshare_SlideArgs = {
   where: Slideshare_Slide_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_SlideRecordArgs = {
+  where: Slideshare_SlideRecord_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Slideshare_SlideRecord_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -897,6 +925,32 @@ export type Mutation_RootInsert_Slideshare_SlideArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Slideshare_SlideRecordArgs = {
+  objects: Array<Slideshare_SlideRecord_Insert_Input>;
+  on_conflict?: Maybe<Slideshare_SlideRecord_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_SlideRecordPieceArgs = {
+  objects: Array<Slideshare_SlideRecordPiece_Insert_Input>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_SlideRecordPiece_OneArgs = {
+  object: Slideshare_SlideRecordPiece_Insert_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Slideshare_SlideRecord_OneArgs = {
+  object: Slideshare_SlideRecord_Insert_Input;
+  on_conflict?: Maybe<Slideshare_SlideRecord_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Slideshare_Slide_OneArgs = {
   object: Slideshare_Slide_Insert_Input;
   on_conflict?: Maybe<Slideshare_Slide_On_Conflict>;
@@ -1050,6 +1104,20 @@ export type Mutation_RootUpdate_Slideshare_Room_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Slideshare_SlideRecordArgs = {
+  _set?: Maybe<Slideshare_SlideRecord_Set_Input>;
+  where: Slideshare_SlideRecord_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Slideshare_SlideRecord_By_PkArgs = {
+  _set?: Maybe<Slideshare_SlideRecord_Set_Input>;
+  pk_columns: Slideshare_SlideRecord_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUploadPdfArgs = {
   pdfName: Scalars['String'];
 };
@@ -1147,6 +1215,14 @@ export type Query_Root = {
   slideshare_Room_by_pk?: Maybe<Slideshare_Room>;
   /** fetch data from the table: "slideshare.Slide" */
   slideshare_Slide: Array<Slideshare_Slide>;
+  /** fetch data from the table: "slideshare.SlideRecord" */
+  slideshare_SlideRecord: Array<Slideshare_SlideRecord>;
+  /** fetch data from the table: "slideshare.SlideRecordPiece" */
+  slideshare_SlideRecordPiece: Array<Slideshare_SlideRecordPiece>;
+  /** fetch data from the table: "slideshare.SlideRecordPiece" using primary key columns */
+  slideshare_SlideRecordPiece_by_pk?: Maybe<Slideshare_SlideRecordPiece>;
+  /** fetch data from the table: "slideshare.SlideRecord" using primary key columns */
+  slideshare_SlideRecord_by_pk?: Maybe<Slideshare_SlideRecord>;
   /** fetch data from the table: "slideshare.Slide" using primary key columns */
   slideshare_Slide_by_pk?: Maybe<Slideshare_Slide>;
 };
@@ -1369,6 +1445,34 @@ export type Query_RootSlideshare_SlideArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Slideshare_Slide_Order_By>>;
   where?: Maybe<Slideshare_Slide_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_SlideRecordArgs = {
+  distinct_on?: Maybe<Array<Slideshare_SlideRecord_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_SlideRecord_Order_By>>;
+  where?: Maybe<Slideshare_SlideRecord_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_SlideRecordPieceArgs = {
+  distinct_on?: Maybe<Array<Slideshare_SlideRecordPiece_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_SlideRecordPiece_Order_By>>;
+  where?: Maybe<Slideshare_SlideRecordPiece_Bool_Exp>;
+};
+
+
+export type Query_RootSlideshare_SlideRecordPiece_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Query_RootSlideshare_SlideRecord_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -3232,6 +3336,260 @@ export type Slideshare_SlidePagesArgs = {
   where?: Maybe<Slideshare_Page_Bool_Exp>;
 };
 
+/** columns and relationships of "slideshare.SlideRecord" */
+export type Slideshare_SlideRecord = {
+  __typename?: 'slideshare_SlideRecord';
+  /** An array relationship */
+  SlideRecordPieces: Array<Slideshare_SlideRecordPiece>;
+  audioUrl: Scalars['String'];
+  createdAt: Scalars['timestamptz'];
+  id: Scalars['Int'];
+  slideId: Scalars['Int'];
+  updatedAt: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "slideshare.SlideRecord" */
+export type Slideshare_SlideRecordSlideRecordPiecesArgs = {
+  distinct_on?: Maybe<Array<Slideshare_SlideRecordPiece_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_SlideRecordPiece_Order_By>>;
+  where?: Maybe<Slideshare_SlideRecordPiece_Bool_Exp>;
+};
+
+/** columns and relationships of "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece = {
+  __typename?: 'slideshare_SlideRecordPiece';
+  id: Scalars['Int'];
+  pageId: Scalars['String'];
+  slideRecordId: Scalars['Int'];
+  startTime: Scalars['Int'];
+};
+
+/** order by aggregate values of table "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece_Aggregate_Order_By = {
+  avg?: Maybe<Slideshare_SlideRecordPiece_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Slideshare_SlideRecordPiece_Max_Order_By>;
+  min?: Maybe<Slideshare_SlideRecordPiece_Min_Order_By>;
+  stddev?: Maybe<Slideshare_SlideRecordPiece_Stddev_Order_By>;
+  stddev_pop?: Maybe<Slideshare_SlideRecordPiece_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Slideshare_SlideRecordPiece_Stddev_Samp_Order_By>;
+  sum?: Maybe<Slideshare_SlideRecordPiece_Sum_Order_By>;
+  var_pop?: Maybe<Slideshare_SlideRecordPiece_Var_Pop_Order_By>;
+  var_samp?: Maybe<Slideshare_SlideRecordPiece_Var_Samp_Order_By>;
+  variance?: Maybe<Slideshare_SlideRecordPiece_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece_Arr_Rel_Insert_Input = {
+  data: Array<Slideshare_SlideRecordPiece_Insert_Input>;
+};
+
+/** order by avg() on columns of table "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece_Avg_Order_By = {
+  id?: Maybe<Order_By>;
+  slideRecordId?: Maybe<Order_By>;
+  startTime?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "slideshare.SlideRecordPiece". All fields are combined with a logical 'AND'. */
+export type Slideshare_SlideRecordPiece_Bool_Exp = {
+  _and?: Maybe<Array<Slideshare_SlideRecordPiece_Bool_Exp>>;
+  _not?: Maybe<Slideshare_SlideRecordPiece_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_SlideRecordPiece_Bool_Exp>>;
+  id?: Maybe<Int_Comparison_Exp>;
+  pageId?: Maybe<String_Comparison_Exp>;
+  slideRecordId?: Maybe<Int_Comparison_Exp>;
+  startTime?: Maybe<Int_Comparison_Exp>;
+};
+
+/** input type for inserting data into table "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece_Insert_Input = {
+  pageId?: Maybe<Scalars['String']>;
+  slideRecordId?: Maybe<Scalars['Int']>;
+  startTime?: Maybe<Scalars['Int']>;
+};
+
+/** order by max() on columns of table "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece_Max_Order_By = {
+  id?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+  slideRecordId?: Maybe<Order_By>;
+  startTime?: Maybe<Order_By>;
+};
+
+/** order by min() on columns of table "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece_Min_Order_By = {
+  id?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+  slideRecordId?: Maybe<Order_By>;
+  startTime?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece_Mutation_Response = {
+  __typename?: 'slideshare_SlideRecordPiece_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Slideshare_SlideRecordPiece>;
+};
+
+/** Ordering options when selecting data from "slideshare.SlideRecordPiece". */
+export type Slideshare_SlideRecordPiece_Order_By = {
+  id?: Maybe<Order_By>;
+  pageId?: Maybe<Order_By>;
+  slideRecordId?: Maybe<Order_By>;
+  startTime?: Maybe<Order_By>;
+};
+
+/** select columns of table "slideshare.SlideRecordPiece" */
+export enum Slideshare_SlideRecordPiece_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PageId = 'pageId',
+  /** column name */
+  SlideRecordId = 'slideRecordId',
+  /** column name */
+  StartTime = 'startTime'
+}
+
+/** order by stddev() on columns of table "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece_Stddev_Order_By = {
+  id?: Maybe<Order_By>;
+  slideRecordId?: Maybe<Order_By>;
+  startTime?: Maybe<Order_By>;
+};
+
+/** order by stddev_pop() on columns of table "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+  slideRecordId?: Maybe<Order_By>;
+  startTime?: Maybe<Order_By>;
+};
+
+/** order by stddev_samp() on columns of table "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+  slideRecordId?: Maybe<Order_By>;
+  startTime?: Maybe<Order_By>;
+};
+
+/** order by sum() on columns of table "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece_Sum_Order_By = {
+  id?: Maybe<Order_By>;
+  slideRecordId?: Maybe<Order_By>;
+  startTime?: Maybe<Order_By>;
+};
+
+/** order by var_pop() on columns of table "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+  slideRecordId?: Maybe<Order_By>;
+  startTime?: Maybe<Order_By>;
+};
+
+/** order by var_samp() on columns of table "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+  slideRecordId?: Maybe<Order_By>;
+  startTime?: Maybe<Order_By>;
+};
+
+/** order by variance() on columns of table "slideshare.SlideRecordPiece" */
+export type Slideshare_SlideRecordPiece_Variance_Order_By = {
+  id?: Maybe<Order_By>;
+  slideRecordId?: Maybe<Order_By>;
+  startTime?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "slideshare.SlideRecord". All fields are combined with a logical 'AND'. */
+export type Slideshare_SlideRecord_Bool_Exp = {
+  SlideRecordPieces?: Maybe<Slideshare_SlideRecordPiece_Bool_Exp>;
+  _and?: Maybe<Array<Slideshare_SlideRecord_Bool_Exp>>;
+  _not?: Maybe<Slideshare_SlideRecord_Bool_Exp>;
+  _or?: Maybe<Array<Slideshare_SlideRecord_Bool_Exp>>;
+  audioUrl?: Maybe<String_Comparison_Exp>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  slideId?: Maybe<Int_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "slideshare.SlideRecord" */
+export enum Slideshare_SlideRecord_Constraint {
+  /** unique or primary key constraint */
+  SlideRecordAudioUrlKey = 'SlideRecord_audioUrl_key',
+  /** unique or primary key constraint */
+  SlideRecordPkey = 'SlideRecord_pkey'
+}
+
+/** input type for inserting data into table "slideshare.SlideRecord" */
+export type Slideshare_SlideRecord_Insert_Input = {
+  SlideRecordPieces?: Maybe<Slideshare_SlideRecordPiece_Arr_Rel_Insert_Input>;
+  audioUrl?: Maybe<Scalars['String']>;
+  slideId?: Maybe<Scalars['Int']>;
+};
+
+/** response of any mutation on the table "slideshare.SlideRecord" */
+export type Slideshare_SlideRecord_Mutation_Response = {
+  __typename?: 'slideshare_SlideRecord_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Slideshare_SlideRecord>;
+};
+
+/** on conflict condition type for table "slideshare.SlideRecord" */
+export type Slideshare_SlideRecord_On_Conflict = {
+  constraint: Slideshare_SlideRecord_Constraint;
+  update_columns?: Array<Slideshare_SlideRecord_Update_Column>;
+  where?: Maybe<Slideshare_SlideRecord_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "slideshare.SlideRecord". */
+export type Slideshare_SlideRecord_Order_By = {
+  SlideRecordPieces_aggregate?: Maybe<Slideshare_SlideRecordPiece_Aggregate_Order_By>;
+  audioUrl?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  slideId?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: slideshare_SlideRecord */
+export type Slideshare_SlideRecord_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "slideshare.SlideRecord" */
+export enum Slideshare_SlideRecord_Select_Column {
+  /** column name */
+  AudioUrl = 'audioUrl',
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  SlideId = 'slideId',
+  /** column name */
+  UpdatedAt = 'updatedAt'
+}
+
+/** input type for updating data in table "slideshare.SlideRecord" */
+export type Slideshare_SlideRecord_Set_Input = {
+  audioUrl?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "slideshare.SlideRecord" */
+export enum Slideshare_SlideRecord_Update_Column {
+  /** column name */
+  AudioUrl = 'audioUrl'
+}
+
 /** Boolean expression to filter rows from the table "slideshare.Slide". All fields are combined with a logical 'AND'. */
 export type Slideshare_Slide_Bool_Exp = {
   Pages?: Maybe<Slideshare_Page_Bool_Exp>;
@@ -3369,6 +3727,14 @@ export type Subscription_Root = {
   slideshare_Room_by_pk?: Maybe<Slideshare_Room>;
   /** fetch data from the table: "slideshare.Slide" */
   slideshare_Slide: Array<Slideshare_Slide>;
+  /** fetch data from the table: "slideshare.SlideRecord" */
+  slideshare_SlideRecord: Array<Slideshare_SlideRecord>;
+  /** fetch data from the table: "slideshare.SlideRecordPiece" */
+  slideshare_SlideRecordPiece: Array<Slideshare_SlideRecordPiece>;
+  /** fetch data from the table: "slideshare.SlideRecordPiece" using primary key columns */
+  slideshare_SlideRecordPiece_by_pk?: Maybe<Slideshare_SlideRecordPiece>;
+  /** fetch data from the table: "slideshare.SlideRecord" using primary key columns */
+  slideshare_SlideRecord_by_pk?: Maybe<Slideshare_SlideRecord>;
   /** fetch data from the table: "slideshare.Slide" using primary key columns */
   slideshare_Slide_by_pk?: Maybe<Slideshare_Slide>;
 };
@@ -3591,6 +3957,34 @@ export type Subscription_RootSlideshare_SlideArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Slideshare_Slide_Order_By>>;
   where?: Maybe<Slideshare_Slide_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_SlideRecordArgs = {
+  distinct_on?: Maybe<Array<Slideshare_SlideRecord_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_SlideRecord_Order_By>>;
+  where?: Maybe<Slideshare_SlideRecord_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_SlideRecordPieceArgs = {
+  distinct_on?: Maybe<Array<Slideshare_SlideRecordPiece_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Slideshare_SlideRecordPiece_Order_By>>;
+  where?: Maybe<Slideshare_SlideRecordPiece_Bool_Exp>;
+};
+
+
+export type Subscription_RootSlideshare_SlideRecordPiece_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Subscription_RootSlideshare_SlideRecord_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -3921,6 +4315,30 @@ export type UpdateRoomParticipantMutationMutationVariables = Exact<{
 
 
 export type UpdateRoomParticipantMutationMutation = { __typename?: 'mutation_root', update_slideshare_RoomParticipant_by_pk?: { __typename?: 'slideshare_RoomParticipant', roomId?: number | null | undefined } | null | undefined };
+
+export type StartSlideRecordMutationVariables = Exact<{
+  audioUrl: Scalars['String'];
+  slideId: Scalars['Int'];
+}>;
+
+
+export type StartSlideRecordMutation = { __typename?: 'mutation_root', insert_slideshare_SlideRecord_one?: { __typename?: 'slideshare_SlideRecord', id: number } | null | undefined };
+
+export type AddSlideRecordPieceMutationVariables = Exact<{
+  pageId: Scalars['String'];
+  slideRecordId: Scalars['Int'];
+  startTime: Scalars['Int'];
+}>;
+
+
+export type AddSlideRecordPieceMutation = { __typename?: 'mutation_root', insert_slideshare_SlideRecordPiece_one?: { __typename?: 'slideshare_SlideRecordPiece', id: number } | null | undefined };
+
+export type SlideRecordQueryVariables = Exact<{
+  slideId?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type SlideRecordQuery = { __typename?: 'query_root', slideshare_SlideRecord: Array<{ __typename?: 'slideshare_SlideRecord', id: number, audioUrl: string, SlideRecordPieces: Array<{ __typename?: 'slideshare_SlideRecordPiece', id: number, pageId: string, startTime: number }> }> };
 
 export type UploadPdfMutationVariables = Exact<{
   pdfName: Scalars['String'];
@@ -5408,6 +5826,120 @@ export function useUpdateRoomParticipantMutationMutation(baseOptions?: Apollo.Mu
 export type UpdateRoomParticipantMutationMutationHookResult = ReturnType<typeof useUpdateRoomParticipantMutationMutation>;
 export type UpdateRoomParticipantMutationMutationResult = Apollo.MutationResult<UpdateRoomParticipantMutationMutation>;
 export type UpdateRoomParticipantMutationMutationOptions = Apollo.BaseMutationOptions<UpdateRoomParticipantMutationMutation, UpdateRoomParticipantMutationMutationVariables>;
+export const StartSlideRecordDocument = gql`
+    mutation StartSlideRecord($audioUrl: String!, $slideId: Int!) {
+  insert_slideshare_SlideRecord_one(
+    object: {slideId: $slideId, audioUrl: $audioUrl}
+  ) {
+    id
+  }
+}
+    `;
+export type StartSlideRecordMutationFn = Apollo.MutationFunction<StartSlideRecordMutation, StartSlideRecordMutationVariables>;
+
+/**
+ * __useStartSlideRecordMutation__
+ *
+ * To run a mutation, you first call `useStartSlideRecordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useStartSlideRecordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [startSlideRecordMutation, { data, loading, error }] = useStartSlideRecordMutation({
+ *   variables: {
+ *      audioUrl: // value for 'audioUrl'
+ *      slideId: // value for 'slideId'
+ *   },
+ * });
+ */
+export function useStartSlideRecordMutation(baseOptions?: Apollo.MutationHookOptions<StartSlideRecordMutation, StartSlideRecordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<StartSlideRecordMutation, StartSlideRecordMutationVariables>(StartSlideRecordDocument, options);
+      }
+export type StartSlideRecordMutationHookResult = ReturnType<typeof useStartSlideRecordMutation>;
+export type StartSlideRecordMutationResult = Apollo.MutationResult<StartSlideRecordMutation>;
+export type StartSlideRecordMutationOptions = Apollo.BaseMutationOptions<StartSlideRecordMutation, StartSlideRecordMutationVariables>;
+export const AddSlideRecordPieceDocument = gql`
+    mutation addSlideRecordPiece($pageId: String!, $slideRecordId: Int!, $startTime: Int!) {
+  insert_slideshare_SlideRecordPiece_one(
+    object: {pageId: $pageId, slideRecordId: $slideRecordId, startTime: $startTime}
+  ) {
+    id
+  }
+}
+    `;
+export type AddSlideRecordPieceMutationFn = Apollo.MutationFunction<AddSlideRecordPieceMutation, AddSlideRecordPieceMutationVariables>;
+
+/**
+ * __useAddSlideRecordPieceMutation__
+ *
+ * To run a mutation, you first call `useAddSlideRecordPieceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddSlideRecordPieceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addSlideRecordPieceMutation, { data, loading, error }] = useAddSlideRecordPieceMutation({
+ *   variables: {
+ *      pageId: // value for 'pageId'
+ *      slideRecordId: // value for 'slideRecordId'
+ *      startTime: // value for 'startTime'
+ *   },
+ * });
+ */
+export function useAddSlideRecordPieceMutation(baseOptions?: Apollo.MutationHookOptions<AddSlideRecordPieceMutation, AddSlideRecordPieceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddSlideRecordPieceMutation, AddSlideRecordPieceMutationVariables>(AddSlideRecordPieceDocument, options);
+      }
+export type AddSlideRecordPieceMutationHookResult = ReturnType<typeof useAddSlideRecordPieceMutation>;
+export type AddSlideRecordPieceMutationResult = Apollo.MutationResult<AddSlideRecordPieceMutation>;
+export type AddSlideRecordPieceMutationOptions = Apollo.BaseMutationOptions<AddSlideRecordPieceMutation, AddSlideRecordPieceMutationVariables>;
+export const SlideRecordDocument = gql`
+    query SlideRecord($slideId: Int) {
+  slideshare_SlideRecord(where: {slideId: {_eq: $slideId}}) {
+    id
+    audioUrl
+    SlideRecordPieces {
+      id
+      pageId
+      startTime
+    }
+  }
+}
+    `;
+
+/**
+ * __useSlideRecordQuery__
+ *
+ * To run a query within a React component, call `useSlideRecordQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSlideRecordQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSlideRecordQuery({
+ *   variables: {
+ *      slideId: // value for 'slideId'
+ *   },
+ * });
+ */
+export function useSlideRecordQuery(baseOptions?: Apollo.QueryHookOptions<SlideRecordQuery, SlideRecordQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SlideRecordQuery, SlideRecordQueryVariables>(SlideRecordDocument, options);
+      }
+export function useSlideRecordLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SlideRecordQuery, SlideRecordQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SlideRecordQuery, SlideRecordQueryVariables>(SlideRecordDocument, options);
+        }
+export type SlideRecordQueryHookResult = ReturnType<typeof useSlideRecordQuery>;
+export type SlideRecordLazyQueryHookResult = ReturnType<typeof useSlideRecordLazyQuery>;
+export type SlideRecordQueryResult = Apollo.QueryResult<SlideRecordQuery, SlideRecordQueryVariables>;
 export const UploadPdfDocument = gql`
     mutation UploadPdf($pdfName: String!) {
   uploadPdf(pdfName: $pdfName) {

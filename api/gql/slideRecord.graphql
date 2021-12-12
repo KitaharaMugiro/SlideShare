@@ -1,0 +1,23 @@
+mutation StartSlideRecord($audioUrl: String!, $slideId: Int!) {
+  insert_slideshare_SlideRecord_one(object: {slideId: $slideId, audioUrl: $audioUrl}) {
+    id
+  }
+}
+
+mutation addSlideRecordPiece($pageId: String!, $slideRecordId: Int!, $startTime: Int!) {
+  insert_slideshare_SlideRecordPiece_one(object: {pageId: $pageId, slideRecordId: $slideRecordId, startTime: $startTime}) {
+    id
+  }
+}
+
+query SlideRecord($slideId: Int) {
+  slideshare_SlideRecord(where:{slideId: {_eq:$slideId}}) {
+    id
+    audioUrl
+    SlideRecordPieces {
+      id
+      pageId
+      startTime
+    }
+  }
+}

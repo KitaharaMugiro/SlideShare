@@ -27,7 +27,7 @@
     "date-fns": "^2.25.0",
     "graphql": "^15.6.1",
     "jotai": "^1.4.2",
-    "next": "12.0.3",
+    "next": "^12.0.7",
     "next-intl": "^2.2.0",
     "next-remove-imports": "^1.0.6",
     "notion-client": "^4.11.1",
@@ -37,15 +37,17 @@
     "react-dom": "17.0.2",
     "react-dropzone": "^11.4.2",
     "react-full-screen": "^1.1.0",
+    "react-media-recorder": "^1.6.3",
     "react-notion-x": "^4.11.0",
     "react-social-login-buttons": "^3.6.0",
+    "react-timer-hook": "^3.0.5",
     "realtimely": "^3.6.0",
     "subscriptions-transport-ws": "^0.9.19",
     "ts-react-codepen-embed": "^0.4.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.2.0",
+    "@graphql-codegen/cli": "^1.9.0",
     "@graphql-codegen/introspection": "^2.1.0",
     "@graphql-codegen/typescript": "^2.2.2",
     "@graphql-codegen/typescript-graphql-request": "^4.1.4",
@@ -56,7 +58,7 @@
     "@types/uuid": "^8.3.1",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
-    "serverless": "^2.64.1",
+    "serverless": "^1.54.0",
     "serverless-python-requirements": "^5.1.1",
     "typescript": "4.4.3"
   }
