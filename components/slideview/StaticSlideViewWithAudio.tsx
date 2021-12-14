@@ -11,6 +11,7 @@ import ControllerOnSlide from "./ControllerOnSlide"
 import style from "./slideview.module.css"
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import useSlideRecordPlayer from "../../model/util-hooks/useSlideRecordPlayer"
+import ControllerOnSlideWithAudio from "./ControllerOnSlideWithAudio"
 interface Props {
     initialSlide: QuerySlideQuery
     isAdmin: boolean
@@ -20,8 +21,7 @@ export default (props: Props) => {
     const { initialSlide, isAdmin } = props
 
     // audio
-    const audioRecord = props.initialSlide.slideshare_SlideRecord
-    const { } = useSlideRecordPlayer()
+    const { play, pause, isPlaying, seek, duration, currentPageId } = useSlideRecordPlayer(props.initialSlide)
 
     //スライドコントローラ
     const [appearController, setAppearController] = useState(false)
@@ -82,9 +82,14 @@ export default (props: Props) => {
                             onClickLeft={goPrevious}
                             onClickRight={goNext}
                         />
-                        <ControllerOnSlide
+                        <ControllerOnSlideWithAudio
                             appear={appearController}
-                            onClickFullScreen={fullscreenHandle.active ? fullscreenHandle.exit : fullscreenHandle.enter} />
+                            onClickFullScreen={fullscreenHandle.active ? fullscreenHandle.exit : fullscreenHandle.enter}
+                            playing={isPlaying}
+                            onClickPause={pause}
+                            onClickPlay={play}
+                            duration={duration}
+                            seek={seek} />
                     </div>
                 </FullScreen>
                 <SlideSlider

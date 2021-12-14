@@ -12,27 +12,7 @@ interface Props {
 
 export default (props: Props) => {
 
-    const renderIfAudioExists = () => {
-        return (
-            <div>
-                <IconButton
-                    onClick={undefined}
-                    style={{ marginLeft: 10, height: 60 }}>
-                    <PlayArrowIcon style={{ width: 40, height: 40 }} />
-                </IconButton>
-                {/* <IconButton
-                onClick={undefined}
-                style={{ marginLeft: 0, height: 60 }}>
-                <SettingsIcon style={{ width: 30, height: 30 }} />
-            </IconButton> */}
 
-
-                <span style={{ marginLeft: 10, color: "white" }}>
-                    9:10 / 30:00 (@3)
-                </span>
-            </div>
-        )
-    }
 
     return (
         <div
@@ -42,7 +22,6 @@ export default (props: Props) => {
                 opacity: props.appear ? 1 : 0
             }}
         >
-            {renderIfAudioExists()}
             <IconButton
                 onClick={props.onClickFullScreen}
                 style={{ position: "absolute", right: 10, height: 60 }}>
