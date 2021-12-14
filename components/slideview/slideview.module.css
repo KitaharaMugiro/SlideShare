@@ -14,9 +14,9 @@
   left: 0;
   height: 60px;
   z-index: 4;
-  background-color: rgb(204, 204, 204);
+  background-color: rgb(204, 204, 204, 0.7);
   display: flex;
-  padding: 0 10px 15px;
+  /* padding: 0 10px 15px; */
   align-items: flex-end;
   transition: transform 0.3s ease;
   border-radius: 0 0 6px 6px;

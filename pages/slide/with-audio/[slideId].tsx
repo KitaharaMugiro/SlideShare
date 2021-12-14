@@ -9,7 +9,7 @@ import getOgpInfo from "../../../model/serverSideRender/getOgpInfo";
 import { useLoading } from "../../../model/util-hooks/useLoading";
 import useUser from "../../../model/util-hooks/useUser";
 import { useQuerySlideQuery } from "../../../src/generated/graphql";
-import style from "./style.module.css";
+import style from "../style.module.css";
 const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const t = useTranslations('Slide');
 
@@ -55,7 +55,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const data = JSON.parse(JSON.stringify(await import(`../../messages/${context.locale}.json`)))
+    const data = JSON.parse(JSON.stringify(await import(`../../../messages/${context.locale}.json`)))
     return {
         ...getOgpInfo(context),
         props: {

@@ -10,6 +10,7 @@ import SlideSlider from "../slide/SlideSlider"
 import ControllerOnSlide from "./ControllerOnSlide"
 import style from "./slideview.module.css"
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import useSlideRecordPlayer from "../../model/util-hooks/useSlideRecordPlayer"
 interface Props {
     initialSlide: QuerySlideQuery
     isAdmin: boolean
@@ -17,6 +18,10 @@ interface Props {
 
 export default (props: Props) => {
     const { initialSlide, isAdmin } = props
+
+    // audio
+    const audioRecord = props.initialSlide.slideshare_SlideRecord
+    const { } = useSlideRecordPlayer()
 
     //スライドコントローラ
     const [appearController, setAppearController] = useState(false)

@@ -40,6 +40,20 @@ query querySlide($slideId: Int!) {
     title
     updatedAt
   }
+
+  slideshare_SlideRecord(where: {slideId: {_eq: $slideId}},  order_by:{createdAt:desc}, limit:1) {
+    id
+    slideId
+    audioUrl
+    createdAt
+    updatedAt
+    SlideRecordPieces {
+      id
+      pageId
+      slideRecordId
+      startTime
+    }
+  }  
 }
 
 query queryUserSlide($userId: String!, $offset: Int!) {
