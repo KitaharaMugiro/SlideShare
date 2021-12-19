@@ -25,29 +25,27 @@ export default (props: Props) => {
     }
     const renderListItems = () => {
         return records.map((r) => {
-            return <>
-                <ListItem
-                    key={r.id}
-                    secondaryAction={
-                        props.isAdmin ?
-                            <IconButton edge="end" aria-label="delete"
-                                onClick={() => onClickDelete(r.id)}>
-                                <DeleteIcon />
-                            </IconButton> : <div />
-                    }>
-                    <ListItemButton
-                        onClick={() => props.onClickReplay(r.id)}
-                        selected={props.selectedRecordId === r.id}>
-                        <ListItemIcon>
-                            <PlayCircleOutlineIcon />
-                        </ListItemIcon>
-                        <ListItemText primaryTypographyProps={{ color: "white" }} id="switch-list-label-wifi"
-                            primary={r.title}
-                            secondary={format(new Date(r.createdAt), "yyyy年MM月dd日 HH時mm分")}
-                        />
-                    </ListItemButton>
-                </ListItem>
-            </>
+            return <ListItem
+                key={r.id}
+                secondaryAction={
+                    props.isAdmin ?
+                        <IconButton edge="end" aria-label="delete"
+                            onClick={() => onClickDelete(r.id)}>
+                            <DeleteIcon />
+                        </IconButton> : <div />
+                }>
+                <ListItemButton
+                    onClick={() => props.onClickReplay(r.id)}
+                    selected={props.selectedRecordId === r.id}>
+                    <ListItemIcon>
+                        <PlayCircleOutlineIcon />
+                    </ListItemIcon>
+                    <ListItemText primaryTypographyProps={{ color: "white" }} id="switch-list-label-wifi"
+                        primary={r.title}
+                        secondary={format(new Date(r.createdAt), "yyyy年MM月dd日 HH時mm分")}
+                    />
+                </ListItemButton>
+            </ListItem>
         })
     }
 

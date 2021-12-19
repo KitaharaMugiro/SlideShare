@@ -118,10 +118,21 @@ export default (props: Props) => {
         }
     }
 
-    const onClickStartRecord = () => {
-        const title = props.roomTitle || latestConference?.title || undefined
-        if (slide) startSlideRecord(slide?.id, title)
-    }
+    const [autoStartRecord, setAutoStartRecord] = useState(false)
+    useEffect(() => {
+        const startRecord = () => {
+            const title = props.roomTitle || latestConference?.title || undefined
+            if (slide) startSlideRecord(slide?.id, title)
+        }
+
+        setTimeout(() => {
+            setAutoStartRecord(true)
+        }, 3000)
+
+        if (autoStartRecord) {
+            startRecord()
+        }
+    }, [autoStartRecord])
 
     const onFinishPresentation = () => {
         stopSlideRecord()
@@ -183,7 +194,6 @@ export default (props: Props) => {
                         syncSlide={syncSlide}
                     />
                     {isAdmin ? <AdminPresentationController
-                        onClickStartRecord={onClickStartRecord}
                         onFinishPresentation={onFinishPresentation}
                         confirmedRecording={confirmedRecording}
                         minutes={minutes}
