@@ -15,6 +15,7 @@ interface Props {
     linkTo: "slide" | "presentation"
     onDeleteCard?: (slideId: number) => void
     onClickPick?: (slideId: number) => void
+    isFocus?: boolean
 }
 
 export default function SlideCard(props: Props) {
@@ -95,7 +96,10 @@ export default function SlideCard(props: Props) {
     }
 
     return (
-        <Card sx={{ width: 280, height: 185 }}>
+        <Card sx={{
+            width: 280, height: 185, border: props.isFocus ? "1px solid rgba(81, 203, 238, 1)" : "",
+            boxShadow: props.isFocus ? "0 0 5px rgba(81, 203, 238, 1)" : ""
+        }}>
             <Link href={`/${props.linkTo || "slide"}/${props.slideId}`} passHref>
                 <a target="_blank" rel="noreferrer">
                     <CardActionArea>

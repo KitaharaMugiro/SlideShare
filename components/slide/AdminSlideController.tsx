@@ -1,6 +1,6 @@
 import { Button, Stack } from "@mui/material";
 import { useRouter } from "next/dist/client/router";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslations } from "use-intl";
 import useConference from "../../model/hooks/useConference";
 import { useQueryConferenceBySlideIdQuery } from "../../src/generated/graphql";
@@ -17,11 +17,11 @@ export default (props: Props) => {
     const { slideId } = props
     const { data, loading, error } = useQueryConferenceBySlideIdQuery({ variables: { slideId } })
     const latestConference = data?.slideshare_Conference ? data?.slideshare_Conference[0] : undefined
-
+    const [now] = useState(new Date())
 
     const renderConference = () => {
         if (latestConference) {
-            if (new Date(latestConference.endDate) > new Date()) {
+            if (new Date(latestConference.endDate) > now) {
                 return <>
                     <Button href={`/presentation/${slideId}`}>{t("open-with-presentation-mode")}</Button>
                     <ConferenceInfoModalButton

@@ -19,16 +19,13 @@ export default function EditableProfileCard(props: Props) {
     };
 
     return (
-        <Dialog open={props.open} onClose={handleClose}>
+        <Dialog open={props.open} disableEscapeKeyDown>
             <DialogTitle>{t("profile")}</DialogTitle>
             <DialogContent>
                 <DialogContentText>
                     {t("edit-description")}
                 </DialogContentText>
                 <TextField
-                    InputProps={{
-                        style: { color: "white" }
-                    }}
                     autoFocus
                     margin="dense"
                     label="Name"
@@ -38,9 +35,6 @@ export default function EditableProfileCard(props: Props) {
                     onChange={e => setName(e.target.value)}
                 />
                 <TextField
-                    InputProps={{
-                        style: { color: "white" }
-                    }}
                     margin="dense"
                     label="Profile"
                     fullWidth

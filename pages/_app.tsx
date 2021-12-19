@@ -32,6 +32,7 @@ import MySnackbar from '../components/common/MySnackbar';
 
 //next intl
 import { NextIntlProvider } from 'next-intl';
+import ForceEditProfile from '../components/profile/ForceEditProfile';
 
 
 function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
@@ -105,6 +106,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <ThemeProvider theme={darkTheme}>
             <MyAppBar />
+            <ForceEditProfile />
             <MyBackdrop />
             <MySnackbar />
             <Component {...pageProps} />

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import useArrowKeyboardEvent from "../../model/util-hooks/useArrowKeyboardEvent"
 import { useWindowDimensions } from "../../model/util-hooks/useWindowDimentions"
 import { QuerySlideQuery } from "../../src/generated/graphql"
@@ -21,35 +21,53 @@ export default (props: Props) => {
     const { initialSlide, isAdmin } = props
 
     // audio
-    const { play, pause, isPlaying, seek, duration, currentPageId } = useSlideRecordPlayer(props.initialSlide)
-
+    const { play, pause, isPlaying, seek, duration, currentPageId, rate, changeRate, skip } = useSlideRecordPlayer(props.initialSlide)
     //スライドコントローラ
     const [appearController, setAppearController] = useState(false)
     const fullscreenHandle = useFullScreenHandle();
 
     //slide状態変数
+    const [isSync, setIsSync] = useState(true)
     const [localPageNumber, setLocalPageNumber] = useState(0)
     const slide = initialSlide?.slideshare_Slide_by_pk
     const pages = slide?.Pages ? [...slide?.Pages].sort((a, b) => a.pageNumber - b.pageNumber) : []
-    const viewingPage = pages[localPageNumber]
+    const audioPageNumber = pages.find(p => p.id === currentPageId)?.pageNumber || 0
+    const viewingPage = isSync ? pages[audioPageNumber || localPageNumber] : pages[localPageNumber]
+
+    useEffect(() => {
+        if (isSync) {
+            setLocalPageNumber(audioPageNumber)
+        } else {
+            //CHECK: 挙動としてaudioPageNumberが追いついたときにSyncさせるかどうか
+            setIsSync(audioPageNumber === localPageNumber)
+        }
+    }, [audioPageNumber])
 
     const goNext = () => {
         const nextPageNumber = localPageNumber + 1
         if (nextPageNumber >= pages.length) return
+        setIsSync(audioPageNumber === nextPageNumber)
         setLocalPageNumber(nextPageNumber)
     }
 
     const goPrevious = () => {
         const nextPageNumber = localPageNumber - 1
         if (nextPageNumber < 0) return
+        setIsSync(audioPageNumber === nextPageNumber)
         setLocalPageNumber(nextPageNumber)
     }
 
+    const syncSlide = () => {
+        setIsSync(true)
+        setLocalPageNumber(audioPageNumber || 0)
+    }
+
     //keyboard event
-    useArrowKeyboardEvent(goPrevious, goNext)
+    useArrowKeyboardEvent(() => skip(-5), () => skip(5))
 
     const onChangePageNumber = (number: number) => {
         const nextPageNumber = number
+        setIsSync(audioPageNumber === nextPageNumber)
         setLocalPageNumber(nextPageNumber)
     }
 
@@ -88,15 +106,18 @@ export default (props: Props) => {
                             playing={isPlaying}
                             onClickPause={pause}
                             onClickPlay={play}
+                            onClickChangeRate={changeRate}
+                            currentRate={rate}
                             duration={duration}
                             seek={seek} />
                     </div>
                 </FullScreen>
                 <SlideSlider
                     maxPageNumber={pages?.length || 0}
-                    pageNumber={localPageNumber}
+                    pageNumber={isSync ? audioPageNumber || localPageNumber : localPageNumber}
                     onChangePageNumber={onChangePageNumber}
-                    isSync={false}
+                    isSync={isSync}
+                    syncSlide={syncSlide}
                 />
                 {isAdmin ? <AdminSlideController
                     slideId={Number(slide?.id)} /> : <div />}

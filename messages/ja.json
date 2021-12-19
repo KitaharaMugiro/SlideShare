@@ -35,7 +35,7 @@
     "Profile": {
         "edit": "プロフィールを編集する",
         "profile": "プロフィール",
-        "edit-description": "参加者のためにプロフィールを記載しよう"
+        "edit-description": "あなたの名前と簡単な自己紹介を記載お願いします。"
     },
     "Conference": {
         "present-with-this-slide": "このスライドで発表する",

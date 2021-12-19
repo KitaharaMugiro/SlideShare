@@ -1105,6 +1105,7 @@ export type Mutation_RootUpdate_Slideshare_Room_By_PkArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Slideshare_SlideRecordArgs = {
+  _inc?: Maybe<Slideshare_SlideRecord_Inc_Input>;
   _set?: Maybe<Slideshare_SlideRecord_Set_Input>;
   where: Slideshare_SlideRecord_Bool_Exp;
 };
@@ -1112,6 +1113,7 @@ export type Mutation_RootUpdate_Slideshare_SlideRecordArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Slideshare_SlideRecord_By_PkArgs = {
+  _inc?: Maybe<Slideshare_SlideRecord_Inc_Input>;
   _set?: Maybe<Slideshare_SlideRecord_Set_Input>;
   pk_columns: Slideshare_SlideRecord_Pk_Columns_Input;
 };
@@ -3343,6 +3345,7 @@ export type Slideshare_SlideRecord = {
   SlideRecordPieces: Array<Slideshare_SlideRecordPiece>;
   audioUrl: Scalars['String'];
   createdAt: Scalars['timestamptz'];
+  duration: Scalars['Int'];
   id: Scalars['Int'];
   slideId: Scalars['Int'];
   updatedAt: Scalars['timestamptz'];
@@ -3514,6 +3517,7 @@ export type Slideshare_SlideRecord_Bool_Exp = {
   _or?: Maybe<Array<Slideshare_SlideRecord_Bool_Exp>>;
   audioUrl?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  duration?: Maybe<Int_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
   slideId?: Maybe<Int_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
@@ -3526,6 +3530,11 @@ export enum Slideshare_SlideRecord_Constraint {
   /** unique or primary key constraint */
   SlideRecordPkey = 'SlideRecord_pkey'
 }
+
+/** input type for incrementing numeric columns in table "slideshare.SlideRecord" */
+export type Slideshare_SlideRecord_Inc_Input = {
+  duration?: Maybe<Scalars['Int']>;
+};
 
 /** input type for inserting data into table "slideshare.SlideRecord" */
 export type Slideshare_SlideRecord_Insert_Input = {
@@ -3555,6 +3564,7 @@ export type Slideshare_SlideRecord_Order_By = {
   SlideRecordPieces_aggregate?: Maybe<Slideshare_SlideRecordPiece_Aggregate_Order_By>;
   audioUrl?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
+  duration?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   slideId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -3572,6 +3582,8 @@ export enum Slideshare_SlideRecord_Select_Column {
   /** column name */
   CreatedAt = 'createdAt',
   /** column name */
+  Duration = 'duration',
+  /** column name */
   Id = 'id',
   /** column name */
   SlideId = 'slideId',
@@ -3582,12 +3594,15 @@ export enum Slideshare_SlideRecord_Select_Column {
 /** input type for updating data in table "slideshare.SlideRecord" */
 export type Slideshare_SlideRecord_Set_Input = {
   audioUrl?: Maybe<Scalars['String']>;
+  duration?: Maybe<Scalars['Int']>;
 };
 
 /** update columns of table "slideshare.SlideRecord" */
 export enum Slideshare_SlideRecord_Update_Column {
   /** column name */
-  AudioUrl = 'audioUrl'
+  AudioUrl = 'audioUrl',
+  /** column name */
+  Duration = 'duration'
 }
 
 /** Boolean expression to filter rows from the table "slideshare.Slide". All fields are combined with a logical 'AND'. */
@@ -4244,7 +4259,7 @@ export type QuerySlideQueryVariables = Exact<{
 }>;
 
 
-export type QuerySlideQuery = { __typename?: 'query_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, title?: string | null | undefined, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number, Bookmarks: Array<{ __typename?: 'slideshare_Bookmark', id: number, url: string }>, Poll?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined } | null | undefined, Files: Array<{ __typename?: 'slideshare_File', id: number, path: string, filename: string }> }> } | null | undefined, slideshare_Conference: Array<{ __typename?: 'slideshare_Conference', id: number, startDate: any, endDate: any, createdAt: any, title?: string | null | undefined, updatedAt: any }>, slideshare_SlideRecord: Array<{ __typename?: 'slideshare_SlideRecord', id: number, slideId: number, audioUrl: string, createdAt: any, updatedAt: any, SlideRecordPieces: Array<{ __typename?: 'slideshare_SlideRecordPiece', id: number, pageId: string, slideRecordId: number, startTime: number }> }> };
+export type QuerySlideQuery = { __typename?: 'query_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, title?: string | null | undefined, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number, Bookmarks: Array<{ __typename?: 'slideshare_Bookmark', id: number, url: string }>, Poll?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined } | null | undefined, Files: Array<{ __typename?: 'slideshare_File', id: number, path: string, filename: string }> }> } | null | undefined, slideshare_Conference: Array<{ __typename?: 'slideshare_Conference', id: number, startDate: any, endDate: any, createdAt: any, title?: string | null | undefined, updatedAt: any }>, slideshare_SlideRecord: Array<{ __typename?: 'slideshare_SlideRecord', id: number, slideId: number, duration: number, audioUrl: string, createdAt: any, updatedAt: any, SlideRecordPieces: Array<{ __typename?: 'slideshare_SlideRecordPiece', id: number, pageId: string, slideRecordId: number, startTime: number }> }> };
 
 export type QueryUserSlideQueryVariables = Exact<{
   userId: Scalars['String'];
@@ -4333,12 +4348,20 @@ export type AddSlideRecordPieceMutationVariables = Exact<{
 
 export type AddSlideRecordPieceMutation = { __typename?: 'mutation_root', insert_slideshare_SlideRecordPiece_one?: { __typename?: 'slideshare_SlideRecordPiece', id: number } | null | undefined };
 
+export type UpdateDurationMutationVariables = Exact<{
+  id: Scalars['Int'];
+  duration: Scalars['Int'];
+}>;
+
+
+export type UpdateDurationMutation = { __typename?: 'mutation_root', update_slideshare_SlideRecord_by_pk?: { __typename?: 'slideshare_SlideRecord', duration: number } | null | undefined };
+
 export type SlideRecordQueryVariables = Exact<{
   slideId?: Maybe<Scalars['Int']>;
 }>;
 
 
-export type SlideRecordQuery = { __typename?: 'query_root', slideshare_SlideRecord: Array<{ __typename?: 'slideshare_SlideRecord', id: number, audioUrl: string, SlideRecordPieces: Array<{ __typename?: 'slideshare_SlideRecordPiece', id: number, pageId: string, startTime: number }> }> };
+export type SlideRecordQuery = { __typename?: 'query_root', slideshare_SlideRecord: Array<{ __typename?: 'slideshare_SlideRecord', id: number, audioUrl: string, duration: number, SlideRecordPieces: Array<{ __typename?: 'slideshare_SlideRecordPiece', id: number, pageId: string, startTime: number }> }> };
 
 export type UploadPdfMutationVariables = Exact<{
   pdfName: Scalars['String'];
@@ -5451,10 +5474,11 @@ export const QuerySlideDocument = gql`
   ) {
     id
     slideId
+    duration
     audioUrl
     createdAt
     updatedAt
-    SlideRecordPieces {
+    SlideRecordPieces(order_by: {startTime: desc}) {
       id
       pageId
       slideRecordId
@@ -5916,11 +5940,49 @@ export function useAddSlideRecordPieceMutation(baseOptions?: Apollo.MutationHook
 export type AddSlideRecordPieceMutationHookResult = ReturnType<typeof useAddSlideRecordPieceMutation>;
 export type AddSlideRecordPieceMutationResult = Apollo.MutationResult<AddSlideRecordPieceMutation>;
 export type AddSlideRecordPieceMutationOptions = Apollo.BaseMutationOptions<AddSlideRecordPieceMutation, AddSlideRecordPieceMutationVariables>;
+export const UpdateDurationDocument = gql`
+    mutation updateDuration($id: Int!, $duration: Int!) {
+  update_slideshare_SlideRecord_by_pk(
+    pk_columns: {id: $id}
+    _set: {duration: $duration}
+  ) {
+    duration
+  }
+}
+    `;
+export type UpdateDurationMutationFn = Apollo.MutationFunction<UpdateDurationMutation, UpdateDurationMutationVariables>;
+
+/**
+ * __useUpdateDurationMutation__
+ *
+ * To run a mutation, you first call `useUpdateDurationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateDurationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateDurationMutation, { data, loading, error }] = useUpdateDurationMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      duration: // value for 'duration'
+ *   },
+ * });
+ */
+export function useUpdateDurationMutation(baseOptions?: Apollo.MutationHookOptions<UpdateDurationMutation, UpdateDurationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateDurationMutation, UpdateDurationMutationVariables>(UpdateDurationDocument, options);
+      }
+export type UpdateDurationMutationHookResult = ReturnType<typeof useUpdateDurationMutation>;
+export type UpdateDurationMutationResult = Apollo.MutationResult<UpdateDurationMutation>;
+export type UpdateDurationMutationOptions = Apollo.BaseMutationOptions<UpdateDurationMutation, UpdateDurationMutationVariables>;
 export const SlideRecordDocument = gql`
     query SlideRecord($slideId: Int) {
   slideshare_SlideRecord(where: {slideId: {_eq: $slideId}}) {
     id
     audioUrl
+    duration
     SlideRecordPieces {
       id
       pageId

@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import StaticSlideView from "../../components/slideview/StaticSlideView";
+import StaticSlideViewWithAudio from "../../components/slideview/StaticSlideViewWithAudio";
 import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag";
 import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
 import { useLoading } from "../../model/util-hooks/useLoading";
@@ -22,6 +23,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     //データ取得
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) }, fetchPolicy: "no-cache" })
     const slide = initialSlide?.slideshare_Slide_by_pk
+    const isAudioAvailable = (initialSlide?.slideshare_SlideRecord.length || 0) > 0 && initialSlide?.slideshare_SlideRecord[0].slideId
 
     useEffect(() => {
         if (loading) {
@@ -46,7 +48,11 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     return (
         <div className={style.main}>
             <OgpTag ogpInfo={ogpInfo} />
-            <StaticSlideView initialSlide={initialSlide} isAdmin={isAdmin} />
+            {isAudioAvailable ?
+
+                <StaticSlideViewWithAudio initialSlide={initialSlide} isAdmin={isAdmin} />
+                : <StaticSlideView initialSlide={initialSlide} isAdmin={isAdmin} />
+            }
             <div style={{ height: 30 }} />
         </div>
     )

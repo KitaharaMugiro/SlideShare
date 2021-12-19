@@ -4,6 +4,8 @@ import React from "react";
 import { useRoomMutation, useRoomParticipantMutation } from "../../model/hooks/useRoom";
 import { Slide } from "../../model/Slide";
 import useMySlidePagenation from "../../model/util-hooks/useMySlidePagenation";
+import PlusSlideCard from "../common/PlusSlideCard";
+import PlusFrame from "../edit/frame/PlusFrame";
 import SlideCard from "../slide/SlideCard";
 
 interface Props {
@@ -14,6 +16,7 @@ interface Props {
     }[],
     roomId: number,
     role: "owner" | "participant" | "public" | "none"
+    onClickAdd: () => void
 }
 
 export default (props: Props) => {
@@ -25,7 +28,7 @@ export default (props: Props) => {
     const renderCards = () => {
         return props.slides.map((slide) => {
             return <div key={slide.slideId} style={{
-                margin: 10
+                marginLeft: 10
             }}>
                 <SlideCard
                     slideId={slide.slideId}
@@ -38,7 +41,8 @@ export default (props: Props) => {
     }
 
     return <div style={{ backgroundColor: "white" }}>
-        <div style={{ display: "flex", overflowX: "scroll" }}>
+        <div style={{ display: "flex", overflowX: "scroll", padding: 10 }}>
+            <PlusSlideCard onClick={props.onClickAdd} />
             {renderCards()}
         </div>
     </div>;

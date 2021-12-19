@@ -19,15 +19,14 @@ export default () => {
             const isFocus = focusedSlideId === slide.id
             return <div key={slide.id} style={{
                 margin: 10,
-                border: isFocus ? "1px solid rgba(81, 203, 238, 1)" : "",
-                boxShadow: isFocus ? "0 0 5px rgba(81, 203, 238, 1)" : ""
             }}>
                 <SlideCard
                     slideId={slide.id}
                     imageUrl={slide.Pages ? slide.Pages[0]?.imageUrl : undefined}
                     actionMode="pick"
                     linkTo="presentation"
-                    onClickPick={onClickPick} />
+                    onClickPick={onClickPick}
+                    isFocus={isFocus} />
             </div>
         })
     }

@@ -10,10 +10,17 @@ mutation addSlideRecordPiece($pageId: String!, $slideRecordId: Int!, $startTime:
   }
 }
 
+mutation updateDuration($id:Int!, $duration:Int!) {
+	update_slideshare_SlideRecord_by_pk(pk_columns:{id:$id}, _set:{duration:$duration}) {
+    duration
+  }
+}
+
 query SlideRecord($slideId: Int) {
   slideshare_SlideRecord(where:{slideId: {_eq:$slideId}}) {
     id
     audioUrl
+    duration
     SlideRecordPieces {
       id
       pageId

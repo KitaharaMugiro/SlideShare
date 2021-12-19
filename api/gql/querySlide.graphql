@@ -44,10 +44,11 @@ query querySlide($slideId: Int!) {
   slideshare_SlideRecord(where: {slideId: {_eq: $slideId}},  order_by:{createdAt:desc}, limit:1) {
     id
     slideId
+    duration
     audioUrl
     createdAt
     updatedAt
-    SlideRecordPieces {
+    SlideRecordPieces(order_by:{startTime:desc}) {
       id
       pageId
       slideRecordId

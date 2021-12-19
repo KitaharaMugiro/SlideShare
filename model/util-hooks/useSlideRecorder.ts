@@ -25,7 +25,6 @@ export default () => {
         resumeRecording,
         stopRecording,
         mediaBlobUrl,
-        previewAudioStream
     } = useReactMediaRecorder({ video: false, onStop });
 
     const {
@@ -36,7 +35,7 @@ export default () => {
         pause,
     } = useStopwatch({ autoStart: false });
 
-    const { insertSlideRecord, addRecordPiece } = useSlideRecord()
+    const { insertSlideRecord, addRecordPiece, updateDuration } = useSlideRecord()
 
     const startSlideRecord = async (slideId: number) => {
         const date = new Date()
@@ -64,12 +63,14 @@ export default () => {
         const data = await axios.get(mediaBlobUrl, {
             'responseType': 'blob'
         })
-
         await Storage.put(
             audioPath,
             data.data,
             { contentType: "audio/webm" }
         )
+        const duration = seconds + minutes * 60 + hours * 60 * 60
+        await updateDuration(recordId!, duration)
+
         console.log("Stored audio")
     }
 

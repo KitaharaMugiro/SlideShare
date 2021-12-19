@@ -39,8 +39,8 @@ export default (props: Props) => {
     }
 
     return <>
-        <IconButton aria-label="settings">
-            <MoreVertIcon onClick={(event) => setAnchorEl(event.currentTarget)} />
+        <IconButton aria-label="settings" onClick={(event) => setAnchorEl(event.currentTarget)}>
+            <MoreVertIcon />
         </IconButton>
         {modal}
         {roomOwnerMenu()}

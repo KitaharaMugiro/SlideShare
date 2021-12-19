@@ -35,7 +35,7 @@
     "Profile": {
         "edit": "edit profile",
         "profile": "Profile",
-        "edit-description": "write a profile for your audience."
+        "edit-description": "Please write your name and a brief introduction."
     },
     "Conference": {
         "present-with-this-slide": "Present with this slide",
