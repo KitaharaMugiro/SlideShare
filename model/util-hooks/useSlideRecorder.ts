@@ -37,10 +37,10 @@ export default () => {
 
     const { insertSlideRecord, addRecordPiece, updateDuration } = useSlideRecord()
 
-    const startSlideRecord = async (slideId: number) => {
+    const startSlideRecord = async (slideId: number, title: string | undefined) => {
         const date = new Date()
         const audioUrl = `record/${slideId}_${date.toISOString()}.webm`;
-        const recordId = await insertSlideRecord(slideId, audioUrl)
+        const recordId = await insertSlideRecord(slideId, audioUrl, title)
         setRecordId(recordId)
         setAudioPath(audioUrl)
         setConfirmedRecording(true)

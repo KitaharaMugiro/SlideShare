@@ -1,4 +1,4 @@
-import { useAddSlideRecordPieceMutation, useDeleteSlideMutation, useStartSlideRecordMutation, useUpdateDurationMutation } from "../../src/generated/graphql"
+import { useAddSlideRecordPieceMutation, useDeleteRecordMutation, useDeleteSlideMutation, useStartSlideRecordMutation, useUpdateDurationMutation } from "../../src/generated/graphql"
 import { useSnackMessage } from "../util-hooks/useSnackMessage"
 
 export default () => {
@@ -6,9 +6,10 @@ export default () => {
     const [insertRecordPieceMutation] = useAddSlideRecordPieceMutation({ onError: (e) => displayErrorMessage(e.message) })
     const [insertSlideRecordMutation] = useStartSlideRecordMutation({ onError: (e) => displayErrorMessage(e.message) })
     const [updateDurationMutation] = useUpdateDurationMutation({ onError: (e) => displayErrorMessage(e.message) })
+    const [deleteRecordMutation] = useDeleteRecordMutation({ onError: (e) => displayErrorMessage(e.message) })
 
-    const insertSlideRecord = async (slideId: number, audioUrl: string) => {
-        const res = await insertSlideRecordMutation({ variables: { slideId, audioUrl } })
+    const insertSlideRecord = async (slideId: number, audioUrl: string, title: string | undefined) => {
+        const res = await insertSlideRecordMutation({ variables: { slideId, audioUrl, title } })
         return res.data?.insert_slideshare_SlideRecord_one?.id
     }
 
@@ -20,5 +21,9 @@ export default () => {
         await updateDurationMutation({ variables: { id, duration } })
     }
 
-    return { insertSlideRecord, addRecordPiece, updateDuration }
+    const deleteRecord = async (id: number) => {
+        await deleteRecordMutation({ variables: { id } })
+    }
+
+    return { insertSlideRecord, addRecordPiece, updateDuration, deleteRecord }
 }

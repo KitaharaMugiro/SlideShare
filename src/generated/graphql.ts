@@ -3348,6 +3348,7 @@ export type Slideshare_SlideRecord = {
   duration: Scalars['Int'];
   id: Scalars['Int'];
   slideId: Scalars['Int'];
+  title: Scalars['String'];
   updatedAt: Scalars['timestamptz'];
 };
 
@@ -3520,6 +3521,7 @@ export type Slideshare_SlideRecord_Bool_Exp = {
   duration?: Maybe<Int_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
   slideId?: Maybe<Int_Comparison_Exp>;
+  title?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -3541,6 +3543,7 @@ export type Slideshare_SlideRecord_Insert_Input = {
   SlideRecordPieces?: Maybe<Slideshare_SlideRecordPiece_Arr_Rel_Insert_Input>;
   audioUrl?: Maybe<Scalars['String']>;
   slideId?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
 };
 
 /** response of any mutation on the table "slideshare.SlideRecord" */
@@ -3567,6 +3570,7 @@ export type Slideshare_SlideRecord_Order_By = {
   duration?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   slideId?: Maybe<Order_By>;
+  title?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
 
@@ -3588,6 +3592,8 @@ export enum Slideshare_SlideRecord_Select_Column {
   /** column name */
   SlideId = 'slideId',
   /** column name */
+  Title = 'title',
+  /** column name */
   UpdatedAt = 'updatedAt'
 }
 
@@ -3595,6 +3601,7 @@ export enum Slideshare_SlideRecord_Select_Column {
 export type Slideshare_SlideRecord_Set_Input = {
   audioUrl?: Maybe<Scalars['String']>;
   duration?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
 };
 
 /** update columns of table "slideshare.SlideRecord" */
@@ -3602,7 +3609,9 @@ export enum Slideshare_SlideRecord_Update_Column {
   /** column name */
   AudioUrl = 'audioUrl',
   /** column name */
-  Duration = 'duration'
+  Duration = 'duration',
+  /** column name */
+  Title = 'title'
 }
 
 /** Boolean expression to filter rows from the table "slideshare.Slide". All fields are combined with a logical 'AND'. */
@@ -4259,7 +4268,7 @@ export type QuerySlideQueryVariables = Exact<{
 }>;
 
 
-export type QuerySlideQuery = { __typename?: 'query_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, title?: string | null | undefined, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number, Bookmarks: Array<{ __typename?: 'slideshare_Bookmark', id: number, url: string }>, Poll?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined } | null | undefined, Files: Array<{ __typename?: 'slideshare_File', id: number, path: string, filename: string }> }> } | null | undefined, slideshare_Conference: Array<{ __typename?: 'slideshare_Conference', id: number, startDate: any, endDate: any, createdAt: any, title?: string | null | undefined, updatedAt: any }>, slideshare_SlideRecord: Array<{ __typename?: 'slideshare_SlideRecord', id: number, slideId: number, duration: number, audioUrl: string, createdAt: any, updatedAt: any, SlideRecordPieces: Array<{ __typename?: 'slideshare_SlideRecordPiece', id: number, pageId: string, slideRecordId: number, startTime: number }> }> };
+export type QuerySlideQuery = { __typename?: 'query_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, title?: string | null | undefined, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number, Bookmarks: Array<{ __typename?: 'slideshare_Bookmark', id: number, url: string }>, Poll?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined } | null | undefined, Files: Array<{ __typename?: 'slideshare_File', id: number, path: string, filename: string }> }> } | null | undefined, slideshare_Conference: Array<{ __typename?: 'slideshare_Conference', id: number, startDate: any, endDate: any, createdAt: any, title?: string | null | undefined, updatedAt: any }>, slideshare_SlideRecord: Array<{ __typename?: 'slideshare_SlideRecord', id: number, slideId: number, duration: number, audioUrl: string, createdAt: any, updatedAt: any, title: string, SlideRecordPieces: Array<{ __typename?: 'slideshare_SlideRecordPiece', id: number, pageId: string, slideRecordId: number, startTime: number }> }> };
 
 export type QueryUserSlideQueryVariables = Exact<{
   userId: Scalars['String'];
@@ -4308,6 +4317,13 @@ export type DeleteRoomMutationVariables = Exact<{
 
 export type DeleteRoomMutation = { __typename?: 'mutation_root', delete_slideshare_Room_by_pk?: { __typename?: 'slideshare_Room', id: number } | null | undefined };
 
+export type GetRoomQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetRoomQuery = { __typename?: 'query_root', slideshare_Room_by_pk?: { __typename?: 'slideshare_Room', id: number, name: string, description: string } | null | undefined };
+
 export type RoomsSubscriptionVariables = Exact<{
   roomCreatedAt?: Maybe<Scalars['timestamptz']>;
   participantUpdatedAt?: Maybe<Scalars['timestamptz']>;
@@ -4334,6 +4350,7 @@ export type UpdateRoomParticipantMutationMutation = { __typename?: 'mutation_roo
 export type StartSlideRecordMutationVariables = Exact<{
   audioUrl: Scalars['String'];
   slideId: Scalars['Int'];
+  title?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -4356,12 +4373,19 @@ export type UpdateDurationMutationVariables = Exact<{
 
 export type UpdateDurationMutation = { __typename?: 'mutation_root', update_slideshare_SlideRecord_by_pk?: { __typename?: 'slideshare_SlideRecord', duration: number } | null | undefined };
 
+export type DeleteRecordMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeleteRecordMutation = { __typename?: 'mutation_root', delete_slideshare_SlideRecord_by_pk?: { __typename?: 'slideshare_SlideRecord', id: number } | null | undefined };
+
 export type SlideRecordQueryVariables = Exact<{
   slideId?: Maybe<Scalars['Int']>;
 }>;
 
 
-export type SlideRecordQuery = { __typename?: 'query_root', slideshare_SlideRecord: Array<{ __typename?: 'slideshare_SlideRecord', id: number, audioUrl: string, duration: number, SlideRecordPieces: Array<{ __typename?: 'slideshare_SlideRecordPiece', id: number, pageId: string, startTime: number }> }> };
+export type SlideRecordQuery = { __typename?: 'query_root', slideshare_SlideRecord: Array<{ __typename?: 'slideshare_SlideRecord', id: number, audioUrl: string, duration: number, title: string, SlideRecordPieces: Array<{ __typename?: 'slideshare_SlideRecordPiece', id: number, pageId: string, startTime: number }> }> };
 
 export type UploadPdfMutationVariables = Exact<{
   pdfName: Scalars['String'];
@@ -5470,7 +5494,6 @@ export const QuerySlideDocument = gql`
   slideshare_SlideRecord(
     where: {slideId: {_eq: $slideId}}
     order_by: {createdAt: desc}
-    limit: 1
   ) {
     id
     slideId
@@ -5478,6 +5501,7 @@ export const QuerySlideDocument = gql`
     audioUrl
     createdAt
     updatedAt
+    title
     SlideRecordPieces(order_by: {startTime: desc}) {
       id
       pageId
@@ -5739,6 +5763,43 @@ export function useDeleteRoomMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeleteRoomMutationHookResult = ReturnType<typeof useDeleteRoomMutation>;
 export type DeleteRoomMutationResult = Apollo.MutationResult<DeleteRoomMutation>;
 export type DeleteRoomMutationOptions = Apollo.BaseMutationOptions<DeleteRoomMutation, DeleteRoomMutationVariables>;
+export const GetRoomDocument = gql`
+    query getRoom($id: Int!) {
+  slideshare_Room_by_pk(id: $id) {
+    id
+    name
+    description
+  }
+}
+    `;
+
+/**
+ * __useGetRoomQuery__
+ *
+ * To run a query within a React component, call `useGetRoomQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRoomQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRoomQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetRoomQuery(baseOptions: Apollo.QueryHookOptions<GetRoomQuery, GetRoomQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRoomQuery, GetRoomQueryVariables>(GetRoomDocument, options);
+      }
+export function useGetRoomLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRoomQuery, GetRoomQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRoomQuery, GetRoomQueryVariables>(GetRoomDocument, options);
+        }
+export type GetRoomQueryHookResult = ReturnType<typeof useGetRoomQuery>;
+export type GetRoomLazyQueryHookResult = ReturnType<typeof useGetRoomLazyQuery>;
+export type GetRoomQueryResult = Apollo.QueryResult<GetRoomQuery, GetRoomQueryVariables>;
 export const RoomsDocument = gql`
     subscription rooms($roomCreatedAt: timestamptz, $participantUpdatedAt: timestamptz) {
   slideshare_Room(where: {createdAt: {_gt: $roomCreatedAt}}) {
@@ -5868,9 +5929,9 @@ export type UpdateRoomParticipantMutationMutationHookResult = ReturnType<typeof 
 export type UpdateRoomParticipantMutationMutationResult = Apollo.MutationResult<UpdateRoomParticipantMutationMutation>;
 export type UpdateRoomParticipantMutationMutationOptions = Apollo.BaseMutationOptions<UpdateRoomParticipantMutationMutation, UpdateRoomParticipantMutationMutationVariables>;
 export const StartSlideRecordDocument = gql`
-    mutation StartSlideRecord($audioUrl: String!, $slideId: Int!) {
+    mutation StartSlideRecord($audioUrl: String!, $slideId: Int!, $title: String) {
   insert_slideshare_SlideRecord_one(
-    object: {slideId: $slideId, audioUrl: $audioUrl}
+    object: {slideId: $slideId, audioUrl: $audioUrl, title: $title}
   ) {
     id
   }
@@ -5893,6 +5954,7 @@ export type StartSlideRecordMutationFn = Apollo.MutationFunction<StartSlideRecor
  *   variables: {
  *      audioUrl: // value for 'audioUrl'
  *      slideId: // value for 'slideId'
+ *      title: // value for 'title'
  *   },
  * });
  */
@@ -5977,12 +6039,46 @@ export function useUpdateDurationMutation(baseOptions?: Apollo.MutationHookOptio
 export type UpdateDurationMutationHookResult = ReturnType<typeof useUpdateDurationMutation>;
 export type UpdateDurationMutationResult = Apollo.MutationResult<UpdateDurationMutation>;
 export type UpdateDurationMutationOptions = Apollo.BaseMutationOptions<UpdateDurationMutation, UpdateDurationMutationVariables>;
+export const DeleteRecordDocument = gql`
+    mutation deleteRecord($id: Int!) {
+  delete_slideshare_SlideRecord_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteRecordMutationFn = Apollo.MutationFunction<DeleteRecordMutation, DeleteRecordMutationVariables>;
+
+/**
+ * __useDeleteRecordMutation__
+ *
+ * To run a mutation, you first call `useDeleteRecordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteRecordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteRecordMutation, { data, loading, error }] = useDeleteRecordMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteRecordMutation(baseOptions?: Apollo.MutationHookOptions<DeleteRecordMutation, DeleteRecordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteRecordMutation, DeleteRecordMutationVariables>(DeleteRecordDocument, options);
+      }
+export type DeleteRecordMutationHookResult = ReturnType<typeof useDeleteRecordMutation>;
+export type DeleteRecordMutationResult = Apollo.MutationResult<DeleteRecordMutation>;
+export type DeleteRecordMutationOptions = Apollo.BaseMutationOptions<DeleteRecordMutation, DeleteRecordMutationVariables>;
 export const SlideRecordDocument = gql`
     query SlideRecord($slideId: Int) {
   slideshare_SlideRecord(where: {slideId: {_eq: $slideId}}) {
     id
     audioUrl
     duration
+    title
     SlideRecordPieces {
       id
       pageId

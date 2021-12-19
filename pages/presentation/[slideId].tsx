@@ -15,7 +15,7 @@ import { useLoading } from "../../model/util-hooks/useLoading";
 import useUser from "../../model/util-hooks/useUser";
 import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag";
 import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
-import { useQuerySlideQuery } from "../../src/generated/graphql";
+import { useGetRoomQuery, useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
 
 const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
@@ -30,6 +30,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
     //データ取得
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) }, fetchPolicy: "no-cache" })
+    const { data: room } = useGetRoomQuery({ variables: { id: Number(roomId) } })
     const slide = initialSlide?.slideshare_Slide_by_pk
     const latestConference = initialSlide?.slideshare_Conference ? initialSlide?.slideshare_Conference[0] : undefined
     const conferenceModel = Conference(latestConference)
@@ -108,7 +109,9 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                 <PresentationSlideView
                     initialSlide={initialSlide}
                     isAdmin={isAdmin}
-                    roomId={Number(roomId)} />}
+                    roomId={Number(roomId)}
+                    roomTitle={room?.slideshare_Room_by_pk?.name || undefined}
+                />}
 
         </>
     }

@@ -22,6 +22,13 @@ mutation deleteRoom($id: Int!) {
   }
 }
 
+query getRoom($id: Int!) {
+  slideshare_Room_by_pk(id: $id) {
+    id
+    name
+    description
+  }
+}
 
 subscription rooms($roomCreatedAt: timestamptz, $participantUpdatedAt: timestamptz) {
   slideshare_Room(where:{createdAt:{_gt: $roomCreatedAt}}) {

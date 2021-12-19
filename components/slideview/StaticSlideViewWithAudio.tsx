@@ -15,13 +15,14 @@ import ControllerOnSlideWithAudio from "./ControllerOnSlideWithAudio"
 interface Props {
     initialSlide: QuerySlideQuery
     isAdmin: boolean
+    selectedRecordId: number | undefined
 }
 
 export default (props: Props) => {
-    const { initialSlide, isAdmin } = props
+    const { initialSlide, isAdmin, selectedRecordId } = props
 
     // audio
-    const { play, pause, isPlaying, seek, duration, currentPageId, rate, changeRate, skip } = useSlideRecordPlayer(props.initialSlide)
+    const { play, pause, isPlaying, seek, duration, currentPageId, rate, changeRate, skip } = useSlideRecordPlayer(props.initialSlide, selectedRecordId)
     //スライドコントローラ
     const [appearController, setAppearController] = useState(false)
     const fullscreenHandle = useFullScreenHandle();

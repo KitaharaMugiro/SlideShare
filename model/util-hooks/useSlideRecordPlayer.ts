@@ -1,8 +1,7 @@
-import { Howl, Howler } from 'howler';
+import { Storage } from "aws-amplify";
+import { Howl } from 'howler';
 import { useEffect, useRef, useState } from 'react';
 import { QuerySlideQuery } from '../../src/generated/graphql';
-import { Storage } from "aws-amplify"
-import { ConsoleLogger } from '@aws-amplify/core';
 //機能概要
 /**
  * 音声再生/停止
@@ -14,8 +13,10 @@ import { ConsoleLogger } from '@aws-amplify/core';
  */
 
 
-export default (initialSlide: QuerySlideQuery) => {
-    const slideRecord = initialSlide.slideshare_SlideRecord.length == 0 ? undefined : initialSlide.slideshare_SlideRecord[0]
+export default (initialSlide: QuerySlideQuery, selectedRecordId: number | undefined) => {
+    //const slideRecord = initialSlide.slideshare_SlideRecord.length == 0 ? undefined : initialSlide.slideshare_SlideRecord[0]
+    const slideRecord = selectedRecordId ? initialSlide.slideshare_SlideRecord.find(r => r.id === selectedRecordId) : undefined
+
     const slideRecordPieces = slideRecord?.SlideRecordPieces
     const duration = slideRecord?.duration || 0
 
@@ -26,18 +27,21 @@ export default (initialSlide: QuerySlideQuery) => {
     const [isPlaying, setIsPlaying] = useState(false) //TODO: howlerから取得したいがラグがある
 
 
-    const onPlay = () => {
-        const TIMEOUT = 500
-        if (howlerRef.current?.playing()) {
-            const seek = howlerRef.current?.seek()
-            //CAUTION: startTime大きい順に並んでいることが前提
-            const currentPiece = slideRecordPieces?.find(p => seek >= p.startTime)
+    useEffect(() => {
+        const onPlay = () => {
+            const TIMEOUT = 500
+            if (howlerRef.current?.playing()) {
+                const seek = howlerRef.current?.seek()
+                //CAUTION: startTime大きい順に並んでいることが前提
+                const currentPiece = slideRecordPieces?.find(p => seek >= p.startTime)
 
-            setSeek(Math.round(seek))
-            setCurrentPageId(currentPiece?.pageId)
+                setSeek(Math.round(seek))
+                setCurrentPageId(currentPiece?.pageId)
+            }
             setTimeout(onPlay, TIMEOUT); //adjust timeout to fit your needs
         }
-    }
+        onPlay()
+    }, [])
 
 
     useEffect(() => {
@@ -48,14 +52,14 @@ export default (initialSlide: QuerySlideQuery) => {
 
             const howler = new Howl({
                 html5: true,
+                autoplay: true,
                 preload: true,
-                src: [signedURL],
-                onplay: onPlay
+                src: [signedURL]
             });
             howlerRef.current = howler
         }
         load()
-    }, [initialSlide])
+    }, [initialSlide, selectedRecordId])
 
     const play = () => {
         howlerRef.current?.play()

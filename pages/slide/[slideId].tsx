@@ -1,7 +1,9 @@
+import { Typography } from "@mui/material";
 import { GetServerSideProps } from "next";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
+import ReplayList from "../../components/replays/ReplayList";
 import StaticSlideView from "../../components/slideview/StaticSlideView";
 import StaticSlideViewWithAudio from "../../components/slideview/StaticSlideViewWithAudio";
 import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag";
@@ -23,8 +25,7 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     //データ取得
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) }, fetchPolicy: "no-cache" })
     const slide = initialSlide?.slideshare_Slide_by_pk
-    const isAudioAvailable = (initialSlide?.slideshare_SlideRecord.length || 0) > 0 && initialSlide?.slideshare_SlideRecord[0].slideId
-
+    const [selectedRecordId, setSelectedRecordId] = useState<number | undefined>(undefined)
     useEffect(() => {
         if (loading) {
             startLoading()
@@ -48,12 +49,20 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     return (
         <div className={style.main}>
             <OgpTag ogpInfo={ogpInfo} />
-            {isAudioAvailable ?
-
-                <StaticSlideViewWithAudio initialSlide={initialSlide} isAdmin={isAdmin} />
+            {selectedRecordId ?
+                <StaticSlideViewWithAudio
+                    initialSlide={initialSlide}
+                    isAdmin={isAdmin}
+                    selectedRecordId={selectedRecordId} />
                 : <StaticSlideView initialSlide={initialSlide} isAdmin={isAdmin} />
             }
             <div style={{ height: 30 }} />
+
+            <ReplayList
+                initialSlide={initialSlide} selectedRecordId={selectedRecordId}
+                onClickReplay={(id) => setSelectedRecordId(id)}
+                isAdmin={isAdmin} />
+
         </div>
     )
 }

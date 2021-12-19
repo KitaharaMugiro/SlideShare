@@ -23,6 +23,7 @@ interface Props {
     initialSlide: QuerySlideQuery
     isAdmin: boolean
     roomId?: number
+    roomTitle?: string
 }
 
 export default (props: Props) => {
@@ -118,7 +119,8 @@ export default (props: Props) => {
     }
 
     const onClickStartRecord = () => {
-        if (slide) startSlideRecord(slide?.id)
+        const title = props.roomTitle || latestConference?.title || undefined
+        if (slide) startSlideRecord(slide?.id, title)
     }
 
     const onFinishPresentation = () => {
