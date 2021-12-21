@@ -10,6 +10,7 @@ import SlideSlider from "../slide/SlideSlider"
 import ControllerOnSlide from "./ControllerOnSlide"
 import style from "./slideview.module.css"
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import Comments2 from "../slide/comments/Comments2"
 interface Props {
     initialSlide: QuerySlideQuery
     isAdmin: boolean
@@ -98,7 +99,7 @@ export default (props: Props) => {
                     marginRight: 30,
                 }}>
                     <ProfileCardController isAdmin={isAdmin} userId={slide?.createdBy || ""} />
-                    <Comments
+                    <Comments2
                         viewingPage={viewingPage}
                         onClickLink={onClickPageLink}
                         presenterUserId={slide?.createdBy}
@@ -113,7 +114,7 @@ export default (props: Props) => {
                 marginRight: 10
             }}>
                 <ProfileCardController isAdmin={isAdmin} userId={slide?.createdBy || ""} />
-                <Comments
+                <Comments2
                     viewingPage={viewingPage}
                     onClickLink={onClickPageLink}
                     presenterUserId={slide?.createdBy}

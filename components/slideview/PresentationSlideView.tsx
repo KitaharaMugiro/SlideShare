@@ -13,6 +13,7 @@ import AdminPresentationController from "../presentation/AdminPresentationContro
 import UserActionDisplay from "../presentation/UserActionDisplay"
 import UserPresentationController from "../presentation/UserPresentationController"
 import Comments from "../slide/comments/Comments"
+import Comments2 from "../slide/comments/Comments2"
 import PageViewController from "../slide/pageview/PageViewController"
 import ProfileCardController from "../slide/ProfileCardController"
 import SlideSlider from "../slide/SlideSlider"
@@ -214,7 +215,7 @@ export default (props: Props) => {
                         marginRight: 30,
                     }}>
                         <ProfileCardController isAdmin={isAdmin} userId={slide?.createdBy || ""} />
-                        <Comments
+                        <Comments2
                             viewingPage={viewingPage}
                             onClickLink={onClickPageLink}
                             presenterUserId={slide?.createdBy}
@@ -228,7 +229,7 @@ export default (props: Props) => {
                     marginRight: 10
                 }}>
                     <ProfileCardController isAdmin={isAdmin} userId={slide?.createdBy || ""} />
-                    <Comments
+                    <Comments2
                         viewingPage={viewingPage}
                         onClickLink={onClickPageLink}
                         presenterUserId={slide?.createdBy}

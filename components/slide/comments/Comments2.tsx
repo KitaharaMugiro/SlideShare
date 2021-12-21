@@ -19,7 +19,7 @@ export default function Comments(props: Props) {
     const t = useTranslations("Comment")
     const { data, loading, error } = useQueryCommentSubscription({ variables: { slideId: props.viewingPage.slideId } })
     const [sendComment] = useSendCommentMutation()
-    const [comment, setComment] = React.useState("")
+    const ref = React.useRef<any>()
     const WIDTH = 340
     const renderComments = () => {
         if (data?.slideshare_Comment.length === 0) {
@@ -50,20 +50,12 @@ export default function Comments(props: Props) {
             variables: {
                 slideId: props.viewingPage.slideId,
                 pageId: props.viewingPage.id,
-                text: comment
+                text: ref.current?.value
             }
         })
-        setComment("")
+        ref.current?.value = ""
     }
 
-    const onChangeComment = (_text: string) => {
-        const splittedTexts = _text.split(": ")
-        const splittedDeleteZeroIndex = splittedTexts.filter((v, i) => i !== 0)
-        const text = splittedDeleteZeroIndex.join(": ")
-        setComment(text)
-    }
-
-    const commentFinal = `@${props.viewingPage.pageNumber + 1}: ` + comment
 
     if (loading) return <div />
     if (error) return <div>{JSON.stringify(error)}</div>
@@ -86,8 +78,7 @@ export default function Comments(props: Props) {
                 label="Comment"
                 multiline
                 rows={3}
-                value={commentFinal}
-                onChange={(e) => onChangeComment(e.target.value)}
+                inputRef={ref}
                 variant="filled"
             />
             <div style={{ width: WIDTH, display: "flex", flexDirection: "row-reverse" }}>
