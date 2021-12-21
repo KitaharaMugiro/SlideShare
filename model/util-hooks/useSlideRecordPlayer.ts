@@ -46,17 +46,18 @@ export default (initialSlide: QuerySlideQuery, selectedRecordId: number | undefi
 
     useEffect(() => {
         const load = async () => {
+            howlerRef.current?.stop()
             const audioUrl = slideRecord?.audioUrl
             if (!audioUrl) return
             const signedURL = await Storage.get(audioUrl);
 
             const howler = new Howl({
                 html5: true,
-                autoplay: true,
                 preload: true,
                 src: [signedURL]
             });
             howlerRef.current = howler
+            play()
         }
         load()
     }, [initialSlide, selectedRecordId])
