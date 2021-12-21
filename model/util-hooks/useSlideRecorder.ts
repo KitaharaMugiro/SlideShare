@@ -7,7 +7,7 @@ import { useSnackMessage } from "./useSnackMessage";
 import { useAtom } from "jotai";
 import { TrackStateAtom } from "../jotai/TrackState";
 import axios from "axios";
-export default () => {
+export default (isAdmin: boolean) => {
     const [audioState] = useAtom(TrackStateAtom)
     const [confirmedRecording, setConfirmedRecording] = useState(false)
     const [finishedRecording, setFinishedRecording] = useState(false)
@@ -88,7 +88,7 @@ export default () => {
     }
 
     useEffect(() => {
-        if (confirmedRecording) {
+        if (isAdmin && confirmedRecording) {
             if (status === "recording") {
                 start();
             } else if (status === "paused") {
@@ -99,13 +99,13 @@ export default () => {
     }, [status])
 
     useEffect(() => {
-        if (finishedRecording) {
+        if (isAdmin && finishedRecording) {
             _onStop()
         }
     }, [finishedRecording])
 
     useEffect(() => {
-        if (confirmedRecording) {
+        if (isAdmin && confirmedRecording) {
             if (!audioState.audio) {
                 pauseRecording()
             } else {

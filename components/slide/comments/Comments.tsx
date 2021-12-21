@@ -86,7 +86,6 @@ export default function Comments(props: Props) {
                 label="Comment"
                 multiline
                 rows={3}
-                value={commentFinal}
                 onChange={(e) => onChangeComment(e.target.value)}
                 variant="filled"
             />

@@ -42,7 +42,7 @@ export default (props: Props) => {
     const fullscreenHandle = useFullScreenHandle();
 
     //録音機能
-    const { startSlideRecord, stopSlideRecord, changePage, confirmedRecording, seconds, minutes, hours } = useSlideRecorder()
+    const { startSlideRecord, stopSlideRecord, changePage, confirmedRecording, seconds, minutes, hours } = useSlideRecorder(props.isAdmin)
 
     //slide状態変数
     const [slideState, setSlideState] = useRealtimeSharedState({
@@ -120,6 +120,7 @@ export default (props: Props) => {
 
     const [autoStartRecord, setAutoStartRecord] = useState(false)
     useEffect(() => {
+        if (!props.isAdmin) return
         const startRecord = () => {
             const title = props.roomTitle || latestConference?.title || undefined
             if (slide) startSlideRecord(slide?.id, title)
