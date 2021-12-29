@@ -34,6 +34,8 @@ import MySnackbar from '../components/common/MySnackbar';
 import { NextIntlProvider } from 'next-intl';
 import ForceEditProfile from '../components/profile/ForceEditProfile';
 
+//google analytics
+import { GA_ID, existsGaId, pageview } from './gtag'
 
 function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
   if (urlStrings.length === 1) return urlStrings[0];
@@ -99,7 +101,24 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     },
   });
 
+  useEffect(() => {
+    if (!existsGaId) {
+      return
+    }
+
+    const handleRouteChange = (path: any) => {
+      pageview(path)
+    }
+
+    router.events.on('routeChangeComplete', handleRouteChange)
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [router.events])
+
   return <>
+
     <ApolloProvider client={MyApolloClient}>
       <NextIntlProvider messages={pageProps.messages}>
         <OgpTag ogpInfo={{}} />

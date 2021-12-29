@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-
+import { GA_ID, existsGaId, pageview } from './gtag'
 export default class MyDocument extends Document {
     render() {
         return (
@@ -10,6 +10,24 @@ export default class MyDocument extends Document {
                         rel="stylesheet"
                         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
                     />
+
+                    {/* Google Analytics */}
+                    {existsGaId && (
+                        <>
+                            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+                            <script
+                                dangerouslySetInnerHTML={{
+                                    __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${GA_ID}', {
+                    page_path: window.location.pathname,
+                  });`,
+                                }}
+                            />
+                        </>
+                    )}
                 </Head>
                 <body>
                     <Main />
