@@ -33,10 +33,6 @@ const MyAppBar = () => {
         setAnchorEl(event.currentTarget);
     };
 
-    const goToMyAccount = () => {
-        router.push("/mypage")
-        setAnchorEl(null);
-    };
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -72,7 +68,16 @@ const MyAppBar = () => {
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={goToMyAccount}>My account</MenuItem>
+                    <Link href="/mypage">
+                        <a rel="noreferrer">
+                            <MenuItem onClick={handleClose} >My account</MenuItem>
+                        </a>
+                    </Link>
+                    <Link href="/upload">
+                        <a rel="noreferrer">
+                            <MenuItem onClick={handleClose} >Upload a slide</MenuItem>
+                        </a>
+                    </Link >
                     <MenuItem onClick={signOut}>Logout</MenuItem>
                 </Menu>
             </div>

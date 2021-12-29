@@ -53,7 +53,9 @@ export default function Comments(props: Props) {
                 text: ref.current?.value
             }
         })
-        ref.current?.value = ""
+        if (ref.current) {
+            ref.current.value = ""
+        }
     }
 
 

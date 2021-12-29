@@ -2,11 +2,12 @@ import { Button } from "@mui/material";
 import React from "react";
 import { useRoomParticipantMutation } from "../../model/hooks/useRoom";
 import useMySlidePagenation from "../../model/util-hooks/useMySlidePagenation";
+import useMySlideSubscription from "../../model/util-hooks/useMySlideSubscription";
 import SlideCard from "../slide/SlideCard";
 
 export default () => {
     const [focusedSlideId, setFocusedSlideId] = React.useState<number | null>(null);
-    const { localSlides, loadMore } = useMySlidePagenation()
+    const { slides, loadMore } = useMySlideSubscription(5)
     const { updatePresentingSlide } = useRoomParticipantMutation()
 
     const onClickPick = async (slideId: number) => {
@@ -15,7 +16,7 @@ export default () => {
     }
 
     const renderCards = () => {
-        return localSlides?.slideshare_Slide.map((slide) => {
+        return slides?.map((slide) => {
             const isFocus = focusedSlideId === slide.id
             return <div key={slide.id} style={{
                 margin: 10,

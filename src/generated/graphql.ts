@@ -4278,6 +4278,14 @@ export type QueryUserSlideQueryVariables = Exact<{
 
 export type QueryUserSlideQuery = { __typename?: 'query_root', slideshare_Slide: Array<{ __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, imageUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined }> }> };
 
+export type SubscribeUserSlideSubscriptionVariables = Exact<{
+  userId: Scalars['String'];
+  limit: Scalars['Int'];
+}>;
+
+
+export type SubscribeUserSlideSubscription = { __typename?: 'subscription_root', slideshare_Slide: Array<{ __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, imageUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined }> }> };
+
 export type DeleteSlideMutationVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -5588,6 +5596,49 @@ export function useQueryUserSlideLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type QueryUserSlideQueryHookResult = ReturnType<typeof useQueryUserSlideQuery>;
 export type QueryUserSlideLazyQueryHookResult = ReturnType<typeof useQueryUserSlideLazyQuery>;
 export type QueryUserSlideQueryResult = Apollo.QueryResult<QueryUserSlideQuery, QueryUserSlideQueryVariables>;
+export const SubscribeUserSlideDocument = gql`
+    subscription subscribeUserSlide($userId: String!, $limit: Int!) {
+  slideshare_Slide(
+    where: {createdBy: {_eq: $userId}}
+    order_by: {createdAt: desc}
+    limit: $limit
+  ) {
+    id
+    createdBy
+    Pages(where: {pageNumber: {_eq: 0}}, limit: 1) {
+      id
+      type
+      imageUrl
+      createdAt
+      updatedAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useSubscribeUserSlideSubscription__
+ *
+ * To run a query within a React component, call `useSubscribeUserSlideSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useSubscribeUserSlideSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSubscribeUserSlideSubscription({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useSubscribeUserSlideSubscription(baseOptions: Apollo.SubscriptionHookOptions<SubscribeUserSlideSubscription, SubscribeUserSlideSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<SubscribeUserSlideSubscription, SubscribeUserSlideSubscriptionVariables>(SubscribeUserSlideDocument, options);
+      }
+export type SubscribeUserSlideSubscriptionHookResult = ReturnType<typeof useSubscribeUserSlideSubscription>;
+export type SubscribeUserSlideSubscriptionResult = Apollo.SubscriptionResult<SubscribeUserSlideSubscription>;
 export const DeleteSlideDocument = gql`
     mutation deleteSlide($id: Int!) {
   delete_slideshare_Slide_by_pk(id: $id) {

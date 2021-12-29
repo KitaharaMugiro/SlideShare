@@ -11,6 +11,7 @@ import ControllerOnSlide from "./ControllerOnSlide"
 import style from "./slideview.module.css"
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import Comments2 from "../slide/comments/Comments2"
+import { Dialog } from "@mui/material"
 interface Props {
     initialSlide: QuerySlideQuery
     isAdmin: boolean
@@ -21,8 +22,25 @@ export default (props: Props) => {
 
     //スライドコントローラ
     const [appearController, setAppearController] = useState(false)
+    const [isFullscreen, setFullscreen] = useState(false) //for mobile safari
+    const elem = document.getElementById("dom-test-for-checking-fullscreenmode");
+    const availableFullscreen = elem?.requestFullscreen
     const fullscreenHandle = useFullScreenHandle();
-
+    const onClickFullscreen = () => {
+        if (availableFullscreen) {
+            if (fullscreenHandle.active) {
+                fullscreenHandle.exit()
+            } else {
+                fullscreenHandle.enter()
+            }
+        } else {
+            if (isFullscreen) {
+                setFullscreen(false)
+            } else {
+                setFullscreen(true)
+            }
+        }
+    }
     //slide状態変数
     const [localPageNumber, setLocalPageNumber] = useState(0)
     const slide = initialSlide?.slideshare_Slide_by_pk
@@ -54,34 +72,55 @@ export default (props: Props) => {
         onChangePageNumber(targetPage?.pageNumber || 0)
     }
 
+    const renderSlide = () => {
+        return (
+            <div style={{ position: "relative" }}
+                onMouseEnter={() => setAppearController(true)}
+                onMouseLeave={() => setAppearController(false)}>
+                <PageViewController
+                    viewingPage={viewingPage}
+                    customizeWidth={slideWidth}
+                    onClickLeft={goPrevious}
+                    onClickRight={goNext}
+                />
+                <ControllerOnSlide
+                    appear={appearController}
+                    onClickFullScreen={onClickFullscreen} />
+            </div>
+        )
+    }
+
+
     //スライドサイズの計算
     const { width } = useWindowDimensions()
     const isRow = width > 800
     const COMMENT_WIDTH = isRow ? 340 : 0
     const MARGIN = isRow ? 100 : 40
     let slideWidth = width - COMMENT_WIDTH - MARGIN
-    if (fullscreenHandle.active) {
-        slideWidth = width
+    if (availableFullscreen) {
+        if (fullscreenHandle.active) {
+            slideWidth = width
+        }
+    } else {
+        if (isFullscreen) {
+            slideWidth = width
+        }
     }
 
     return <>
         {/* スライド */}
         <div className={style.deck_space}>
             <div >
+                <Dialog
+                    fullScreen
+                    open={isFullscreen}
+                    onClose={onClickFullscreen}
+                >
+                    {renderSlide()}
+
+                </Dialog>
                 <FullScreen handle={fullscreenHandle}>
-                    <div style={{ position: "relative" }}
-                        onMouseEnter={() => setAppearController(true)}
-                        onMouseLeave={() => setAppearController(false)}>
-                        <PageViewController
-                            viewingPage={viewingPage}
-                            customizeWidth={slideWidth}
-                            onClickLeft={goPrevious}
-                            onClickRight={goNext}
-                        />
-                        <ControllerOnSlide
-                            appear={appearController}
-                            onClickFullScreen={fullscreenHandle.active ? fullscreenHandle.exit : fullscreenHandle.enter} />
-                    </div>
+                    {renderSlide()}
                 </FullScreen>
                 <SlideSlider
                     maxPageNumber={pages?.length || 0}
