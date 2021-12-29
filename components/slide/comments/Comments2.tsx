@@ -31,8 +31,9 @@ export default function Comments(props: Props) {
         }
         return data?.slideshare_Comment.map((comment) => {
             const isPresenter = props.presenterUserId ? comment.createdBy === props.presenterUserId : false
-            return <>
+            return <div key={comment.id}>
                 <Comment
+
                     name={comment.Profile?.name}
                     pageNumber={comment.Page.pageNumber + 1}
                     pageId={comment.pageId}
@@ -41,7 +42,7 @@ export default function Comments(props: Props) {
                     isPresenter={isPresenter}
                 />
                 <Divider variant="inset" component="li" />
-            </>
+            </div>
         })
     }
 

@@ -40,7 +40,7 @@ export default (isAdmin: boolean) => {
     const startSlideRecord = async (slideId: number, title: string | undefined) => {
         if (confirmedRecording) return
         const date = new Date()
-        const audioUrl = `record/${slideId}_${date.toISOString()}.webm`;
+        const audioUrl = `record/${slideId}_${date.toISOString()}.wav`;
         const recordId = await insertSlideRecord(slideId, audioUrl, title)
         setRecordId(recordId)
         setAudioPath(audioUrl)
@@ -67,7 +67,7 @@ export default (isAdmin: boolean) => {
         await Storage.put(
             audioPath,
             data.data,
-            { contentType: "audio/webm" }
+            { contentType: "audio/wav" }
         )
         const duration = seconds + minutes * 60 + hours * 60 * 60
         await updateDuration(recordId!, duration)

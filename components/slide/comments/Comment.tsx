@@ -32,10 +32,9 @@ export default (props: Props) => {
                         >
                             {props.name || ""}
                         </Typography>
-                        <div>
-                            <Link onClick={onClickLink} style={{ cursor: "pointer" }}>@{props.pageNumber}</Link>
-                            {" " + props.comment}
-                        </div>
+                        <br />
+                        <Link onClick={onClickLink} style={{ cursor: "pointer" }}>@{props.pageNumber}</Link>
+                        {" " + props.comment}
                     </React.Fragment>
                 }
             />

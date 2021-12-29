@@ -1,7 +1,10 @@
+import { ConstructionOutlined } from "@mui/icons-material";
 import { Storage } from "aws-amplify";
+import axios from "axios";
 import { Howl } from 'howler';
 import { useEffect, useRef, useState } from 'react';
 import { QuerySlideQuery } from '../../src/generated/graphql';
+import { useSnackMessage } from "./useSnackMessage";
 //機能概要
 /**
  * 音声再生/停止
@@ -26,7 +29,7 @@ export default (initialSlide: QuerySlideQuery, selectedRecordId: number | undefi
     const [currentPageId, setCurrentPageId] = useState<string | undefined>(undefined)
     const [isPlaying, setIsPlaying] = useState(false) //TODO: howlerから取得したいがラグがある
 
-
+    const { displayErrorMessage } = useSnackMessage()
     useEffect(() => {
         const onPlay = () => {
             const TIMEOUT = 500
@@ -44,17 +47,28 @@ export default (initialSlide: QuerySlideQuery, selectedRecordId: number | undefi
     }, [])
 
 
+    const onPlayError = () => {
+        displayErrorMessage("再生に失敗しました(iOS非対応)")
+    }
+
+    const onLoadError = (soundId: number, error: unknown) => {
+        displayErrorMessage("動画読み込みに失敗しました(iOS非対応)")
+    }
     useEffect(() => {
         const load = async () => {
             howlerRef.current?.stop()
             const audioUrl = slideRecord?.audioUrl
             if (!audioUrl) return
             const signedURL = await Storage.get(audioUrl);
+            const data = await axios.get(signedURL)
+            console.log({ data })
 
             const howler = new Howl({
                 html5: true,
                 preload: true,
-                src: [signedURL]
+                src: [signedURL],
+                onplayerror: onPlayError,
+                onloaderror: onLoadError
             });
             howlerRef.current = howler
             play()

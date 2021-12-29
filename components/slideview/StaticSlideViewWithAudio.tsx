@@ -92,7 +92,7 @@ export default (props: Props) => {
         if (appearController) {
             setTimeout(() => {
                 setAppearController(false)
-            }, 3000)
+            }, 10000)
         }
     }, [appearController])
     const renderSlide = () => {
@@ -106,9 +106,17 @@ export default (props: Props) => {
                     onClickLeft={goPrevious}
                     onClickRight={goNext}
                 />
-                <ControllerOnSlide
+                <ControllerOnSlideWithAudio
                     appear={appearController}
-                    onClickFullScreen={onClickFullscreen} />
+                    onClickFullScreen={onClickFullscreen}
+                    playing={isPlaying}
+                    onClickPause={pause}
+                    onClickPlay={play}
+                    onClickChangeRate={changeRate}
+                    currentRate={rate}
+                    duration={duration}
+                    seek={seek} />
+
             </div>
         )
     }
