@@ -22,7 +22,6 @@ import MyApolloClient from '../api/MyApolloClient';
 import MyAppBar from '../components/common/MyAppBar';
 import MyBackdrop from '../components/common/MyBackdrop';
 import useUser from '../model/util-hooks/useUser';
-import OgpTag from '../model/ogp/OgpTag';
 import awsConfig from '../src/aws-exports';
 import '../styles/globals.css';
 
@@ -35,7 +34,7 @@ import { NextIntlProvider } from 'next-intl';
 import ForceEditProfile from '../components/profile/ForceEditProfile';
 
 //google analytics
-import { GA_ID, existsGaId, pageview } from './gtag'
+import { GA_ID, existsGaId, pageview } from '../model/gtag'
 
 function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
   if (urlStrings.length === 1) return urlStrings[0];
@@ -121,7 +120,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
     <ApolloProvider client={MyApolloClient}>
       <NextIntlProvider messages={pageProps.messages}>
-        <OgpTag ogpInfo={{}} />
+
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <ThemeProvider theme={darkTheme}>
             <MyAppBar />

@@ -9,7 +9,10 @@ import useSignin from "../../model/util-hooks/useSignin"
 import { createNewPage, Page } from "../../model/Page"
 import { Slideshare_PageType_Enum, useCreateSlideMutation, useInsertPageMutation, useUploadPdfMutation } from "../../src/generated/graphql"
 import style from "./index.module.css"
-const Home = () => {
+import { GetServerSideProps } from "next"
+import getOgpInfo from "../../model/serverSideRender/getOgpInfo"
+import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag"
+const Home = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const [createNewSlide] = useCreateSlideMutation()
     const [createPageMutation] = useInsertPageMutation()
     const [uploadPdf] = useUploadPdfMutation()
@@ -55,6 +58,7 @@ const Home = () => {
     }
 
     return (<>
+        <OgpTag ogpInfo={ogpInfo} />
 
         <div className={style.center}>
             <div style={{ height: 30 }} />
@@ -71,6 +75,16 @@ const Home = () => {
             <Button onClick={onClickNew}>Start with blank</Button>
         </div>
     </>)
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const data = JSON.parse(JSON.stringify(await import(`../../messages/${context.locale}.json`)))
+    return {
+        ...getOgpInfo(context),
+        props: {
+            messages: data
+        }
+    }
 }
 
 export default Home

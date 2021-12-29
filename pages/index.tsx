@@ -2,14 +2,17 @@ import { Button, Paper, Typography } from '@mui/material'
 import type { GetStaticPropsContext, NextPage } from 'next'
 import { useTranslations } from 'next-intl'
 import React from 'react'
-import OgpTag from '../model/ogp/OgpTag'
+import OgpTag, { OpgMetaData } from '../model/ogp/OgpTag'
+import getOgpInfo from '../model/serverSideRender/getOgpInfo'
+
 import styles from './index.module.css'
 
-const Home: NextPage = () => {
+const Home = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
   const t = useTranslations('Home');
   return (
     <div>
-      <OgpTag ogpInfo={{}} />
+      <OgpTag ogpInfo={ogpInfo} />
+
       <div className={styles.heroine}>
         <div className={styles.center}>
           <Paper elevation={3} style={{ margin: 40, padding: 40 }}>
@@ -32,10 +35,11 @@ const Home: NextPage = () => {
   )
 }
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
-  const data = JSON.parse(JSON.stringify(await import(`../messages/${locale}.json`)))
+export async function getStaticProps(context: GetStaticPropsContext) {
+  const data = JSON.parse(JSON.stringify(await import(`../messages/${context.locale}.json`)))
   return {
     props: {
+      ...getOgpInfo(context),
       messages: data
     }
   };

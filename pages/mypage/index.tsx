@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
-import useSignin from "../../model/util-hooks/useSignin";
-import useUser from "../../model/util-hooks/useUser";
-import { QueryUserSlideQuery, QueryUserSlideQueryResult, Slideshare_Slide, useQueryUserSlideLazyQuery, useQueryUserSlideQuery } from "../../src/generated/graphql";
-import { Auth } from 'aws-amplify';
-import SlideCard from "../../components/slide/SlideCard";
 import { Button, Typography } from "@mui/material";
+import { Auth } from 'aws-amplify';
+import { GetServerSideProps } from "next";
+import React, { useEffect } from "react";
+import SlideCard from "../../components/slide/SlideCard";
+import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag";
+import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
 import useMySlidePagenation from "../../model/util-hooks/useMySlidePagenation";
+import useSignin from "../../model/util-hooks/useSignin";
 
 //TODO: Pagenationをhooksに落とし込めないかな
-export default () => {
+export default ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const { localSlides, onDeleteCard, loadMore } = useMySlidePagenation()
     const { goSignin } = useSignin()
     useEffect(() => {
@@ -30,9 +31,9 @@ export default () => {
         })
     }
 
-
     return (
         <div>
+            <OgpTag ogpInfo={ogpInfo} />
             <Typography variant="h1" style={{ marginLeft: 30 }}>Slides</Typography>
             <div style={{ display: "flex", flexWrap: "wrap" }}>
                 {renderCards()}
@@ -40,4 +41,14 @@ export default () => {
             <Button onClick={loadMore}>さらに読み込む</Button>
         </div>
     );
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const data = JSON.parse(JSON.stringify(await import(`../../messages/${context.locale}.json`)))
+    return {
+        ...getOgpInfo(context),
+        props: {
+            messages: data
+        }
+    }
 }

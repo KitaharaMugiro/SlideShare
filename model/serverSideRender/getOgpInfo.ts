@@ -27,8 +27,8 @@ export default async function getServerSideProps(context: any) {
         const imageUrl = 1 === res.Pages.length ? res.Pages[0]?.imageUrl : "";
         const signedURL = await Storage.get(imageUrl);
         const ogpInfo: OpgMetaData = {
-            pageTitle: "PresenShare",
-            pageDescription: "プレゼン公開中",
+            pageTitle: "続きを読む",
+            pageDescription: "スライドの続きを読むことができます",
             pageImg: signedURL
         }
         return {

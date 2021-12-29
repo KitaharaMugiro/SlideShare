@@ -2,20 +2,23 @@ import SendIcon from '@mui/icons-material/Send';
 import { Button } from "@mui/material";
 import { Auth } from 'aws-amplify';
 import { useAtom } from "jotai";
+import { GetServerSideProps } from 'next';
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect } from "react";
 import EditOrPreview from "../../components/edit/EditOrPreview";
 import HorizontalSlideList from "../../components/edit/HorizontalSlideList";
 import { usePageList } from '../../model/hooks/usePageList';
 import { pageListAtom } from "../../model/jotai/PageList";
+import OgpTag, { OpgMetaData } from '../../model/ogp/OgpTag';
 import { Page } from '../../model/Page';
+import getOgpInfo from '../../model/serverSideRender/getOgpInfo';
 import { useLoading } from '../../model/util-hooks/useLoading';
 import useSignin from '../../model/util-hooks/useSignin';
 import useUser from '../../model/util-hooks/useUser';
 import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./index.module.css";
 
-const Edit = () => {
+const Edit = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
     const router = useRouter()
     const { slideId } = router.query
@@ -75,10 +78,10 @@ const Edit = () => {
     }
 
     //TODO: もっとマシにしよう
+
     if (error) return <div>{error}</div>
-    if (loading) {
-        return <div></div>
-    }
+    if (loading) return <div><OgpTag ogpInfo={ogpInfo} /></div>
+
 
     return <>
         <HorizontalSlideList />
@@ -99,3 +102,13 @@ const Edit = () => {
 }
 
 export default Edit
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const data = JSON.parse(JSON.stringify(await import(`../../messages/${context.locale}.json`)))
+    return {
+        ...getOgpInfo(context),
+        props: {
+            messages: data
+        }
+    }
+}

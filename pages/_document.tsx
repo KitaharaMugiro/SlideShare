@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { GA_ID, existsGaId, pageview } from './gtag'
+import { GA_ID, existsGaId, pageview } from '../model/gtag'
 export default class MyDocument extends Document {
     render() {
         return (
