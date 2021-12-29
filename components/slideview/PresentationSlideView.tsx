@@ -41,23 +41,15 @@ export default (props: Props) => {
     //スライドコントローラ
     const [appearController, setAppearController] = useState(false)
     const [isFullscreen, setFullscreen] = useState(false) //for mobile safari
-    const elem = document.getElementById("dom-test-for-checking-fullscreenmode");
-    const availableFullscreen = elem?.requestFullscreen
-    const fullscreenHandle = useFullScreenHandle();
+
     const onClickFullscreen = () => {
-        if (availableFullscreen) {
-            if (fullscreenHandle.active) {
-                fullscreenHandle.exit()
-            } else {
-                fullscreenHandle.enter()
-            }
+
+        if (isFullscreen) {
+            setFullscreen(false)
         } else {
-            if (isFullscreen) {
-                setFullscreen(false)
-            } else {
-                setFullscreen(true)
-            }
+            setFullscreen(true)
         }
+
     }
 
 
@@ -178,6 +170,14 @@ export default (props: Props) => {
         }
     }, [createdUserAction])
 
+    useEffect(() => {
+        if (appearController) {
+            setTimeout(() => {
+                setAppearController(false)
+            }, 3000)
+        }
+    }, [appearController])
+
     const renderSlide = () => {
         return (
             <div style={{ position: "relative" }}
@@ -202,15 +202,11 @@ export default (props: Props) => {
     const COMMENT_WIDTH = isRow ? 340 : 0
     const MARGIN = isRow ? 100 : 40
     let slideWidth = width - COMMENT_WIDTH - MARGIN
-    if (availableFullscreen) {
-        if (fullscreenHandle.active) {
-            slideWidth = width
-        }
-    } else {
-        if (isFullscreen) {
-            slideWidth = width
-        }
+
+    if (isFullscreen) {
+        slideWidth = width
     }
+
 
 
     return (
@@ -225,9 +221,8 @@ export default (props: Props) => {
                         {renderSlide()}
 
                     </Dialog>
-                    <FullScreen handle={fullscreenHandle}>
-                        {renderSlide()}
-                    </FullScreen>
+                    {renderSlide()}
+
                     <SlideSlider
                         maxPageNumber={pages?.length || 0}
                         pageNumber={isSync ? slideState.pageNumber : localPageNumber}
