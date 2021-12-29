@@ -1,5 +1,5 @@
 import { Button, Paper, Typography } from '@mui/material'
-import type { GetStaticPropsContext, NextPage } from 'next'
+import type { GetServerSideProps, GetStaticPropsContext, NextPage } from 'next'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 import OgpTag, { OpgMetaData } from '../model/ogp/OgpTag'
@@ -35,14 +35,14 @@ const Home = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
   )
 }
 
-export async function getStaticProps(context: GetStaticPropsContext) {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const data = JSON.parse(JSON.stringify(await import(`../messages/${context.locale}.json`)))
   return {
+    ...getOgpInfo(context),
     props: {
-      ...getOgpInfo(context),
       messages: data
     }
-  };
+  }
 }
 
 export default Home
