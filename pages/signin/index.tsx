@@ -33,9 +33,11 @@ export default ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const data = JSON.parse(JSON.stringify(await import(`../../messages/${context.locale}.json`)))
+    const ogpInfo = await getOgpInfo(context)
     return {
-        ...getOgpInfo(context),
+
         props: {
+            ...ogpInfo,
             messages: data
         }
     }

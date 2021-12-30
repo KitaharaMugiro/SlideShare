@@ -15,14 +15,14 @@ import getOgpInfo from '../../model/serverSideRender/getOgpInfo';
 import { useLoading } from '../../model/util-hooks/useLoading';
 import useSignin from '../../model/util-hooks/useSignin';
 import useUser from '../../model/util-hooks/useUser';
-import { useQuerySlideQuery } from "../../src/generated/graphql";
+import { useSubscribeSlideSubscription } from "../../src/generated/graphql";
 import style from "./index.module.css";
 
 const Edit = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
     const router = useRouter()
     const { slideId } = router.query
-    const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) } })
+    const { loading, error, data: initialSlide } = useSubscribeSlideSubscription({ variables: { slideId: Number(slideId) } })
     const { user } = useUser()
     const [_, setEditingPageList] = useAtom(pageListAtom)
     const { updateAllPageNumber, pageList } = usePageList()
@@ -84,6 +84,7 @@ const Edit = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
 
     return <>
+        <OgpTag ogpInfo={ogpInfo} />
         <HorizontalSlideList />
 
         <div className={style.edit_or_preview_container}>
@@ -105,9 +106,11 @@ export default Edit
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const data = JSON.parse(JSON.stringify(await import(`../../messages/${context.locale}.json`)))
+    const ogpInfo = await getOgpInfo(context)
     return {
-        ...getOgpInfo(context),
+
         props: {
+            ...ogpInfo,
             messages: data
         }
     }

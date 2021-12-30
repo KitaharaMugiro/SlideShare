@@ -58,6 +58,41 @@ query querySlide($slideId: Int!) {
   }  
 }
 
+subscription subscribeSlide($slideId: Int!) {
+  slideshare_Slide_by_pk(id: $slideId) {
+    id
+    createdBy
+    Pages(order_by:{pageNumber:asc}) {
+      id
+      type
+      title
+      text
+      pageNumber
+      imageUrl
+      videoUrl
+      createdAt
+      updatedAt
+      slideId
+      Bookmarks {
+        id
+        url
+      }
+      Poll {
+        question
+        option1
+        option2
+        option3
+        option4
+      }
+      Files {
+        id
+        path
+        filename
+      }
+    }
+  }  
+}
+
 query queryUserSlide($userId: String!, $offset: Int!) {
   slideshare_Slide(where: {createdBy: {_eq: $userId}}, order_by: {createdAt: desc}, offset: $offset, limit: 10) {
     id

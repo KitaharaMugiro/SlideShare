@@ -25,7 +25,8 @@ const OgpTag = (props: Props) => {
         pageImgWidth,
         pageImgHeight
     } = props.ogpInfo
-    const title = pageTitle || "PresenShare"
+    const webTitle = "PresenShare" //TODO: タイトル変更できるようにする
+    const ogpTitle = pageTitle || "PresenShare"
     const description = pageDescription || "スライドをアップロードしてプレゼンを始めよう"
     const url = pagePath
     const imgUrl = pageImg || 'https://presen-share.yunomy.com/static/default_ogp.png'
@@ -34,13 +35,13 @@ const OgpTag = (props: Props) => {
 
     return (
         <Head>
-            <title>{title}</title>
+            <title>{webTitle}</title>
             <meta name="viewport" content="width=device-width,initial-scale=1.0" />
             <meta name="description" content={description} />
             <meta name="twitter:card" content="summary_large_image" />
             <meta property="og:url" content={url} />
-            <meta property="og:title" content={title} />
-            <meta property="og:site_name" content={title} />
+            <meta property="og:title" content={ogpTitle} />
+            <meta property="og:site_name" content={ogpTitle} />
             <meta property="og:description" content={description} />
             <meta property="og:type" content="website" />
             <meta property="og:image" content={imgUrl} />

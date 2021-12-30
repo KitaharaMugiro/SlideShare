@@ -24,17 +24,29 @@ export default async function getServerSideProps(context: any) {
             },
         });
         const res = data.slideshare_Slide_by_pk;
-        const imageUrl = 1 === res.Pages.length ? res.Pages[0]?.imageUrl : "";
-        const signedURL = await Storage.get(imageUrl);
+        if (!res) {
+            //スライドがない場合
+            const ogpInfo: OpgMetaData = {
+                pageTitle: "続きを読む",
+                pageDescription: "スライドの続きを読むことができます",
+                pageImg: "https://presen-share.yunomy.com/static/default_slide.png"
+            }
+            return {
+                ogpInfo
+            };
+        }
+        const imageUrl = 1 === res.Pages.length ? res.Pages[0]?.imageUrl : undefined;
+        let signedURL = "https://presen-share.yunomy.com/static/default_slide.png"
+        if (imageUrl) {
+            signedURL = await Storage.get(imageUrl);
+        }
         const ogpInfo: OpgMetaData = {
             pageTitle: "続きを読む",
             pageDescription: "スライドの続きを読むことができます",
             pageImg: signedURL
         }
         return {
-            props: {
-                ogpInfo
-            },
+            ogpInfo
         };
     }
 
@@ -45,8 +57,6 @@ export default async function getServerSideProps(context: any) {
         pageImg: "https://presen-share.yunomy.com/static/default_ogp.png"
     }
     return {
-        props: {
-            ogpInfo
-        },
+        ogpInfo
     };
 }

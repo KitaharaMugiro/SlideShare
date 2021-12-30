@@ -407,7 +407,7 @@ export type String_Comparison_Exp = {
 
 export type UploadPdfOutput = {
   __typename?: 'UploadPdfOutput';
-  keys?: Maybe<Array<Maybe<Scalars['String']>>>;
+  slideId: Scalars['Int'];
 };
 
 /** Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'. */
@@ -1122,6 +1122,7 @@ export type Mutation_RootUpdate_Slideshare_SlideRecord_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUploadPdfArgs = {
   pdfName: Scalars['String'];
+  slideId: Scalars['Int'];
 };
 
 /** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
@@ -4270,6 +4271,13 @@ export type QuerySlideQueryVariables = Exact<{
 
 export type QuerySlideQuery = { __typename?: 'query_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, title?: string | null | undefined, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number, Bookmarks: Array<{ __typename?: 'slideshare_Bookmark', id: number, url: string }>, Poll?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined } | null | undefined, Files: Array<{ __typename?: 'slideshare_File', id: number, path: string, filename: string }> }> } | null | undefined, slideshare_Conference: Array<{ __typename?: 'slideshare_Conference', id: number, startDate: any, endDate: any, createdAt: any, title?: string | null | undefined, updatedAt: any }>, slideshare_SlideRecord: Array<{ __typename?: 'slideshare_SlideRecord', id: number, slideId: number, duration: number, audioUrl: string, createdAt: any, updatedAt: any, title: string, SlideRecordPieces: Array<{ __typename?: 'slideshare_SlideRecordPiece', id: number, pageId: string, slideRecordId: number, startTime: number }> }> };
 
+export type SubscribeSlideSubscriptionVariables = Exact<{
+  slideId: Scalars['Int'];
+}>;
+
+
+export type SubscribeSlideSubscription = { __typename?: 'subscription_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, title?: string | null | undefined, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number, Bookmarks: Array<{ __typename?: 'slideshare_Bookmark', id: number, url: string }>, Poll?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined } | null | undefined, Files: Array<{ __typename?: 'slideshare_File', id: number, path: string, filename: string }> }> } | null | undefined };
+
 export type QueryUserSlideQueryVariables = Exact<{
   userId: Scalars['String'];
   offset: Scalars['Int'];
@@ -4397,10 +4405,11 @@ export type SlideRecordQuery = { __typename?: 'query_root', slideshare_SlideReco
 
 export type UploadPdfMutationVariables = Exact<{
   pdfName: Scalars['String'];
+  slideId: Scalars['Int'];
 }>;
 
 
-export type UploadPdfMutation = { __typename?: 'mutation_root', uploadPdf?: { __typename?: 'UploadPdfOutput', keys?: Array<string | null | undefined> | null | undefined } | null | undefined };
+export type UploadPdfMutation = { __typename?: 'mutation_root', uploadPdf?: { __typename?: 'UploadPdfOutput', slideId: number } | null | undefined };
 
 
 export const UpdatePageDocument = gql`
@@ -5547,6 +5556,65 @@ export function useQuerySlideLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type QuerySlideQueryHookResult = ReturnType<typeof useQuerySlideQuery>;
 export type QuerySlideLazyQueryHookResult = ReturnType<typeof useQuerySlideLazyQuery>;
 export type QuerySlideQueryResult = Apollo.QueryResult<QuerySlideQuery, QuerySlideQueryVariables>;
+export const SubscribeSlideDocument = gql`
+    subscription subscribeSlide($slideId: Int!) {
+  slideshare_Slide_by_pk(id: $slideId) {
+    id
+    createdBy
+    Pages(order_by: {pageNumber: asc}) {
+      id
+      type
+      title
+      text
+      pageNumber
+      imageUrl
+      videoUrl
+      createdAt
+      updatedAt
+      slideId
+      Bookmarks {
+        id
+        url
+      }
+      Poll {
+        question
+        option1
+        option2
+        option3
+        option4
+      }
+      Files {
+        id
+        path
+        filename
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useSubscribeSlideSubscription__
+ *
+ * To run a query within a React component, call `useSubscribeSlideSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useSubscribeSlideSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSubscribeSlideSubscription({
+ *   variables: {
+ *      slideId: // value for 'slideId'
+ *   },
+ * });
+ */
+export function useSubscribeSlideSubscription(baseOptions: Apollo.SubscriptionHookOptions<SubscribeSlideSubscription, SubscribeSlideSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<SubscribeSlideSubscription, SubscribeSlideSubscriptionVariables>(SubscribeSlideDocument, options);
+      }
+export type SubscribeSlideSubscriptionHookResult = ReturnType<typeof useSubscribeSlideSubscription>;
+export type SubscribeSlideSubscriptionResult = Apollo.SubscriptionResult<SubscribeSlideSubscription>;
 export const QueryUserSlideDocument = gql`
     query queryUserSlide($userId: String!, $offset: Int!) {
   slideshare_Slide(
@@ -6167,9 +6235,9 @@ export type SlideRecordQueryHookResult = ReturnType<typeof useSlideRecordQuery>;
 export type SlideRecordLazyQueryHookResult = ReturnType<typeof useSlideRecordLazyQuery>;
 export type SlideRecordQueryResult = Apollo.QueryResult<SlideRecordQuery, SlideRecordQueryVariables>;
 export const UploadPdfDocument = gql`
-    mutation UploadPdf($pdfName: String!) {
-  uploadPdf(pdfName: $pdfName) {
-    keys
+    mutation UploadPdf($pdfName: String!, $slideId: Int!) {
+  uploadPdf(pdfName: $pdfName, slideId: $slideId) {
+    slideId
   }
 }
     `;
@@ -6189,6 +6257,7 @@ export type UploadPdfMutationFn = Apollo.MutationFunction<UploadPdfMutation, Upl
  * const [uploadPdfMutation, { data, loading, error }] = useUploadPdfMutation({
  *   variables: {
  *      pdfName: // value for 'pdfName'
+ *      slideId: // value for 'slideId'
  *   },
  * });
  */

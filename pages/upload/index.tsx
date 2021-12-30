@@ -35,24 +35,12 @@ const Home = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
     const onSuccessUpload = async (key: string) => {
         startLoading()
-        const response = await uploadPdf({ variables: { pdfName: key } })
-        const pngList = response.data?.uploadPdf?.keys
-        if (!pngList) { return }
         const createdSlide = await createNewSlide()
         const slideId = createdSlide.data?.insert_slideshare_Slide_one?.id
         if (!slideId) { return }
-        let pageNumber = 0
-        const promises = []
-        for (const imageUrl of pngList) {
-            const newPage = createNewPage(slideId) as any //TODO: anyを使わない方法を知りたい
-            newPage.type = Slideshare_PageType_Enum.Image
-            newPage.imageUrl = imageUrl
-            newPage.pageNumber = pageNumber
-            pageNumber += 1
-            const promise = createPageMutation({ variables: { object: { ...newPage, slideId } } })
-            promises.push(promise)
-        }
-        await Promise.all(promises)
+
+        uploadPdf({ variables: { pdfName: key, slideId } })
+        //TODO: 状況チェック
         router.push(`/edit/${slideId}`)
         finishLoading()
     }
@@ -79,9 +67,11 @@ const Home = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const data = JSON.parse(JSON.stringify(await import(`../../messages/${context.locale}.json`)))
+    const ogpInfo = await getOgpInfo(context)
     return {
-        ...getOgpInfo(context),
+
         props: {
+            ...ogpInfo,
             messages: data
         }
     }
