@@ -92,7 +92,7 @@ export default (props: Props) => {
         if (appearController) {
             setTimeout(() => {
                 setAppearController(false)
-            }, 10000)
+            }, 30000)
         }
     }, [appearController])
     const renderSlide = () => {
@@ -113,6 +113,7 @@ export default (props: Props) => {
                     onClickPause={pause}
                     onClickPlay={play}
                     onClickChangeRate={changeRate}
+                    onClickForwardOrBack={(second) => skip(second)}
                     currentRate={rate}
                     duration={duration}
                     seek={seek} />

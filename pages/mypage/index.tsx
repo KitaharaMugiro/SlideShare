@@ -26,7 +26,9 @@ export default ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
                     imageUrl={slide.Pages ? slide.Pages[0]?.imageUrl : undefined}
                     onDeleteCard={onDeleteCard}
                     linkTo="slide"
-                    actionMode="mypage" />
+                    actionMode="mypage"
+                    uploading={slide.status === "uploading"}
+                />
             </div>
         })
     }

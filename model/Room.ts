@@ -12,7 +12,7 @@ export type Room = {
     participants: RoomParticipant[]
     status: "open" | "waiting" | "closed"
     createdBy: string
-    presentingSlide: { slideId: number, slideImageUrl: string | undefined | null } | undefined | null
+    presentingSlide: { slideId: number, slideImageUrl: string | undefined | null, status: string } | undefined | null
 }
 
 export type MyRoomState = {

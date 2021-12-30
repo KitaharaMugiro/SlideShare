@@ -48,6 +48,7 @@ subscription rooms($roomCreatedAt: timestamptz, $participantUpdatedAt: timestamp
       }
       Slide {
         id
+        status
         Pages(order_by:{pageNumber: asc}, limit:1) {
           imageUrl
         }

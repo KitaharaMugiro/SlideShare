@@ -28,6 +28,28 @@ def lambda_handler(event, context):
     bucket_name = "slidesharefb3e5b28443a4cada2800e8b4b2e9012235535-dev"
     print(f"Bucket: {bucket_name}`, `Key: ${original_pdf_key}")
 
+    updateSlideMutation = """
+    mutation UpdateSlide($id: Int!, $status:String!) {
+        update_slideshare_Slide_by_pk(pk_columns:{id:$id}, _set:{status:$status}) {
+            id
+        }
+    }
+    """
+    graphqlReq = {
+        "query": updateSlideMutation,
+        "variables": {
+            "id": slideId,
+            "status": "uploading",
+        },
+    }
+    res = requests.post(
+        url=HASURA_URL,
+        json=graphqlReq,
+        headers={"Authorization": headers["Authorization"]},
+    )
+    print("response")
+    print(res.text)
+
     s3 = boto3.client("s3")
     response = s3.get_object(Bucket=bucket_name, Key=original_pdf_key)
     data = response["Body"].read()
@@ -87,5 +109,27 @@ def lambda_handler(event, context):
         print("response")
         print(res.text)
         index += 1
+
+    updateSlideMutation = """
+    mutation UpdateSlide($id: Int!, $status:String!) {
+        update_slideshare_Slide_by_pk(pk_columns:{id:$id}, _set:{status:$status}) {
+            id
+        }
+    }
+    """
+    graphqlReq = {
+        "query": updateSlideMutation,
+        "variables": {
+            "id": slideId,
+            "status": "uploaded",
+        },
+    }
+    res = requests.post(
+        url=HASURA_URL,
+        json=graphqlReq,
+        headers={"Authorization": headers["Authorization"]},
+    )
+    print("response")
+    print(res.text)
     print("process end")
     return {"statusCode": 200, "body": json.dumps({"slideId": slideId})}

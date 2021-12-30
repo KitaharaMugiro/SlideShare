@@ -1,22 +1,20 @@
 import Auth from "@aws-amplify/auth"
 import { Button, Divider, Typography } from "@mui/material"
-import { TypeInfo } from "graphql"
+import { GetServerSideProps } from "next"
 import { useRouter } from "next/dist/client/router"
 import React, { useEffect } from "react"
 import PdfUploader from "../../components/upload/PdfUploader"
+import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag"
+import getOgpInfo from "../../model/serverSideRender/getOgpInfo"
 import { useLoading } from "../../model/util-hooks/useLoading"
 import useSignin from "../../model/util-hooks/useSignin"
-import { createNewPage, Page } from "../../model/Page"
-import { Slideshare_PageType_Enum, useCreateSlideMutation, useInsertPageMutation, useUploadPdfMutation } from "../../src/generated/graphql"
+import { useCreateSlideMutation, useInsertPageMutation, useUploadPdfMutation } from "../../src/generated/graphql"
 import style from "./index.module.css"
-import { GetServerSideProps } from "next"
-import getOgpInfo from "../../model/serverSideRender/getOgpInfo"
-import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag"
 const Home = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const [createNewSlide] = useCreateSlideMutation()
     const [createPageMutation] = useInsertPageMutation()
     const [uploadPdf] = useUploadPdfMutation()
-    const { startLoading, finishLoading } = useLoading("このまま30秒ほどお待ちください")
+    const { startLoading, finishLoading } = useLoading("")
     const router = useRouter()
     const { goSignin } = useSignin()
 
@@ -27,7 +25,7 @@ const Home = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     }, [])
 
     const onClickNew = async () => {
-        const createdSlide = await createNewSlide()
+        const createdSlide = await createNewSlide({ variables: { status: "uploaded" } })
         const slideId = createdSlide.data?.insert_slideshare_Slide_one?.id
         if (!slideId) { return }
         router.push(`/edit/${slideId}`)
@@ -35,13 +33,15 @@ const Home = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
     const onSuccessUpload = async (key: string) => {
         startLoading()
-        const createdSlide = await createNewSlide()
+        const createdSlide = await createNewSlide({ variables: { status: "uploading" } })
         const slideId = createdSlide.data?.insert_slideshare_Slide_one?.id
         if (!slideId) { return }
 
-        uploadPdf({ variables: { pdfName: key, slideId } })
+        uploadPdf({ variables: { pdfName: key, slideId } }).catch(() => {
+            //タイムアウトエラーが発生するので握りつぶす
+        })
         //TODO: 状況チェック
-        router.push(`/edit/${slideId}`)
+        router.push(`/mypage`)
         finishLoading()
     }
 

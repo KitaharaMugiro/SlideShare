@@ -1,11 +1,6 @@
-import { Button } from "@mui/material";
-import { useRouter } from "next/dist/client/router";
 import React from "react";
-import { useRoomMutation, useRoomParticipantMutation } from "../../model/hooks/useRoom";
-import { Slide } from "../../model/Slide";
-import useMySlidePagenation from "../../model/util-hooks/useMySlidePagenation";
+import { useRoomMutation } from "../../model/hooks/useRoom";
 import PlusSlideCard from "../common/PlusSlideCard";
-import PlusFrame from "../edit/frame/PlusFrame";
 import SlideCard from "../slide/SlideCard";
 
 interface Props {
@@ -35,7 +30,8 @@ export default (props: Props) => {
                     imageUrl={slide.imageUrl}
                     actionMode={props.role === "owner" ? "pick" : "none"}
                     linkTo="presentation"
-                    onClickPick={onClickPick} />
+                    onClickPick={onClickPick}
+                    uploading={false} />
             </div>
         })
     }

@@ -22,7 +22,7 @@ const Edit = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
 
     const router = useRouter()
     const { slideId } = router.query
-    const { loading, error, data: initialSlide } = useSubscribeSlideSubscription({ variables: { slideId: Number(slideId) } })
+    const { loading, error, data: initialSlide } = useSubscribeSlideSubscription({ variables: { slideId: Number(slideId) } }) //ここsubscriptionで回るんだろうか？
     const { user } = useUser()
     const [_, setEditingPageList] = useAtom(pageListAtom)
     const { updateAllPageNumber, pageList } = usePageList()

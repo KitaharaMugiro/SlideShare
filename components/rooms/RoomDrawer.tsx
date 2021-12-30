@@ -7,7 +7,6 @@ import useSignin from "../../model/util-hooks/useSignin"
 import useUser from "../../model/util-hooks/useUser"
 import MuteButton from "../common/MuteButton"
 import SlideCard from "../slide/SlideCard"
-import RoomParticipants from "./RoomParticipants"
 import SlidePicker from "./SlidePicker"
 import SlidePickerForPresentation from "./SlidePickerForPresentation"
 
@@ -74,7 +73,8 @@ export default (props: Props) => {
                         onDeleteCard={onWithdrawPresentation}
                         onClickPick={onGoingPresentation}
                         linkTo="presentation"
-                        isFocus={true} />
+                        isFocus={true}
+                        uploading={slide.status === "uploading"} />
                 </div>
             </>
         }

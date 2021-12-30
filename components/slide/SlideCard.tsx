@@ -16,6 +16,7 @@ interface Props {
     onDeleteCard?: (slideId: number) => void
     onClickPick?: (slideId: number) => void
     isFocus?: boolean
+    uploading: boolean
 }
 
 export default function SlideCard(props: Props) {
@@ -44,9 +45,11 @@ export default function SlideCard(props: Props) {
     }
 
     const renderActionsAccordingToMode = () => {
+        const message = props.uploading ? <span>アップロード中</span> : <div />
         switch (props.actionMode) {
             case "mypage":
                 return <>
+                    {message}
                     <Button
                         href={`/edit/${props.slideId}`}
                         size="small" color="primary">
@@ -60,6 +63,7 @@ export default function SlideCard(props: Props) {
                 </>
             case "pick":
                 return <>
+                    {message}
                     <span style={{ marginRight: 10 }}>
                         {"ID: " + props.slideId}
                     </span>
@@ -78,6 +82,7 @@ export default function SlideCard(props: Props) {
                 </>
             case "presenting-owner":
                 return <>
+                    {message}
                     <span style={{ marginRight: 10 }}>
                         {"ID: " + props.slideId}
                     </span>
@@ -86,6 +91,7 @@ export default function SlideCard(props: Props) {
                 </>
             case "none":
                 return <>
+                    {message}
                     <span style={{ marginRight: 10 }}>
                         {"ID: " + props.slideId}
                     </span>

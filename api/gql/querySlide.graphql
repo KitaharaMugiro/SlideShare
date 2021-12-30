@@ -62,6 +62,7 @@ subscription subscribeSlide($slideId: Int!) {
   slideshare_Slide_by_pk(id: $slideId) {
     id
     createdBy
+    status
     Pages(order_by:{pageNumber:asc}) {
       id
       type
@@ -97,6 +98,7 @@ query queryUserSlide($userId: String!, $offset: Int!) {
   slideshare_Slide(where: {createdBy: {_eq: $userId}}, order_by: {createdAt: desc}, offset: $offset, limit: 10) {
     id
     createdBy
+    status
     Pages(where: {pageNumber: {_eq: 0}}, limit: 1) {
       id
       type
@@ -111,6 +113,7 @@ subscription subscribeUserSlide($userId: String!, $limit: Int!) {
   slideshare_Slide(where: {createdBy: {_eq: $userId}}, order_by: {createdAt: desc}, limit: $limit) {
     id
     createdBy
+    status
     Pages(where: {pageNumber: {_eq: 0}}, limit: 1) {
       id
       type

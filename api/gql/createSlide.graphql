@@ -1,5 +1,5 @@
-mutation createSlide {
-  insert_slideshare_Slide_one(object:{}) {
+mutation createSlide($status: String!) {
+  insert_slideshare_Slide_one(object:{status: $status}) {
     id
     Pages {
       id

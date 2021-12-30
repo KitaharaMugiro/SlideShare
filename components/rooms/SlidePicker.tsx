@@ -27,7 +27,8 @@ export default () => {
                     actionMode="pick"
                     linkTo="presentation"
                     onClickPick={onClickPick}
-                    isFocus={isFocus} />
+                    isFocus={isFocus}
+                    uploading={slide.status === "uploading"} />
             </div>
         })
     }

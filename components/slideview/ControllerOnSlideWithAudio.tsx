@@ -5,6 +5,9 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import SettingsIcon from '@mui/icons-material/Settings';
+import Forward5Icon from '@mui/icons-material/Forward5';
+import Replay5Icon from '@mui/icons-material/Replay5';
+import { Replay5 } from "@mui/icons-material";
 interface Props {
     appear: boolean
     onClickFullScreen: () => void
@@ -12,6 +15,7 @@ interface Props {
     onClickPlay: () => void
     onClickPause: () => void
     onClickChangeRate: (rate: number) => void
+    onClickForwardOrBack: (second: number) => void
     currentRate: number
     duration: number
     seek: number
@@ -94,6 +98,16 @@ export default (props: Props) => {
                         <PlayArrowIcon style={{ width: 40, height: 40 }} />}
                 </IconButton>
                 {renderAudioRateChange()}
+                <IconButton
+                    onClick={() => props.onClickForwardOrBack(-5)}
+                    style={{ marginLeft: 10, height: 60 }}>
+                    <Replay5Icon style={{ width: 40, height: 40 }} />
+                </IconButton>
+                <IconButton
+                    onClick={() => props.onClickForwardOrBack(5)}
+                    style={{ marginLeft: 10, height: 60 }}>
+                    <Forward5Icon style={{ width: 40, height: 40 }} />
+                </IconButton>
                 <span style={{ marginLeft: 10, color: "white" }}>
                     {seekMM}:{seekSS} / {durationMM}:{durationSS}
                 </span>

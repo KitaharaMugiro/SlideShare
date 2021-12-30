@@ -577,10 +577,14 @@ export type Mutation_Root = {
   update_slideshare_RoomParticipant_by_pk?: Maybe<Slideshare_RoomParticipant>;
   /** update single row of the table: "slideshare.Room" */
   update_slideshare_Room_by_pk?: Maybe<Slideshare_Room>;
+  /** update data of the table: "slideshare.Slide" */
+  update_slideshare_Slide?: Maybe<Slideshare_Slide_Mutation_Response>;
   /** update data of the table: "slideshare.SlideRecord" */
   update_slideshare_SlideRecord?: Maybe<Slideshare_SlideRecord_Mutation_Response>;
   /** update single row of the table: "slideshare.SlideRecord" */
   update_slideshare_SlideRecord_by_pk?: Maybe<Slideshare_SlideRecord>;
+  /** update single row of the table: "slideshare.Slide" */
+  update_slideshare_Slide_by_pk?: Maybe<Slideshare_Slide>;
   /** PDFをPNGに変えてPageにする */
   uploadPdf?: Maybe<UploadPdfOutput>;
 };
@@ -1104,6 +1108,13 @@ export type Mutation_RootUpdate_Slideshare_Room_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Slideshare_SlideArgs = {
+  _set?: Maybe<Slideshare_Slide_Set_Input>;
+  where: Slideshare_Slide_Bool_Exp;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Slideshare_SlideRecordArgs = {
   _inc?: Maybe<Slideshare_SlideRecord_Inc_Input>;
   _set?: Maybe<Slideshare_SlideRecord_Set_Input>;
@@ -1116,6 +1127,13 @@ export type Mutation_RootUpdate_Slideshare_SlideRecord_By_PkArgs = {
   _inc?: Maybe<Slideshare_SlideRecord_Inc_Input>;
   _set?: Maybe<Slideshare_SlideRecord_Set_Input>;
   pk_columns: Slideshare_SlideRecord_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Slideshare_Slide_By_PkArgs = {
+  _set?: Maybe<Slideshare_Slide_Set_Input>;
+  pk_columns: Slideshare_Slide_Pk_Columns_Input;
 };
 
 
@@ -3326,6 +3344,7 @@ export type Slideshare_Slide = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   createdBy: Scalars['String'];
   id: Scalars['Int'];
+  status: Scalars['String'];
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -3624,6 +3643,7 @@ export type Slideshare_Slide_Bool_Exp = {
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   createdBy?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
+  status?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -3636,6 +3656,7 @@ export enum Slideshare_Slide_Constraint {
 /** input type for inserting data into table "slideshare.Slide" */
 export type Slideshare_Slide_Insert_Input = {
   Pages?: Maybe<Slideshare_Page_Arr_Rel_Insert_Input>;
+  status?: Maybe<Scalars['String']>;
 };
 
 /** response of any mutation on the table "slideshare.Slide" */
@@ -3667,7 +3688,13 @@ export type Slideshare_Slide_Order_By = {
   createdAt?: Maybe<Order_By>;
   createdBy?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  status?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: slideshare_Slide */
+export type Slideshare_Slide_Pk_Columns_Input = {
+  id: Scalars['Int'];
 };
 
 /** select columns of table "slideshare.Slide" */
@@ -3679,13 +3706,20 @@ export enum Slideshare_Slide_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Status = 'status',
+  /** column name */
   UpdatedAt = 'updatedAt'
 }
 
-/** placeholder for update columns of table "slideshare.Slide" (current role has no relevant permissions) */
+/** input type for updating data in table "slideshare.Slide" */
+export type Slideshare_Slide_Set_Input = {
+  status?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "slideshare.Slide" */
 export enum Slideshare_Slide_Update_Column {
-  /** placeholder (do not use) */
-  Placeholder = '_PLACEHOLDER'
+  /** column name */
+  Status = 'status'
 }
 
 export type Subscription_Root = {
@@ -4168,7 +4202,9 @@ export type QuerySubscribeQueryVariables = Exact<{
 
 export type QuerySubscribeQuery = { __typename?: 'query_root', slideshare_ConferenceSubscriber: Array<{ __typename?: 'slideshare_ConferenceSubscriber', id: number }> };
 
-export type CreateSlideMutationVariables = Exact<{ [key: string]: never; }>;
+export type CreateSlideMutationVariables = Exact<{
+  status: Scalars['String'];
+}>;
 
 
 export type CreateSlideMutation = { __typename?: 'mutation_root', insert_slideshare_Slide_one?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined }> } | null | undefined };
@@ -4276,7 +4312,7 @@ export type SubscribeSlideSubscriptionVariables = Exact<{
 }>;
 
 
-export type SubscribeSlideSubscription = { __typename?: 'subscription_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, title?: string | null | undefined, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number, Bookmarks: Array<{ __typename?: 'slideshare_Bookmark', id: number, url: string }>, Poll?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined } | null | undefined, Files: Array<{ __typename?: 'slideshare_File', id: number, path: string, filename: string }> }> } | null | undefined };
+export type SubscribeSlideSubscription = { __typename?: 'subscription_root', slideshare_Slide_by_pk?: { __typename?: 'slideshare_Slide', id: number, createdBy: string, status: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, title?: string | null | undefined, text?: string | null | undefined, pageNumber: number, imageUrl?: string | null | undefined, videoUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined, slideId: number, Bookmarks: Array<{ __typename?: 'slideshare_Bookmark', id: number, url: string }>, Poll?: { __typename?: 'slideshare_Poll', question: string, option1: string, option2: string, option3?: string | null | undefined, option4?: string | null | undefined } | null | undefined, Files: Array<{ __typename?: 'slideshare_File', id: number, path: string, filename: string }> }> } | null | undefined };
 
 export type QueryUserSlideQueryVariables = Exact<{
   userId: Scalars['String'];
@@ -4284,7 +4320,7 @@ export type QueryUserSlideQueryVariables = Exact<{
 }>;
 
 
-export type QueryUserSlideQuery = { __typename?: 'query_root', slideshare_Slide: Array<{ __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, imageUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined }> }> };
+export type QueryUserSlideQuery = { __typename?: 'query_root', slideshare_Slide: Array<{ __typename?: 'slideshare_Slide', id: number, createdBy: string, status: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, imageUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined }> }> };
 
 export type SubscribeUserSlideSubscriptionVariables = Exact<{
   userId: Scalars['String'];
@@ -4292,7 +4328,7 @@ export type SubscribeUserSlideSubscriptionVariables = Exact<{
 }>;
 
 
-export type SubscribeUserSlideSubscription = { __typename?: 'subscription_root', slideshare_Slide: Array<{ __typename?: 'slideshare_Slide', id: number, createdBy: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, imageUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined }> }> };
+export type SubscribeUserSlideSubscription = { __typename?: 'subscription_root', slideshare_Slide: Array<{ __typename?: 'slideshare_Slide', id: number, createdBy: string, status: string, Pages: Array<{ __typename?: 'slideshare_Page', id: string, type: Slideshare_PageType_Enum, imageUrl?: string | null | undefined, createdAt?: any | null | undefined, updatedAt?: any | null | undefined }> }> };
 
 export type DeleteSlideMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -4346,7 +4382,7 @@ export type RoomsSubscriptionVariables = Exact<{
 }>;
 
 
-export type RoomsSubscription = { __typename?: 'subscription_root', slideshare_Room: Array<{ __typename?: 'slideshare_Room', id: number, description: string, name: string, createdAt: any, updatedAt: any, createdBy: string, Slide?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', imageUrl?: string | null | undefined }> } | null | undefined, RoomParticipants: Array<{ __typename?: 'slideshare_RoomParticipant', userId: string, Profile: { __typename?: 'slideshare_Profile', name?: string | null | undefined, profile?: string | null | undefined }, Slide?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', imageUrl?: string | null | undefined }> } | null | undefined }> }> };
+export type RoomsSubscription = { __typename?: 'subscription_root', slideshare_Room: Array<{ __typename?: 'slideshare_Room', id: number, description: string, name: string, createdAt: any, updatedAt: any, createdBy: string, Slide?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', imageUrl?: string | null | undefined }> } | null | undefined, RoomParticipants: Array<{ __typename?: 'slideshare_RoomParticipant', userId: string, Profile: { __typename?: 'slideshare_Profile', name?: string | null | undefined, profile?: string | null | undefined }, Slide?: { __typename?: 'slideshare_Slide', id: number, status: string, Pages: Array<{ __typename?: 'slideshare_Page', imageUrl?: string | null | undefined }> } | null | undefined }> }> };
 
 export type JoinRoomMutationMutationVariables = Exact<{
   roomId?: Maybe<Scalars['Int']>;
@@ -5012,8 +5048,8 @@ export type QuerySubscribeQueryHookResult = ReturnType<typeof useQuerySubscribeQ
 export type QuerySubscribeLazyQueryHookResult = ReturnType<typeof useQuerySubscribeLazyQuery>;
 export type QuerySubscribeQueryResult = Apollo.QueryResult<QuerySubscribeQuery, QuerySubscribeQueryVariables>;
 export const CreateSlideDocument = gql`
-    mutation createSlide {
-  insert_slideshare_Slide_one(object: {}) {
+    mutation createSlide($status: String!) {
+  insert_slideshare_Slide_one(object: {status: $status}) {
     id
     Pages {
       id
@@ -5042,6 +5078,7 @@ export type CreateSlideMutationFn = Apollo.MutationFunction<CreateSlideMutation,
  * @example
  * const [createSlideMutation, { data, loading, error }] = useCreateSlideMutation({
  *   variables: {
+ *      status: // value for 'status'
  *   },
  * });
  */
@@ -5561,6 +5598,7 @@ export const SubscribeSlideDocument = gql`
   slideshare_Slide_by_pk(id: $slideId) {
     id
     createdBy
+    status
     Pages(order_by: {pageNumber: asc}) {
       id
       type
@@ -5625,6 +5663,7 @@ export const QueryUserSlideDocument = gql`
   ) {
     id
     createdBy
+    status
     Pages(where: {pageNumber: {_eq: 0}}, limit: 1) {
       id
       type
@@ -5673,6 +5712,7 @@ export const SubscribeUserSlideDocument = gql`
   ) {
     id
     createdBy
+    status
     Pages(where: {pageNumber: {_eq: 0}}, limit: 1) {
       id
       type
@@ -5938,6 +5978,7 @@ export const RoomsDocument = gql`
       }
       Slide {
         id
+        status
         Pages(order_by: {pageNumber: asc}, limit: 1) {
           imageUrl
         }
