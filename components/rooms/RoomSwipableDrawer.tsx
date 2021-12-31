@@ -1,24 +1,23 @@
-import { Button, Chip, Divider, Drawer, SwipeableDrawer, Typography } from "@mui/material"
-import { useRouter } from "next/router"
+import CloseIcon from '@mui/icons-material/Close'
+import { Button, Chip, Divider, IconButton, SwipeableDrawer, Typography } from "@mui/material"
 import { useState } from "react"
-import { useRoomMutation } from "../../model/hooks/useRoom"
+import { HEADER_HEIGHT } from "../../config/StyleConst"
 import { Room } from "../../model/Room"
 import useSignin from "../../model/util-hooks/useSignin"
-import useUser from "../../model/util-hooks/useUser"
 import MuteButton from "../common/MuteButton"
-import SlideCard from "../slide/SlideCard"
 import SlidePicker from "./SlidePicker"
 import SlidePickerForPresentation from "./SlidePickerForPresentation"
-
 interface Props {
     drawerWidth: any,
     joinedRoom: Room | undefined
     role: "owner" | "participant" | "public" | "none"
+    onClickLeave: () => void
+    open: boolean
+    onOpen: () => void
+    onClose: () => void
 }
 
 export default (props: Props) => {
-    const { user } = useUser()
-    const { drawerWidth } = props
     const { goSignin } = useSignin()
     const [openBottom, setOpenBottom] = useState(false)
     const bottomViewHeight = openBottom ? 300 : 90
@@ -43,43 +42,6 @@ export default (props: Props) => {
         }
     }
 
-    const { updatePresentingSlide } = useRoomMutation()
-    const router = useRouter()
-
-    const onWithdrawPresentation = async () => {
-        if (props.joinedRoom) {
-            await updatePresentingSlide(props.joinedRoom.id, null)
-        }
-
-    }
-
-    const onGoingPresentation = async (slideId: number) => {
-        if (props.joinedRoom) {
-            router.push(`presentation/${slideId}?roomId=${props.joinedRoom.id}`)
-        }
-    }
-
-    const renderPresentingSlide = () => {
-        if (props.joinedRoom?.presentingSlide) {
-            const slide = props.joinedRoom.presentingSlide;
-            return <>
-                <Typography variant="h5">登壇中のスライド</Typography>
-                <div style={{ marginLeft: 15, marginBottom: 20 }}>
-
-                    <SlideCard
-                        slideId={slide.slideId}
-                        imageUrl={slide.slideImageUrl}
-                        actionMode={props.role === "owner" ? "presenting-owner" : "presenting-participant"}
-                        onDeleteCard={onWithdrawPresentation}
-                        onClickPick={onGoingPresentation}
-                        linkTo="presentation"
-                        isFocus={true}
-                        uploading={slide.status === "uploading"} />
-                </div>
-            </>
-        }
-    }
-
     const renderSlides = () => {
         if (!props.joinedRoom) return <div />
         const slides: { userName: string, slideId: number, imageUrl: string | null | undefined }[] = props.joinedRoom.participants.filter(p => p.slideId).map(p => {
@@ -89,10 +51,12 @@ export default (props: Props) => {
                 imageUrl: p.slideImageUrl
             }
         })
+
         return (<div style={{ marginLeft: 15 }}>
             <SlidePickerForPresentation
                 onClickAdd={onClickAddParticipantSlide}
                 slides={slides}
+                presentingSlideId={props.joinedRoom?.presentingSlide?.slideId}
                 roomId={props.joinedRoom.id}
                 role={props.role} />
         </div>)
@@ -103,24 +67,29 @@ export default (props: Props) => {
     }
 
     return <>
-        <Drawer
+        <SwipeableDrawer
             sx={{
-                width: drawerWidth,
+                width: props.drawerWidth,
                 flexShrink: 0,
                 '& .MuiDrawer-paper': {
-                    width: drawerWidth,
+                    width: props.drawerWidth,
+                    marginTop: HEADER_HEIGHT + "px",
                 },
             }}
             variant="persistent"
             anchor="right"
-            open={props.joinedRoom !== undefined}
+            open={props.open}
+            onOpen={props.onOpen}
+            onClose={props.onClose}
         >
             <div style={{ padding: 10, paddingTop: 20 }}>
+                <IconButton onClick={props.onClose}>
+                    <CloseIcon />
+                </IconButton>
                 {StatusChip()}
                 <Typography variant="h4">{props.joinedRoom?.name}</Typography>
                 <Typography variant="caption">{props.joinedRoom?.description}</Typography>
 
-                {renderPresentingSlide()}
                 <Typography variant="h5">登壇予定のスライド</Typography>
                 {renderSlides()}
                 <div style={{ height: bottomViewHeight }} />
@@ -128,19 +97,21 @@ export default (props: Props) => {
                     <div style={{
                         position: "fixed",
                         bottom: "0",
-                        width: drawerWidth,
+                        width: props.drawerWidth,
                         height: bottomViewHeight,
                         backgroundColor: "white"
                     }}>
                         <Divider />
-                        {renderMuteButton()}
-                        <Button>👋 Leave</Button>
+                        <div style={{ display: "flex" }}>
+                            {renderMuteButton()}
+                            <Button onClick={props.onClickLeave}>👋 Leave</Button>
+                        </div>
                         {openBottom ? <SlidePicker /> : <div />}
                     </div>
                 </>
 
             </div>
 
-        </Drawer>
+        </SwipeableDrawer>
     </>
 }

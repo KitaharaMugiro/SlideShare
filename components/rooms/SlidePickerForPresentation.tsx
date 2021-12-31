@@ -10,6 +10,7 @@ interface Props {
         imageUrl: string | null | undefined
     }[],
     roomId: number,
+    presentingSlideId: number | undefined
     role: "owner" | "participant" | "public" | "none"
     onClickAdd: () => void
 }
@@ -20,6 +21,12 @@ export default (props: Props) => {
         await updatePresentingSlide(props.roomId, slideId)
     }
 
+    const onWithdrawPresentation = async () => {
+        if (props.roomId) {
+            await updatePresentingSlide(props.roomId, null)
+        }
+    }
+
     const renderCards = () => {
         return props.slides.map((slide) => {
             return <div key={slide.slideId} style={{
@@ -28,9 +35,11 @@ export default (props: Props) => {
                 <SlideCard
                     slideId={slide.slideId}
                     imageUrl={slide.imageUrl}
-                    actionMode={props.role === "owner" ? "pick" : "none"}
+                    actionMode={props.role === "owner" ? "presenting-owner" : "none"}
                     linkTo="presentation"
+                    onDeleteCard={onWithdrawPresentation}
                     onClickPick={onClickPick}
+                    isFocus={props.presentingSlideId === slide.slideId}
                     uploading={false} />
             </div>
         })

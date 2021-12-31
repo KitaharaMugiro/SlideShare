@@ -13,6 +13,7 @@ import { HeaderTitleAtom } from '../../model/jotai/HeaderTitle';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import { useRouter } from 'next/dist/client/router';
+import { HEADER_HEIGHT } from '../../config/StyleConst';
 const MyAppBar = () => {
     const router = useRouter()
     const { user } = useUser()
@@ -89,6 +90,7 @@ const MyAppBar = () => {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar
+                style={{ height: HEADER_HEIGHT }}
                 color="inherit"
                 position="static">
                 <Toolbar>

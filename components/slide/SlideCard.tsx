@@ -86,7 +86,7 @@ export default function SlideCard(props: Props) {
                     <span style={{ marginRight: 10 }}>
                         {"ID: " + props.slideId}
                     </span>
-                    <Button onClick={() => props.onClickPick!(props.slideId)}>参加する</Button>
+                    <Button onClick={() => props.onClickPick!(props.slideId)}>Use This</Button>
                     <Button color="warning" onClick={() => props.onDeleteCard!(props.slideId)}>取り下げる</Button>
                 </>
             case "none":

@@ -4382,7 +4382,7 @@ export type RoomsSubscriptionVariables = Exact<{
 }>;
 
 
-export type RoomsSubscription = { __typename?: 'subscription_root', slideshare_Room: Array<{ __typename?: 'slideshare_Room', id: number, description: string, name: string, createdAt: any, updatedAt: any, createdBy: string, Slide?: { __typename?: 'slideshare_Slide', id: number, Pages: Array<{ __typename?: 'slideshare_Page', imageUrl?: string | null | undefined }> } | null | undefined, RoomParticipants: Array<{ __typename?: 'slideshare_RoomParticipant', userId: string, Profile: { __typename?: 'slideshare_Profile', name?: string | null | undefined, profile?: string | null | undefined }, Slide?: { __typename?: 'slideshare_Slide', id: number, status: string, Pages: Array<{ __typename?: 'slideshare_Page', imageUrl?: string | null | undefined }> } | null | undefined }> }> };
+export type RoomsSubscription = { __typename?: 'subscription_root', slideshare_Room: Array<{ __typename?: 'slideshare_Room', id: number, description: string, name: string, createdAt: any, updatedAt: any, createdBy: string, Slide?: { __typename?: 'slideshare_Slide', id: number, status: string, Pages: Array<{ __typename?: 'slideshare_Page', imageUrl?: string | null | undefined }> } | null | undefined, RoomParticipants: Array<{ __typename?: 'slideshare_RoomParticipant', userId: string, Profile: { __typename?: 'slideshare_Profile', name?: string | null | undefined, profile?: string | null | undefined }, Slide?: { __typename?: 'slideshare_Slide', id: number, status: string, Pages: Array<{ __typename?: 'slideshare_Page', imageUrl?: string | null | undefined }> } | null | undefined }> }> };
 
 export type JoinRoomMutationMutationVariables = Exact<{
   roomId?: Maybe<Scalars['Int']>;
@@ -5966,6 +5966,7 @@ export const RoomsDocument = gql`
     description
     Slide {
       id
+      status
       Pages(order_by: {pageNumber: asc}, limit: 1) {
         imageUrl
       }

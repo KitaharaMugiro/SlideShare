@@ -25,7 +25,7 @@ export default () => {
             description: r.description,
             participants: r.RoomParticipants.map(p => { return { id: p.userId, name: p.Profile.name || "Anon", slideId: p.Slide?.id, slideImageUrl: (p.Slide?.Pages && p.Slide?.Pages.length > 0) ? p.Slide?.Pages[0].imageUrl : null } }) || [],
             status: r.Slide ? "open" : "waiting",
-            presentingSlide: r.Slide ? { slideId: r.Slide.id, slideImageUrl: r.Slide.Pages && r.Slide.Pages.length > 0 ? r.Slide.Pages[0].imageUrl : null } : null,
+            presentingSlide: r.Slide ? { slideId: r.Slide.id, slideImageUrl: r.Slide.Pages && r.Slide.Pages.length > 0 ? r.Slide.Pages[0].imageUrl : null, status: r.Slide.status } : null,
             createdBy: r.createdBy
         }
     }) || []

@@ -75,7 +75,7 @@ export default (props: Props) => {
     }
 
     //keyboard event
-    useArrowKeyboardEvent(() => skip(-5), () => skip(5))
+    useArrowKeyboardEvent(goNext, goPrevious)
 
     const onChangePageNumber = (number: number) => {
         const nextPageNumber = number
