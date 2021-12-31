@@ -1,5 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close'
-import { Button, Chip, Divider, IconButton, SwipeableDrawer, Typography } from "@mui/material"
+import { Button, Chip, Divider, IconButton, Paper, SwipeableDrawer, Typography } from "@mui/material"
 import { useState } from "react"
 import { HEADER_HEIGHT } from "../../config/StyleConst"
 import { Room } from "../../model/Room"
@@ -94,12 +94,11 @@ export default (props: Props) => {
                 {renderSlides()}
                 <div style={{ height: bottomViewHeight }} />
                 <>
-                    <div style={{
+                    <Paper style={{
                         position: "fixed",
                         bottom: "0",
                         width: props.drawerWidth,
-                        height: bottomViewHeight,
-                        backgroundColor: "white"
+                        height: bottomViewHeight
                     }}>
                         <Divider />
                         <div style={{ display: "flex" }}>
@@ -107,7 +106,7 @@ export default (props: Props) => {
                             <Button onClick={props.onClickLeave}>👋 Leave</Button>
                         </div>
                         {openBottom ? <SlidePicker /> : <div />}
-                    </div>
+                    </Paper>
                 </>
 
             </div>

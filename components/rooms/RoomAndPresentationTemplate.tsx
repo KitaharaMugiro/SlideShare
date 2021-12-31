@@ -1,23 +1,27 @@
 
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
-import { IconButton } from "@mui/material";
+import { IconButton, Paper } from "@mui/material";
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { isMobile } from 'react-device-detect';
 import { HEADER_HEIGHT } from "../../config/StyleConst";
 import useRoom, { useRoomParticipantMutation } from "../../model/hooks/useRoom";
+import { DarkModeAtom } from '../../model/jotai/DarkMode';
 import { MyRoomState } from "../../model/Room";
 import useUser from "../../model/util-hooks/useUser";
 import MuteButton from "../common/MuteButton";
+import PresentationForRoomTemplate from '../presentation/PresentationForRoomTemplate';
 import style from "./room.module.css";
 import RoomListTemplate from './RoomListTemplate';
 import RoomSwipableDrawer from "./RoomSwipableDrawer";
+import { useAtom } from 'jotai'
 export default () => {
     const router = useRouter()
     const { roomId } = router.query
     const { rooms } = useRoom()
     const { joinRoom } = useRoomParticipantMutation()
     const { user } = useUser()
+    const [_, setThemeMode] = useAtom(DarkModeAtom)
 
     const [openDrawer, setOpenDrawer] = useState(false)
     const [state, setState] = useState<MyRoomState>({ participatedRoomId: undefined, role: "none" });
@@ -62,6 +66,14 @@ export default () => {
         };
     }, [joinedRoom]);
 
+    useEffect(() => {
+        if (isPresenting) {
+            setThemeMode("dark")
+        } else {
+            setThemeMode("light")
+        }
+    }, [isPresenting])
+
 
 
     useEffect(() => {
@@ -74,7 +86,7 @@ export default () => {
 
     let drawerWidth = "45%"
     if (isMobile) {
-        drawerWidth = "100%"
+        drawerWidth = "80%"
     }
 
     return (
@@ -88,10 +100,13 @@ export default () => {
                 onOpen={() => setOpenDrawer(true)}
                 onClose={() => setOpenDrawer(false)} />
 
-            <div className={style.root} style={{ padding: 10, marginRight: (!isPresenting && openDrawer) ? drawerWidth : "" }}>
+            <div className={style.root} style={{ marginRight: (!isPresenting && openDrawer) ? drawerWidth : "" }}>
 
                 {isPresenting ?
-                    <div>発表中だよ</div>
+                    <PresentationForRoomTemplate
+                        room={joinedRoom}
+                        slideId={joinedRoom?.presentingSlide?.slideId || undefined}
+                    />
                     :
                     <RoomListTemplate
                         rooms={rooms}
@@ -102,10 +117,10 @@ export default () => {
 
 
                 {/* Drawer閉じているときの横のバー */}
-                <div style={{
+                <Paper style={{
                     position: "absolute",
                     height: "100%", width: 50, right: 0, top: HEADER_HEIGHT,
-                    bottom: 0, backgroundColor: "white",
+                    bottom: 0,
                     paddingTop: 20,
                     zIndex: 0
                 }}>
@@ -119,7 +134,7 @@ export default () => {
                             onClick={() => onClickLeave()}>
                             👋
                         </IconButton> : <div />}
-                </div>
+                </Paper>
             </div>
 
         </>

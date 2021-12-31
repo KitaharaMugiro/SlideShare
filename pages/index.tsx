@@ -1,13 +1,20 @@
 import { Button, Paper, Typography } from '@mui/material'
+import { useAtom } from 'jotai'
 import type { GetServerSideProps, GetStaticPropsContext, NextPage } from 'next'
 import { useTranslations } from 'next-intl'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { DarkModeAtom } from '../model/jotai/DarkMode'
 import OgpTag, { OpgMetaData } from '../model/ogp/OgpTag'
 import getOgpInfo from '../model/serverSideRender/getOgpInfo'
 
 import styles from './index.module.css'
 
 const Home = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
+  const [_, setThemeMode] = useAtom(DarkModeAtom)
+
+  useEffect(() => {
+    setThemeMode("light")
+  }, [])
   const t = useTranslations('Home');
   return (
     <div>

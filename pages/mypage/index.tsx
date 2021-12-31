@@ -1,8 +1,10 @@
 import { Button, Typography } from "@mui/material";
 import { Auth } from 'aws-amplify';
+import { useAtom } from "jotai";
 import { GetServerSideProps } from "next";
 import React, { useEffect } from "react";
 import SlideCard from "../../components/slide/SlideCard";
+import { DarkModeAtom } from "../../model/jotai/DarkMode";
 import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag";
 import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
 import useMySlidePagenation from "../../model/util-hooks/useMySlidePagenation";
@@ -10,6 +12,13 @@ import useSignin from "../../model/util-hooks/useSignin";
 
 //TODO: Pagenationをhooksに落とし込めないかな
 export default ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
+
+    const [_, setThemeMode] = useAtom(DarkModeAtom)
+
+    useEffect(() => {
+        setThemeMode("light")
+    }, [])
+
     const { localSlides, onDeleteCard, loadMore } = useMySlidePagenation()
     const { goSignin } = useSignin()
     useEffect(() => {

@@ -1,9 +1,11 @@
 import Auth from "@aws-amplify/auth"
 import { Button, Divider, Typography } from "@mui/material"
+import { useAtom } from "jotai"
 import { GetServerSideProps } from "next"
 import { useRouter } from "next/dist/client/router"
 import React, { useEffect } from "react"
 import PdfUploader from "../../components/upload/PdfUploader"
+import { DarkModeAtom } from "../../model/jotai/DarkMode"
 import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag"
 import getOgpInfo from "../../model/serverSideRender/getOgpInfo"
 import { useLoading } from "../../model/util-hooks/useLoading"
@@ -11,6 +13,14 @@ import useSignin from "../../model/util-hooks/useSignin"
 import { useCreateSlideMutation, useInsertPageMutation, useUploadPdfMutation } from "../../src/generated/graphql"
 import style from "./index.module.css"
 const Home = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
+
+    const [_, setThemeMode] = useAtom(DarkModeAtom)
+
+    useEffect(() => {
+        setThemeMode("light")
+    }, [])
+
+
     const [createNewSlide] = useCreateSlideMutation()
     const [createPageMutation] = useInsertPageMutation()
     const [uploadPdf] = useUploadPdfMutation()

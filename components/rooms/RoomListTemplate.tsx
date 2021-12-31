@@ -14,7 +14,7 @@ export default (props: Props) => {
     const { button, modal } = useRoomSetModal()
 
     return (
-        <div>
+        <div style={{ padding: 10 }}>
             <div>
                 {button}
             </div>

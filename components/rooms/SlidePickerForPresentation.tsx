@@ -1,3 +1,4 @@
+import { Paper } from "@mui/material";
 import React from "react";
 import { useRoomMutation } from "../../model/hooks/useRoom";
 import PlusSlideCard from "../common/PlusSlideCard";
@@ -45,10 +46,10 @@ export default (props: Props) => {
         })
     }
 
-    return <div style={{ backgroundColor: "white" }}>
+    return <Paper elevation={0}>
         <div style={{ display: "flex", overflowX: "scroll", padding: 10 }}>
             <PlusSlideCard onClick={props.onClickAdd} />
             {renderCards()}
         </div>
-    </div>;
+    </Paper>;
 }

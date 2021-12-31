@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import { useAtom } from "jotai";
 import { GetServerSideProps } from "next";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/dist/client/router";
@@ -6,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import ReplayList from "../../components/replays/ReplayList";
 import StaticSlideView from "../../components/slideview/StaticSlideView";
 import StaticSlideViewWithAudio from "../../components/slideview/StaticSlideViewWithAudio";
+import { DarkModeAtom } from "../../model/jotai/DarkMode";
 import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag";
 import getOgpInfo from "../../model/serverSideRender/getOgpInfo";
 import { useLoading } from "../../model/util-hooks/useLoading";
@@ -14,6 +16,7 @@ import { useQuerySlideQuery } from "../../src/generated/graphql";
 import style from "./style.module.css";
 const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const t = useTranslations('Slide');
+    const [_, setThemeMode] = useAtom(DarkModeAtom)
 
     const router = useRouter()
     const { slideId } = router.query
@@ -26,6 +29,11 @@ const Page = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
     const { loading, error, data: initialSlide } = useQuerySlideQuery({ variables: { slideId: Number(slideId) }, fetchPolicy: "no-cache" })
     const slide = initialSlide?.slideshare_Slide_by_pk
     const [selectedRecordId, setSelectedRecordId] = useState<number | undefined>(undefined)
+
+    useEffect(() => {
+        setThemeMode("dark")
+    }, [])
+
     useEffect(() => {
         if (loading) {
             startLoading()

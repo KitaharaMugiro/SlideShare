@@ -8,6 +8,7 @@ import React, { useEffect } from "react";
 import EditOrPreview from "../../components/edit/EditOrPreview";
 import HorizontalSlideList from "../../components/edit/HorizontalSlideList";
 import { usePageList } from '../../model/hooks/usePageList';
+import { DarkModeAtom } from '../../model/jotai/DarkMode';
 import { pageListAtom } from "../../model/jotai/PageList";
 import OgpTag, { OpgMetaData } from '../../model/ogp/OgpTag';
 import { Page } from '../../model/Page';
@@ -19,6 +20,11 @@ import { useSubscribeSlideSubscription } from "../../src/generated/graphql";
 import style from "./index.module.css";
 
 const Edit = ({ ogpInfo }: { ogpInfo: OpgMetaData }) => {
+    const [__, setThemeMode] = useAtom(DarkModeAtom)
+
+    useEffect(() => {
+        setThemeMode("light")
+    }, [])
 
     const router = useRouter()
     const { slideId } = router.query

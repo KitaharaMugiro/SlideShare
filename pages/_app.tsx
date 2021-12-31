@@ -35,6 +35,8 @@ import ForceEditProfile from '../components/profile/ForceEditProfile';
 
 //google analytics
 import { GA_ID, existsGaId, pageview } from '../model/gtag'
+import { useAtom } from 'jotai';
+import { DarkModeAtom } from '../model/jotai/DarkMode';
 
 function findUrlForEnv(urlStrings: Array<string>, isLocal: boolean): string {
   if (urlStrings.length === 1) return urlStrings[0];
@@ -92,11 +94,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     })
   }, [])
 
-  const darkModePathList = ["/slide", "/presentation"]
-  const isDark = darkModePathList.reduce((acc, cur) => acc || router.pathname.includes(cur), false)
+  const [themeMode] = useAtom(DarkModeAtom)
   const darkTheme = createTheme({
     palette: {
-      mode: isDark ? 'dark' : "light",
+      mode: themeMode,
     },
   });
 

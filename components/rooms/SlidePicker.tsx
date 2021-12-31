@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import React from "react";
 import { useRoomParticipantMutation } from "../../model/hooks/useRoom";
 import useMySlidePagenation from "../../model/util-hooks/useMySlidePagenation";
@@ -33,10 +33,10 @@ export default () => {
         })
     }
 
-    return <div style={{ backgroundColor: "white" }}>
+    return <Paper elevation={0}>
         <div style={{ display: "flex", overflowX: "scroll" }}>
             {renderCards()}
         </div>
         <Button onClick={loadMore}>さらに読み込む</Button>
-    </div>;
+    </Paper>;
 }
