@@ -1,10 +1,10 @@
 import { Button } from "@mui/material";
 import {
-    ClientConfig, createClient,
-    createMicrophoneAudioTrack, IAgoraRTCRemoteUser, IMicrophoneAudioTrack
+    createClient,
+    createMicrophoneAudioTrack, IMicrophoneAudioTrack
 } from "agora-rtc-react";
 import { useAtom } from "jotai";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { TrackStateAtom } from "../../model/jotai/TrackState";
 import { useGenerateAgoraTokenMutation } from "../../src/generated/graphql";
 
@@ -193,6 +193,12 @@ export const Controls = (props: {
         if (props.onClickLeave) props.onClickLeave()
     }
 
+    useEffect(() => {
+        const leave = async () => {
+            await onClickLeave()
+        }
+        return () => { leave() }
+    }, [])
 
     return (
         <div>
