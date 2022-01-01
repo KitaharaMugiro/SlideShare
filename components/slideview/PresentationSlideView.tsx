@@ -25,6 +25,7 @@ interface Props {
     isAdmin: boolean
     roomId?: number
     roomTitle?: string
+    existsSideBar?: boolean
 }
 
 export default (props: Props) => {
@@ -201,7 +202,7 @@ export default (props: Props) => {
     const isRow = width > 800
     const COMMENT_WIDTH = isRow ? 340 : 0
     const MARGIN = isRow ? 100 : 40
-    let slideWidth = width - COMMENT_WIDTH - MARGIN
+    let slideWidth = width - COMMENT_WIDTH - MARGIN - (props.existsSideBar ? 50 : 0)
 
     if (isFullscreen) {
         slideWidth = width

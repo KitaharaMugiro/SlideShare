@@ -35,10 +35,10 @@ const App = ({ channelName, uid, host, isHost, onClickLeave }: Props) => {
 
     }, [channelName])
 
-    if (loading) return <div>ローディング</div>
-    if (error) return <div>エラー</div>
+    if (loading) return <div></div>
+    if (error) return <div>音声エラー</div>
     const token = data?.GenerateAgoraToken?.token
-    if (!token) return <div>トークンエラー</div>
+    if (!token) return <div>音声トークンエラー</div>
     console.log({ token })
     return (
         <div>
@@ -68,7 +68,6 @@ const Call = (props: {
     const client = useClient();
     // ready is a state variable, which returns true when the local tracks are initialized, untill then tracks variable is null
     const { ready, track } = useMicrophone();
-
 
     useEffect(() => {
         // function to initialise the SDK

@@ -52,14 +52,20 @@ export default (props: Props) => {
             }
         })
 
-        return (<div style={{ marginLeft: 15 }}>
-            <SlidePickerForPresentation
-                onClickAdd={onClickAddParticipantSlide}
-                slides={slides}
-                presentingSlideId={props.joinedRoom?.presentingSlide?.slideId}
-                roomId={props.joinedRoom.id}
-                role={props.role} />
-        </div>)
+        return (
+            <>
+                <Typography variant="h5">登壇予定のスライド</Typography>
+                <div style={{ marginLeft: 15 }}>
+                    <SlidePickerForPresentation
+                        onClickAdd={onClickAddParticipantSlide}
+                        slides={slides}
+                        presentingSlideId={props.joinedRoom?.presentingSlide?.slideId}
+                        roomId={props.joinedRoom.id}
+                        role={props.role} />
+                </div>
+            </>
+
+        )
     }
 
     const onClickAddParticipantSlide = () => {
@@ -90,7 +96,7 @@ export default (props: Props) => {
                 <Typography variant="h4">{props.joinedRoom?.name}</Typography>
                 <Typography variant="caption">{props.joinedRoom?.description}</Typography>
 
-                <Typography variant="h5">登壇予定のスライド</Typography>
+
                 {renderSlides()}
                 <div style={{ height: bottomViewHeight }} />
                 <>

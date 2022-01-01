@@ -15,12 +15,13 @@ import style from "./room.module.css";
 import RoomListTemplate from './RoomListTemplate';
 import RoomSwipableDrawer from "./RoomSwipableDrawer";
 import { useAtom } from 'jotai'
+import AgoraClient from '../slide/AgoraClient';
 export default () => {
     const router = useRouter()
     const { roomId } = router.query
     const { rooms } = useRoom()
     const { joinRoom } = useRoomParticipantMutation()
-    const { user } = useUser()
+    const { user, tempUserId } = useUser()
     const [_, setThemeMode] = useAtom(DarkModeAtom)
 
     const [openDrawer, setOpenDrawer] = useState(false)
@@ -53,6 +54,26 @@ export default () => {
         setOpenDrawer(false)
     }
 
+    const renderAgora = () => {
+        if (joinedRoom) {
+            if (user) {
+                return <AgoraClient
+                    uid={user.attributes.sub}
+                    host={joinedRoom.createdBy}
+                    channelName={`room-${joinedRoom.id}`}
+                    isHost={true} />
+            } else {
+                return <AgoraClient
+                    uid={tempUserId}
+                    host={joinedRoom.createdBy}
+                    channelName={`room-${joinedRoom.id}`}
+                    isHost={false} />
+            }
+        }
+        return <div />
+    }
+
+
 
     useEffect(() => {
         const time = 1000 * 60 * 20 //20min
@@ -69,8 +90,10 @@ export default () => {
     useEffect(() => {
         if (isPresenting) {
             setThemeMode("dark")
+            setOpenDrawer(false)
         } else {
             setThemeMode("light")
+            setOpenDrawer(true)
         }
     }, [isPresenting])
 
@@ -84,6 +107,7 @@ export default () => {
     }, [roomId, user, rooms])
 
 
+    const SideBarWidth = 50
     let drawerWidth = "45%"
     if (isMobile) {
         drawerWidth = "80%"
@@ -91,6 +115,7 @@ export default () => {
 
     return (
         <>
+            {renderAgora()}
             <RoomSwipableDrawer
                 role={state.role}
                 drawerWidth={drawerWidth}
@@ -100,7 +125,7 @@ export default () => {
                 onOpen={() => setOpenDrawer(true)}
                 onClose={() => setOpenDrawer(false)} />
 
-            <div className={style.root} style={{ marginRight: (!isPresenting && openDrawer) ? drawerWidth : "" }}>
+            <div className={style.root} style={{ marginRight: (!isPresenting && openDrawer) ? drawerWidth : SideBarWidth }}>
 
                 {isPresenting ?
                     <PresentationForRoomTemplate
@@ -119,10 +144,11 @@ export default () => {
                 {/* Drawer閉じているときの横のバー */}
                 <Paper style={{
                     position: "absolute",
-                    height: "100%", width: 50, right: 0, top: HEADER_HEIGHT,
+                    height: "100%", width: SideBarWidth, right: 0, top: HEADER_HEIGHT,
                     bottom: 0,
                     paddingTop: 20,
-                    zIndex: 0
+                    zIndex: 0,
+                    borderRadius: 0
                 }}>
                     <IconButton
                         onClick={() => setOpenDrawer(true)}>

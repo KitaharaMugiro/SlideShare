@@ -20,11 +20,13 @@ export default (props: Props) => {
     const { updatePresentingSlide } = useRoomMutation()
     const onClickPick = async (slideId: number) => {
         await updatePresentingSlide(props.roomId, slideId)
+
     }
 
     const onWithdrawPresentation = async () => {
         if (props.roomId) {
             await updatePresentingSlide(props.roomId, null)
+
         }
     }
 

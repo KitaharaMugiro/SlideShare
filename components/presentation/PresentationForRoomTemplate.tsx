@@ -33,19 +33,6 @@ export default (props: Props) => {
         }
     }, [loading])
 
-    const renderSlideIfActiveConference = () => {
-        return <>
-            {/* スライド */}
-            {initialSlide &&
-                <PresentationSlideView
-                    initialSlide={initialSlide}
-                    isAdmin={isAdmin}
-                    roomId={room.id}
-                    roomTitle={room.name}
-                />}
-
-        </>
-    }
 
     if (!slideId) return <div>{t("not-found")}</div>
     if (loading) return <div></div>
@@ -54,7 +41,14 @@ export default (props: Props) => {
 
     return (
         <div className={style.main}>
-            {renderSlideIfActiveConference()}
+            {initialSlide &&
+                <PresentationSlideView
+                    initialSlide={initialSlide}
+                    isAdmin={isAdmin}
+                    roomId={room.id}
+                    roomTitle={room.name}
+                    existsSideBar={true}
+                />}
             <div style={{ height: 30 }} />
         </div>
     )
