@@ -60,7 +60,7 @@ export default (props: Props) => {
     //slide状態変数
     const [slideState, setSlideState] = useRealtimeSharedState({
         pageNumber: 0
-    }, "slideState")
+    }, `slideState${slide?.id}`)
     const [finished, setFinished] = useState(false)
     const { pushUserAction, createdUserAction } = useRealtimeUserAction()
 

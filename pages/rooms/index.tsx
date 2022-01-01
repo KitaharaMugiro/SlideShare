@@ -3,7 +3,6 @@ import { useAtom } from "jotai";
 import { GetServerSideProps, GetStaticPropsContext } from "next";
 import React, { useEffect } from "react";
 import RoomAndPresentationTemplate from "../../components/rooms/RoomAndPresentationTemplate";
-import RoomTemplate from "../../components/rooms/RoomTemplate";
 import { DarkModeAtom } from "../../model/jotai/DarkMode";
 import OgpTag, { OpgMetaData } from "../../model/ogp/OgpTag";
 import getOgpInfo from "../../model/serverSideRender/getOgpInfo";

@@ -43,7 +43,7 @@ export default (props: Props) => {
     }
 
     const renderSlides = () => {
-        if (!props.joinedRoom) return <div />
+        if (!props.joinedRoom) return <div>ルームに入ると表示されます</div>
         const slides: { userName: string, slideId: number, imageUrl: string | null | undefined }[] = props.joinedRoom.participants.filter(p => p.slideId).map(p => {
             return {
                 userName: p.name,
